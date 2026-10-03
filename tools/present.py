@@ -11,7 +11,7 @@ DRAFT = {'en': 'Draft · design options for review · not live', 'de': 'Entwurf 
 
 def nav(lang):
     items = ''.join('<li><a href="#/%s/%s" data-slug="%s">%s</a></li>' % (lang, s, s, esc(B.NAV[lang][s])) for s, _ in B.PAGES[lang])
-    return f'<nav class="sitenav" aria-label="Main" data-lang="{lang}" hidden><ul>{items}</ul></nav>'
+    return f'<nav class="sitenav" id="nav-{lang}" aria-label="Main" data-lang="{lang}" hidden><ul>{items}</ul></nav>'
 
 def build():
     views, navs, tails = [], [], []
@@ -52,6 +52,7 @@ d.dataset.theme=(t==='light'||t==='dark')?t:(c==='c-ring'?'light':'dark')}})()</
     <div class="concepts" role="group" aria-label="Design option">{switch}</div>
     <a class="lang" href="#/de/home" hreflang="de" lang="de" aria-label="Language: DE">DE</a>
     <button class="theme" type="button" aria-label="Switch light/dark mode" title="Switch light/dark mode"><span></span></button>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-en"><span class="bars" aria-hidden="true"></span><span class="menu-t">Menu</span></button>
   </div>
 </header>
 <div class="shell">

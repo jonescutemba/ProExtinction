@@ -139,7 +139,7 @@ def faq_body(lang, slug, lines):
 def sitenav(lang, slug):
     t = T[lang]; cur = ' aria-current="page"'
     items = ''.join('<li><a href="%s.html"%s>%s</a></li>' % (s_, cur if s_ == slug else '', esc(NAV[lang][s_])) for s_, _ in PAGES[lang])
-    return f'<nav class="sitenav" aria-label="Main"><ul>{items}</ul></nav>'
+    return f'<nav class="sitenav" id="sitenav" aria-label="Main"><ul>{items}</ul></nav>'
 
 def header(c, lang, slug, ctx):
     t = T[lang]; other = 'de' if lang == 'en' else 'en'
@@ -155,6 +155,7 @@ def header(c, lang, slug, ctx):
   <div class="tools">
     <a class="lang" href="../{other}/{other_slug}.html" hreflang="{other}" lang="{other}" aria-label="{t["lang"]}: {other.upper()}">{other.upper()}</a>
     <button class="theme" type="button" aria-label="{t["theme"]}" title="{t["theme"]}"><span></span></button>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitenav"><span class="bars" aria-hidden="true"></span><span class="menu-t">{t["menu"]}</span></button>
   </div>
 </header>'''
 

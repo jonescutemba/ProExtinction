@@ -67,12 +67,33 @@
     langLink.href = '#/' + other + '/' + otherSlug; langLink.textContent = other.toUpperCase(); langLink.lang = other; langLink.hreflang = other;
     langLink.setAttribute('aria-label', (r.lang === 'en' ? 'Language' : 'Sprache') + ': ' + other.toUpperCase());
     brand.href = '#/' + r.lang + '/home';
+    var mb = document.querySelector('.menu-toggle');
+    if (mb) { mb.setAttribute('aria-controls', 'nav-' + r.lang); mb.querySelector('.menu-t').textContent = r.lang === 'de' ? 'Menü' : 'Menu'; }
     updateTitle();
     if (changed) { d.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); d.style.scrollBehavior = ''; }
     bindToc(); railMore(); bindLogos();
   }
   window.addEventListener('hashchange', show);
 
+
+  // ---- expandable menu below 1000px
+  var topBar = document.querySelector('.top'), menuBtn = document.querySelector('.menu-toggle');
+  function setTopH() { if (topBar) d.style.setProperty('--top-h', Math.max(0, topBar.getBoundingClientRect().bottom) + 'px'); }
+  function closeNav() { d.classList.remove('nav-open'); if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false'); }
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+      var open = !d.classList.contains('nav-open'); setTopH();
+      d.classList.toggle('nav-open', open); menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && d.classList.contains('nav-open')) { closeNav(); menuBtn.focus(); } });
+    document.addEventListener('click', function (e) {
+      if (!d.classList.contains('nav-open')) return;
+      if (e.target.closest('.sitenav a')) { closeNav(); return; }
+      if (!e.target.closest('.sitenav') && !e.target.closest('.menu-toggle')) closeNav();
+    });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 1000) closeNav(); else setTopH(); });
+    window.addEventListener('scroll', function () { if (d.classList.contains('nav-open')) setTopH(); }, { passive: true });
+  }
   // ---- progress bar
   var bar = document.querySelector('.progress i');
   function onScroll() { if (!bar) return; var h = d.scrollHeight - d.clientHeight; bar.style.width = (h > 0 ? Math.min(100, (d.scrollTop / h) * 100) : 0) + '%'; }

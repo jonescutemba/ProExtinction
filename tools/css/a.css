@@ -1,7 +1,7 @@
 /* Concept A "Ember": angular, editorial, asymmetric. Red/black/silver. Serif body. */
 body{font-size:1.125rem}
 .hero{display:grid;grid-template-columns:1fr;max-width:var(--wide);margin-inline:auto}
-@media (min-width:900px){
+@media (min-width:1000px){
   .shell{flex-direction:row;align-items:flex-start;background:linear-gradient(var(--line),var(--line)) 17.5rem 0/1px 100% no-repeat}
   .sitenav{position:sticky;top:4.3rem;width:17.5rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:0;padding:1.6rem 1.2rem 2rem calc(var(--gutter) / 2)}
   .sitenav ul{flex-direction:column;overflow:visible;gap:0}
@@ -22,3 +22,12 @@ body{font-size:1.125rem}
 @media (min-width:1280px){.doc{grid-template-columns:minmax(0,68ch) 14rem}.prose{grid-column:1;grid-row:2}.toc{grid-column:2;grid-row:2;position:sticky;top:5.5rem;align-self:start;margin-top:0;max-height:calc(100vh - 7rem);overflow:auto}}
 .prose h2::before{content:counter(ch,decimal-leading-zero) "  ";font-family:var(--mono);font-size:.55em;color:var(--link);letter-spacing:.08em;vertical-align:.35em}
 .mission blockquote{border-left:6px solid var(--accent);padding-left:1.2rem;max-width:26ch}
+
+/* efforts hover: slash bar sweeps along the top rule, number jumps forward */
+.efforts li{position:relative;transition:background-color .3s}
+.efforts li::before{content:"";position:absolute;left:0;top:-2px;height:4px;width:0;background:var(--accent);clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.efforts li:hover::before{width:100%}
+.efforts .num{display:inline-block;transform-origin:left bottom;transition:transform .4s cubic-bezier(.2,.8,.2,1),color .3s}
+.efforts li:hover .num{transform:translateX(.5rem) scale(1.3);color:var(--link)}
+.efforts .eff-label{transition:color .3s,letter-spacing .4s}
+.efforts li:hover .eff-label{color:var(--text);letter-spacing:.16em}
