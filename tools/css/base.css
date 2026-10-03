@@ -14,6 +14,7 @@ html{scrollbar-color:var(--accent) var(--bg);scrollbar-width:thin}
 }
 ::selection{background:var(--accent);color:var(--on-accent)}
 html{accent-color:var(--accent);caret-color:var(--accent);--accent-dim:color-mix(in srgb,var(--accent) 58%,var(--bg))}
+@media (prefers-reduced-motion:reduce){html:not([data-motion=on]){scroll-behavior:auto}html:not([data-motion=on]) *,html:not([data-motion=on]) *::before,html:not([data-motion=on]) *::after{animation:none!important;transition:none!important}}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:1.0625rem;line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:var(--grain);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:var(--grain-blend,overlay)}
 main{flex:1;width:100%}
@@ -69,7 +70,18 @@ p{margin:0 0 1.15em}
 .btn.primary:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
 /* home */
 .hero{padding:clamp(3rem,9vw,7rem) var(--gutter) clamp(2.5rem,6vw,4.5rem)}
-.hero-logo{width:clamp(7rem,22vw,13rem);aspect-ratio:1;color:var(--text);margin-bottom:1.5rem;position:relative;cursor:pointer}
+.hero-logo{display:inline-block;width:clamp(7rem,22vw,13rem);aspect-ratio:1;color:var(--text);margin-bottom:1.5rem;position:relative;cursor:pointer}
+/* animated logo: the snake turns once, then the slash strikes through, holds, fades; loops. Reduced motion: static full logo. */
+.hero-logo .lg{position:absolute;inset:var(--lg-inset,0);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.lg-snake{--m:var(--logo-snake);background:currentColor;animation:lg-spin 7s infinite}
+.lg-cut{--m:var(--logo-cut);background:var(--lg-cut,var(--bg));animation:lg-strike 7s infinite}
+.lg-slash{--m:var(--logo-slash);background:currentColor;animation:lg-strike 7s infinite}
+@keyframes lg-spin{0%{rotate:0deg;animation-timing-function:cubic-bezier(.65,0,.35,1)}55%,100%{rotate:360deg}}
+@keyframes lg-strike{
+  0%,56%{clip-path:polygon(300% 200%,-100% -200%,300% -200%);opacity:1;animation-timing-function:cubic-bezier(.75,0,.9,.35)}
+  61%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
+  88%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
+  95%,100%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:0}}
 /* logo jumpscare: grows fast, shakes, spins back down. Uses individual transform properties so they can run in parallel. */
 .hero-logo.scare{z-index:55;pointer-events:none;color:var(--scare,var(--accent));filter:drop-shadow(0 0 22px var(--scare,var(--accent)));
   animation:scare-scale 4s cubic-bezier(.2,.8,.2,1) both,scare-spin 4s ease-in-out both,scare-shake .045s steps(1) .2s 44 alternate both}

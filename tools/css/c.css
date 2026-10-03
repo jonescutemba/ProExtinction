@@ -59,3 +59,5 @@ main .doc{max-width:58rem}
 .efforts li:hover{transform:translateY(-5px);border-color:var(--accent);background:var(--bg)}
 .efforts .num{transition:background-color .35s,color .35s,transform .7s cubic-bezier(.2,.8,.2,1)}
 .efforts li:hover .num{background:var(--accent);color:var(--on-accent);transform:rotate(360deg)}
+
+@media (min-width:900px){.hero-logo{--lg-inset:1.4rem;--lg-cut:var(--surface)}}

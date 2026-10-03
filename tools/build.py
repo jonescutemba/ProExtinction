@@ -225,7 +225,7 @@ def home_main(lang, href=lambda s: s + '.html'):
     t = T[lang]
     efforts = ''.join(f'<li><span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
     return f'''<section class="hero">
-  <span class="logo hero-logo" role="img" aria-label="Pro Extinction logo"></span>
+  {HERO_LOGO}
   <h1 class="wordmark">PRO EXTINCTION</h1>
   <p class="hero-tag">{t["tagline"]}</p>
   <p class="hero-sub">{esc(t["sub"])}</p>
@@ -235,10 +235,17 @@ def home_main(lang, href=lambda s: s + '.html'):
 <section class="efforts"><ol>{efforts}</ol></section>
 <section class="questions"><h2>{t["questions"]}</h2><p>{linkify(t["questions_text"])}</p></section>'''
 
+def _svg_uri(name):
+    svg = (OUT / 'assets' / f'{name}.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
+    return 'data:image/svg+xml,' + urllib.parse.quote(svg, safe="/:=' ")
+
 def logo_css():
-    svg = (OUT / 'assets' / 'logo.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
-    uri = 'data:image/svg+xml,' + urllib.parse.quote(svg, safe="/:=' ")
-    return f'.logo{{--logo:url("{uri}");-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat;background:currentColor;display:inline-block}}\n'
+    """Static logo (header) plus the three layers of the animated hero logo: snake, cut gap, slash."""
+    return (f'.logo{{--logo:url("{_svg_uri("logo")}");-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat;background:currentColor;display:inline-block}}\n'
+            f':root{{--logo-snake:url("{_svg_uri("logo-snake")}");--logo-cut:url("{_svg_uri("logo-cut")}");--logo-slash:url("{_svg_uri("logo-slash")}")}}\n')
+
+HERO_LOGO = ('<span class="hero-logo" role="img" aria-label="Pro Extinction logo">'
+             '<span class="lg lg-snake"></span><span class="lg lg-cut"></span><span class="lg lg-slash"></span></span>')
 
 def build():
     css_base = (ROOT / 'tools/css/base.css').read_text(encoding='utf-8')

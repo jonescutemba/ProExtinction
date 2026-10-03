@@ -23,7 +23,8 @@ def build():
             views.append(f'<section class="view" data-view="{lang}/{slug}" data-title="{esc(title)}" hidden>\n{main}\n</section>')
         B.ID_PREFIX = ''
         tails.append(f'<div data-lang="{lang}" hidden>{B.footer(lang).replace(B.T[lang]["foot"], B.T[lang]["foot"] + " · " + DRAFT[lang])}</div>')
-    styles = ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text(encoding="utf-8")}\n</style>\n' for c in B.CONCEPTS)
+    logo = B.logo_css()
+    styles = f'<style id="logo">\n{logo}</style>\n' + ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text(encoding="utf-8").replace(logo, "")}\n</style>\n' for c in B.CONCEPTS)
     switch = ''.join(f'<button type="button" data-concept="{c}" aria-pressed="false" title="{B.CONCEPTS[c]["name"]}"><span class="k">{c[0].upper()}</span><span class="n">{B.CONCEPTS[c]["name"]}</span></button>' for c in B.CONCEPTS)
     pair = json.dumps({'en2de': {k: v for k, v in B.PAIR.items() if v in B.NAV['de']}, 'de2en': {v: k for k, v in B.PAIR.items() if v in B.NAV['de']}})
     js = (ROOT / 'tools' / 'present.js').read_text(encoding='utf-8')
