@@ -23,11 +23,6 @@ body{font-size:1.125rem}
 .prose h2::before{content:counter(ch,decimal-leading-zero) "  ";font-family:var(--mono);font-size:.55em;color:var(--link);letter-spacing:.08em;vertical-align:.35em}
 .mission blockquote{border-left:6px solid var(--accent);padding-left:1.2rem;max-width:26ch}
 
-/* efforts hover: slash bar sweeps along the top rule, number jumps forward */
-.efforts li{position:relative;transition:background-color .3s}
-.efforts li::before{content:"";position:absolute;left:0;top:-2px;height:4px;width:0;background:var(--accent);clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.efforts li:hover::before{width:100%}
-.efforts .num{display:inline-block;transform-origin:left bottom;transition:transform .4s cubic-bezier(.2,.8,.2,1),color .3s}
-.efforts li:hover .num{transform:translateX(.5rem) scale(1.3);color:var(--link)}
-.efforts .eff-label{transition:color .3s,letter-spacing .4s}
-.efforts li:hover .eff-label{color:var(--text);letter-spacing:.16em}
+/* efforts hover: the number gets underlined, nothing moves or scales */
+.efforts .num{display:inline-block;padding-bottom:.15rem;background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 100%/0 3px;transition:background-size .35s cubic-bezier(.2,.8,.2,1),color .3s}
+.efforts li:hover .num{background-size:100% 3px;color:var(--link)}
