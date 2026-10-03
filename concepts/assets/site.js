@@ -6,8 +6,15 @@
     d.dataset.theme = next;
     try { localStorage.setItem('pe-theme', next); } catch (e) {}
   });
+  // The OS setting "reduce motion" switches the logo effect off. For testing it can be overridden: add ?motion=on (or ?motion=off to undo).
+  try {
+    var mp = new URLSearchParams(location.search).get('motion');
+    if (mp === 'on') localStorage.setItem('pe-motion', 'on');
+    if (mp === 'off') localStorage.removeItem('pe-motion');
+    if (localStorage.getItem('pe-motion') === 'on') d.dataset.motion = 'on';
+  } catch (e) {}
   var logo = document.querySelector('.hero-logo');
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && d.dataset.motion !== 'on';
   function scare() {
     if (!logo || reduce || logo.classList.contains('scare')) return;
     logo.classList.add('scare'); d.classList.add('scaring');
