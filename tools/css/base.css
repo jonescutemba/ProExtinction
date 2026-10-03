@@ -129,5 +129,5 @@ html,body{overflow-x:clip}
 
 /* sidebar that is taller than the window: fade the cut-off edge instead of slicing a label in half */
 @media (min-width:900px){
-  .sitenav[data-more]{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent)}
+  .sitenav[data-more],.sitenav ul[data-more]{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent)}
 }

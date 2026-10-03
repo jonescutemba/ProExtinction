@@ -57,12 +57,20 @@
     [].slice.call(document.querySelectorAll('.prose h2')).forEach(function (h) { io.observe(h); });
   }
   var rail = document.querySelector('.sitenav');
+  var railList = rail && rail.querySelector('ul');
+  // the scrolling element is the rail itself (A) or just its list inside a bordered card (C); fade only that one
   function railMore() {
-    if (!rail) return;
-    var more = rail.scrollHeight - rail.clientHeight - rail.scrollTop > 6;
-    if (more) rail.setAttribute('data-more', ''); else rail.removeAttribute('data-more');
+    [rail, railList].forEach(function (el) {
+      if (!el) return;
+      var scrolls = el.scrollHeight - el.clientHeight > 6 && getComputedStyle(el).overflowY !== 'visible';
+      var more = scrolls && el.scrollHeight - el.clientHeight - el.scrollTop > 6;
+      if (more) el.setAttribute('data-more', ''); else el.removeAttribute('data-more');
+    });
   }
-  if (rail) { rail.addEventListener('scroll', railMore, { passive: true }); window.addEventListener('resize', railMore); railMore(); }
+  if (rail) {
+    [rail, railList].forEach(function (el) { el.addEventListener('scroll', railMore, { passive: true }); });
+    window.addEventListener('resize', railMore); railMore();
+  }
   var cur = document.querySelector('.sitenav [aria-current=page]');
   if (cur && cur.scrollIntoView && getComputedStyle(cur.parentNode.parentNode).overflowX === 'auto') {
     cur.parentNode.parentNode.scrollLeft = cur.offsetLeft - 16;

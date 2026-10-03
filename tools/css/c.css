@@ -34,8 +34,8 @@ body{font-size:1.15rem}
 .sitenav a[aria-current=page]::after{display:none}
 @media (min-width:1000px){
   .shell{flex-direction:row-reverse;align-items:flex-start}
-  .sitenav{position:sticky;top:5.6rem;width:16.5rem;flex:none;margin:1rem var(--gutter) 0 0;padding:.7rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);max-height:calc(100vh - 7rem);overflow:auto}
-  .sitenav ul{flex-direction:column;overflow:visible;gap:.15rem}
+  .sitenav{position:sticky;top:5.6rem;width:16.5rem;flex:none;margin:1rem var(--gutter) 0 0;padding:.7rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);max-height:none;overflow:visible}
+  .sitenav ul{flex-direction:column;overflow-x:visible;overflow-y:auto;max-height:calc(100vh - 9rem);gap:.15rem;padding-right:.2rem}
   .sitenav a{border:0;border-radius:.8rem;padding:.55rem .8rem;white-space:normal;font-size:1rem}
   .sitenav a:hover{background:var(--bg)}
 }
