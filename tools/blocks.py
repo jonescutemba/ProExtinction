@@ -37,12 +37,21 @@ def abridge(blocks, limit=230):
     return kept, len(kept) < len(blocks)
 
 def faq_pairs(lines):
-    """Pairs of (question, [answer paragraphs]); returns (intro_lines, pairs)."""
-    intro, pairs, cur = [], [], None
+    """Pairs of (question, [answer paragraphs]); returns (intro_lines, pairs).
+
+    Questions are lines starting with "N." (the source numbers them inconsistently, so the
+    number is stripped and re-counted by CSS). Before question 10, short unnumbered lines
+    ending in "?" also count (the English source forgets numbers on some early questions).
+    """
+    intro, pairs, cur, seen_late = [], [], None, False
     for l in lines:
         l = l.strip()
         if not l: continue
-        if l.endswith('?') and len(l) < 170:
+        m = re.match(r'^(\d+)\.\s*(.+)$', l)
+        if m:
+            if int(m.group(1)) >= 10: seen_late = True
+            cur = (m.group(2).strip(), []); pairs.append(cur)
+        elif l.endswith('?') and len(l) <= 62 and l[:1].isupper() and not seen_late:
             cur = (l, []); pairs.append(cur)
         elif cur: cur[1].append(l)
         else: intro.append(l)

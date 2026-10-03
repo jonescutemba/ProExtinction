@@ -28,6 +28,9 @@ p{margin:0 0 1.15em}
 .progress i{display:block;height:100%;width:0;background:var(--accent);clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%)}
 /* header */
 .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:40}
+.lead{display:flex;align-items:center;gap:1rem;min-width:0}
+.back{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:var(--r-ui);height:2.1rem;padding:0 .75rem;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;background:none}
+.back:hover{color:var(--text);border-color:var(--accent)}
 .brand{display:flex;align-items:center;gap:.7rem;color:var(--text);background:none}
 .brand .logo{width:2.4rem;height:2.4rem;color:var(--text);transition:color .25s,transform .4s}
 .brand:hover .logo{color:var(--accent);transform:rotate(-8deg)}
@@ -95,7 +98,9 @@ p{margin:0 0 1.15em}
 .prose{counter-reset:ch}
 .prose h2{counter-increment:ch}
 /* faq */
-.faq details{border-top:1px solid var(--line)}
+.faq{counter-reset:q}
+.faq details{border-top:1px solid var(--line);counter-increment:q}
+.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--accent);margin-right:.9rem;vertical-align:.25em}
 .faq details:last-child{border-bottom:1px solid var(--line)}
 .faq summary{cursor:pointer;list-style:none;padding:1.1rem 2.4rem 1.1rem 0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.02em;font-size:1.2rem;line-height:1.25;position:relative}
 .faq summary::-webkit-details-marker{display:none}
@@ -110,7 +115,7 @@ p{margin:0 0 1.15em}
 .cta-links{display:flex;flex-wrap:wrap;gap:.8rem;margin:0}
 .foot{border-top:1px solid var(--line);padding:1.4rem var(--gutter)}
 .foot p{margin:0}
-@media (max-width:640px){.brand .wordmark{font-size:1rem}.top{gap:.5rem}.tools{gap:.4rem}}
+@media (max-width:640px){.back span+*{display:none}.back{padding:0 .6rem}.lead{gap:.6rem}.brand .wordmark{font-size:1rem}.top{gap:.5rem}.tools{gap:.4rem}}
 
 /* Concept A "Ember": angular, editorial, asymmetric. Red/black/silver. Serif body. */
 :root{--display:"Oswald","Arial Narrow",Impact,sans-serif;--body:"Newsreader",Georgia,"Times New Roman",serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display-weight:600;--gutter:clamp(1.1rem,5vw,3.5rem);--wide:78rem;--r-ui:0;--r-card:0}

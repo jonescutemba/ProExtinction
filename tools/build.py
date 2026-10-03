@@ -50,7 +50,7 @@ T = {
   effort='Effort', questions='Questions?', questions_text='Contact info@proextinction.com to get more information on the project',
   action='Take action', toc='On this page', abridged='Preview: the long list of channels is left out in this concept. The full list is on the current site:',
   abridged_link='Open the full page', ki='Machine-translated from English (AI). The German original site does not have this page. Abridged preview.',
-  ki_tag='AI', progress='Reading progress', home_link='Pro Extinction – home',
+  ki_tag='AI', back='Concepts', back_title='Back to the concept overview', progress='Reading progress', home_link='Pro Extinction – home',
   efforts=['Growing the movement to make it possible to prevent billions of years of suffering.',
    'Universal, non-discriminatory help for as many victims as physically possible. For animals, as much extraterrestrial life as possible, and humans.',
    'Purely organised action/activism based. No lamenting at the expense of the victims.',
@@ -63,7 +63,7 @@ T = {
   effort='Einsatz', questions='Fragen?', questions_text='Kontaktiere info@proextinction.com, um mehr Informationen zu bekommen.',
   action='Mach mit', toc='Auf dieser Seite', abridged='Vorschau: die lange Kanalliste ist in diesem Konzept weggelassen. Die vollständige Liste steht auf der aktuellen Seite:',
   abridged_link='Vollständige Seite öffnen', ki='Automatisch aus dem Englischen übersetzt (KI). Die deutsche Originalseite hat diese Seite nicht. Gekürzte Vorschau.',
-  ki_tag='KI', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
+  ki_tag='KI', back='Konzepte', back_title='Zurück zur Konzeptübersicht', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
   efforts=['Wir vergrößern die Bewegung, um unzählige Jahre Leid zu verhindern.',
    'Universelle, nicht diskriminierende Hilfe für so viele Opfer wie physisch möglich. Für Tiere, so viel außerirdisches Leben wie möglich und Menschen.',
    'Wir sind strikt handlungsorientiert, anstatt auf Kosten der Opfer nur über das extreme Leid zu klagen.',
@@ -146,7 +146,10 @@ def header(c, lang, slug, ctx):
     return f'''<a class="skip" href="#main">{t["skip"]}</a>
 <div class="progress" aria-hidden="true"><i></i></div>
 <header class="top">
-  <a class="brand" href="home.html" aria-label="{t["home_link"]}"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a>
+  <div class="lead">
+    <a class="brand" href="home.html" aria-label="{t["home_link"]}"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a>
+    <a class="back" href="../../index.html" title="{t["back_title"]}"><span aria-hidden="true">←</span> {t["back"]}</a>
+  </div>
   <div class="tools">
     <a class="lang" href="../{other}/{other_slug}.html" hreflang="{other}" lang="{other}" aria-label="{t["lang"]}: {other.upper()}">{other.upper()}</a>
     <button class="theme" type="button" aria-label="{t["theme"]}" title="{t["theme"]}"><span></span></button>
