@@ -5,10 +5,10 @@
 body{font-size:1.125rem}
 .hero{display:grid;grid-template-columns:1fr;max-width:var(--wide);margin-inline:auto}
 @media (min-width:900px){
-  .shell{flex-direction:row;align-items:flex-start}
-  .sitenav{position:sticky;top:4.3rem;width:15rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:1px solid var(--line);padding:2rem 1rem 2rem var(--gutter)}
+  .shell{flex-direction:row;align-items:flex-start;background:linear-gradient(var(--line),var(--line)) 17.5rem 0/1px 100% no-repeat}
+  .sitenav{position:sticky;top:4.3rem;width:17.5rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:0;padding:1.6rem 1.2rem 2rem var(--gutter)}
   .sitenav ul{flex-direction:column;overflow:visible;gap:0}
-  .sitenav a{padding:.42rem 0 .42rem 1rem;font-size:1rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
+  .sitenav a{padding:.36rem 0 .36rem 1rem;font-size:.97rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
   .sitenav a:hover{border-left-color:var(--accent)}
   .sitenav a[aria-current=page]{border-left:3px solid var(--accent);padding-left:calc(1rem - 2px)}
   .sitenav a[aria-current=page]::after{display:none}

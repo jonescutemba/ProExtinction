@@ -126,3 +126,8 @@ html,body{overflow-x:clip}
 .foot{border-top:1px solid var(--line);padding:1.4rem var(--gutter)}
 .foot p{margin:0}
 @media (max-width:640px){.back span+*{display:none}.back{padding:0 .6rem}.lead{gap:.6rem}.brand .wordmark{font-size:1rem}.top{gap:.5rem}.tools{gap:.4rem}}
+
+/* sidebar that is taller than the window: fade the cut-off edge instead of slicing a label in half */
+@media (min-width:900px){
+  .sitenav[data-more]{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent)}
+}

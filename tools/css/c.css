@@ -39,3 +39,6 @@ body{font-size:1.15rem}
   .sitenav a{border:0;border-radius:.8rem;padding:.55rem .8rem;white-space:normal;font-size:1rem}
   .sitenav a:hover{background:var(--bg)}
 }
+
+main .hero,main .mission,main .efforts,main .questions,main .doc{margin-inline:0}
+main .doc{max-width:58rem}

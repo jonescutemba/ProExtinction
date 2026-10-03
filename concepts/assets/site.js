@@ -56,6 +56,13 @@
     }, { rootMargin: '-15% 0px -75% 0px' });
     [].slice.call(document.querySelectorAll('.prose h2')).forEach(function (h) { io.observe(h); });
   }
+  var rail = document.querySelector('.sitenav');
+  function railMore() {
+    if (!rail) return;
+    var more = rail.scrollHeight - rail.clientHeight - rail.scrollTop > 6;
+    if (more) rail.setAttribute('data-more', ''); else rail.removeAttribute('data-more');
+  }
+  if (rail) { rail.addEventListener('scroll', railMore, { passive: true }); window.addEventListener('resize', railMore); railMore(); }
   var cur = document.querySelector('.sitenav [aria-current=page]');
   if (cur && cur.scrollIntoView && getComputedStyle(cur.parentNode.parentNode).overflowX === 'auto') {
     cur.parentNode.parentNode.scrollLeft = cur.offsetLeft - 16;

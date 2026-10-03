@@ -127,6 +127,11 @@ html,body{overflow-x:clip}
 .foot p{margin:0}
 @media (max-width:640px){.back span+*{display:none}.back{padding:0 .6rem}.lead{gap:.6rem}.brand .wordmark{font-size:1rem}.top{gap:.5rem}.tools{gap:.4rem}}
 
+/* sidebar that is taller than the window: fade the cut-off edge instead of slicing a label in half */
+@media (min-width:900px){
+  .sitenav[data-more]{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent)}
+}
+
 /* Concept A "Ember": angular, editorial, asymmetric. Red/black/silver. Serif body. */
 :root{--display:"Oswald","Arial Narrow",Impact,sans-serif;--body:"Newsreader",Georgia,"Times New Roman",serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display-weight:600;--gutter:clamp(1.1rem,5vw,3.5rem);--wide:78rem;--r-ui:0;--r-card:0}
 :root[data-theme=dark]{--scare:#e01a20;--accent-deep:#7e0e12;--bg:#0d0809;--surface:#151011;--text:#dcd8d8;--muted:#9a9292;--line:#2c2224;--accent:#c4161c;--link:#e8484d;--on-accent:#fff;--grain:.07;--metal:linear-gradient(180deg,#f3f3f3 0%,#a9a9a9 42%,#ececec 52%,#7a7a7a 100%)}
@@ -134,10 +139,10 @@ html,body{overflow-x:clip}
 body{font-size:1.125rem}
 .hero{display:grid;grid-template-columns:1fr;max-width:var(--wide);margin-inline:auto}
 @media (min-width:900px){
-  .shell{flex-direction:row;align-items:flex-start}
-  .sitenav{position:sticky;top:4.3rem;width:15rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:1px solid var(--line);padding:2rem 1rem 2rem var(--gutter)}
+  .shell{flex-direction:row;align-items:flex-start;background:linear-gradient(var(--line),var(--line)) 17.5rem 0/1px 100% no-repeat}
+  .sitenav{position:sticky;top:4.3rem;width:17.5rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:0;padding:1.6rem 1.2rem 2rem var(--gutter)}
   .sitenav ul{flex-direction:column;overflow:visible;gap:0}
-  .sitenav a{padding:.42rem 0 .42rem 1rem;font-size:1rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
+  .sitenav a{padding:.36rem 0 .36rem 1rem;font-size:.97rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
   .sitenav a:hover{border-left-color:var(--accent)}
   .sitenav a[aria-current=page]{border-left:3px solid var(--accent);padding-left:calc(1rem - 2px)}
   .sitenav a[aria-current=page]::after{display:none}
