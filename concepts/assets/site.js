@@ -15,12 +15,25 @@
   } catch (e) {}
   var logo = document.querySelector('.hero-logo');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && d.dataset.motion !== 'on';
-  function scare() {
-    if (!logo || reduce || logo.classList.contains('scare')) return;
+  var armed = true;
+  function scare(e) {
+    if (!logo || reduce || !armed) return;
+    armed = false;
     logo.classList.add('scare'); d.classList.add('scaring');
-    setTimeout(function () { logo.classList.remove('scare'); d.classList.remove('scaring'); }, 4000);
+    setTimeout(function () {
+      logo.classList.remove('scare'); d.classList.remove('scaring');
+      if (e && e.type === 'click') armed = true; // touch has no mouseleave
+    }, 4000);
   }
-  if (logo) { logo.addEventListener('mouseenter', scare); logo.addEventListener('click', scare); }
+  if (logo) {
+    logo.addEventListener('mouseenter', scare);
+    logo.addEventListener('click', scare);
+    // re-arm only after the pointer has left, so resting on the logo does not loop the effect
+    logo.addEventListener('mouseleave', function () { if (!logo.classList.contains('scare')) armed = true; });
+    document.addEventListener('mousemove', function (e) {
+      if (!armed && !logo.classList.contains('scare') && !logo.contains(e.target)) armed = true;
+    }, { passive: true });
+  }
   var bar = document.querySelector('.progress i');
   function onScroll() {
     if (!bar) return;
