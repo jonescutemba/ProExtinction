@@ -64,7 +64,17 @@ p{margin:0 0 1.15em}
 .btn.primary:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
 /* home */
 .hero{padding:clamp(3rem,9vw,7rem) var(--gutter) clamp(2.5rem,6vw,4.5rem)}
-.hero-logo{width:clamp(7rem,22vw,13rem);aspect-ratio:1;color:var(--text);margin-bottom:1.5rem}
+.hero-logo{width:clamp(7rem,22vw,13rem);aspect-ratio:1;color:var(--text);margin-bottom:1.5rem;position:relative;cursor:pointer}
+/* logo jumpscare: grows fast, shakes, spins back down. Uses individual transform properties so they can run in parallel. */
+.hero-logo.scare{z-index:55;pointer-events:none;color:var(--scare,var(--accent));filter:drop-shadow(0 0 22px var(--scare,var(--accent)));
+  animation:scare-scale 4s cubic-bezier(.2,.8,.2,1) both,scare-spin 4s ease-in-out both,scare-shake .045s steps(1) .2s 44 alternate both}
+/* the logo is a ring (hollow centre), so the page is dimmed behind it for the duration */
+html.scaring body::after{content:"";position:fixed;inset:0;z-index:54;pointer-events:none;background:var(--bg);opacity:0;animation:scare-dim 4s ease both}
+@keyframes scare-dim{0%{opacity:0}4%{opacity:.93}82%{opacity:.93}100%{opacity:0}}
+@keyframes scare-scale{0%{scale:1}4%{scale:3.3}62%{scale:3.3}100%{scale:1}}
+@keyframes scare-spin{0%,60%{rotate:0deg}100%{rotate:720deg}}
+@keyframes scare-shake{0%{translate:0 0}25%{translate:-14px 9px}50%{translate:11px -12px}75%{translate:-9px -8px}100%{translate:13px 10px}}
+html,body{overflow-x:clip}
 .hero .wordmark{font-size:clamp(2.6rem,11vw,8rem);margin:0 0 1rem;min-width:0;overflow-wrap:anywhere;padding-bottom:.08em}
 .hero-tag{font-family:var(--display);text-transform:uppercase;letter-spacing:.3em;font-size:clamp(.9rem,2.4vw,1.25rem);color:var(--text);margin:0 0 .5rem}
 .hero-tag::after{content:"";display:block;width:3.5rem;height:4px;margin-top:.9rem;background:var(--accent);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
@@ -120,8 +130,8 @@ p{margin:0 0 1.15em}
 
 /* Concept C "Ring": round, sepia and ink, editorial. Serif body. */
 :root{--display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;--body:"Source Serif 4",Georgia,"Times New Roman",serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display-weight:400;--gutter:clamp(1.1rem,5vw,3rem);--wide:72rem;--r-ui:999px;--r-card:1.4rem;--r-scroll:999px}
-:root[data-theme=light]{--accent-deep:#5f3212;--bg:#f1e6d0;--surface:#e8dac0;--text:#2a1d12;--muted:#6b5842;--line:#cdb995;--accent:#8a4b1c;--link:#8a4b1c;--on-accent:#fff7ea;--grain:.07;--grain-blend:multiply;--metal:linear-gradient(180deg,#2a1d12 0%,#6c5238 48%,#2a1d12 56%,#7b6144 100%)}
-:root[data-theme=dark]{--accent-deep:#9a6a36;--bg:#14100c;--surface:#1d1711;--text:#e6dcc8;--muted:#a39784;--line:#37291d;--accent:#d29550;--link:#d9a263;--on-accent:#1a1209;--grain:.08;--metal:linear-gradient(180deg,#f2e6cf 0%,#b79c78 45%,#efe0c4 55%,#8a7253 100%)}
+:root[data-theme=light]{--scare:#8f1d12;--accent-deep:#5f3212;--bg:#f1e6d0;--surface:#e8dac0;--text:#2a1d12;--muted:#6b5842;--line:#cdb995;--accent:#8a4b1c;--link:#8a4b1c;--on-accent:#fff7ea;--grain:.07;--grain-blend:multiply;--metal:linear-gradient(180deg,#2a1d12 0%,#6c5238 48%,#2a1d12 56%,#7b6144 100%)}
+:root[data-theme=dark]{--scare:#c63a1e;--accent-deep:#9a6a36;--bg:#14100c;--surface:#1d1711;--text:#e6dcc8;--muted:#a39784;--line:#37291d;--accent:#d29550;--link:#d9a263;--on-accent:#1a1209;--grain:.08;--metal:linear-gradient(180deg,#f2e6cf 0%,#b79c78 45%,#efe0c4 55%,#8a7253 100%)}
 body{font-size:1.15rem}
 .top{margin:.8rem var(--gutter);padding:.6rem .8rem .6rem 1.2rem;border:1px solid var(--line);border-radius:999px;top:.6rem;background:var(--bg)}
 .hero{max-width:var(--wide);margin-inline:auto;display:grid;gap:1rem}

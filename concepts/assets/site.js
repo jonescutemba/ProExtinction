@@ -6,6 +6,14 @@
     d.dataset.theme = next;
     try { localStorage.setItem('pe-theme', next); } catch (e) {}
   });
+  var logo = document.querySelector('.hero-logo');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function scare() {
+    if (!logo || reduce || logo.classList.contains('scare')) return;
+    logo.classList.add('scare'); d.classList.add('scaring');
+    setTimeout(function () { logo.classList.remove('scare'); d.classList.remove('scaring'); }, 4000);
+  }
+  if (logo) { logo.addEventListener('mouseenter', scare); logo.addEventListener('click', scare); }
   var bar = document.querySelector('.progress i');
   function onScroll() {
     if (!bar) return;

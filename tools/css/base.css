@@ -64,7 +64,17 @@ p{margin:0 0 1.15em}
 .btn.primary:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
 /* home */
 .hero{padding:clamp(3rem,9vw,7rem) var(--gutter) clamp(2.5rem,6vw,4.5rem)}
-.hero-logo{width:clamp(7rem,22vw,13rem);aspect-ratio:1;color:var(--text);margin-bottom:1.5rem}
+.hero-logo{width:clamp(7rem,22vw,13rem);aspect-ratio:1;color:var(--text);margin-bottom:1.5rem;position:relative;cursor:pointer}
+/* logo jumpscare: grows fast, shakes, spins back down. Uses individual transform properties so they can run in parallel. */
+.hero-logo.scare{z-index:55;pointer-events:none;color:var(--scare,var(--accent));filter:drop-shadow(0 0 22px var(--scare,var(--accent)));
+  animation:scare-scale 4s cubic-bezier(.2,.8,.2,1) both,scare-spin 4s ease-in-out both,scare-shake .045s steps(1) .2s 44 alternate both}
+/* the logo is a ring (hollow centre), so the page is dimmed behind it for the duration */
+html.scaring body::after{content:"";position:fixed;inset:0;z-index:54;pointer-events:none;background:var(--bg);opacity:0;animation:scare-dim 4s ease both}
+@keyframes scare-dim{0%{opacity:0}4%{opacity:.93}82%{opacity:.93}100%{opacity:0}}
+@keyframes scare-scale{0%{scale:1}4%{scale:3.3}62%{scale:3.3}100%{scale:1}}
+@keyframes scare-spin{0%,60%{rotate:0deg}100%{rotate:720deg}}
+@keyframes scare-shake{0%{translate:0 0}25%{translate:-14px 9px}50%{translate:11px -12px}75%{translate:-9px -8px}100%{translate:13px 10px}}
+html,body{overflow-x:clip}
 .hero .wordmark{font-size:clamp(2.6rem,11vw,8rem);margin:0 0 1rem;min-width:0;overflow-wrap:anywhere;padding-bottom:.08em}
 .hero-tag{font-family:var(--display);text-transform:uppercase;letter-spacing:.3em;font-size:clamp(.9rem,2.4vw,1.25rem);color:var(--text);margin:0 0 .5rem}
 .hero-tag::after{content:"";display:block;width:3.5rem;height:4px;margin-top:.9rem;background:var(--accent);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
