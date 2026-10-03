@@ -10,8 +10,9 @@ body{font-size:1.15rem}
 @media (min-width:900px){.hero .wordmark{font-size:clamp(2.6rem,6vw,5.2rem)}}
 .mission{margin-top:1rem}
 .mission blockquote{font-family:var(--body);font-weight:600;text-transform:none;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.2;max-width:28ch;font-style:italic}
-.efforts ol{grid-template-columns:1fr;gap:1.2rem}
-@media (min-width:760px){.efforts ol{grid-template-columns:repeat(2,1fr)}}
+.efforts ol{gap:1.2rem}
+@container (min-width:34rem){.efforts ol{grid-template-columns:repeat(2,1fr)}}
+@container (min-width:76rem){.efforts ol{grid-template-columns:repeat(4,1fr)}}
 .efforts li{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:1.6rem 1.6rem 1.6rem 5.4rem}
 .efforts .num{position:absolute;left:1.2rem;top:1.4rem;width:3.2rem;height:3.2rem;border:2px solid var(--accent);border-radius:50%;display:grid;place-items:center;font-size:1.05rem;color:var(--accent)}
 .doc h1{font-size:clamp(2.4rem,6.5vw,4.6rem);max-width:18ch}

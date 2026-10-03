@@ -14,9 +14,9 @@ body{font-size:1.125rem}
 .mission{text-align:center}
 .mission .slash::after{left:50%;transform:translateX(-50%)}
 .mission blockquote{margin-inline:auto;font-size:clamp(2rem,6.5vw,4.4rem);line-height:1.02;max-width:18ch}
-.efforts ol{grid-template-columns:1fr}
+.efforts ol{border-bottom:1px solid var(--line);column-gap:2rem}
+@container (min-width:38rem){.efforts ol{grid-template-columns:repeat(2,1fr)}}
 .efforts li{text-align:center;border-top:1px solid var(--line);padding:2.2rem 0}
-.efforts li:last-child{border-bottom:1px solid var(--line)}
 .efforts .num{font-family:var(--display);font-size:clamp(4rem,12vw,7rem);line-height:.9;color:transparent;-webkit-text-stroke:2px var(--accent)}
 .efforts li p:last-child{max-width:34rem;margin-inline:auto;font-size:1.2rem}
 .questions{text-align:center}

@@ -15,9 +15,9 @@ body{font-size:1.125rem}
 }
 @media (min-width:1280px){.hero{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-areas:"w l" "t l" "s l" "c l";align-items:start;column-gap:3rem}.hero .wordmark{grid-area:w;font-size:clamp(2.6rem,5.2vw,5rem)}.hero-tag{grid-area:t}.hero-sub{grid-area:s}.hero-cta{grid-area:c}.hero-logo{grid-area:l;width:100%;max-width:24rem;justify-self:end;margin:0}}
 .hero .wordmark{line-height:.95}
-.efforts ol{grid-template-columns:1fr}
-@media (min-width:760px){.efforts ol{grid-template-columns:repeat(2,1fr);column-gap:2rem}}
-@media (min-width:1500px){.efforts ol{grid-template-columns:repeat(4,1fr)}}
+.efforts ol{column-gap:2rem}
+@container (min-width:34rem){.efforts ol{grid-template-columns:repeat(2,1fr)}}
+@container (min-width:66rem){.efforts ol{grid-template-columns:repeat(4,1fr);column-gap:1.6rem}}
 .efforts li{border-top:1px solid var(--line);padding:1.5rem 1.4rem 1.5rem 0}
 .doc{display:grid;grid-template-columns:minmax(0,1fr);column-gap:3rem;max-width:none}
 .doc-head{grid-column:1/-1}
