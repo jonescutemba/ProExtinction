@@ -2,14 +2,22 @@
 import re
 
 def is_heading(l):
-    return len(l) <= 70 and not re.search(r'[.,;!]$', l) and not l.startswith(('*', '–', '-', '•', 'http'))
+    return (len(l) <= 70 and not re.search(r'[.,;!]$', l) and ',' not in l and '/' not in l
+            and not l[:1].isdigit() and not l.startswith(('*', '–', '-', '•', 'http', 'Protest')))
+
+def is_list_line(l):
+    return l.startswith(('*', '–', '- ', '•', '-')) and len(l) > 2
 
 def blocks_of(lines):
     out = []
-    for l in lines:
-        l = l.strip()
-        if not l: continue
-        if l.startswith(('*', '–', '- ', '•', '-')) and len(l) > 2:
+    skip = {'Discord', 'Whatsapp', 'WhatsApp'}
+    clean = [l.strip() for l in lines if l.strip() and l.strip() not in skip and not l.startswith('Proextinction Website -')]
+    for n, l in enumerate(clean):
+        nxt = clean[n + 1] if n + 1 < len(clean) else ''
+        # a line that introduces a list ("... if they:") is a lead-in sentence, not a chapter
+        if is_heading(l) and is_list_line(nxt) and (l.endswith(':') or len(l) > 40 or ',' in l or l[:1].islower()) :
+            out.append(('p', l)); continue
+        if is_list_line(l):
             item = l.lstrip('*–-• ').strip()
             if out and out[-1][0] == 'ul': out[-1][1].append(item)
             else: out.append(('ul', [item]))

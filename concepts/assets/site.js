@@ -14,7 +14,22 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-  var menu = document.querySelector('.menu');
-  document.addEventListener('click', function (e) { if (menu && menu.open && !menu.contains(e.target)) menu.open = false; });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu) menu.open = false; });
+  var links = [].slice.call(document.querySelectorAll('.toc a'));
+  if (links.length && 'IntersectionObserver' in window) {
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (a) { a.removeAttribute('aria-current'); });
+          var a = map[e.target.id]; if (a) a.setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    [].slice.call(document.querySelectorAll('.prose h2')).forEach(function (h) { io.observe(h); });
+  }
+  var cur = document.querySelector('.sitenav [aria-current=page]');
+  if (cur && cur.scrollIntoView && getComputedStyle(cur.parentNode.parentNode).overflowX === 'auto') {
+    cur.parentNode.parentNode.scrollLeft = cur.offsetLeft - 16;
+  }
 })();

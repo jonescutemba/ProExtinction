@@ -48,7 +48,7 @@ T = {
   cta1='Join us', cta2='Read the manifesto', mission='Our Mission',
   mission_text='Preventing as much suffering as physically possible, without tradeoffs.',
   effort='Effort', questions='Questions?', questions_text='Contact info@proextinction.com to get more information on the project',
-  action='Take action', toc='On this page', abridged='Abridged preview for the design concept. The full text is on the current site:',
+  action='Take action', toc='On this page', abridged='Preview: the long list of channels is left out in this concept. The full list is on the current site:',
   abridged_link='Open the full page', ki='Machine-translated from English (AI). The German original site does not have this page. Abridged preview.',
   ki_tag='AI', progress='Reading progress', home_link='Pro Extinction – home',
   efforts=['Growing the movement to make it possible to prevent billions of years of suffering.',
@@ -61,7 +61,7 @@ T = {
   cta1='Aktiv werden', cta2='Manifest lesen', mission='Unsere Mission',
   mission_text='Wir zielen darauf ab, ohne Kompromisse, so viel Leid wie möglich zu beenden.',
   effort='Einsatz', questions='Fragen?', questions_text='Kontaktiere info@proextinction.com, um mehr Informationen zu bekommen.',
-  action='Mach mit', toc='Auf dieser Seite', abridged='Gekürzte Vorschau für das Designkonzept. Der vollständige Text steht auf der aktuellen Seite:',
+  action='Mach mit', toc='Auf dieser Seite', abridged='Vorschau: die lange Kanalliste ist in diesem Konzept weggelassen. Die vollständige Liste steht auf der aktuellen Seite:',
   abridged_link='Vollständige Seite öffnen', ki='Automatisch aus dem Englischen übersetzt (KI). Die deutsche Originalseite hat diese Seite nicht. Gekürzte Vorschau.',
   ki_tag='KI', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
   efforts=['Wir vergrößern die Bewegung, um unzählige Jahre Leid zu verhindern.',
@@ -106,8 +106,10 @@ def render_blocks(blocks, used):
 def head_lede(lines):
     title, rest = lines[0], lines[1:]
     lede = None
-    if rest and len(rest[0]) <= 90 and rest[0].endswith('.') and len(rest) > 1:
-        lede, rest = rest[0], rest[1:]
+    from blocks import is_heading
+    if len(rest) > 1 and len(rest[0]) <= 90 and not rest[0].endswith('?') \
+            and (rest[0].endswith('.') or is_heading(rest[0])) and is_heading(rest[1]) and not rest[1].endswith('?'):
+        lede, rest = rest[0].rstrip(':'), rest[1:]
     return title, lede, rest
 
 def doc_body(lang, slug, lines, full_url):
@@ -117,7 +119,7 @@ def doc_body(lang, slug, lines, full_url):
     if slug in ('social-media-channels',):
         bl = blocks_of(rest)[:2]; truncated = True
     else:
-        bl, truncated = abridge(blocks_of(rest), 230)
+        bl = blocks_of(rest)
     body, toc = render_blocks(bl, used)
     return title, lede, body, toc, truncated
 
@@ -125,22 +127,20 @@ def faq_body(lang, slug, lines):
     t = T[lang]
     title, lede, rest = head_lede(lines)
     intro, pairs = faq_pairs(rest)
-    limit = 6 if 'full' in slug or 'vollst' in slug else len(pairs)
-    shown = pairs[:limit]
+    shown = pairs
     intro_html = ''.join(f'<p>{linkify(l)}</p>' for l in intro)
     items = []
     for q, a in shown:
         items.append(f'<details><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a) + '</div></details>')
     return title, lede, intro_html + '<div class="faq">' + '\n'.join(items) + '</div>', [], len(shown) < len(pairs)
 
+def sitenav(lang, slug):
+    t = T[lang]; cur = ' aria-current="page"'
+    items = ''.join('<li><a href="%s.html"%s>%s</a></li>' % (s_, cur if s_ == slug else '', esc(NAV[lang][s_])) for s_, _ in PAGES[lang])
+    return f'<nav class="sitenav" aria-label="Main"><ul>{items}</ul></nav>'
+
 def header(c, lang, slug, ctx):
     t = T[lang]; other = 'de' if lang == 'en' else 'en'
-    cur = ' aria-current="page"'
-    nav = ''.join(
-        '<li><a href="%s.html"%s>%s%s</a></li>' % (
-            s_, cur if s_ == slug else '', esc(NAV[lang][s_]),
-            f'<span class="tag">{t["ki_tag"]}</span>' if (lang == 'de' and s_ in KI) else '')
-        for s_, _ in PAGES[lang])
     other_slug = (PAIR[slug] if lang == 'en' else PAIR_REV.get(slug, 'home'))
     if other == 'de' and other_slug not in NAV['de']: other_slug = 'home'
     return f'''<a class="skip" href="#main">{t["skip"]}</a>
@@ -150,7 +150,6 @@ def header(c, lang, slug, ctx):
   <div class="tools">
     <a class="lang" href="../{other}/{other_slug}.html" hreflang="{other}" lang="{other}" aria-label="{t["lang"]}: {other.upper()}">{other.upper()}</a>
     <button class="theme" type="button" aria-label="{t["theme"]}" title="{t["theme"]}"><span></span></button>
-    <details class="menu"><summary>{t["menu"]}</summary><nav aria-label="Main"><ul>{nav}</ul></nav></details>
   </div>
 </header>'''
 
@@ -202,9 +201,12 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 </head>
 <body class="{body_class}">
 {header(c, lang, slug, None)}
+<div class="shell">
+{sitenav(lang, slug)}
 <main id="main">
 {main}
 </main>
+</div>
 {footer(lang)}
 <script src="../../assets/site.js" defer></script>
 </body>

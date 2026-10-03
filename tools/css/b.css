@@ -3,7 +3,8 @@
 :root[data-theme=dark]{--bg:#0b0708;--surface:#150f10;--text:#e2dfdf;--muted:#9d9595;--line:#2f2426;--accent:#c4161c;--link:#e8484d;--on-accent:#fff;--grain:.08;--metal:linear-gradient(180deg,#fff 0%,#b5b5b5 40%,#f0f0f0 52%,#7d7d7d 100%)}
 :root[data-theme=light]{--bg:#f3efe9;--surface:#e9e3da;--text:#130d0e;--muted:#5a5253;--line:#cdc4b8;--accent:#a30f14;--link:#a30f14;--on-accent:#fff;--grain:.05;--grain-blend:multiply;--metal:linear-gradient(180deg,#0f0a0b 0%,#4f484a 45%,#120c0d 55%,#6a6263 100%)}
 body{font-size:1.125rem}
-.top{justify-content:center;flex-wrap:wrap}
+.top{justify-content:center;flex-wrap:wrap;position:static}
+.sitenav{position:sticky;top:0;z-index:39;border-bottom:1px solid var(--line)}
 @media (min-width:760px){.top{display:grid;grid-template-columns:1fr auto 1fr}.brand{grid-column:2}.tools{grid-column:3;justify-self:end}}
 .hero{text-align:center;display:flex;flex-direction:column;align-items:center;max-width:var(--wide);margin-inline:auto}
 .hero .wordmark{font-size:clamp(2.2rem,11.5vw,9.5rem);letter-spacing:.01em}
@@ -39,3 +40,8 @@ body{font-size:1.125rem}
 .cta .slash::after{left:50%;transform:translateX(-50%)}
 .cta-links{justify-content:center}
 .btn{font-size:1.1rem;padding:.8rem 1.8rem}
+
+@media (min-width:900px){
+  .sitenav ul{flex-wrap:wrap;justify-content:center;overflow:visible;gap:0 .3rem}
+  .sitenav a{font-size:1.05rem;padding:.8rem .8rem;letter-spacing:.07em}
+}

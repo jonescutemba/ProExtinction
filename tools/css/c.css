@@ -4,7 +4,6 @@
 :root[data-theme=dark]{--bg:#14100c;--surface:#1d1711;--text:#e6dcc8;--muted:#a39784;--line:#37291d;--accent:#d29550;--link:#d9a263;--on-accent:#1a1209;--grain:.08;--metal:linear-gradient(180deg,#f2e6cf 0%,#b79c78 45%,#efe0c4 55%,#8a7253 100%)}
 body{font-size:1.15rem}
 .top{margin:.8rem var(--gutter);padding:.6rem .8rem .6rem 1.2rem;border:1px solid var(--line);border-radius:999px;top:.6rem;background:var(--bg)}
-.menu nav{border-radius:var(--r-card)}
 .hero{max-width:var(--wide);margin-inline:auto;display:grid;gap:1rem}
 @media (min-width:900px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,.8fr);grid-template-areas:"w l" "t l" "s l" "c l";column-gap:3rem;align-items:center}.hero .wordmark{grid-area:w}.hero-tag{grid-area:t}.hero-sub{grid-area:s}.hero-cta{grid-area:c}.hero-logo{grid-area:l;width:100%;max-width:24rem;justify-self:center;margin:0;padding:1.4rem;border:1px solid var(--line);border-radius:50%;background:var(--surface)}}
 .hero .wordmark{font-size:clamp(2.6rem,10vw,6.5rem);line-height:.95;margin:0}
@@ -28,3 +27,15 @@ body{font-size:1.15rem}
 .faq summary{padding-right:2.6rem}
 .cta{text-align:left}
 .btn{letter-spacing:.1em}
+
+.sitenav{border:0;background:none;padding:.2rem var(--gutter) .6rem}
+.sitenav a{border:1px solid var(--line);border-radius:999px;padding:.4rem .9rem;font-size:.9rem;letter-spacing:.08em}
+.sitenav a[aria-current=page]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.sitenav a[aria-current=page]::after{display:none}
+@media (min-width:1000px){
+  .shell{flex-direction:row-reverse;align-items:flex-start}
+  .sitenav{position:sticky;top:5.6rem;width:16.5rem;flex:none;margin:1rem var(--gutter) 0 0;padding:.7rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);max-height:calc(100vh - 7rem);overflow:auto}
+  .sitenav ul{flex-direction:column;overflow:visible;gap:.15rem}
+  .sitenav a{border:0;border-radius:.8rem;padding:.55rem .8rem;white-space:normal;font-size:1rem}
+  .sitenav a:hover{background:var(--bg)}
+}

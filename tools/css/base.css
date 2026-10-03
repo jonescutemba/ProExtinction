@@ -24,17 +24,21 @@ p{margin:0 0 1.15em}
 .wordmark{font-family:var(--display);font-weight:var(--display-weight,600);letter-spacing:.04em;line-height:1;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .brand .wordmark{font-size:1.25rem}
 .tools{display:flex;align-items:center;gap:.6rem}
-.lang,.theme,.menu summary{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text);background:none;border:1px solid var(--line);height:2.4rem;min-width:2.4rem;padding:0 .8rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:var(--r-ui);list-style:none}
-.lang:hover,.theme:hover,.menu summary:hover{border-color:var(--accent);color:var(--text)}
+.lang,.theme{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text);background:none;border:1px solid var(--line);height:2.4rem;min-width:2.4rem;padding:0 .8rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:var(--r-ui);list-style:none}
+.lang:hover,.theme:hover{border-color:var(--accent);color:var(--text)}
 .theme{padding:0}
 .theme span{width:1.05rem;height:1.05rem;border-radius:50%;border:2px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
 :root[data-theme=light] .theme span{transform:rotate(180deg)}
-.menu{position:relative}
-.menu summary::-webkit-details-marker{display:none}
-.menu nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(22rem,calc(100vw - 2*var(--gutter)));background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:.6rem;max-height:75vh;overflow:auto}
-.menu ul{list-style:none;margin:0;padding:0}
-.menu li a{display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;color:var(--text);background:none;border-radius:var(--r-ui);font-size:.98rem}
-.menu li a:hover,.menu li a[aria-current=page]{background:var(--bg);box-shadow:inset 3px 0 0 var(--accent)}
+/* persistent navigation: horizontal strip by default (mobile), concepts turn it into a rail or navbar */
+.shell{display:flex;flex-direction:column;flex:1;width:100%;min-width:0}
+.shell>main{min-width:0;flex:1}
+.sitenav{border-bottom:1px solid var(--line);padding:0 var(--gutter);background:var(--bg)}
+.sitenav ul{list-style:none;margin:0;padding:0;display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:thin}
+.sitenav a{display:block;white-space:nowrap;padding:.85rem .7rem;color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;position:relative;transition:color .2s}
+.sitenav a:hover{color:var(--accent)}
+.sitenav a[aria-current=page]{color:var(--accent)}
+.sitenav a[aria-current=page]::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:.3rem;height:3px;background:var(--accent);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.toc a[aria-current=true]{color:var(--accent)}
 .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--accent);padding:.05rem .35rem;margin-left:.5rem;border-radius:var(--r-ui)}
 /* slash divider: signature */
 .slash{border:0;height:10px;margin:2rem 0;background:linear-gradient(var(--line),var(--line)) 0 50%/100% 1px no-repeat;position:relative;overflow:visible}
