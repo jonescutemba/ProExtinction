@@ -13,7 +13,7 @@ Drei Designkonzepte für die Seite, jeweils EN und DE, Hell und Dunkel.
 | `tools/` | Generator: `build.py` (Seiten), `kit.py` (Kits), `blocks.py`, `parse.py`, CSS-Quellen |
 | `DECISIONS.md` | was entschieden und was offen ist |
 
-Bauen: `python3 tools/build.py && python3 tools/present.py && python3 tools/kit.py`. Danach `concepts/index.html` im Browser öffnen.
+Bauen: `python tools/build_all.py` (Windows, Mac, Linux; unter Mac/Linux ggf. `python3`). Danach `concepts/index.html` im Browser öffnen.
 Das ist ein Prototyp: Google-Fonts-Einbindung und Auszüge/Platzhalter sind noch nicht für den Livegang gedacht.
 
 ## Präsentationsseite für Kunden

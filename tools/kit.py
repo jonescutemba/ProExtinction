@@ -66,7 +66,7 @@ CONCEPTS = {
 
 # ---------- helpers
 def parse_tokens(c):
-    s = (BRAND / c / 'tokens.css').read_text()
+    s = (BRAND / c / 'tokens.css').read_text(encoding='utf-8')
     root = re.search(r':root\{([^}]*)\}', s).group(1)
     th = {m: dict(re.findall(r'--([\w-]+):([^;}]+)', re.search(r':root\[data-theme=%s\]\{([^}]*)\}' % m, s).group(1))) for m in ('dark', 'light')}
     base = dict(re.findall(r'--([\w-]+):([^;}]+)', root))
@@ -93,10 +93,10 @@ def pretty_tokens(c):
         for k in ORDER + [k for k in th[m] if k not in ORDER]:
             if k in th[m]: out.append(f'  --{k}:{th[m][k]};' + (f'  /* {ROLES[k]} */' if k in ROLES else ''))
         out.append('}')
-    (BRAND / c / 'tokens.css').write_text('\n'.join(out) + '\n')
+    (BRAND / c / 'tokens.css').write_text('\n'.join(out) + '\n', encoding='utf-8')
 
 def helmet(c):
-    d = CONCEPTS[c]; tok = (BRAND / c / 'tokens.css').read_text()
+    d = CONCEPTS[c]; tok = (BRAND / c / 'tokens.css').read_text(encoding='utf-8')
     return f'''<!-- Brand Kit Pro Extinction · {d["name"]}. Generiert von tools/kit.py. Nicht von Hand ändern.
      Im Layout ausschließlich var(--…) benutzen. Der <style>-Block gehört in den <head>.
      Vor dem Livegang die Schriften selbst hosten (DSGVO), siehe BRAND.md, Abschnitt „Offen". -->
@@ -329,8 +329,8 @@ def props_json(c):
 
 def examples(c):
     d = CONCEPTS[c]; base, th = parse_tokens(c)
-    css = (ROOT / 'concepts' / c / 'style.css').read_text()
-    js = (ROOT / 'concepts' / 'assets' / 'site.js').read_text()
+    css = (ROOT / 'concepts' / c / 'style.css').read_text(encoding='utf-8')
+    js = (ROOT / 'concepts' / 'assets' / 'site.js').read_text(encoding='utf-8')
     def sw(m):
         return ''.join(f'<li><span class="sw" style="background:{th[m][k]}"></span><b class="mono">--{k}</b><code>{th[m][k]}</code></li>' for k in ORDER)
     cur = ' aria-current="page"'
@@ -375,23 +375,23 @@ def examples(c):
 <footer class="foot"><p class="mono">Beispieldaten · Pro Extinction · {d["name"]}</p></footer>
 <script>{js}</script></body></html>
 '''
-    (BRAND / c / 'beispiel' / 'bausteine.html').write_text(page)
+    (BRAND / c / 'beispiel' / 'bausteine.html').write_text(page, encoding='utf-8')
     (BRAND / c / 'beispiel' / 'bausteine-mobil.html').write_text(f'''<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bausteine mobil · {d["name"]}</title>
 <body style="margin:0;background:#444;display:grid;place-items:center;min-height:100vh"><iframe src="bausteine.html" title="Mobil 390 px" style="width:390px;height:844px;border:0;background:#fff"></iframe></body></html>
-''')
+''', encoding='utf-8')
 
 def main():
-    logo = (ROOT / 'concepts' / 'assets' / 'logo.svg').read_text()
+    logo = (ROOT / 'concepts' / 'assets' / 'logo.svg').read_text(encoding='utf-8')
     for c in CONCEPTS:
         d = BRAND / c; (d / 'beispiel').mkdir(parents=True, exist_ok=True)
         pretty_tokens(c)
-        (d / 'brand-helmet.html').write_text(helmet(c))
-        (d / 'BRAND.md').write_text(brand_md(c))
-        (d / 'CLAUDE.md').write_text(claude_md(c))
-        (d / 'README.md').write_text(readme(c))
-        (d / 'wordmark.svg').write_text(wordmark_svg(c))
-        (d / 'mark.svg').write_text(logo)
-        (d / 'brand-props.json').write_text(props_json(c))
+        (d / 'brand-helmet.html').write_text(helmet(c), encoding='utf-8')
+        (d / 'BRAND.md').write_text(brand_md(c), encoding='utf-8')
+        (d / 'CLAUDE.md').write_text(claude_md(c), encoding='utf-8')
+        (d / 'README.md').write_text(readme(c), encoding='utf-8')
+        (d / 'wordmark.svg').write_text(wordmark_svg(c), encoding='utf-8')
+        (d / 'mark.svg').write_text(logo, encoding='utf-8')
+        (d / 'brand-props.json').write_text(props_json(c), encoding='utf-8')
         examples(c)
     print('kits written:', ', '.join(CONCEPTS))
 

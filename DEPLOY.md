@@ -28,7 +28,7 @@ Alternativ per Kommandozeile im Repo-Ordner: `npm i -g vercel`, dann `vercel` (P
 | Fehlende DE-Seiten | 4 Seiten fehlen noch (Übersetzung ist ein eigener Schritt) |
 
 ## Aktualisieren
-Nach Änderungen: `python3 tools/build.py && python3 tools/present.py && python3 tools/kit.py`,
+Nach Änderungen: `python tools/build_all.py`,
 Ergebnis committen und pushen. Vercel veröffentlicht automatisch neu.
 
 ## Schriften neu beziehen

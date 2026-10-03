@@ -23,10 +23,10 @@ def build():
             views.append(f'<section class="view" data-view="{lang}/{slug}" data-title="{esc(title)}" hidden>\n{main}\n</section>')
         B.ID_PREFIX = ''
         tails.append(f'<div data-lang="{lang}" hidden>{B.footer(lang).replace(B.T[lang]["foot"], B.T[lang]["foot"] + " · " + DRAFT[lang])}</div>')
-    styles = ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text()}\n</style>\n' for c in B.CONCEPTS)
+    styles = ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text(encoding="utf-8")}\n</style>\n' for c in B.CONCEPTS)
     switch = ''.join(f'<button type="button" data-concept="{c}" aria-pressed="false" title="{B.CONCEPTS[c]["name"]}"><span class="k">{c[0].upper()}</span><span class="n">{B.CONCEPTS[c]["name"]}</span></button>' for c in B.CONCEPTS)
     pair = json.dumps({'en2de': {k: v for k, v in B.PAIR.items() if v in B.NAV['de']}, 'de2en': {v: k for k, v in B.PAIR.items() if v in B.NAV['de']}})
-    js = (ROOT / 'tools' / 'present.js').read_text()
+    js = (ROOT / 'tools' / 'present.js').read_text(encoding='utf-8')
     page = f'''<!doctype html>
 <html lang="en" data-concept="a-ember" data-default="dark">
 <head>
@@ -36,7 +36,7 @@ def build():
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style id="fonts">
-{(ROOT / "tools" / "fonts.css").read_text()}</style>
+{(ROOT / "tools" / "fonts.css").read_text(encoding="utf-8")}</style>
 {styles}<script>(function(){{var d=document.documentElement,q=function(k){{try{{return new URLSearchParams(location.search).get(k)}}catch(e){{return null}}}},m={{a:'a-ember',b:'b-poster',c:'c-ring'}},c=m[q('concept')]||q('concept')||(function(){{try{{return localStorage.getItem('pe-concept')}}catch(e){{return null}}}})()||'a-ember';
 if(!/^(a-ember|b-poster|c-ring)$/.test(c))c='a-ember';d.dataset.concept=c;
 [].forEach.call(document.querySelectorAll('style[data-concept]'),function(s){{s.media=s.dataset.concept===c?'all':'not all'}});
@@ -69,7 +69,7 @@ d.dataset.theme=(t==='light'||t==='dark')?t:(c==='c-ring'?'light':'dark')}})()</
 </html>
 '''
     out = ROOT / 'presentation' / 'index.html'
-    out.write_text(page)
+    out.write_text(page, encoding='utf-8')
     print('presentation/index.html', round(out.stat().st_size / 1024), 'KB,', len(views), 'views')
 
 if __name__ == '__main__':

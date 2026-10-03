@@ -174,7 +174,7 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     ki = lang == 'de' and slug in KI
     if kind == 'home':
         return NAV[lang]['home'], home_main(lang, href), 'home'
-    lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text())
+    lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text(encoding='utf-8'))
     if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines)
     else: title, lede, body, toc, truncated = doc_body(lang, slug, lines, '')
     if lang == 'en': orig = ORIGINAL['en'].format(slug)
@@ -235,20 +235,20 @@ def home_main(lang, href=lambda s: s + '.html'):
 <section class="questions"><h2>{t["questions"]}</h2><p>{linkify(t["questions_text"])}</p></section>'''
 
 def logo_css():
-    svg = (OUT / 'assets' / 'logo.svg').read_text().replace('currentColor', '#000')
+    svg = (OUT / 'assets' / 'logo.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
     uri = 'data:image/svg+xml,' + urllib.parse.quote(svg, safe="/:=' ")
     return f'.logo{{--logo:url("{uri}");-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat;background:currentColor;display:inline-block}}\n'
 
 def build():
-    css_base = (ROOT / 'tools/css/base.css').read_text()
+    css_base = (ROOT / 'tools/css/base.css').read_text(encoding='utf-8')
     for c in CONCEPTS:
-        css = css_base + '\n' + (ROOT / 'brand' / c / 'tokens.css').read_text() + '\n' + (ROOT / f'tools/css/{c[0]}.css').read_text() + '\n' + logo_css()
+        css = css_base + '\n' + (ROOT / 'brand' / c / 'tokens.css').read_text(encoding='utf-8') + '\n' + (ROOT / f'tools/css/{c[0]}.css').read_text(encoding='utf-8') + '\n' + logo_css()
         (OUT / c).mkdir(parents=True, exist_ok=True)
-        (OUT / c / 'style.css').write_text(css)
+        (OUT / c / 'style.css').write_text(css, encoding='utf-8')
         for lang in ('en', 'de'):
             d = OUT / c / lang; d.mkdir(exist_ok=True)
             for slug, kind in PAGES[lang]:
-                (d / f'{slug}.html').write_text(page_html(c, lang, slug, kind))
+                (d / f'{slug}.html').write_text(page_html(c, lang, slug, kind), encoding='utf-8')
     n = sum(len(PAGES[l]) for l in PAGES) * len(CONCEPTS)
     print('built', n, 'pages')
 
@@ -271,4 +271,4 @@ h2{font:600 1.5rem "Arial Narrow",Impact,sans-serif;text-transform:uppercase;mar
 <li><h2>C · Ring</h2><p>Round, sepia and ink, editorial. Serif body text.</p><a href="c-ring/en/home.html">English</a><a href="c-ring/de/home.html">Deutsch</a></li>
 </ul></body></html>
 '''
-(OUT / 'index.html').write_text(INDEX)
+(OUT / 'index.html').write_text(INDEX, encoding='utf-8')

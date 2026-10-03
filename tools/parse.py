@@ -5,7 +5,7 @@ NAV_END = {'en': 'Donate', 'de': 'Kontakt'}
 FIX = {'WIr': 'Wir', 'Resourcen': 'Ressourcen', 'becaufse': 'because'}
 
 def parse(path, lang):
-    L = [l for l in path.read_text().split('\n')]
+    L = [l for l in path.read_text(encoding='utf-8').split('\n')]
     # content starts after the last nav-end item within the header, then "Proextinction Website"
     head = L[:80]
     last_nav = max(i for i, l in enumerate(head) if l == NAV_END[lang])
@@ -21,5 +21,5 @@ if __name__ == '__main__':
     OUT.mkdir(parents=True, exist_ok=True)
     for p in sorted(SRC.glob('*.txt')):
         body = parse(p, lang)
-        (OUT / (p.stem + '.json')).write_text(json.dumps(body, ensure_ascii=False, indent=1))
+        (OUT / (p.stem + '.json')).write_text(json.dumps(body, ensure_ascii=False, indent=1), encoding='utf-8')
         print(p.stem, len(body), 'lines')
