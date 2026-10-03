@@ -49,11 +49,11 @@ p{margin:0 0 1.15em}
 .sitenav{border-bottom:1px solid var(--line);padding:0 var(--gutter);background:var(--bg)}
 .sitenav ul{list-style:none;margin:0;padding:0;display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:thin}
 .sitenav a{display:block;white-space:nowrap;line-height:1.2;padding:.85rem .7rem;color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;position:relative;transition:color .2s}
-.sitenav a:hover{color:var(--accent)}
-.sitenav a[aria-current=page]{color:var(--accent)}
+.sitenav a:hover{color:var(--link)}
+.sitenav a[aria-current=page]{color:var(--link)}
 .sitenav a[aria-current=page]::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:.3rem;height:3px;background:var(--accent);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
-.toc a[aria-current=true]{color:var(--accent)}
-.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--accent);padding:.05rem .35rem;margin-left:.5rem;border-radius:var(--r-ui)}
+.toc a[aria-current=true]{color:var(--link)}
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--link);padding:.05rem .35rem;margin-left:.5rem;border-radius:var(--r-ui)}
 /* slash divider: signature */
 .slash{border:0;height:10px;margin:2rem 0;background:linear-gradient(var(--line),var(--line)) 0 50%/100% 1px no-repeat;position:relative;overflow:visible}
 .slash::after{content:"";position:absolute;left:0;top:0;width:5.5rem;height:10px;background:var(--accent);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%)}
@@ -105,20 +105,20 @@ html,body{overflow-x:clip}
 .note{font-size:.95rem;color:var(--muted);border-left:3px solid var(--accent);padding:.4rem 0 .4rem 1rem;margin-bottom:2rem}
 .toc ol{list-style:none;margin:.6rem 0 0;padding:0;counter-reset:t}
 .toc li{counter-increment:t;margin:.35rem 0;font-size:.95rem}
-.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--accent);margin-right:.4rem}
+.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--link);margin-right:.4rem}
 .toc a{color:var(--text)}
 .prose{counter-reset:ch}
 .prose h2{counter-increment:ch}
 /* faq */
 .faq{counter-reset:q}
 .faq details{border-top:1px solid var(--line);counter-increment:q}
-.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--accent);margin-right:.9rem;vertical-align:.25em}
+.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--link);margin-right:.9rem;vertical-align:.25em}
 .faq details:last-child{border-bottom:1px solid var(--line)}
 .faq summary{cursor:pointer;list-style:none;padding:1.1rem 2.4rem 1.1rem 0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.02em;font-size:1.2rem;line-height:1.25;position:relative}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"";position:absolute;right:.2rem;top:50%;width:1.1rem;height:2px;background:var(--accent);transform:translateY(-50%) rotate(-30deg);transition:transform .25s}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(30deg)}
-.faq summary:hover{color:var(--accent)}
+.faq summary:hover{color:var(--link)}
 .faq .a{padding:0 0 1rem}
 /* cta + footer */
 .cta{padding:2rem var(--gutter) 3.5rem;max-width:var(--wide);margin-inline:auto;width:100%}
@@ -134,10 +134,51 @@ html,body{overflow-x:clip}
   .sitenav[data-more],.sitenav ul[data-more]{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent)}
 }
 
+/* Pro Extinction · Konzept Ring · ausführbare Tokens (einzige Quelle der Wahrheit).
+   Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
+   Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
+:root{
+  --display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --display-weight:400;
+  --gutter:clamp(1.1rem,5vw,3rem);
+  --wide:72rem;
+  --r-ui:999px;
+  --r-card:1.4rem;
+  --r-scroll:999px;
+}
+:root[data-theme=dark]{
+  --bg:#14100c;  /* Grundfläche */
+  --surface:#1d1711;  /* Karten, Panels, Navigationsleiste */
+  --text:#e6dcc8;  /* Haupttext */
+  --muted:#a39784;  /* Beschreibungen, Labels, Metadaten */
+  --line:#37291d;  /* Rahmen, Trenner, 1px */
+  --accent:#d29550;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#d9a263;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#1a1209;  /* Text auf Akzentfläche */
+  --scare:#c63a1e;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#9a6a36;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.08;  /* Deckkraft der Körnung */
+  --metal:linear-gradient(180deg,#f2e6cf 0%,#b79c78 45%,#efe0c4 55%,#8a7253 100%);
+}
+:root[data-theme=light]{
+  --bg:#f1e6d0;  /* Grundfläche */
+  --surface:#e8dac0;  /* Karten, Panels, Navigationsleiste */
+  --text:#2a1d12;  /* Haupttext */
+  --muted:#6b5842;  /* Beschreibungen, Labels, Metadaten */
+  --line:#cdb995;  /* Rahmen, Trenner, 1px */
+  --accent:#8a4b1c;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#8a4b1c;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#fff7ea;  /* Text auf Akzentfläche */
+  --scare:#8f1d12;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#5f3212;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.07;  /* Deckkraft der Körnung */
+  --grain-blend:multiply;
+  --metal:linear-gradient(180deg,#2a1d12 0%,#6c5238 48%,#2a1d12 56%,#7b6144 100%);
+}
+
 /* Concept C "Ring": round, sepia and ink, editorial. Serif body. */
-:root{--display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;--body:"Source Serif 4",Georgia,"Times New Roman",serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display-weight:400;--gutter:clamp(1.1rem,5vw,3rem);--wide:72rem;--r-ui:999px;--r-card:1.4rem;--r-scroll:999px}
-:root[data-theme=light]{--scare:#8f1d12;--accent-deep:#5f3212;--bg:#f1e6d0;--surface:#e8dac0;--text:#2a1d12;--muted:#6b5842;--line:#cdb995;--accent:#8a4b1c;--link:#8a4b1c;--on-accent:#fff7ea;--grain:.07;--grain-blend:multiply;--metal:linear-gradient(180deg,#2a1d12 0%,#6c5238 48%,#2a1d12 56%,#7b6144 100%)}
-:root[data-theme=dark]{--scare:#c63a1e;--accent-deep:#9a6a36;--bg:#14100c;--surface:#1d1711;--text:#e6dcc8;--muted:#a39784;--line:#37291d;--accent:#d29550;--link:#d9a263;--on-accent:#1a1209;--grain:.08;--metal:linear-gradient(180deg,#f2e6cf 0%,#b79c78 45%,#efe0c4 55%,#8a7253 100%)}
 body{font-size:1.15rem}
 .top{margin:.8rem var(--gutter);padding:.6rem .8rem .6rem 1.2rem;border:1px solid var(--line);border-radius:999px;top:.6rem;background:var(--bg)}
 .hero{max-width:var(--wide);margin-inline:auto;display:grid;gap:1rem}

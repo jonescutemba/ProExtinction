@@ -1,0 +1,58 @@
+<!-- Brand Kit Pro Extinction · Ring. Generiert von tools/kit.py. Nicht von Hand ändern.
+     Im Layout ausschließlich var(--…) benutzen. Der <style>-Block gehört in den <head>.
+     Vor dem Livegang die Schriften selbst hosten (DSGVO), siehe BRAND.md, Abschnitt „Offen". -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Pro Extinction · Konzept Ring · ausführbare Tokens (einzige Quelle der Wahrheit).
+   Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
+   Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
+:root{
+  --display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --display-weight:400;
+  --gutter:clamp(1.1rem,5vw,3rem);
+  --wide:72rem;
+  --r-ui:999px;
+  --r-card:1.4rem;
+  --r-scroll:999px;
+}
+:root[data-theme=dark]{
+  --bg:#14100c;  /* Grundfläche */
+  --surface:#1d1711;  /* Karten, Panels, Navigationsleiste */
+  --text:#e6dcc8;  /* Haupttext */
+  --muted:#a39784;  /* Beschreibungen, Labels, Metadaten */
+  --line:#37291d;  /* Rahmen, Trenner, 1px */
+  --accent:#d29550;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#d9a263;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#1a1209;  /* Text auf Akzentfläche */
+  --scare:#c63a1e;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#9a6a36;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.08;  /* Deckkraft der Körnung */
+  --metal:linear-gradient(180deg,#f2e6cf 0%,#b79c78 45%,#efe0c4 55%,#8a7253 100%);
+}
+:root[data-theme=light]{
+  --bg:#f1e6d0;  /* Grundfläche */
+  --surface:#e8dac0;  /* Karten, Panels, Navigationsleiste */
+  --text:#2a1d12;  /* Haupttext */
+  --muted:#6b5842;  /* Beschreibungen, Labels, Metadaten */
+  --line:#cdb995;  /* Rahmen, Trenner, 1px */
+  --accent:#8a4b1c;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#8a4b1c;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#fff7ea;  /* Text auf Akzentfläche */
+  --scare:#8f1d12;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#5f3212;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.07;  /* Deckkraft der Körnung */
+  --grain-blend:multiply;
+  --metal:linear-gradient(180deg,#2a1d12 0%,#6c5238 48%,#2a1d12 56%,#7b6144 100%);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.65}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;line-height:1.05}
+a{color:var(--link)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.lbl{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.val{font-family:var(--mono);font-variant-numeric:tabular-nums}
+</style>

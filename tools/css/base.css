@@ -49,11 +49,11 @@ p{margin:0 0 1.15em}
 .sitenav{border-bottom:1px solid var(--line);padding:0 var(--gutter);background:var(--bg)}
 .sitenav ul{list-style:none;margin:0;padding:0;display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:thin}
 .sitenav a{display:block;white-space:nowrap;line-height:1.2;padding:.85rem .7rem;color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;position:relative;transition:color .2s}
-.sitenav a:hover{color:var(--accent)}
-.sitenav a[aria-current=page]{color:var(--accent)}
+.sitenav a:hover{color:var(--link)}
+.sitenav a[aria-current=page]{color:var(--link)}
 .sitenav a[aria-current=page]::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:.3rem;height:3px;background:var(--accent);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
-.toc a[aria-current=true]{color:var(--accent)}
-.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--accent);padding:.05rem .35rem;margin-left:.5rem;border-radius:var(--r-ui)}
+.toc a[aria-current=true]{color:var(--link)}
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--link);padding:.05rem .35rem;margin-left:.5rem;border-radius:var(--r-ui)}
 /* slash divider: signature */
 .slash{border:0;height:10px;margin:2rem 0;background:linear-gradient(var(--line),var(--line)) 0 50%/100% 1px no-repeat;position:relative;overflow:visible}
 .slash::after{content:"";position:absolute;left:0;top:0;width:5.5rem;height:10px;background:var(--accent);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%)}
@@ -105,20 +105,20 @@ html,body{overflow-x:clip}
 .note{font-size:.95rem;color:var(--muted);border-left:3px solid var(--accent);padding:.4rem 0 .4rem 1rem;margin-bottom:2rem}
 .toc ol{list-style:none;margin:.6rem 0 0;padding:0;counter-reset:t}
 .toc li{counter-increment:t;margin:.35rem 0;font-size:.95rem}
-.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--accent);margin-right:.4rem}
+.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--link);margin-right:.4rem}
 .toc a{color:var(--text)}
 .prose{counter-reset:ch}
 .prose h2{counter-increment:ch}
 /* faq */
 .faq{counter-reset:q}
 .faq details{border-top:1px solid var(--line);counter-increment:q}
-.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--accent);margin-right:.9rem;vertical-align:.25em}
+.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--link);margin-right:.9rem;vertical-align:.25em}
 .faq details:last-child{border-bottom:1px solid var(--line)}
 .faq summary{cursor:pointer;list-style:none;padding:1.1rem 2.4rem 1.1rem 0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.02em;font-size:1.2rem;line-height:1.25;position:relative}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"";position:absolute;right:.2rem;top:50%;width:1.1rem;height:2px;background:var(--accent);transform:translateY(-50%) rotate(-30deg);transition:transform .25s}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(30deg)}
-.faq summary:hover{color:var(--accent)}
+.faq summary:hover{color:var(--link)}
 .faq .a{padding:0 0 1rem}
 /* cta + footer */
 .cta{padding:2rem var(--gutter) 3.5rem;max-width:var(--wide);margin-inline:auto;width:100%}

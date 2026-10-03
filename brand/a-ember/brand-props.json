@@ -1,0 +1,11 @@
+{
+  "accent": {
+    "label": "Akzent",
+    "options": [
+      "#a30f14",
+      "#c4161c"
+    ],
+    "default": "#c4161c"
+  },
+  "_note": "Prüfwerkzeug, kein zweiter Markenakzent. Nur Markenfarben, keine Funktionsfarben."
+}

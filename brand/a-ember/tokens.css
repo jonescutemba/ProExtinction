@@ -1,0 +1,42 @@
+/* Pro Extinction · Konzept Ember · ausführbare Tokens (einzige Quelle der Wahrheit).
+   Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
+   Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
+:root{
+  --display:"Oswald","Arial Narrow",Impact,sans-serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --display-weight:600;
+  --gutter:clamp(1.1rem,5vw,3.5rem);
+  --wide:78rem;
+  --r-ui:0;
+  --r-card:0;
+}
+:root[data-theme=dark]{
+  --bg:#0d0809;  /* Grundfläche */
+  --surface:#151011;  /* Karten, Panels, Navigationsleiste */
+  --text:#dcd8d8;  /* Haupttext */
+  --muted:#9a9292;  /* Beschreibungen, Labels, Metadaten */
+  --line:#2c2224;  /* Rahmen, Trenner, 1px */
+  --accent:#c4161c;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#e8484d;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#fff;  /* Text auf Akzentfläche */
+  --scare:#e01a20;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#7e0e12;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.07;  /* Deckkraft der Körnung */
+  --metal:linear-gradient(180deg,#f3f3f3 0%,#a9a9a9 42%,#ececec 52%,#7a7a7a 100%);
+}
+:root[data-theme=light]{
+  --bg:#f4f0ea;  /* Grundfläche */
+  --surface:#ebe5dc;  /* Karten, Panels, Navigationsleiste */
+  --text:#151011;  /* Haupttext */
+  --muted:#5e5656;  /* Beschreibungen, Labels, Metadaten */
+  --line:#cfc6ba;  /* Rahmen, Trenner, 1px */
+  --accent:#a30f14;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#a30f14;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#fff;  /* Text auf Akzentfläche */
+  --scare:#c4121a;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#6d0a0d;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.05;  /* Deckkraft der Körnung */
+  --grain-blend:multiply;
+  --metal:linear-gradient(180deg,#1a1415 0%,#5b5455 45%,#171112 55%,#6a6263 100%);
+}

@@ -1,0 +1,57 @@
+<!-- Brand Kit Pro Extinction · Poster. Generiert von tools/kit.py. Nicht von Hand ändern.
+     Im Layout ausschließlich var(--…) benutzen. Der <style>-Block gehört in den <head>.
+     Vor dem Livegang die Schriften selbst hosten (DSGVO), siehe BRAND.md, Abschnitt „Offen". -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
+   Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
+   Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
+:root{
+  --display:"Anton",Impact,"Arial Narrow",sans-serif;
+  --body:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --display-weight:400;
+  --gutter:clamp(1.1rem,5vw,3rem);
+  --wide:60rem;
+  --r-ui:0;
+  --r-card:0;
+}
+:root[data-theme=dark]{
+  --bg:#0b0708;  /* Grundfläche */
+  --surface:#150f10;  /* Karten, Panels, Navigationsleiste */
+  --text:#e2dfdf;  /* Haupttext */
+  --muted:#9d9595;  /* Beschreibungen, Labels, Metadaten */
+  --line:#2f2426;  /* Rahmen, Trenner, 1px */
+  --accent:#c4161c;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#e8484d;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#fff;  /* Text auf Akzentfläche */
+  --scare:#e01a20;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#7e0e12;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.08;  /* Deckkraft der Körnung */
+  --metal:linear-gradient(180deg,#fff 0%,#b5b5b5 40%,#f0f0f0 52%,#7d7d7d 100%);
+}
+:root[data-theme=light]{
+  --bg:#f3efe9;  /* Grundfläche */
+  --surface:#e9e3da;  /* Karten, Panels, Navigationsleiste */
+  --text:#130d0e;  /* Haupttext */
+  --muted:#5a5253;  /* Beschreibungen, Labels, Metadaten */
+  --line:#cdc4b8;  /* Rahmen, Trenner, 1px */
+  --accent:#a30f14;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
+  --link:#a30f14;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
+  --on-accent:#fff;  /* Text auf Akzentfläche */
+  --scare:#c4121a;  /* nur Logo-Effekt (Jumpscare) */
+  --accent-deep:#6d0a0d;  /* dunklere Akzentvariante (Reserve) */
+  --grain:.05;  /* Deckkraft der Körnung */
+  --grain-blend:multiply;
+  --metal:linear-gradient(180deg,#0f0a0b 0%,#4f484a 45%,#120c0d 55%,#6a6263 100%);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.65}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;line-height:1.05}
+a{color:var(--link)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.lbl{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.val{font-family:var(--mono);font-variant-numeric:tabular-nums}
+</style>

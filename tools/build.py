@@ -238,7 +238,7 @@ def logo_css():
 def build():
     css_base = (ROOT / 'tools/css/base.css').read_text()
     for c in CONCEPTS:
-        css = css_base + '\n' + (ROOT / f'tools/css/{c[0]}.css').read_text() + '\n' + logo_css()
+        css = css_base + '\n' + (ROOT / 'brand' / c / 'tokens.css').read_text() + '\n' + (ROOT / f'tools/css/{c[0]}.css').read_text() + '\n' + logo_css()
         (OUT / c).mkdir(parents=True, exist_ok=True)
         (OUT / c / 'style.css').write_text(css)
         for lang in ('en', 'de'):
