@@ -56,7 +56,7 @@ CONCEPTS = {
   nav='Runde Karte rechts, 16,5 rem, ab 1000 px, klebt oben. Die Liste scrollt innerhalb der Karte, der Rand bleibt intakt. Darunter Pillen-Streifen. Aktive Seite: gefüllte Pille.',
   toc='Karte mit zwei Spalten über dem Text.',
   layout='Redaktionell, Inhalt linksbündig, maximal 58 rem. Kapitelnummern in Ringen (2,4 rem).',
-  efforts='Container-Breite: unter 34 rem 1 Spalte, ab 34 rem 2, ab 76 rem 4. Karten mit Ring-Nummer links.',
+  efforts='Container-Breite: unter 34 rem 1 Spalte, ab 34 rem 2 (bleibt 2: Karten mit Ring-Nummer links brauchen Breite).',
   h1='clamp(2,4 rem, 6,5 vw, 4,6 rem)', wordmark_hero='clamp(2,6 rem, 6 vw, 5,2 rem) ab 900 px, sonst bis 6,5 rem',
   gutter='clamp(1,1 rem, 5 vw, 3 rem)', wide='72 rem', body_size='1,15 rem / Zeilenhöhe 1,65',
   bp='640 (Kopfzeile kompakt) · 900 (Hero zweispaltig) · 1000 (Navigation als rechte Karte)',

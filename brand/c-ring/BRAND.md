@@ -89,7 +89,7 @@ abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, 
 | Navigation | Runde Karte rechts, 16,5 rem, ab 1000 px, klebt oben. Die Liste scrollt innerhalb der Karte, der Rand bleibt intakt. Darunter Pillen-Streifen. Aktive Seite: gefüllte Pille. Nur die Liste in der Karte scrollt und blendet unten aus; der Kartenrand bleibt vollständig. |
 | Kapitelübersicht | Karte mit zwei Spalten über dem Text. Aktives Kapitel in `--link`, nummeriert 01, 02 … |
 | Langtext | Redaktionell, Inhalt linksbündig, maximal 58 rem. Kapitelnummern in Ringen (2,4 rem). Absatzabstand 1,15 em |
-| Vier Efforts | Container-Breite: unter 34 rem 1 Spalte, ab 34 rem 2, ab 76 rem 4. Karten mit Ring-Nummer links. |
+| Vier Efforts | Container-Breite: unter 34 rem 1 Spalte, ab 34 rem 2 (bleibt 2: Karten mit Ring-Nummer links brauchen Breite). |
 | Mission-Zitat | Display, Versalien (C: Serif kursiv), bis 3,2 rem, höchstens 22–28 Zeichen Breite |
 | FAQ | aufklappbar (`<details>`), fortlaufend nummeriert per CSS, Pfeil als Schrägstrich |
 | Call-to-Action | Discord (primär), WhatsApp, E-Mail; am Seitenende jeder Seite |

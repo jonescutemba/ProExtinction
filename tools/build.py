@@ -148,7 +148,7 @@ def header(c, lang, slug, ctx):
 <header class="top">
   <div class="lead">
     <a class="brand" href="home.html" aria-label="{t["home_link"]}"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a>
-    <a class="back" href="../../index.html" title="{t["back_title"]}"><span aria-hidden="true">←</span> {t["back"]}</a>
+    <a class="back" href="../../index.html" title="{t["back_title"]}"><span aria-hidden="true">←</span><span class="back-t">{t["back"]}</span></a>
   </div>
   <div class="tools">
     <a class="lang" href="../{other}/{other_slug}.html" hreflang="{other}" lang="{other}" aria-label="{t["lang"]}: {other.upper()}">{other.upper()}</a>

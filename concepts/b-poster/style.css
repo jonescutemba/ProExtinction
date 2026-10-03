@@ -32,6 +32,9 @@ p{margin:0 0 1.15em}
 .lead{display:flex;align-items:center;gap:1rem;min-width:0}
 .back{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:var(--r-ui);height:2.1rem;padding:0 .75rem;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;background:none}
 .back:hover{color:var(--text);border-color:var(--accent)}
+.back-t{margin-left:.4rem}
+.brand .wordmark{white-space:nowrap}
+.tools{flex:none}
 .brand{display:flex;align-items:center;gap:.7rem;color:var(--text);background:none}
 .brand .logo{width:2.4rem;height:2.4rem;color:var(--text);transition:color .25s,transform .4s}
 .brand:hover .logo{color:var(--accent);transform:rotate(-8deg)}
@@ -60,6 +63,7 @@ p{margin:0 0 1.15em}
 /* buttons */
 .btn{display:inline-flex;align-items:center;min-height:3rem;padding:.7rem 1.4rem;border:1px solid var(--text);color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);letter-spacing:.08em;text-transform:uppercase;font-size:1rem;border-radius:var(--r-ui);transition:background-color .2s,color .2s,border-color .2s;background-image:none}
 .btn:hover,.btn:focus-visible{background:var(--text);color:var(--bg);background-image:none}
+.btn{max-width:100%;text-align:center;overflow-wrap:anywhere}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.primary:hover{background:var(--text);border-color:var(--text);color:var(--bg)}
 /* home */
@@ -127,11 +131,20 @@ html,body{overflow-x:clip}
 .cta-links{display:flex;flex-wrap:wrap;gap:.8rem;margin:0}
 .foot{border-top:1px solid var(--line);padding:1.4rem var(--gutter)}
 .foot p{margin:0}
-@media (max-width:640px){.back span+*{display:none}.back{padding:0 .6rem}.lead{gap:.6rem}.brand .wordmark{font-size:1rem}.top{gap:.5rem}.tools{gap:.4rem}}
+@media (max-width:640px){.back-t{display:none}.back{padding:0 .7rem}.lead{gap:.6rem}.brand .wordmark{font-size:1rem}.top{gap:.5rem}.tools{gap:.4rem}}
 
 /* sidebar that is taller than the window: fade the cut-off edge instead of slicing a label in half */
 @media (min-width:900px){
   .sitenav[data-more],.sitenav ul[data-more]{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 3rem),transparent)}
+}
+
+/* very narrow phones: keep wordmark + language + theme on one row (the prototype-only back button hides) */
+@media (max-width:480px){
+  .back{display:none}
+  .brand .wordmark{font-size:.92rem;letter-spacing:.02em}
+  .brand .logo{width:2rem;height:2rem}
+  .lang,.theme{height:2.1rem;min-width:2.1rem;padding-inline:.55rem}
+  .theme{padding:0}
 }
 
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
