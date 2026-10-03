@@ -76,7 +76,7 @@ p{margin:0 0 1.15em}
 .lg-snake{--m:var(--logo-snake);background:currentColor;animation:lg-spin 7s infinite}
 .lg-cut{--m:var(--logo-cut);background:var(--lg-cut,var(--bg));animation:lg-strike 7s infinite}
 .lg-slash{--m:var(--logo-slash);background:currentColor;animation:lg-strike 7s infinite}
-@keyframes lg-spin{0%{rotate:0deg;animation-timing-function:cubic-bezier(.65,0,.35,1)}55%,100%{rotate:360deg}}
+@keyframes lg-spin{0%{rotate:0deg;animation-timing-function:cubic-bezier(.65,0,.35,1)}55%,100%{rotate:-360deg}}
 @keyframes lg-strike{
   0%,56%{clip-path:polygon(300% 200%,-100% -200%,300% -200%);opacity:1;animation-timing-function:cubic-bezier(.75,0,.9,.35)}
   61%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
