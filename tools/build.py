@@ -85,11 +85,13 @@ def linkify(s):
     s = re.sub(r'(https?://[^\s<]+)', lambda m: f'<a href="{m.group(1)}" rel="noopener">{m.group(1)}</a>', s)
     return re.sub(r'\b([\w.+-]+@[\w-]+\.[\w.-]+)\b', r'<a href="mailto:\1">\1</a>', s)
 
+ID_PREFIX = ''   # set by present.py so ids stay unique when all views live in one document
+
 def slug_id(s, used):
     base = re.sub(r'[^a-z0-9]+', '-', s.lower()).strip('-')[:40] or 'section'
     i, k = base, 2
     while i in used: i = f'{base}-{k}'; k += 1
-    used.add(i); return i
+    used.add(i); return ID_PREFIX + i
 
 def render_blocks(blocks, used):
     out, toc = [], []
@@ -166,28 +168,30 @@ def footer(lang):
 </section>
 <footer class="foot"><p class="mono">{t["foot"]}</p></footer>'''
 
-def page_html(c, lang, slug, kind):
-    t = T[lang]; cdef = CONCEPTS[c]
+def page_main(lang, slug, kind, href=lambda s: s + '.html'):
+    """Title and <main> content of one page (shared by the multi-page prototype and the single-file presentation)."""
+    t = T[lang]
     ki = lang == 'de' and slug in KI
     if kind == 'home':
-        main = home_main(lang)
-        title = NAV[lang]['home']
-        body_class = 'home'
-    else:
-        lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text())
-        if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines)
-        else: title, lede, body, toc, truncated = doc_body(lang, slug, lines, '')
-        if lang == 'en': orig = ORIGINAL['en'].format(slug)
-        else: orig = ORIGINAL['de'].format(urllib.parse.quote(ORIG_DE_SLUG.get(slug, slug)))
-        notes = ''
-        if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
-        elif truncated: notes += f'<p class="note">{t["abridged"]} <a href="{orig}" rel="noopener">{t["abridged_link"]}</a></p>'
-        toc_html = ''
-        if len(toc) > 1:
-            toc_html = f'<nav class="toc" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>' + ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc) + '</ol></nav>'
-        lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
-        main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
-        body_class = 'page'
+        return NAV[lang]['home'], home_main(lang, href), 'home'
+    lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text())
+    if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines)
+    else: title, lede, body, toc, truncated = doc_body(lang, slug, lines, '')
+    if lang == 'en': orig = ORIGINAL['en'].format(slug)
+    else: orig = ORIGINAL['de'].format(urllib.parse.quote(ORIG_DE_SLUG.get(slug, slug)))
+    notes = ''
+    if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
+    elif truncated: notes += f'<p class="note">{t["abridged"]} <a href="{orig}" rel="noopener">{t["abridged_link"]}</a></p>'
+    toc_html = ''
+    if len(toc) > 1:
+        toc_html = f'<nav class="toc" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>' + ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc) + '</ol></nav>'
+    lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
+    main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
+    return title, main, 'page'
+
+def page_html(c, lang, slug, kind):
+    t = T[lang]; cdef = CONCEPTS[c]
+    title, main, body_class = page_main(lang, slug, kind)
     other = 'de' if lang == 'en' else 'en'
     return f'''<!doctype html>
 <html lang="{lang}" data-concept="{c}" data-default="{cdef["mode"]}">
@@ -216,7 +220,7 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 </html>
 '''
 
-def home_main(lang):
+def home_main(lang, href=lambda s: s + '.html'):
     t = T[lang]
     efforts = ''.join(f'<li><span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
     return f'''<section class="hero">
@@ -224,7 +228,7 @@ def home_main(lang):
   <h1 class="wordmark">PRO EXTINCTION</h1>
   <p class="hero-tag">{t["tagline"]}</p>
   <p class="hero-sub">{esc(t["sub"])}</p>
-  <p class="hero-cta"><a class="btn primary" href="{ 'aktiv-werden' if lang=='de' else 'join-us'}.html">{t["cta1"]}</a><a class="btn" href="{ 'manifest' if lang=='de' else 'manifesto'}.html">{t["cta2"]}</a></p>
+  <p class="hero-cta"><a class="btn primary" href="{href('aktiv-werden' if lang=='de' else 'join-us')}">{t["cta1"]}</a><a class="btn" href="{href('manifest' if lang=='de' else 'manifesto')}">{t["cta2"]}</a></p>
 </section>
 <section class="mission"><hr class="slash"><p class="mono kicker">{t["mission"]}</p><blockquote>{esc(t["mission_text"])}</blockquote></section>
 <section class="efforts"><ol>{efforts}</ol></section>

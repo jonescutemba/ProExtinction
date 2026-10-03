@@ -153,6 +153,18 @@ html,body{overflow-x:clip}
   .theme{padding:0}
 }
 
+/* ---- single-page presentation: views, concept switcher ---- */
+[hidden]{display:none!important}
+.concepts{display:flex;border:1px solid var(--line);border-radius:var(--r-ui);overflow:hidden;height:2.4rem}
+.concepts button{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:0;border-right:1px solid var(--line);color:var(--muted);padding:0 .75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:background-color .2s,color .2s}
+.concepts button:last-child{border-right:0}
+.concepts button:hover{color:var(--text)}
+.concepts button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
+.concepts .n{display:none}
+@media (min-width:1180px){.concepts .n{display:inline}}
+@media (max-width:640px){.top{flex-wrap:wrap;row-gap:.5rem}.tools{width:100%;justify-content:flex-end}}
+.draft-note{margin:0}
+
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
    Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */

@@ -39,3 +39,5 @@ body{font-size:1.15rem}
 
 main .hero,main .mission,main .efforts,main .questions,main .doc{margin-inline:0}
 main .doc{max-width:58rem}
+
+@media (max-width:640px){.top{border-radius:1.4rem}}

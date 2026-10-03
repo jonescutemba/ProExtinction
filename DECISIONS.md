@@ -49,9 +49,14 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 | Fließtext | Serif (Newsreader) | Sans (Barlow) | Serif (Source Serif 4) |
 | Standardmodus | dunkel | dunkel | hell |
 
+## Kundenpräsentation
+`presentation/index.html` zeigt alle drei Konzepte in **einer** Seite mit Umschalter (Design, Sprache, Hell/Dunkel).
+Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Der Stand dort ist ein **Entwurf**
+(Fußzeile sagt das), mit Original-Texten, Google-Fonts-Einbindung und ohne Fotos.
+
 ## Vorgehen bis zur Wahl
 1. Konzepte pflegen, nur Fehler beheben und Gemeinsames verbessern. Nichts zwischen Konzepten mischen.
 2. Gemeinsames liegt in `tools/css/base.css`, `tools/build.py`, `tools/blocks.py`, `content/`.
 3. Konzeptspezifisches liegt in `brand/<konzept>/tokens.css` und `tools/css/<buchstabe>.css`.
-4. Nach jeder Token-Änderung: `python3 tools/build.py && python3 tools/kit.py`.
+4. Nach jeder Änderung: `python3 tools/build.py && python3 tools/present.py && python3 tools/kit.py`.
 5. Nach der Wahl: Entscheidung oben eintragen, Übersetzung, `brandkit-build` final, Responsivitäts- und Barrierefreiheitsprüfung, `brandkit-publish`.
