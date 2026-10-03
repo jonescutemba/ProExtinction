@@ -9,7 +9,8 @@ Bis dahin werden alle drei Konzepte parallel gepflegt.
 | **Welches Konzept gilt** (A Ember, B Poster, C Ring) oder eine Mischung | offen, nicht vorentschieden | nach dem Vergleich im Browser und der Rückmeldung von Beteiligten |
 | Endgültige Hex-Werte | je Konzept vorläufig in `brand/<konzept>/tokens.css` | mit der Konzeptwahl |
 | Original-Logo als Vektor | fehlt, `mark.svg` ist eine Nachzeichnung | sobald auffindbar |
-| Schriften selbst hosten | noch Google Fonts (nur Prototyp) | vor Livegang, DSGVO |
+| Schriften selbst hosten | **erledigt für `presentation/`** (lokal, OFL). Prototyp-Seiten und `brand-helmet.html` laden noch von Google | vor Livegang der übrigen Teile |
+| Impressum, Datenschutz, Zugriffsschutz | nicht vorhanden; siehe `DEPLOY.md` | vor öffentlichem Livegang |
 | Bilder von „Suffering in detail" (16) | erste Runde ohne Fotos | nach der Konzeptwahl |
 | Animationen (Staub am Seitenende, animiertes Logo) | Logo-Effekt vorhanden; Staub nicht gebaut | nach der Konzeptwahl |
 | Deutsche Übersetzung der 4 fehlenden Seiten | Entwürfe in `content/_translation-pending/`, nicht eingebaut | eigener Schritt |
@@ -52,7 +53,7 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 ## Kundenpräsentation
 `presentation/index.html` zeigt alle drei Konzepte in **einer** Seite mit Umschalter (Design, Sprache, Hell/Dunkel).
 Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Der Stand dort ist ein **Entwurf**
-(Fußzeile sagt das), mit Original-Texten, Google-Fonts-Einbindung und ohne Fotos.
+(Fußzeile sagt das), mit Original-Texten, lokalen Schriften, ohne Fotos, auf „noindex“. Livegang: `DEPLOY.md`.
 
 ## Vorgehen bis zur Wahl
 1. Konzepte pflegen, nur Fehler beheben und Gemeinsames verbessern. Nichts zwischen Konzepten mischen.

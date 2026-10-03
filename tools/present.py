@@ -33,9 +33,10 @@ def build():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pro Extinction · design options</title>
-<meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{FONTS}&display=swap">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style id="fonts">
+{(ROOT / "tools" / "fonts.css").read_text()}</style>
 {styles}<script>(function(){{var d=document.documentElement,q=function(k){{try{{return new URLSearchParams(location.search).get(k)}}catch(e){{return null}}}},m={{a:'a-ember',b:'b-poster',c:'c-ring'}},c=m[q('concept')]||q('concept')||(function(){{try{{return localStorage.getItem('pe-concept')}}catch(e){{return null}}}})()||'a-ember';
 if(!/^(a-ember|b-poster|c-ring)$/.test(c))c='a-ember';d.dataset.concept=c;
 [].forEach.call(document.querySelectorAll('style[data-concept]'),function(s){{s.media=s.dataset.concept===c?'all':'not all'}});

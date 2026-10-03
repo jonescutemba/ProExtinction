@@ -41,3 +41,13 @@ main .hero,main .mission,main .efforts,main .questions,main .doc{margin-inline:0
 main .doc{max-width:58rem}
 
 @media (max-width:640px){.top{border-radius:1.4rem}}
+
+/* Bebas Neue sets small: bump sizes of display-set UI text */
+.btn{font-size:1.2rem;letter-spacing:.08em}
+.sitenav a{font-size:1.1rem}
+.back,.lang,.theme,.concepts button{font-size:.8rem}
+.doc h1{font-size:clamp(2.8rem,7vw,5.4rem)}
+.faq summary{font-size:1.4rem}
+.efforts .num{font-size:1.2rem}
+@media (min-width:900px){.hero .wordmark{font-size:clamp(3rem,7.2vw,6.4rem)}}
+@media (min-width:1000px){.sitenav a{font-size:1.2rem}}

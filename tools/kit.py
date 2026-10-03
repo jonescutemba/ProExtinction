@@ -249,7 +249,7 @@ im Marketing-Sinn, „Hoffnung" als Floskel, Ausrufezeichen, Emojis.
 - **Konzeptwahl** A, B oder C: später, siehe `/DECISIONS.md`.
 - **Hex-Werte** sind Vorschläge, nicht abgenommen.
 - **Original-Logo als Vektor** fehlt; `mark.svg` ist eine Nachzeichnung.
-- **Schriften selbst hosten** (Google-Fonts-Einbindung ist in der EU datenschutzrechtlich heikel).
+- **Schriften:** in `presentation/` lokal gehostet. `brand-helmet.html` und die Prototyp-Seiten laden noch von Google; vor Livegang auch dort umstellen (DSGVO).
 - **Bilder** („Suffering in detail", 16 Stück): erste Runde ohne Fotos; drastische Bilder nur hinter Klick.
 - **Telefonnummer** nur auf der deutschen Seite, vor Livegang bestätigen lassen.
 - **IBAN auf der Spendenseite:** unverändert aus dem Original; Seite gehört erst nach Freigabe live.

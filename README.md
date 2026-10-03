@@ -5,7 +5,8 @@ Drei Designkonzepte für die Seite, jeweils EN und DE, Hell und Dunkel.
 
 | Pfad | Inhalt |
 |---|---|
-| **`presentation/index.html`** | **Eine einzige Seite für Kundentermine:** alle drei Designs, EN/DE, Hell/Dunkel, per Umschalter oben rechts |
+| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** alle drei Designs, EN/DE, Hell/Dunkel, per Umschalter oben rechts. Schriften lokal in `fonts/` |
+| `DEPLOY.md`, `vercel.json` | Livegang auf Vercel, Checkliste |
 | `concepts/index.html` | Vorläufer: die drei Konzepte als getrennte Mehrseiten-Prototypen |
 | `brand/` | je Konzept ein Brand Kit (Tokens, `BRAND.md`, Referenzseiten) |
 | `content/` | gescrapter Originaltext als JSON (`en/`, `de/`); `_translation-pending/` = Entwürfe, nicht eingebaut |
@@ -16,7 +17,7 @@ Bauen: `python3 tools/build.py && python3 tools/present.py && python3 tools/kit.
 Das ist ein Prototyp: Google-Fonts-Einbindung und Auszüge/Platzhalter sind noch nicht für den Livegang gedacht.
 
 ## Präsentationsseite für Kunden
-`presentation/index.html` ist eine **einzelne, in sich geschlossene Datei** (kein Server nötig, nur Internet für die Schriften).
+`presentation/index.html` ist **eine Seite** mit allen Ansichten (kein Server nötig; `fonts/` muss daneben liegen). Livegang: siehe `DEPLOY.md`.
 Oben rechts: **A Ember · B Poster · C Ring** (Design), **EN/DE** (Sprache), **Hell/Dunkel**. Die Auswahl bleibt gespeichert.
 
 Direktlinks für einzelne Varianten (an die Adresse hängen):
