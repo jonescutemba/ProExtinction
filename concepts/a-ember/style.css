@@ -1,6 +1,16 @@
 /* Shared structure. Concept files define tokens, fonts and layout character. */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+/* scrollbars: thin, themed; inside rails they only show on hover */
+html,.sitenav ul,.sitenav,.toc{scrollbar-width:thin;scrollbar-color:var(--muted) var(--bg)}
+.sitenav,.toc,.sitenav ul{scrollbar-color:transparent transparent}
+.sitenav:hover,.toc:hover,.sitenav ul:hover{scrollbar-color:var(--muted) transparent}
+@supports not (scrollbar-color:auto){
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--muted);border-radius:var(--r-ui)}
+  .sitenav::-webkit-scrollbar-track,.toc::-webkit-scrollbar-track{background:transparent}
+}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:1.0625rem;line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:var(--grain);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:var(--grain-blend,overlay)}
