@@ -15,14 +15,24 @@
   } catch (e) {}
   var logo = document.querySelector('.hero-logo');
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && d.dataset.motion !== 'on';
+  // The effect fires on the 1st hover and then on every 10th one (10, 20, 30 ...). The count survives page loads; ?scare=reset starts over.
+  var hovers = 0;
+  try {
+    if (new URLSearchParams(location.search).get('scare') === 'reset') localStorage.removeItem('pe-hovers');
+    hovers = parseInt(localStorage.getItem('pe-hovers'), 10) || 0;
+  } catch (e) {}
   var armed = true;
   function scare(e) {
     if (!logo || reduce || !armed) return;
     armed = false;
+    hovers++;
+    try { localStorage.setItem('pe-hovers', String(hovers)); } catch (err) {}
+    var isClick = e && e.type === 'click';
+    if (hovers !== 1 && hovers % 10 !== 0) { if (isClick) armed = true; return; }
     logo.classList.add('scare'); d.classList.add('scaring');
     setTimeout(function () {
       logo.classList.remove('scare'); d.classList.remove('scaring');
-      if (e && e.type === 'click') armed = true; // touch has no mouseleave
+      if (isClick) armed = true; // touch has no mouseleave
     }, 4000);
   }
   if (logo) {
