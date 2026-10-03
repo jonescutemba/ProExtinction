@@ -1,14 +1,14 @@
 /* Concept A "Ember": angular, editorial, asymmetric. Red/black/silver. Serif body. */
 :root{--display:"Oswald","Arial Narrow",Impact,sans-serif;--body:"Newsreader",Georgia,"Times New Roman",serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display-weight:600;--gutter:clamp(1.1rem,5vw,3.5rem);--wide:78rem;--r-ui:0;--r-card:0}
-:root[data-theme=dark]{--bg:#0d0809;--surface:#151011;--text:#dcd8d8;--muted:#9a9292;--line:#2c2224;--accent:#c4161c;--link:#e8484d;--on-accent:#fff;--grain:.07;--metal:linear-gradient(180deg,#f3f3f3 0%,#a9a9a9 42%,#ececec 52%,#7a7a7a 100%)}
-:root[data-theme=light]{--bg:#f4f0ea;--surface:#ebe5dc;--text:#151011;--muted:#5e5656;--line:#cfc6ba;--accent:#a30f14;--link:#a30f14;--on-accent:#fff;--grain:.05;--grain-blend:multiply;--metal:linear-gradient(180deg,#1a1415 0%,#5b5455 45%,#171112 55%,#6a6263 100%)}
+:root[data-theme=dark]{--accent-deep:#7e0e12;--bg:#0d0809;--surface:#151011;--text:#dcd8d8;--muted:#9a9292;--line:#2c2224;--accent:#c4161c;--link:#e8484d;--on-accent:#fff;--grain:.07;--metal:linear-gradient(180deg,#f3f3f3 0%,#a9a9a9 42%,#ececec 52%,#7a7a7a 100%)}
+:root[data-theme=light]{--accent-deep:#6d0a0d;--bg:#f4f0ea;--surface:#ebe5dc;--text:#151011;--muted:#5e5656;--line:#cfc6ba;--accent:#a30f14;--link:#a30f14;--on-accent:#fff;--grain:.05;--grain-blend:multiply;--metal:linear-gradient(180deg,#1a1415 0%,#5b5455 45%,#171112 55%,#6a6263 100%)}
 body{font-size:1.125rem}
 .hero{display:grid;grid-template-columns:1fr;max-width:var(--wide);margin-inline:auto}
 @media (min-width:900px){
   .shell{flex-direction:row;align-items:flex-start}
   .sitenav{position:sticky;top:4.3rem;width:15rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:1px solid var(--line);padding:2rem 1rem 2rem var(--gutter)}
   .sitenav ul{flex-direction:column;overflow:visible;gap:0}
-  .sitenav a{padding:.5rem 0 .5rem 1rem;font-size:1.02rem;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
+  .sitenav a{padding:.42rem 0 .42rem 1rem;font-size:1rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
   .sitenav a:hover{border-left-color:var(--accent)}
   .sitenav a[aria-current=page]{border-left:3px solid var(--accent);padding-left:calc(1rem - 2px)}
   .sitenav a[aria-current=page]::after{display:none}

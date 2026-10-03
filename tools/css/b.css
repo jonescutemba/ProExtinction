@@ -1,7 +1,7 @@
 /* Concept B "Poster": angular, centred, loud. Red/black/silver. Sans body. */
 :root{--display:"Anton",Impact,"Arial Narrow",sans-serif;--body:"Barlow","Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--display-weight:400;--gutter:clamp(1.1rem,5vw,3rem);--wide:60rem;--r-ui:0;--r-card:0}
-:root[data-theme=dark]{--bg:#0b0708;--surface:#150f10;--text:#e2dfdf;--muted:#9d9595;--line:#2f2426;--accent:#c4161c;--link:#e8484d;--on-accent:#fff;--grain:.08;--metal:linear-gradient(180deg,#fff 0%,#b5b5b5 40%,#f0f0f0 52%,#7d7d7d 100%)}
-:root[data-theme=light]{--bg:#f3efe9;--surface:#e9e3da;--text:#130d0e;--muted:#5a5253;--line:#cdc4b8;--accent:#a30f14;--link:#a30f14;--on-accent:#fff;--grain:.05;--grain-blend:multiply;--metal:linear-gradient(180deg,#0f0a0b 0%,#4f484a 45%,#120c0d 55%,#6a6263 100%)}
+:root[data-theme=dark]{--accent-deep:#7e0e12;--bg:#0b0708;--surface:#150f10;--text:#e2dfdf;--muted:#9d9595;--line:#2f2426;--accent:#c4161c;--link:#e8484d;--on-accent:#fff;--grain:.08;--metal:linear-gradient(180deg,#fff 0%,#b5b5b5 40%,#f0f0f0 52%,#7d7d7d 100%)}
+:root[data-theme=light]{--accent-deep:#6d0a0d;--bg:#f3efe9;--surface:#e9e3da;--text:#130d0e;--muted:#5a5253;--line:#cdc4b8;--accent:#a30f14;--link:#a30f14;--on-accent:#fff;--grain:.05;--grain-blend:multiply;--metal:linear-gradient(180deg,#0f0a0b 0%,#4f484a 45%,#120c0d 55%,#6a6263 100%)}
 body{font-size:1.125rem}
 .top{justify-content:center;flex-wrap:wrap;position:static}
 .sitenav{position:sticky;top:0;z-index:39;border-bottom:1px solid var(--line)}

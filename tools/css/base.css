@@ -1,17 +1,18 @@
 /* Shared structure. Concept files define tokens, fonts and layout character. */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-/* scrollbars: thin, themed; inside rails they only show on hover */
-html,.sitenav ul,.sitenav,.toc{scrollbar-width:thin;scrollbar-color:var(--muted) var(--bg)}
-.sitenav,.toc,.sitenav ul{scrollbar-color:transparent transparent}
-.sitenav:hover,.toc:hover,.sitenav ul:hover{scrollbar-color:var(--muted) transparent}
-@supports not (scrollbar-color:auto){
-  ::-webkit-scrollbar{width:8px;height:8px}
-  ::-webkit-scrollbar-track{background:var(--bg)}
-  ::-webkit-scrollbar-thumb{background:var(--muted);border-radius:var(--r-ui)}
-  .sitenav::-webkit-scrollbar-track,.toc::-webkit-scrollbar-track{background:transparent}
-}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+/* scrollbars: Chromium/Safari get slash-striped red thumbs, Firefox gets the standard thin red one */
+::-webkit-scrollbar{width:10px;height:10px;background:var(--bg)}
+::-webkit-scrollbar-track{background:var(--bg);box-shadow:inset 1px 0 0 var(--line)}
+::-webkit-scrollbar-thumb{background:repeating-linear-gradient(135deg,var(--accent) 0 5px,var(--accent-deep,var(--accent)) 5px 8px);border-radius:var(--r-scroll,0);border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+::-webkit-scrollbar-button,::-webkit-scrollbar-corner{display:none;background:transparent}
+.sitenav::-webkit-scrollbar,.toc::-webkit-scrollbar,.sitenav ul::-webkit-scrollbar{width:6px;height:6px}
+.sitenav::-webkit-scrollbar-track,.toc::-webkit-scrollbar-track,.sitenav ul::-webkit-scrollbar-track{background:transparent;box-shadow:none}
+.sitenav::-webkit-scrollbar-thumb,.toc::-webkit-scrollbar-thumb,.sitenav ul::-webkit-scrollbar-thumb{border:0;background:var(--accent)}
+@supports (-moz-appearance:none){*{scrollbar-width:thin;scrollbar-color:var(--accent) var(--bg)}.sitenav,.toc,.sitenav ul{scrollbar-color:var(--accent) transparent}}
+::selection{background:var(--accent);color:var(--on-accent)}
+html{accent-color:var(--accent);caret-color:var(--accent)}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:1.0625rem;line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:var(--grain);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:var(--grain-blend,overlay)}
 main{flex:1;width:100%}
@@ -47,7 +48,7 @@ p{margin:0 0 1.15em}
 .shell>main{min-width:0;flex:1}
 .sitenav{border-bottom:1px solid var(--line);padding:0 var(--gutter);background:var(--bg)}
 .sitenav ul{list-style:none;margin:0;padding:0;display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:thin}
-.sitenav a{display:block;white-space:nowrap;padding:.85rem .7rem;color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;position:relative;transition:color .2s}
+.sitenav a{display:block;white-space:nowrap;line-height:1.2;padding:.85rem .7rem;color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;position:relative;transition:color .2s}
 .sitenav a:hover{color:var(--accent)}
 .sitenav a[aria-current=page]{color:var(--accent)}
 .sitenav a[aria-current=page]::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:.3rem;height:3px;background:var(--accent);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
