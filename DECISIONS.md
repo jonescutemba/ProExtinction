@@ -53,8 +53,8 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 
 ## Kundenpräsentation
 `presentation/index.html` zeigt beide Konzepte in **einer** Seite mit Umschalter (Design, Sprache, Hell/Dunkel).
-Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Der Stand dort ist ein **Entwurf**
-(Fußzeile sagt das), mit Original-Texten, lokalen Schriften, ohne Fotos, auf „noindex“. Livegang: `DEPLOY.md`.
+Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Sie ist als **finale Version** aufgebaut (keine Entwurfs-Hinweise, alle Seiten vollständig,
+Join-Buttons als WhatsApp + Discord, Icons im Footer), mit lokalen Schriften, ohne Fotos, vorerst noch auf „noindex“. Livegang: `DEPLOY.md`.
 
 ## Vorgehen bis zur Wahl
 1. Konzepte pflegen, nur Fehler beheben und Gemeinsames verbessern. Nichts zwischen Konzepten mischen.

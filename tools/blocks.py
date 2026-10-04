@@ -8,16 +8,20 @@ def is_heading(l):
 def is_list_line(l):
     return l.startswith(('*', '–', '- ', '•', '-')) and len(l) > 2
 
-def blocks_of(lines, like=None):
-    """Typed blocks. like: the English lines a translation mirrors 1:1; the structure is then read from them."""
+def blocks_of(lines, like=None, join=(), drop=()):
+    """Typed blocks. like: the English lines a translation mirrors 1:1; the structure is then read from them.
+    join: indices (into lines) of join buttons; each run of them becomes one ('join',) block (WhatsApp + Discord)."""
     out = []
-    skip = {'Discord', 'Whatsapp', 'WhatsApp'}
-    keep = lambda l: l.strip() and l.strip() not in skip and not l.startswith('Proextinction Website -')
+    btn = {'Discord', 'Whatsapp', 'WhatsApp'}
+    keep = lambda l: l.strip() and not l.startswith('Proextinction Website -')
     pairs = list(zip(lines, like)) if like else [(l, l) for l in lines]
-    pairs = [(t.strip(), l.strip()) for t, l in pairs if keep(l)]
-    clean = [l for _, l in pairs]
-    for n, (text, l) in enumerate(pairs):
+    pairs = [(i, t.strip(), l.strip()) for i, (t, l) in enumerate(pairs) if keep(l) and i not in drop]
+    clean = [l for _, _, l in pairs]
+    for n, (i, text, l) in enumerate(pairs):
         nxt = clean[n + 1] if n + 1 < len(clean) else ''
+        if l in btn or i in join:
+            if not (out and out[-1][0] == 'join'): out.append(('join',))
+            continue
         # a line that introduces a list ("... if they:") is a lead-in sentence, not a chapter
         if is_heading(l) and is_list_line(nxt) and (l.endswith(':') or len(l) > 40 or ',' in l or l[:1].islower()) :
             out.append(('p', text)); continue

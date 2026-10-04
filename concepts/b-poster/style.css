@@ -218,6 +218,19 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 /* the English wordmark and slogan stay left-to-right (so the full stop stays at the end) but keep the page alignment */
 [dir=rtl] :is(.wordmark,.hero-tag,.cta-sub){direction:ltr;text-align:-webkit-match-parent;text-align:match-parent}
 @media (max-width:999.98px){[dir=rtl] .sitenav a[aria-current=page]{box-shadow:inset -3px 0 0 var(--accent)}}
+/* icons in buttons (WhatsApp, Discord, mail) */
+.btn .ic{width:1.2em;height:1.2em;flex:none;margin-inline-end:.6em}
+.prose .cta-links.join,.faq-more{margin:2rem 0}
+.faq-more{justify-content:center}
+.arr{margin-inline-start:.6em}
+[dir=rtl] .arr{display:inline-block;transform:scaleX(-1)}
+/* social channel list */
+.prose h3.plat{display:flex;align-items:center;gap:.5em;margin:2rem 0 .6rem;font-size:1.15rem}
+.plat .ic{width:1.1em;height:1.1em;color:var(--link);flex:none}
+.plat-note{color:var(--muted);font-size:.95rem}
+.prose ul.channels{columns:2 16rem;column-gap:2rem}
+.channels li{break-inside:avoid;overflow-wrap:anywhere}
+.channels .bio{display:block;color:var(--muted);font-size:.9rem;margin-top:.15rem}
 
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
@@ -288,7 +301,7 @@ body{font-size:1.125rem}
 .lede{font-style:normal}
 /* chapter overview as in A: accent rule, numbered list; sticky right column from 1280 px */
 .toc{text-align:start;border-inline-start:2px solid var(--accent);padding-inline-start:1rem;margin:1.6rem auto;max-width:68ch}
-@media (min-width:1280px){.doc:has(>.toc){display:grid;grid-template-columns:minmax(0,68ch) 14rem;column-gap:3rem;justify-content:center}.doc:has(>.toc) .doc-head{grid-column:1/-1}.doc:has(>.toc) .prose{grid-column:1;grid-row:2;margin-inline:0}.toc{grid-column:2;grid-row:2;position:sticky;top:7.5rem;align-self:start;margin:0;max-height:calc(100vh - 9rem);overflow:auto}}
+@media (min-width:1280px){.doc:has(>.toc){display:grid;grid-template-columns:minmax(0,68ch) 14rem;column-gap:3rem;justify-content:center}.doc:has(>.toc) .doc-head{display:contents}.doc:has(>.toc) .doc-head>*{grid-column:1}.doc-head>.kicker{grid-row:1}.doc-head>h1{grid-row:2}.doc-head>.lede{grid-row:3}.doc-head>.slash{grid-row:4}.doc:has(>.toc) .prose{grid-column:1;grid-row:5;margin-inline:0}.toc{grid-column:2;grid-row:3/6;position:sticky;top:7.5rem;align-self:start;margin:1rem 0 0;max-height:calc(100vh - 9rem);overflow:auto}}
 .prose{text-align:start;margin-inline:auto}
 .prose h2{text-align:center;font-size:clamp(1.8rem,5vw,2.8rem);margin-top:3.2rem}
 .prose h2::after{content:"";display:block;width:3rem;height:4px;margin:.9rem auto 0;background:var(--accent);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}

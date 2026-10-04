@@ -46,7 +46,7 @@
   var current = null, curKey = '';
   function parse() { var m = /^#\/([a-z]{2})\/([\w-]+)/.exec(location.hash); return m && PAIR.ui[m[1]] ? { lang: m[1], slug: m[2] } : null; }
   function updateTitle() {
-    var v = views[curKey]; document.title = (v ? v.dataset.title + ' – ' : '') + 'Pro Extinction · ' + (CONCEPTS[d.dataset.concept] || {}).n;
+    var v = views[curKey]; document.title = (v ? v.dataset.title + ' – ' : '') + 'Pro Extinction';
   }
   function show() {
     var r = parse();

@@ -2,7 +2,7 @@
 
 **Was live geht:** der Ordner `presentation/` (`index.html`, `fonts/`, `favicon.svg`, `robots.txt`).
 Es gibt keinen Build-Schritt. Die Konfiguration steht in `vercel.json` (Ausgabeordner, Sicherheits-Header,
-Cache für Schriften). Die Seite ist ein statischer Entwurf zum Vorlegen, **bewusst auf „noindex"**.
+Cache für Schriften). Die Seite ist statisch und als finale Version gebaut, aber noch **bewusst auf „noindex"**.
 
 ## Einrichten (einmalig, im Vercel-Dashboard)
 1. vercel.com → **Add New… → Project** → GitHub-Repository `appsofuse/proextinction` importieren.

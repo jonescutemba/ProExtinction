@@ -108,65 +108,65 @@ def counterpart(lang, slug, other):
     return OF_EN[other].get(EN_OF[lang].get(slug) or '', 'home')
 
 T = {
- 'en': dict(menu='Menu', skip='Skip to content', lang='Language', theme='Switch light/dark mode',
+ 'en': dict(full_faq='Read the full FAQ', menu='Menu', skip='Skip to content', lang='Language', theme='Switch light/dark mode',
   tagline='Together, we end suffering.', sub='The organisation dedicated to ending forced existence and suffering',
   cta1='Join us', cta2='Read the manifesto', mission='Our Mission',
   mission_text='Preventing as much suffering as physically possible, without tradeoffs.',
   effort='Effort', questions='Questions?', questions_text='Contact info@proextinction.com to get more information on the project',
-  action='Take action', toc='On this page', abridged='Preview: the long list of channels is left out in this concept. The full list is on the current site:',
-  abridged_link='Open the full page', ki='Machine-translated from English (AI).',
+  action='Take action', toc='On this page',
+  ki='Machine-translated from English (AI).',
   ki_tag='AI', back='Concepts', back_title='Back to the concept overview', progress='Reading progress', home_link='Pro Extinction – home',
   efforts=['Growing the movement to make it possible to prevent billions of years of suffering.',
    'Universal, non-discriminatory help for as many victims as physically possible. For animals, as much extraterrestrial life as possible, and humans.',
    'Purely organised action/activism based. No lamenting at the expense of the victims.',
    'Fully rational, empathetic, atheistic, logical, and fair.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'de': dict(menu='Menü', skip='Zum Inhalt springen', lang='Sprache', theme='Hell/Dunkel umschalten',
+ 'de': dict(full_faq='Zum vollständigen FAQ', menu='Menü', skip='Zum Inhalt springen', lang='Sprache', theme='Hell/Dunkel umschalten',
   tagline='Together, we end suffering.', sub='Die Organisation, die sich für das Ende erzwungener Existenz und erzwungenen Leids einsetzt.',
   cta1='Aktiv werden', cta2='Manifest lesen', mission='Unsere Mission',
   mission_text='Wir zielen darauf ab, ohne Kompromisse, so viel Leid wie möglich zu beenden.',
   effort='Einsatz', questions='Fragen?', questions_text='Kontaktiere info@proextinction.com, um mehr Informationen zu bekommen.',
-  action='Mach mit', toc='Auf dieser Seite', abridged='Vorschau: die lange Kanalliste ist in diesem Konzept weggelassen. Die vollständige Liste steht auf der aktuellen Seite:',
-  abridged_link='Vollständige Seite öffnen', ki='KI-Übersetzung aus dem Englischen. Die deutsche Originalseite hat diese Seite nicht.',
+  action='Mach mit', toc='Auf dieser Seite',
+  ki='Maschinell aus dem Englischen übersetzt (AI).',
   ki_tag='AI', back='Konzepte', back_title='Zurück zur Konzeptübersicht', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
   efforts=['Wir vergrößern die Bewegung, um unzählige Jahre Leid zu verhindern.',
    'Universelle, nicht diskriminierende Hilfe für so viele Opfer wie physisch möglich. Für Tiere, so viel außerirdisches Leben wie möglich und Menschen.',
    'Wir sind strikt handlungsorientiert, anstatt auf Kosten der Opfer nur über das extreme Leid zu klagen.',
    'Wir sind völlig rational, empathisch, atheistisch, logisch und fair.'],
   foot='Pro Extinction · Global · +44 7557095418', page_title='Pro Extinction'),
- 'pl': dict(menu='Menu', skip='Przejdź do treści', lang='Język', theme='Przełącz tryb jasny/ciemny',
+ 'pl': dict(full_faq='Przejdź do pełnego FAQ', menu='Menu', skip='Przejdź do treści', lang='Język', theme='Przełącz tryb jasny/ciemny',
   tagline='Together, we end suffering.', sub='Organizacja działająca na rzecz położenia kresu przymusowemu istnieniu i cierpieniu',
   cta1='Dołącz', cta2='Przeczytaj komunikat', mission='Nasza misja',
   mission_text='Zapobieganie cierpieniu w jak największym stopniu, bez żadnych kompromisów.',
   effort='Działanie', questions='Pytania?', questions_text='Skontaktuj się z info@proextinction.com, aby uzyskać więcej informacji na temat projektu',
-  action='Dołącz', toc='Na tej stronie', abridged='Podgląd: w tym koncepcie pominięto długą listę kanałów. Pełna lista jest na obecnej stronie:',
-  abridged_link='Otwórz pełną stronę', ki='Tłumaczenie maszynowe z angielskiego (AI). Polska wersja strony nie ma tej podstrony.',
+  action='Dołącz', toc='Na tej stronie',
+  ki='Tłumaczenie maszynowe z angielskiego (AI).',
   ki_tag='AI', back='Koncepty', back_title='Powrót do przeglądu konceptów', progress='Postęp czytania', home_link='Pro Extinction – strona główna',
   efforts=['Rozwój ruchu, aby umożliwić zapobieżenie miliardom lat cierpienia.',
    'Powszechna, niedyskryminująca pomoc dla jak największej liczby ofiar, na ile to fizycznie możliwe. Dla zwierząt, jak największej liczby form życia więcej niż ziemskiego (czyli wszędzie, gdzie życie może zostać zapobiegnięte od zaistnienia cierpienia w kosmosie) oraz dla ludzi.',
    'Działania oparte wyłącznie na zorganizowanym działaniu/aktywizmie. Żadnego użalania się nad losem ofiar.',
    'W pełni racjonalne, empatyczne, ateistyczne, logiczne i sprawiedliwe.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'es': dict(menu='Menú', skip='Ir al contenido', lang='Idioma', theme='Cambiar modo claro/oscuro',
+ 'es': dict(full_faq='Ver las PMF completas', menu='Menú', skip='Ir al contenido', lang='Idioma', theme='Cambiar modo claro/oscuro',
   tagline='Together, we end suffering.', sub='Organización dedicada a poner fin a la existencia impuesta y a su sufrimiento',
   cta1='Únete', cta2='Leer el manifiesto', mission='Nuestra misión',
   mission_text='Minimizar al máximo el sufrimiento, sin concesiones.',
   effort='Línea de acción', questions='¿Preguntas?', questions_text='Contacta con info@proextinction.com para obtener más información sobre el proyecto.',
-  action='Actúa', toc='En esta página', abridged='Vista previa: este concepto omite la larga lista de canales. La lista completa está en la web actual:',
-  abridged_link='Abrir la página completa', ki='Traducción automática del inglés (AI). La web original en español no tiene esta página.',
+  action='Actúa', toc='En esta página',
+  ki='Traducción automática del inglés (AI).',
   ki_tag='AI', back='Conceptos', back_title='Volver a la vista general de conceptos', progress='Progreso de lectura', home_link='Pro Extinction – página inicial',
   efforts=['Impulsar un crecimiento estratégico del movimiento que permita intervenir de forma efectiva sobre las causas estructurales del sufrimiento y prevenir su perpetuación a gran escala.',
    'Promover un alivio universal, no discriminatorio y basado en criterios de sufrimiento, dirigido al mayor número posible de víctimas: animales no humanos, cualquier forma de vida potencialmente sintiente fuera de la Tierra y la humanidad.',
    'Desarrollar un activismo organizado, disciplinado y orientado a resultados, centrado exclusivamente en la reducción del sufrimiento, sin concesiones emocionales ni discursos que lo perpetúen.',
    'Sostener el movimiento sobre principios estrictamente racionales, empáticos y coherentes, libres de dogmas, creencias infundadas o sesgos arbitrarios, con un compromiso firme con la justicia y la lógica.'],
   foot='Pro Extinction · Global · +44 7557095418', page_title='Pro Extinction'),
- 'it': dict(menu='Menu', skip='Vai al contenuto', lang='Lingua', theme='Cambia modalità chiara/scura',
+ 'it': dict(full_faq='Vai alle FAQ complete', menu='Menu', skip='Vai al contenuto', lang='Lingua', theme='Cambia modalità chiara/scura',
   tagline='Together, we end suffering.', sub="L'organizzazione dedicata a porre fine all'esistenza forzata e alla sofferenza.",
   cta1='Unisciti a noi', cta2='Leggi il manifesto', mission='La nostra missione',
   mission_text='Prevenire quanta più sofferenza sia fisicamente possibile, senza compromessi.',
   effort='Obiettivo', questions='Domande?', questions_text='Contatta info@proextinction.com per ottenere più informazioni sul progetto',
-  action='Agisci', toc='In questa pagina', abridged="Anteprima: questo concept omette il lungo elenco dei canali. L'elenco completo è sul sito attuale:",
-  abridged_link='Apri la pagina completa', ki="Traduzione automatica dall'inglese (AI). Il sito originale in italiano non ha questa pagina.",
+  action='Agisci', toc='In questa pagina',
+  ki="Traduzione automatica dall'inglese (AI).",
   ki_tag='AI', back='Concept', back_title='Torna alla panoramica dei concept', progress='Avanzamento lettura', home_link='Pro Extinction – home',
   efforts=['Crescere il movimento per rendere possibile la prevenzione di miliardi di anni di sofferenza.',
    'Aiuto universale, non-discriminatorio per quante più vittime sia fisicamente possibile. Per gli animali, quanta più vita extraterrestre possibile, e gli umani.',
@@ -175,117 +175,117 @@ T = {
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
 }
 T.update({
- 'fr': dict(menu='Menu', skip='Aller au contenu', lang='Langue', theme='Basculer entre mode clair et sombre',
+ 'fr': dict(full_faq='Lire la FAQ complète', menu='Menu', skip='Aller au contenu', lang='Langue', theme='Basculer entre mode clair et sombre',
   tagline='Together, we end suffering.', sub="L'organisation qui se consacre à mettre fin à l'existence forcée et à la souffrance",
   cta1='Nous rejoindre', cta2='Lire le manifeste', mission='Notre mission',
   mission_text='Empêcher autant de souffrance que physiquement possible, sans compromis.',
   effort='Engagement', questions='Des questions ?', questions_text="Écrivez à info@proextinction.com pour en savoir plus sur le projet",
-  action='Agir', toc='Sur cette page', abridged="Aperçu : ce concept laisse de côté la longue liste des chaînes. La liste complète se trouve sur le site actuel :",
-  abridged_link='Ouvrir la page complète', ki="Traduction automatique de l'anglais (AI). Il n'existe pas de site original en français.",
+  action='Agir', toc='Sur cette page',
+  ki="Traduction automatique de l'anglais (AI).",
   ki_tag='AI', back='Concepts', back_title="Retour à l'aperçu des concepts", progress='Progression de lecture', home_link='Pro Extinction – accueil',
   efforts=["Faire grandir le mouvement pour rendre possible la prévention de milliards d'années de souffrance.",
    'Une aide universelle et sans discrimination pour autant de victimes que physiquement possible. Pour les animaux, pour autant de vie extraterrestre que possible et pour les humains.',
    "Une action purement organisée, fondée sur l'activisme. Pas de lamentations aux dépens des victimes.",
    'Entièrement rationnel, empathique, athée, logique et juste.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'pt': dict(menu='Menu', skip='Ir para o conteúdo', lang='Idioma', theme='Alternar modo claro/escuro',
+ 'pt': dict(full_faq='Ler o FAQ completo', menu='Menu', skip='Ir para o conteúdo', lang='Idioma', theme='Alternar modo claro/escuro',
   tagline='Together, we end suffering.', sub='A organização dedicada a acabar com a existência forçada e o sofrimento',
   cta1='Junte-se a nós', cta2='Ler o manifesto', mission='Nossa missão',
   mission_text='Evitar o máximo de sofrimento fisicamente possível, sem concessões.',
   effort='Frente', questions='Dúvidas?', questions_text='Escreva para info@proextinction.com para saber mais sobre o projeto',
-  action='Aja', toc='Nesta página', abridged='Prévia: este conceito deixa de fora a longa lista de canais. A lista completa está no site atual:',
-  abridged_link='Abrir a página completa', ki='Tradução automática do inglês (AI). Não existe um site original em português.',
+  action='Aja', toc='Nesta página',
+  ki='Tradução automática do inglês (AI).',
   ki_tag='AI', back='Conceitos', back_title='Voltar à visão geral dos conceitos', progress='Progresso de leitura', home_link='Pro Extinction – início',
   efforts=['Fazer o movimento crescer para tornar possível evitar bilhões de anos de sofrimento.',
    'Ajuda universal e sem discriminação para o maior número de vítimas fisicamente possível. Para animais, para o máximo possível de vida extraterrestre e para humanos.',
    'Ação puramente organizada, baseada em ativismo. Nada de lamentar à custa das vítimas.',
    'Totalmente racional, empático, ateu, lógico e justo.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'ru': dict(menu='Меню', skip='Перейти к содержанию', lang='Язык', theme='Переключить светлую/тёмную тему',
+ 'ru': dict(full_faq='Все вопросы и ответы', menu='Меню', skip='Перейти к содержанию', lang='Язык', theme='Переключить светлую/тёмную тему',
   tagline='Together, we end suffering.', sub='Организация, которая стремится положить конец вынужденному существованию и страданию',
   cta1='Присоединиться', cta2='Читать манифест', mission='Наша миссия',
   mission_text='Предотвратить столько страданий, сколько физически возможно, без компромиссов.',
   effort='Направление', questions='Есть вопросы?', questions_text='Пишите на info@proextinction.com, чтобы узнать больше о проекте',
-  action='Действуйте', toc='На этой странице', abridged='Превью: в этом концепте длинный список каналов опущен. Полный список есть на текущем сайте:',
-  abridged_link='Открыть полную страницу', ki='Машинный перевод с английского (AI). Оригинального сайта на русском языке нет.',
+  action='Действуйте', toc='На этой странице',
+  ki='Машинный перевод с английского (AI).',
   ki_tag='AI', back='Концепты', back_title='Назад к обзору концептов', progress='Прогресс чтения', home_link='Pro Extinction – главная',
   efforts=['Развивать движение, чтобы сделать возможным предотвращение миллиардов лет страданий.',
    'Всеобщая помощь без дискриминации для стольких жертв, сколько физически возможно. Для животных, для как можно большего числа внеземной жизни и для людей.',
    'Только организованные действия и активизм. Никаких причитаний за счёт жертв.',
    'Полностью рационально, эмпатично, атеистично, логично и справедливо.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'zh': dict(menu='菜单', skip='跳到正文', lang='语言', theme='切换浅色/深色模式',
+ 'zh': dict(full_faq='查看完整问答', menu='菜单', skip='跳到正文', lang='语言', theme='切换浅色/深色模式',
   tagline='Together, we end suffering.', sub='致力于终结被迫存在与苦难的组织',
   cta1='加入我们', cta2='阅读宣言', mission='我们的使命',
   mission_text='在物理上可能的范围内尽量防止苦难，绝不妥协。',
   effort='方向', questions='有疑问？', questions_text='请联系 info@proextinction.com 了解项目详情',
-  action='行动起来', toc='本页内容', abridged='预览：此设计方案省略了较长的频道列表。完整列表见现有网站：',
-  abridged_link='打开完整页面', ki='由英文机器翻译 (AI)。原网站没有中文版本。',
+  action='行动起来', toc='本页内容',
+  ki='由英文机器翻译 (AI)。',
   ki_tag='AI', back='方案', back_title='返回设计方案总览', progress='阅读进度', home_link='Pro Extinction – 首页',
   efforts=['壮大运动，让防止数十亿年的苦难成为可能。',
    '为物理上可能的最多受害者提供普遍、无差别的帮助。包括动物、尽可能多的地外生命以及人类。',
    '完全以有组织的行动和行动主义为本。不以受害者为代价空发哀叹。',
    '完全理性、富有同理心、无神论、合乎逻辑且公平。'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'hi': dict(menu='मेनू', skip='सामग्री पर जाएँ', lang='भाषा', theme='लाइट/डार्क मोड बदलें',
+ 'hi': dict(full_faq='पूरा FAQ पढ़ें', menu='मेनू', skip='सामग्री पर जाएँ', lang='भाषा', theme='लाइट/डार्क मोड बदलें',
   tagline='Together, we end suffering.', sub='वह संगठन जो थोपे गए अस्तित्व और पीड़ा को ख़त्म करने के लिए समर्पित है',
   cta1='हमसे जुड़ें', cta2='घोषणापत्र पढ़ें', mission='हमारा मिशन',
   mission_text='बिना किसी समझौते के, भौतिक रूप से जितनी हो सके उतनी पीड़ा को रोकना।',
   effort='प्रयास', questions='कोई सवाल?', questions_text='परियोजना के बारे में और जानकारी के लिए info@proextinction.com पर संपर्क करें',
-  action='कदम उठाएँ', toc='इस पेज पर', abridged='प्रीव्यू: इस कॉन्सेप्ट में चैनलों की लंबी सूची छोड़ दी गई है। पूरी सूची मौजूदा साइट पर है:',
-  abridged_link='पूरा पेज खोलें', ki='अंग्रेज़ी से मशीन अनुवाद (AI)। मूल साइट का हिन्दी संस्करण नहीं है।',
+  action='कदम उठाएँ', toc='इस पेज पर',
+  ki='अंग्रेज़ी से मशीन अनुवाद (AI)।',
   ki_tag='AI', back='कॉन्सेप्ट', back_title='कॉन्सेप्ट की सूची पर वापस जाएँ', progress='पढ़ने की प्रगति', home_link='Pro Extinction – होम',
   efforts=['आंदोलन को बढ़ाना, ताकि अरबों वर्षों की पीड़ा को रोकना संभव हो सके।',
    'भौतिक रूप से जितने संभव हों उतने पीड़ितों के लिए सार्वभौमिक, बिना भेदभाव की मदद। जानवरों के लिए, जितना हो सके उतने पृथ्वी से बाहर के जीवन के लिए, और इंसानों के लिए।',
    'पूरी तरह संगठित कार्रवाई और एक्टिविज़्म पर आधारित। पीड़ितों की कीमत पर कोई विलाप नहीं।',
    'पूरी तरह तार्किक, सहानुभूतिपूर्ण, नास्तिक, विवेकपूर्ण और न्यायसंगत।'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'ar': dict(menu='القائمة', skip='انتقل إلى المحتوى', lang='اللغة', theme='التبديل بين الوضع الفاتح والداكن',
+ 'ar': dict(full_faq='اقرأ كل الأسئلة', menu='القائمة', skip='انتقل إلى المحتوى', lang='اللغة', theme='التبديل بين الوضع الفاتح والداكن',
   tagline='Together, we end suffering.', sub='المنظمة المكرّسة لإنهاء الوجود القسري والمعاناة',
   cta1='انضم إلينا', cta2='اقرأ البيان', mission='مهمتنا',
   mission_text='منع أكبر قدر ممكن فيزيائيًا من المعاناة، دون تنازلات.',
   effort='محور', questions='لديك أسئلة؟', questions_text='راسلنا على info@proextinction.com لمعرفة المزيد عن المشروع',
-  action='تحرّك', toc='في هذه الصفحة', abridged='معاينة: يحذف هذا التصميم القائمة الطويلة للقنوات. القائمة الكاملة موجودة على الموقع الحالي:',
-  abridged_link='افتح الصفحة كاملة', ki='ترجمة آلية من الإنجليزية (AI). لا توجد نسخة عربية من الموقع الأصلي.',
+  action='تحرّك', toc='في هذه الصفحة',
+  ki='ترجمة آلية من الإنجليزية (AI).',
   ki_tag='AI', back='التصاميم', back_title='العودة إلى نظرة عامة على التصاميم', progress='تقدّم القراءة', home_link='Pro Extinction – الرئيسية',
   efforts=['تنمية الحركة لكي يصبح منع مليارات السنين من المعاناة ممكنًا.',
    'مساعدة شاملة ودون تمييز لأكبر عدد ممكن فيزيائيًا من الضحايا. للحيوانات، ولأكبر قدر ممكن من الحياة خارج الأرض، وللبشر.',
    'عمل منظّم ونشاط ميداني فقط. لا نوح على حساب الضحايا.',
    'عقلانية تامة وتعاطف وإلحاد ومنطق وعدل.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'bn': dict(menu='মেনু', skip='মূল বিষয়ে যান', lang='ভাষা', theme='লাইট/ডার্ক মোড বদলান',
+ 'bn': dict(full_faq='সম্পূর্ণ FAQ পড়ুন', menu='মেনু', skip='মূল বিষয়ে যান', lang='ভাষা', theme='লাইট/ডার্ক মোড বদলান',
   tagline='Together, we end suffering.', sub='যে সংগঠন জোর করে চাপিয়ে দেওয়া অস্তিত্ব আর দুঃখভোগের অবসানে নিবেদিত',
   cta1='আমাদের সাথে যোগ দিন', cta2='ইশতেহার পড়ুন', mission='আমাদের লক্ষ্য',
   mission_text='কোনো আপস ছাড়াই, শারীরিকভাবে যতটা সম্ভব দুঃখভোগ ঠেকানো।',
   effort='প্রচেষ্টা', questions='কোনো প্রশ্ন?', questions_text='প্রকল্প সম্পর্কে আরও জানতে info@proextinction.com-এ যোগাযোগ করুন',
-  action='পদক্ষেপ নিন', toc='এই পাতায়', abridged='প্রিভিউ: এই ডিজাইনে চ্যানেলের লম্বা তালিকা বাদ রাখা হয়েছে। পুরো তালিকা বর্তমান সাইটে আছে:',
-  abridged_link='পুরো পাতা খুলুন', ki='ইংরেজি থেকে যন্ত্রে অনুবাদ (AI)। মূল সাইটের কোনো বাংলা সংস্করণ নেই।',
+  action='পদক্ষেপ নিন', toc='এই পাতায়',
+  ki='ইংরেজি থেকে যন্ত্রে অনুবাদ (AI)।',
   ki_tag='AI', back='ডিজাইন', back_title='ডিজাইনের তালিকায় ফিরে যান', progress='পড়ার অগ্রগতি', home_link='Pro Extinction – হোম',
   efforts=['আন্দোলনকে বড় করা, যাতে কোটি কোটি বছরের দুঃখভোগ ঠেকানো সম্ভব হয়।',
    'শারীরিকভাবে যত বেশি সম্ভব ভুক্তভোগীর জন্য সর্বজনীন, বৈষম্যহীন সাহায্য। প্রাণীদের জন্য, যত বেশি সম্ভব পৃথিবীর বাইরের প্রাণের জন্য, আর মানুষের জন্য।',
    'কেবল সংগঠিত কাজ আর অ্যাক্টিভিজমের ওপর ভিত্তি করে। ভুক্তভোগীদের মূল্যে কোনো বিলাপ নয়।',
    'পুরোপুরি যুক্তিনিষ্ঠ, সহমর্মী, নাস্তিক, যৌক্তিক আর ন্যায্য।'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'ur': dict(menu='مینو', skip='مواد پر جائیں', lang='زبان', theme='لائٹ/ڈارک موڈ بدلیں',
+ 'ur': dict(full_faq='تمام سوالات پڑھیں', menu='مینو', skip='مواد پر جائیں', lang='زبان', theme='لائٹ/ڈارک موڈ بدلیں',
   tagline='Together, we end suffering.', sub='وہ تنظیم جو زبردستی کے وجود اور تکلیف کو ختم کرنے کے لیے وقف ہے',
   cta1='ہمارے ساتھ شامل ہوں', cta2='منشور پڑھیں', mission='ہمارا مشن',
   mission_text='بغیر کسی سمجھوتے کے، جسمانی طور پر جتنی ممکن ہو اتنی تکلیف کو روکنا۔',
   effort='کوشش', questions='کوئی سوال؟', questions_text='منصوبے کے بارے میں مزید جاننے کے لیے info@proextinction.com پر رابطہ کریں',
-  action='قدم اٹھائیں', toc='اس صفحے پر', abridged='پیش نظارہ: اس ڈیزائن میں چینلز کی لمبی فہرست شامل نہیں۔ پوری فہرست موجودہ سائٹ پر ہے:',
-  abridged_link='پورا صفحہ کھولیں', ki='انگریزی سے مشینی ترجمہ (AI)۔ اصل سائٹ کا کوئی اردو ورژن نہیں ہے۔',
+  action='قدم اٹھائیں', toc='اس صفحے پر',
+  ki='انگریزی سے مشینی ترجمہ (AI)۔',
   ki_tag='AI', back='ڈیزائن', back_title='ڈیزائنز کی فہرست پر واپس جائیں', progress='پڑھنے کی پیش رفت', home_link='Pro Extinction – ہوم',
   efforts=['تحریک کو بڑھانا، تاکہ اربوں سال کی تکلیف کو روکنا ممکن ہو سکے۔',
    'جسمانی طور پر جتنے ممکن ہوں اتنے متاثرین کے لیے عالمگیر، بلا امتیاز مدد۔ جانوروں کے لیے، زمین سے باہر جتنی ممکن ہو اتنی زندگی کے لیے، اور انسانوں کے لیے۔',
    'صرف منظم عمل اور ایکٹیوزم پر مبنی۔ متاثرین کی قیمت پر کوئی ماتم نہیں۔',
    'مکمل طور پر عقلی، ہمدرد، ملحد، منطقی اور منصفانہ۔'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
- 'id': dict(menu='Menu', skip='Langsung ke isi', lang='Bahasa', theme='Ganti mode terang/gelap',
+ 'id': dict(full_faq='Baca FAQ lengkap', menu='Menu', skip='Langsung ke isi', lang='Bahasa', theme='Ganti mode terang/gelap',
   tagline='Together, we end suffering.', sub='Organisasi yang berjuang untuk mengakhiri keberadaan yang dipaksakan dan penderitaan',
   cta1='Bergabung', cta2='Baca manifesto', mission='Misi kami',
   mission_text='Mencegah penderitaan sebanyak yang secara fisik mungkin, tanpa kompromi.',
   effort='Upaya', questions='Ada pertanyaan?', questions_text='Hubungi info@proextinction.com untuk informasi lebih lanjut tentang proyek ini',
-  action='Bertindak', toc='Di halaman ini', abridged='Pratinjau: konsep ini tidak menampilkan daftar kanal yang panjang. Daftar lengkapnya ada di situs saat ini:',
-  abridged_link='Buka halaman lengkap', ki='Terjemahan mesin dari bahasa Inggris (AI). Situs aslinya tidak memiliki versi bahasa Indonesia.',
+  action='Bertindak', toc='Di halaman ini',
+  ki='Terjemahan mesin dari bahasa Inggris (AI).',
   ki_tag='AI', back='Konsep', back_title='Kembali ke ringkasan konsep', progress='Kemajuan membaca', home_link='Pro Extinction – beranda',
   efforts=['Membesarkan gerakan agar pencegahan miliaran tahun penderitaan menjadi mungkin.',
    'Bantuan universal tanpa diskriminasi bagi sebanyak mungkin korban yang secara fisik bisa dijangkau. Bagi hewan, bagi sebanyak mungkin kehidupan di luar Bumi, dan bagi manusia.',
@@ -299,6 +299,17 @@ WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'htt
             'es': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG'}  # as linked on each original site
 WHATSAPP.update({l: WHATSAPP['en'] for l in FULL_AI})
 EMAIL = 'info@proextinction.com'
+
+ICON = {'x': 'M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z', 'tiktok': 'M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z', 'instagram': 'M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077', 'youtube': 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z', 'facebook': 'M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z', 'discord': 'M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z', 'whatsapp': 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z', 'mail': 'M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'}
+icon = lambda n: f'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="{ICON[n]}"/></svg>'
+# Lines of the original language pages that were "join the team" buttons; rendered as WhatsApp + Discord buttons.
+# (lang, slug): line indices. DROP: PL line 9 is a "join" link right above the same heading and its buttons.
+JOIN = {('es', 'equipo'): {16}, ('pl', 'z-nami'): {12}}
+DROP = {('pl', 'z-nami'): {9}}
+
+def join_buttons(lang):
+    return (f'<p class="cta-links join"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a>'
+            f'<a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a></p>')
 
 CONCEPTS = {
  'a-ember':  dict(name='Ember',  mode='dark',  fonts='family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500'),
@@ -318,12 +329,14 @@ def slug_id(s, used):
     while i in used: i = f'{base}-{k}'; k += 1
     used.add(i); return ID_PREFIX + i
 
-def render_blocks(blocks, used):
+def render_blocks(blocks, used, lang='en'):
     out, toc = [], []
     for b in blocks:
         if b[0] == 'h':
             i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：')))
             out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":："))}</h2>')
+        elif b[0] == 'join':
+            out.append(join_buttons(lang))
         elif b[0] == 'ul':
             out.append('<ul>' + ''.join(f'<li>{linkify(i)}</li>' for i in b[1]) + '</ul>')
         else:
@@ -346,15 +359,40 @@ def doc_body(lang, slug, lines, full_url, like=None):
     t = T[lang]; used = set()
     title, lede, rest = head_lede(lines, like)
     rest_like = like[len(lines) - len(rest):] if like else None
-    kind = 'doc'; truncated = False
-    if slug in ('social-media-channels',):
-        bl = blocks_of(rest, rest_like)[:2]; truncated = True
-    else:
-        bl = blocks_of(rest, rest_like)
-    body, toc = render_blocks(bl, used)
+    truncated = False
+    if slug == 'social-media-channels' and (len(lines) == len(SOCIAL_EN) or lang in SOCIAL_IDX):
+        body, toc = social_body(lang, lines, used)
+        return title, lede, body, toc, truncated
+    off, key = len(lines) - len(rest), (lang, OF_EN[lang].get(slug, slug))
+    bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())})
+    body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 
-def faq_body(lang, slug, lines, like=None):
+SOCIAL_EN = json.loads((ROOT / 'content' / 'en' / 'social-media-channels.json').read_text(encoding='utf-8'))
+SOCIAL = json.loads((ROOT / 'content' / 'social.json').read_text(encoding='utf-8'))
+
+# Line positions where a language's own channel page differs from the English one (PL lists Twitter/X too).
+SOCIAL_IDX = {'pl': {65: 67, 77: 79, 88: 90, 91: 93, 94: 96}}
+
+def social_body(lang, lines, used):
+    """Channel list (content/social.json: language > platform > accounts with links). Headings, intro and notes come
+    from the page's lines (index-aligned with English); account names and channel bios stay as their owners wrote them."""
+    L = lambda i: lines[SOCIAL_IDX.get(lang, {}).get(i, i)]
+    out, toc = [f'<p>{esc(L(1))}</p><p>{esc(L(2))}</p>'], []
+    for g in SOCIAL:
+        name = L(g['line']).rstrip(':：'); i = slug_id(name, used); toc.append((i, name))
+        out.append(f'<h2 id="{i}">{esc(name)}</h2>')
+        for pl in g['platforms']:
+            if lang not in pl.get('only', [lang]): continue
+            out.append(f'<h3 class="plat">{icon(pl["name"].lower())}{pl["name"]}</h3>')
+            if 'note' in pl: out.append(f'<p class="plat-note">{esc(L(pl["note"]))}</p>')
+            out.append('<ul class="channels">' + ''.join(
+                f'<li><a href="{esc(x["url"])}" rel="noopener">{esc(x["label"])}</a>' + (f'<span class="bio">{esc(x["desc"])}</span>' if x.get('desc') else '') + '</li>'
+                for x in pl['items']) + '</ul>')
+    out.append(f'<p class="note">{esc(L(94))}</p>')
+    return '\n'.join(out), toc
+
+def faq_body(lang, slug, lines, like=None, href=lambda s: s + '.html'):
     t = T[lang]
     title, lede, rest = head_lede(lines, like)
     intro, pairs = faq_pairs(rest, like[len(lines) - len(rest):] if like else None)
@@ -363,7 +401,10 @@ def faq_body(lang, slug, lines, like=None):
     items = []
     for q, a in shown:
         items.append(f'<details><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a) + '</div></details>')
-    return title, lede, intro_html + '<div class="faq">' + '\n'.join(items) + '</div>', [], len(shown) < len(pairs)
+    more = ''
+    if EN_OF[lang][slug] == 'basic-faq':
+        more = f'<p class="cta-links faq-more"><a class="btn primary" href="{href(OF_EN[lang]["full-faq"])}">{T[lang]["full_faq"]} <span aria-hidden="true" class="arr">→</span></a></p>'
+    return title, lede, intro_html + '<div class="faq">' + '\n'.join(items) + '</div>' + more, [], len(shown) < len(pairs)
 
 def sitenav(lang, slug):
     t = T[lang]; cur = ' aria-current="page"'
@@ -399,7 +440,7 @@ def footer(lang):
   <hr class="slash">
   <h2>{t["action"]}</h2>
   <p class="cta-sub">{t["tagline"]}</p>
-  <p class="cta-links"><a class="btn primary" href="{DISCORD}" rel="noopener">Discord</a><a class="btn" href="{WHATSAPP[lang]}" rel="noopener">WhatsApp</a><a class="btn" href="mailto:{EMAIL}">{EMAIL}</a></p>
+  <p class="cta-links"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>
 </section>
 <footer class="foot"><p class="mono">{t["foot"]}</p></footer>'''
 
@@ -411,14 +452,11 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
         return NAV[lang]['home'], home_main(lang, href), 'home'
     lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text(encoding='utf-8'))
     like = json.loads((ROOT / 'content' / 'en' / f'{EN_OF[lang][slug]}.json').read_text(encoding='utf-8')) if ki else None
-    if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines, like)
+    if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines, like, href)
     else:
         title, lede, body, toc, truncated = doc_body(lang, EN_OF[lang][slug], lines, '', like)
-    if ki: orig = ORIGINAL['en'].format(EN_OF[lang][slug])
-    else: orig = ORIGINAL[lang].format(urllib.parse.quote(ORIG[lang][slug]))
     notes = ''
     if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
-    if truncated: notes += f'<p class="note">{t["abridged"]} <a href="{orig}" rel="noopener">{t["abridged_link"]}</a></p>'
     toc_html = ''
     if len(toc) > 1:
         toc_html = f'<nav class="toc" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>' + ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc) + '</ol></nav>'

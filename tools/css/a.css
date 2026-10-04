@@ -19,7 +19,7 @@ body{font-size:1.125rem}
 .doc{display:grid;grid-template-columns:minmax(0,1fr);column-gap:3rem;max-width:none}
 .doc-head{grid-column:1/-1}
 .toc{border-inline-start:2px solid var(--accent);padding-inline-start:1rem;margin:1.6rem 0}
-@media (min-width:1280px){.doc{grid-template-columns:minmax(0,68ch) 14rem}.prose{grid-column:1;grid-row:2}.toc{grid-column:2;grid-row:2;position:sticky;top:5.5rem;align-self:start;margin-top:0;max-height:calc(100vh - 7rem);overflow:auto}}
+@media (min-width:1280px){.doc{grid-template-columns:minmax(0,68ch) 14rem}.doc-head{display:contents}.doc-head>*{grid-column:1}.doc-head>.kicker{grid-row:1}.doc-head>h1{grid-row:2}.doc-head>.lede{grid-row:3}.doc-head>.slash{grid-row:4}.prose{grid-column:1;grid-row:5}.toc{grid-column:2;grid-row:3/6;position:sticky;top:5.5rem;align-self:start;margin:1rem 0 0;max-height:calc(100vh - 7rem);overflow:auto}}
 .prose h2::before{content:counter(ch,decimal-leading-zero) "  ";font-family:var(--mono);font-size:.55em;color:var(--link);letter-spacing:.08em;vertical-align:.35em}
 .mission blockquote{border-inline-start:6px solid var(--accent);padding-inline-start:1.2rem;max-width:26ch}
 
