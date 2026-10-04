@@ -7,40 +7,76 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'concepts'
 esc = html.escape
 
-# slug, kind ('doc'|'faq'), original path on the live site, labels
-PAGES = {
- 'en': [
-  ('home','home'),('manifesto','doc'),('basic-faq','faq'),('full-faq','faq'),
-  ('criticism-of-different-pro-life-ideologies','doc'),('principles-of-the-movement','doc'),
-  ('suffering-in-detail','doc'),('cosmic-extinction','doc'),('history','doc'),('join-us','doc'),
-  ('social-media-channels','doc'),('contact','doc'),('donate','doc')],
+LANGS = ['en', 'de', 'pl', 'es', 'it']   # English is the source; other languages fill gaps with AI translations
+LANG_NAME = {'en': 'English', 'de': 'Deutsch', 'pl': 'Polski', 'es': 'Español', 'it': 'Italiano'}
+KINDS = {'home': 'home', 'basic-faq': 'faq', 'full-faq': 'faq'}  # by English slug, default 'doc'
+AI_MARK = ' (AI)'
+
+# Per language: (slug, English slug or None for pages only that language has, menu label, original slug or None if AI-translated).
+# Order follows the English menu; language-only pages go last.
+SITE = {
+ 'en': [(s, s, l, s) for s, l in [
+  ('home', 'Home'), ('manifesto', 'Manifesto'), ('basic-faq', 'Basic FAQ'), ('full-faq', 'Full FAQ'),
+  ('criticism-of-different-pro-life-ideologies', 'Criticism of pro-life ideologies'),
+  ('principles-of-the-movement', 'Principles of the movement'), ('suffering-in-detail', 'Suffering in detail'),
+  ('cosmic-extinction', 'Cosmic Extinction'), ('history', 'History'), ('join-us', 'Join us'),
+  ('social-media-channels', 'Social Media Channels'), ('contact', 'Contact'), ('donate', 'Donate')]],
  'de': [
-  ('home','home'),('manifest','doc'),('basis-faq','faq'),('vollstaendiges-faq','faq'),
-  ('die-prinzipien-unserer-bewegung','doc'),
-  ('leid-im-detail','doc'),('geschichte','doc'),('aktiv-werden','doc'),
-  ('kontakt','doc'),('ressourcen','doc')],
+  ('home', 'home', 'Home', 'home'), ('manifest', 'manifesto', 'Manifest', 'manifest'),
+  ('basis-faq', 'basic-faq', 'Basis-FAQ', 'basis-faq'), ('vollstaendiges-faq', 'full-faq', 'Vollständiges FAQ', 'vollständiges-faq'),
+  ('kritik-an-pro-life-ideologien', 'criticism-of-different-pro-life-ideologies', 'Kritik an Pro-Life-Ideologien', None),
+  ('die-prinzipien-unserer-bewegung', 'principles-of-the-movement', 'Die Prinzipien unserer Bewegung', 'die-prinzipien-unserer-bewegung'),
+  ('leid-im-detail', 'suffering-in-detail', 'Leid im Detail', 'leid-im-detail'),
+  ('kosmische-extinction', 'cosmic-extinction', 'Kosmische Extinction', None),
+  ('geschichte', 'history', 'Geschichte', 'geschichte'), ('aktiv-werden', 'join-us', 'Aktiv werden', 'aktiv-werden'),
+  ('social-media', 'social-media-channels', 'Social-Media-Kanäle', None), ('kontakt', 'contact', 'Kontakt', 'kontakt'),
+  ('spenden', 'donate', 'Spenden', None), ('ressourcen', None, 'Ressourcen', 'resourcen')],
+ 'pl': [
+  ('home', 'home', 'Home', 'home'), ('komunikat', 'manifesto', 'Komunikat', 'komunikat'),
+  ('basic-faq', 'basic-faq', 'Basic FAQ', 'basic-faq'), ('full-faq', 'full-faq', 'Full FAQ', 'full-faq'),
+  ('krytyka-ideologii-pro-life', 'criticism-of-different-pro-life-ideologies', 'Krytyka ideologii pro-life', None),
+  ('zasady-ruchu', 'principles-of-the-movement', 'Zasady ruchu', 'zasady-ruchu'),
+  ('znaczenie-cierpienia', 'suffering-in-detail', 'Znaczenie cierpienia', 'znaczenie-cierpienia'),
+  ('kosmiczne-wyginiecie', 'cosmic-extinction', 'Kosmiczne wyginięcie', None),
+  ('historia', 'history', 'Historia', 'historia'), ('z-nami', 'join-us', 'Z nami', 'z-nami'),
+  ('profile-aktywistyczne', 'social-media-channels', 'Profile aktywistyczne', 'profile-aktywistyczne'),
+  ('kontakt', 'contact', 'Kontakt', 'kontakt'), ('darowizny', 'donate', 'Przekaż darowiznę', None),
+  ('zasoby', None, 'Zasoby', 'zasoby')],
+ 'es': [
+  ('home', 'home', 'Página inicial', 'página-inicial'), ('manifiesto', 'manifesto', 'Manifiesto', 'manifiesto'),
+  ('pmf-basicas', 'basic-faq', 'PMF básicas', 'pmf-básicas'), ('pmf-completas', 'full-faq', 'PMF completas', 'pmf-completas'),
+  ('critica-ideologias-provida', 'criticism-of-different-pro-life-ideologies', 'Crítica de las ideologías provida', None),
+  ('principios-del-movimiento', 'principles-of-the-movement', 'Principios del movimiento', None),
+  ('sufrimiento-en-detalle', 'suffering-in-detail', 'El sufrimiento en detalle', None),
+  ('extincion-cosmica', 'cosmic-extinction', 'Extinción cósmica', None),
+  ('historia', 'history', 'Historia', 'historia'), ('equipo', 'join-us', 'Equipo', 'equipo'),
+  ('redes-sociales', 'social-media-channels', 'Redes sociales', None), ('contacto', 'contact', 'Contacto', 'contacto'),
+  ('donar', 'donate', 'Donar', None), ('recursos', None, 'Recursos', 'recursos'), ('mapa-del-sitio', None, 'Mapa del sitio', 'mapa-del-sitio')],
+ 'it': [
+  ('home', 'home', 'Home', 'home'), ('manifesto', 'manifesto', 'Manifesto', 'manifesto'),
+  ('faq-di-base', 'basic-faq', 'FAQ di base', 'faq-di-base'), ('faq-completo', 'full-faq', 'FAQ completo', 'faq-completo'),
+  ('critica-ideologie-pro-vita', 'criticism-of-different-pro-life-ideologies', 'Critica delle ideologie pro-vita', None),
+  ('principi-del-movimento', 'principles-of-the-movement', 'Principi del movimento', 'principi-del-movimento'),
+  ('la-sofferenza-nei-dettagli', 'suffering-in-detail', 'La sofferenza nei dettagli', 'la-sofferenza-nei-dettagli'),
+  ('estinzione-cosmica', 'cosmic-extinction', 'Estinzione cosmica', None),
+  ('storia', 'history', 'Storia', 'storia'), ('unisciti-a-noi', 'join-us', 'Unisciti a noi', 'unisciti-a-noi'),
+  ('canali-social', 'social-media-channels', 'Canali social', None), ('contatti', 'contact', 'Contatti', None),
+  ('donazioni', 'donate', 'Donazioni', 'donazioni')],
 }
-NAV = {
- 'en': {'home':'Home','manifesto':'Manifesto','basic-faq':'Basic FAQ','full-faq':'Full FAQ',
-  'criticism-of-different-pro-life-ideologies':'Criticism of pro-life ideologies',
-  'principles-of-the-movement':'Principles of the movement','suffering-in-detail':'Suffering in detail',
-  'cosmic-extinction':'Cosmic Extinction','history':'History','join-us':'Join us',
-  'social-media-channels':'Social Media Channels','contact':'Contact','donate':'Donate'},
- 'de': {'home':'Home','manifest':'Manifest','basis-faq':'Basis-FAQ','vollstaendiges-faq':'Vollständiges FAQ',
-  'die-prinzipien-unserer-bewegung':'Die Prinzipien unserer Bewegung','leid-im-detail':'Leid im Detail',
-  'geschichte':'Geschichte','aktiv-werden':'Aktiv werden','kontakt':'Kontakt','ressourcen':'Ressourcen'},
-}
-PAIR = {  # en slug -> de slug
- 'home':'home','manifesto':'manifest','basic-faq':'basis-faq','full-faq':'vollstaendiges-faq',
- 'criticism-of-different-pro-life-ideologies':'kritik-an-pro-life-ideologien',
- 'principles-of-the-movement':'die-prinzipien-unserer-bewegung','suffering-in-detail':'leid-im-detail',
- 'cosmic-extinction':'kosmisches-leben','history':'geschichte','join-us':'aktiv-werden',
- 'social-media-channels':'social-media','contact':'kontakt','donate':'spenden'}
-PAIR_REV = {v: k for k, v in PAIR.items()}
-KI = set()  # machine-translated pages: translation is a separate step (content/_translation-pending)
-ORIGINAL = {'en': 'https://www.proextinction.com/{}', 'de': 'https://sites.google.com/view/proextinctionwebsitegerman/{}'}
-ORIG_DE_SLUG = {'vollstaendiges-faq': 'vollständiges-faq'}
-ORIG_EN_SLUG = {'home': 'home'}
+ORIGINAL = {'en': 'https://www.proextinction.com/{}', 'de': 'https://sites.google.com/view/proextinctionwebsitegerman/{}',
+            'pl': 'https://sites.google.com/view/proextinction-website-polish/{}',
+            'es': 'https://sites.google.com/view/proextinction-website-spanish/{}',
+            'it': 'https://sites.google.com/view/proextinction-website-italian/{}'}
+AI = {l: {s for s, _, _, o in SITE[l] if o is None} for l in LANGS}
+PAGES = {l: [(s, KINDS.get(e, 'doc')) for s, e, _, _ in SITE[l]] for l in LANGS}
+NAV = {l: {s: lab + (AI_MARK if s in AI[l] else '') for s, _, lab, _ in SITE[l]} for l in LANGS}
+EN_OF = {l: {s: e for s, e, _, _ in SITE[l]} for l in LANGS}          # slug -> English slug
+OF_EN = {l: {e: s for s, e, _, _ in SITE[l] if e} for l in LANGS}     # English slug -> slug
+ORIG = {l: {s: o for s, _, _, o in SITE[l]} for l in LANGS}
+
+def counterpart(lang, slug, other):
+    """Slug of the same page in another language, or 'home'."""
+    return OF_EN[other].get(EN_OF[lang].get(slug) or '', 'home')
 
 T = {
  'en': dict(menu='Menu', skip='Skip to content', lang='Language', theme='Switch light/dark mode',
@@ -49,7 +85,7 @@ T = {
   mission_text='Preventing as much suffering as physically possible, without tradeoffs.',
   effort='Effort', questions='Questions?', questions_text='Contact info@proextinction.com to get more information on the project',
   action='Take action', toc='On this page', abridged='Preview: the long list of channels is left out in this concept. The full list is on the current site:',
-  abridged_link='Open the full page', ki='Machine-translated from English (AI). The German original site does not have this page. Abridged preview.',
+  abridged_link='Open the full page', ki='Machine-translated from English (AI).',
   ki_tag='AI', back='Concepts', back_title='Back to the concept overview', progress='Reading progress', home_link='Pro Extinction – home',
   efforts=['Growing the movement to make it possible to prevent billions of years of suffering.',
    'Universal, non-discriminatory help for as many victims as physically possible. For animals, as much extraterrestrial life as possible, and humans.',
@@ -62,16 +98,57 @@ T = {
   mission_text='Wir zielen darauf ab, ohne Kompromisse, so viel Leid wie möglich zu beenden.',
   effort='Einsatz', questions='Fragen?', questions_text='Kontaktiere info@proextinction.com, um mehr Informationen zu bekommen.',
   action='Mach mit', toc='Auf dieser Seite', abridged='Vorschau: die lange Kanalliste ist in diesem Konzept weggelassen. Die vollständige Liste steht auf der aktuellen Seite:',
-  abridged_link='Vollständige Seite öffnen', ki='Automatisch aus dem Englischen übersetzt (KI). Die deutsche Originalseite hat diese Seite nicht. Gekürzte Vorschau.',
-  ki_tag='KI', back='Konzepte', back_title='Zurück zur Konzeptübersicht', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
+  abridged_link='Vollständige Seite öffnen', ki='KI-Übersetzung aus dem Englischen. Die deutsche Originalseite hat diese Seite nicht.',
+  ki_tag='AI', back='Konzepte', back_title='Zurück zur Konzeptübersicht', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
   efforts=['Wir vergrößern die Bewegung, um unzählige Jahre Leid zu verhindern.',
    'Universelle, nicht diskriminierende Hilfe für so viele Opfer wie physisch möglich. Für Tiere, so viel außerirdisches Leben wie möglich und Menschen.',
    'Wir sind strikt handlungsorientiert, anstatt auf Kosten der Opfer nur über das extreme Leid zu klagen.',
    'Wir sind völlig rational, empathisch, atheistisch, logisch und fair.'],
   foot='Pro Extinction · Global · +44 7557095418', page_title='Pro Extinction'),
+ 'pl': dict(menu='Menu', skip='Przejdź do treści', lang='Język', theme='Przełącz tryb jasny/ciemny',
+  tagline='Together, we end suffering.', sub='Organizacja działająca na rzecz położenia kresu przymusowemu istnieniu i cierpieniu',
+  cta1='Dołącz', cta2='Przeczytaj komunikat', mission='Nasza misja',
+  mission_text='Zapobieganie cierpieniu w jak największym stopniu, bez żadnych kompromisów.',
+  effort='Działanie', questions='Pytania?', questions_text='Skontaktuj się z info@proextinction.com, aby uzyskać więcej informacji na temat projektu',
+  action='Dołącz', toc='Na tej stronie', abridged='Podgląd: w tym koncepcie pominięto długą listę kanałów. Pełna lista jest na obecnej stronie:',
+  abridged_link='Otwórz pełną stronę', ki='Tłumaczenie maszynowe z angielskiego (AI). Polska wersja strony nie ma tej podstrony.',
+  ki_tag='AI', back='Koncepty', back_title='Powrót do przeglądu konceptów', progress='Postęp czytania', home_link='Pro Extinction – strona główna',
+  efforts=['Rozwój ruchu, aby umożliwić zapobieżenie miliardom lat cierpienia.',
+   'Powszechna, niedyskryminująca pomoc dla jak największej liczby ofiar, na ile to fizycznie możliwe. Dla zwierząt, jak największej liczby form życia więcej niż ziemskiego (czyli wszędzie, gdzie życie może zostać zapobiegnięte od zaistnienia cierpienia w kosmosie) oraz dla ludzi.',
+   'Działania oparte wyłącznie na zorganizowanym działaniu/aktywizmie. Żadnego użalania się nad losem ofiar.',
+   'W pełni racjonalne, empatyczne, ateistyczne, logiczne i sprawiedliwe.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'es': dict(menu='Menú', skip='Ir al contenido', lang='Idioma', theme='Cambiar modo claro/oscuro',
+  tagline='Together, we end suffering.', sub='Organización dedicada a poner fin a la existencia impuesta y a su sufrimiento',
+  cta1='Únete', cta2='Leer el manifiesto', mission='Nuestra misión',
+  mission_text='Minimizar al máximo el sufrimiento, sin concesiones.',
+  effort='Línea de acción', questions='¿Preguntas?', questions_text='Contacta con info@proextinction.com para obtener más información sobre el proyecto.',
+  action='Actúa', toc='En esta página', abridged='Vista previa: este concepto omite la larga lista de canales. La lista completa está en la web actual:',
+  abridged_link='Abrir la página completa', ki='Traducción automática del inglés (AI). La web original en español no tiene esta página.',
+  ki_tag='AI', back='Conceptos', back_title='Volver a la vista general de conceptos', progress='Progreso de lectura', home_link='Pro Extinction – página inicial',
+  efforts=['Impulsar un crecimiento estratégico del movimiento que permita intervenir de forma efectiva sobre las causas estructurales del sufrimiento y prevenir su perpetuación a gran escala.',
+   'Promover un alivio universal, no discriminatorio y basado en criterios de sufrimiento, dirigido al mayor número posible de víctimas: animales no humanos, cualquier forma de vida potencialmente sintiente fuera de la Tierra y la humanidad.',
+   'Desarrollar un activismo organizado, disciplinado y orientado a resultados, centrado exclusivamente en la reducción del sufrimiento, sin concesiones emocionales ni discursos que lo perpetúen.',
+   'Sostener el movimiento sobre principios estrictamente racionales, empáticos y coherentes, libres de dogmas, creencias infundadas o sesgos arbitrarios, con un compromiso firme con la justicia y la lógica.'],
+  foot='Pro Extinction · Global · +44 7557095418', page_title='Pro Extinction'),
+ 'it': dict(menu='Menu', skip='Vai al contenuto', lang='Lingua', theme='Cambia modalità chiara/scura',
+  tagline='Together, we end suffering.', sub="L'organizzazione dedicata a porre fine all'esistenza forzata e alla sofferenza.",
+  cta1='Unisciti a noi', cta2='Leggi il manifesto', mission='La nostra missione',
+  mission_text='Prevenire quanta più sofferenza sia fisicamente possibile, senza compromessi.',
+  effort='Obiettivo', questions='Domande?', questions_text='Contatta info@proextinction.com per ottenere più informazioni sul progetto',
+  action='Agisci', toc='In questa pagina', abridged="Anteprima: questo concept omette il lungo elenco dei canali. L'elenco completo è sul sito attuale:",
+  abridged_link='Apri la pagina completa', ki="Traduzione automatica dall'inglese (AI). Il sito originale in italiano non ha questa pagina.",
+  ki_tag='AI', back='Concept', back_title='Torna alla panoramica dei concept', progress='Avanzamento lettura', home_link='Pro Extinction – home',
+  efforts=['Crescere il movimento per rendere possibile la prevenzione di miliardi di anni di sofferenza.',
+   'Aiuto universale, non-discriminatorio per quante più vittime sia fisicamente possibile. Per gli animali, quanta più vita extraterrestre possibile, e gli umani.',
+   'Basato esclusivamente su azioni/attivismo organizzati. Nessun lamento a spese delle vittime.',
+   'Pienamente razionale, empatico, ateo, logico, e giusto.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
 }
 DISCORD = 'https://discord.gg/nb2K8y846R'
-WHATSAPP = 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs'
+WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
+            'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
+            'es': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG'}  # as linked on each original site
 EMAIL = 'info@proextinction.com'
 
 CONCEPTS = {
@@ -105,23 +182,27 @@ def render_blocks(blocks, used):
             out.append(f'<p>{linkify(b[1])}</p>')
     return '\n'.join(out), toc
 
-def head_lede(lines):
+def head_lede(lines, like=None):
+    """Title, optional lede, rest. like: English lines that a translation mirrors (decides the structure)."""
+    like = like or lines
     title, rest = lines[0], lines[1:]
     lede = None
     from blocks import is_heading
-    if len(rest) > 1 and len(rest[0]) <= 90 and not rest[0].endswith('?') \
-            and (rest[0].endswith('.') or is_heading(rest[0])) and is_heading(rest[1]) and not rest[1].endswith('?'):
+    r = like[1:]
+    if len(r) > 1 and len(r[0]) <= 90 and not r[0].endswith('?') \
+            and (r[0].endswith('.') or is_heading(r[0])) and is_heading(r[1]) and not r[1].endswith('?'):
         lede, rest = rest[0].rstrip(':'), rest[1:]
     return title, lede, rest
 
-def doc_body(lang, slug, lines, full_url):
+def doc_body(lang, slug, lines, full_url, like=None):
     t = T[lang]; used = set()
-    title, lede, rest = head_lede(lines)
+    title, lede, rest = head_lede(lines, like)
+    rest_like = like[len(lines) - len(rest):] if like else None
     kind = 'doc'; truncated = False
     if slug in ('social-media-channels',):
-        bl = blocks_of(rest)[:2]; truncated = True
+        bl = blocks_of(rest, rest_like)[:2]; truncated = True
     else:
-        bl = blocks_of(rest)
+        bl = blocks_of(rest, rest_like)
     body, toc = render_blocks(bl, used)
     return title, lede, body, toc, truncated
 
@@ -141,10 +222,15 @@ def sitenav(lang, slug):
     items = ''.join('<li><a href="%s.html"%s>%s</a></li>' % (s_, cur if s_ == slug else '', esc(NAV[lang][s_])) for s_, _ in PAGES[lang])
     return f'<nav class="sitenav" id="sitenav" aria-label="Main"><ul>{items}</ul></nav>'
 
+def lang_select(lang, url):
+    """Language picker. url(other_lang) gives each option's target; site.js / present.js navigate on change."""
+    t = T[lang]
+    opts = ''.join(f'<option value="{url(l)}" lang="{l}"{" selected" if l == lang else ""}>{l.upper()} · {LANG_NAME[l]}</option>' for l in LANGS)
+    return f'<label class="lang-wrap"><span class="lang" aria-hidden="true">{lang.upper()}</span><select class="lang-select" aria-label="{t["lang"]}">{opts}</select></label>'
+
 def header(c, lang, slug, ctx):
-    t = T[lang]; other = 'de' if lang == 'en' else 'en'
-    other_slug = (PAIR[slug] if lang == 'en' else PAIR_REV.get(slug, 'home'))
-    if other == 'de' and other_slug not in NAV['de']: other_slug = 'home'
+    t = T[lang]
+    picker = lang_select(lang, lambda l: f'../{l}/{counterpart(lang, slug, l)}.html')
     return f'''<a class="skip" href="#main">{t["skip"]}</a>
 <div class="progress" aria-hidden="true"><i></i></div>
 <header class="top">
@@ -153,7 +239,7 @@ def header(c, lang, slug, ctx):
     <a class="back" href="../../index.html" title="{t["back_title"]}"><span aria-hidden="true">←</span><span class="back-t">{t["back"]}</span></a>
   </div>
   <div class="tools">
-    <a class="lang" href="../{other}/{other_slug}.html" hreflang="{other}" lang="{other}" aria-label="{t["lang"]}: {other.upper()}">{other.upper()}</a>
+    {picker}
     <button class="theme" type="button" aria-label="{t["theme"]}" title="{t["theme"]}"><span></span></button>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitenav"><span class="bars" aria-hidden="true"></span><span class="menu-t">{t["menu"]}</span></button>
   </div>
@@ -165,24 +251,26 @@ def footer(lang):
   <hr class="slash">
   <h2>{t["action"]}</h2>
   <p class="cta-sub">{t["tagline"]}</p>
-  <p class="cta-links"><a class="btn primary" href="{DISCORD}" rel="noopener">Discord</a><a class="btn" href="{WHATSAPP}" rel="noopener">WhatsApp</a><a class="btn" href="mailto:{EMAIL}">{EMAIL}</a></p>
+  <p class="cta-links"><a class="btn primary" href="{DISCORD}" rel="noopener">Discord</a><a class="btn" href="{WHATSAPP[lang]}" rel="noopener">WhatsApp</a><a class="btn" href="mailto:{EMAIL}">{EMAIL}</a></p>
 </section>
 <footer class="foot"><p class="mono">{t["foot"]}</p></footer>'''
 
 def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     """Title and <main> content of one page (shared by the multi-page prototype and the single-file presentation)."""
     t = T[lang]
-    ki = lang == 'de' and slug in KI
+    ki = slug in AI[lang]
     if kind == 'home':
         return NAV[lang]['home'], home_main(lang, href), 'home'
     lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text(encoding='utf-8'))
     if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines)
-    else: title, lede, body, toc, truncated = doc_body(lang, slug, lines, '')
-    if lang == 'en': orig = ORIGINAL['en'].format(slug)
-    else: orig = ORIGINAL['de'].format(urllib.parse.quote(ORIG_DE_SLUG.get(slug, slug)))
+    else:
+        like = json.loads((ROOT / 'content' / 'en' / f'{EN_OF[lang][slug]}.json').read_text(encoding='utf-8')) if ki else None
+        title, lede, body, toc, truncated = doc_body(lang, EN_OF[lang][slug], lines, '', like)
+    if ki: orig = ORIGINAL['en'].format(EN_OF[lang][slug])
+    else: orig = ORIGINAL[lang].format(urllib.parse.quote(ORIG[lang][slug]))
     notes = ''
     if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
-    elif truncated: notes += f'<p class="note">{t["abridged"]} <a href="{orig}" rel="noopener">{t["abridged_link"]}</a></p>'
+    if truncated: notes += f'<p class="note">{t["abridged"]} <a href="{orig}" rel="noopener">{t["abridged_link"]}</a></p>'
     toc_html = ''
     if len(toc) > 1:
         toc_html = f'<nav class="toc" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>' + ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc) + '</ol></nav>'
@@ -193,7 +281,6 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
 def page_html(c, lang, slug, kind):
     t = T[lang]; cdef = CONCEPTS[c]
     title, main, body_class = page_main(lang, slug, kind)
-    other = 'de' if lang == 'en' else 'en'
     return f'''<!doctype html>
 <html lang="{lang}" data-concept="{c}" data-default="{cdef["mode"]}">
 <head>
@@ -229,7 +316,7 @@ def home_main(lang, href=lambda s: s + '.html'):
   <h1 class="wordmark">PRO EXTINCTION</h1>
   <p class="hero-tag">{t["tagline"]}</p>
   <p class="hero-sub">{esc(t["sub"])}</p>
-  <p class="hero-cta"><a class="btn primary" href="{href('aktiv-werden' if lang=='de' else 'join-us')}">{t["cta1"]}</a><a class="btn" href="{href('manifest' if lang=='de' else 'manifesto')}">{t["cta2"]}</a></p>
+  <p class="hero-cta"><a class="btn primary" href="{href(OF_EN[lang]['join-us'])}">{t["cta1"]}</a><a class="btn" href="{href(OF_EN[lang]['manifesto'])}">{t["cta2"]}</a></p>
 </section>
 <section class="mission"><hr class="slash"><p class="mono kicker">{t["mission"]}</p><blockquote>{esc(t["mission_text"])}</blockquote></section>
 <section class="efforts"><ol>{efforts}</ol></section>
@@ -253,7 +340,7 @@ def build():
         css = css_base + '\n' + (ROOT / 'brand' / c / 'tokens.css').read_text(encoding='utf-8') + '\n' + (ROOT / f'tools/css/{c[0]}.css').read_text(encoding='utf-8') + '\n' + logo_css()
         (OUT / c).mkdir(parents=True, exist_ok=True)
         (OUT / c / 'style.css').write_text(css, encoding='utf-8')
-        for lang in ('en', 'de'):
+        for lang in LANGS:
             d = OUT / c / lang; d.mkdir(exist_ok=True)
             for slug, kind in PAGES[lang]:
                 (d / f'{slug}.html').write_text(page_html(c, lang, slug, kind), encoding='utf-8')
@@ -272,11 +359,12 @@ h1{font:600 clamp(2rem,6vw,3.4rem)/1 "Arial Narrow",Impact,sans-serif;text-trans
 p{color:var(--muted)}li{border-top:1px solid var(--line);padding:1.2rem 0;list-style:none}ul{padding:0;margin:2rem 0}
 h2{font:600 1.5rem "Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0 0 .3rem}a{color:var(--accent);margin-right:1.2rem}</style></head>
 <body><h1>Pro Extinction – design concepts</h1>
-<p>Three directions for the redesign. All have a light/dark switch (button top right), EN and DE. Preview build with abridged texts.</p>
+<p>Three directions for the redesign. All have a light/dark switch (button top right) and five languages. Pages marked (AI) are machine-translated from English.</p>
 <ul>
-<li><h2>A · Ember</h2><p>Angular, editorial, asymmetric. Red/black/silver, serif body text.</p><a href="a-ember/en/home.html">English</a><a href="a-ember/de/home.html">Deutsch</a></li>
-<li><h2>B · Poster</h2><p>Angular, centred, loud. Red/black/silver, sans-serif body text.</p><a href="b-poster/en/home.html">English</a><a href="b-poster/de/home.html">Deutsch</a></li>
-<li><h2>C · Ring</h2><p>Round, sepia and ink, editorial. Serif body text.</p><a href="c-ring/en/home.html">English</a><a href="c-ring/de/home.html">Deutsch</a></li>
+<li><h2>A · Ember</h2><p>Angular, editorial, asymmetric. Red/black/silver, serif body text.</p>%s</li>
+<li><h2>B · Poster</h2><p>Angular, centred, loud. Red/black/silver, sans-serif body text.</p>%s</li>
+<li><h2>C · Ring</h2><p>Round, sepia and ink, editorial. Serif body text.</p>%s</li>
 </ul></body></html>
 '''
-(OUT / 'index.html').write_text(INDEX, encoding='utf-8')
+LINKS = lambda c: ''.join(f'<a href="{c}/{l}/home.html">{LANG_NAME[l]}</a>' for l in LANGS)
+(OUT / 'index.html').write_text(INDEX % tuple(LINKS(c) for c in CONCEPTS), encoding='utf-8')

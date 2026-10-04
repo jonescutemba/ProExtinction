@@ -1,4 +1,4 @@
-"""Build presentation/index.html: ONE self-contained page with all three concepts, EN + DE, light/dark."""
+"""Build presentation/index.html: ONE self-contained page with all three concepts, five languages, light/dark."""
 import json, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import build as B
@@ -7,7 +7,10 @@ ROOT = B.ROOT; esc = B.esc
 FONTS = ('family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400'
          '&family=Anton&family=Barlow:wght@400;500;600&family=Bebas+Neue'
          '&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500')
-DRAFT = {'en': 'Draft · design options for review · not live', 'de': 'Entwurf · Designvarianten zur Auswahl · nicht live'}
+DRAFT = {'en': 'Draft · design options for review · not live', 'de': 'Entwurf · Designvarianten zur Auswahl · nicht live',
+         'pl': 'Wersja robocza · warianty projektu do wyboru · nie jest opublikowana',
+         'es': 'Borrador · opciones de diseño para revisar · no publicado',
+         'it': 'Bozza · opzioni di design da valutare · non pubblicato'}
 
 def nav(lang):
     items = ''.join('<li><a href="#/%s/%s" data-slug="%s">%s</a></li>' % (lang, s, s, esc(B.NAV[lang][s])) for s, _ in B.PAGES[lang])
@@ -15,7 +18,7 @@ def nav(lang):
 
 def build():
     views, navs, tails = [], [], []
-    for lang in ('en', 'de'):
+    for lang in B.LANGS:
         navs.append(nav(lang))
         for slug, kind in B.PAGES[lang]:
             B.ID_PREFIX = f'{lang}-{slug}-'
@@ -26,7 +29,7 @@ def build():
     logo = B.logo_css()
     styles = f'<style id="logo">\n{logo}</style>\n' + ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text(encoding="utf-8").replace(logo, "")}\n</style>\n' for c in B.CONCEPTS)
     switch = ''.join(f'<button type="button" data-concept="{c}" aria-pressed="false" title="{B.CONCEPTS[c]["name"]}"><span class="k">{c[0].upper()}</span><span class="n">{B.CONCEPTS[c]["name"]}</span></button>' for c in B.CONCEPTS)
-    pair = json.dumps({'en2de': {k: v for k, v in B.PAIR.items() if v in B.NAV['de']}, 'de2en': {v: k for k, v in B.PAIR.items() if v in B.NAV['de']}})
+    pair = json.dumps({'en_of': B.EN_OF, 'of_en': B.OF_EN, 'ui': {l: {'menu': B.T[l]['menu'], 'lang': B.T[l]['lang'], 'home': B.T[l]['home_link']} for l in B.LANGS}}, ensure_ascii=False)
     js = (ROOT / 'tools' / 'present.js').read_text(encoding='utf-8')
     page = f'''<!doctype html>
 <html lang="en" data-concept="a-ember" data-default="dark">
@@ -51,7 +54,7 @@ d.dataset.theme=(t==='light'||t==='dark')?t:(c==='c-ring'?'light':'dark')}})()</
   <div class="lead"><a class="brand" href="#/en/home" aria-label="Pro Extinction – home"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a></div>
   <div class="tools">
     <div class="concepts" role="group" aria-label="Design option">{switch}</div>
-    <a class="lang" href="#/de/home" hreflang="de" lang="de" aria-label="Language: DE">DE</a>
+    {B.lang_select('en', lambda l: f'#/{l}/home')}
     <button class="theme" type="button" aria-label="Switch light/dark mode" title="Switch light/dark mode"><span></span></button>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-en"><span class="bars" aria-hidden="true"></span><span class="menu-t">Menu</span></button>
   </div>

@@ -1,15 +1,16 @@
 # Pro Extinction · Website-Redesign (Konzeptphase)
 
-Drei Designkonzepte für die Seite, jeweils EN und DE, Hell und Dunkel.
+Drei Designkonzepte für die Seite, in fünf Sprachen (EN, DE, PL, ES, IT), Hell und Dunkel.
 **Die Konzeptwahl steht noch aus:** `DECISIONS.md`.
 
 | Pfad | Inhalt |
 |---|---|
-| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** alle drei Designs, EN/DE, Hell/Dunkel, per Umschalter oben rechts. Schriften lokal in `fonts/` |
+| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** alle drei Designs, fünf Sprachen, Hell/Dunkel, per Umschalter oben rechts. Schriften lokal in `fonts/` |
 | `DEPLOY.md`, `vercel.json` | Livegang auf Vercel, Checkliste |
 | `concepts/index.html` | Vorläufer: die drei Konzepte als getrennte Mehrseiten-Prototypen |
 | `brand/` | je Konzept ein Brand Kit (Tokens, `BRAND.md`, Referenzseiten) |
-| `content/` | gescrapter Originaltext als JSON (`en/`, `de/`); `_translation-pending/` = Entwürfe, nicht eingebaut |
+| `content/` | Text als JSON pro Sprache (`en/ de/ pl/ es/ it/`): Originaltext der jeweiligen Sprachseite plus KI-Übersetzungen der fehlenden Seiten (welche das sind, steht in `SITE` in `tools/build.py`) |
+| `raw/` | Rohtext der Google-Sites-Seiten PL/ES/IT (`tools/scrape.py`, dann `tools/parse_raw.py`) |
 | `tools/` | Generator: `build.py` (Seiten), `kit.py` (Kits), `blocks.py`, `parse.py`, CSS-Quellen |
 | `DECISIONS.md` | was entschieden und was offen ist |
 
@@ -18,7 +19,7 @@ Das ist ein Prototyp: Google-Fonts-Einbindung und Auszüge/Platzhalter sind noch
 
 ## Präsentationsseite für Kunden
 `presentation/index.html` ist **eine Seite** mit allen Ansichten (kein Server nötig; `fonts/` muss daneben liegen). Livegang: siehe `DEPLOY.md`.
-Oben rechts: **A Ember · B Poster · C Ring** (Design), **EN/DE** (Sprache), **Hell/Dunkel**. Die Auswahl bleibt gespeichert.
+Oben rechts: **A Ember · B Poster · C Ring** (Design), **EN ▾** (Sprachauswahl; Seiten mit "(AI)" sind KI-Übersetzungen aus dem Englischen), **Hell/Dunkel**. Die Auswahl bleibt gespeichert.
 
 Direktlinks für einzelne Varianten (an die Adresse hängen):
 - Design: `?concept=a`, `?concept=b` oder `?concept=c` · Modus: `&theme=light` oder `&theme=dark`

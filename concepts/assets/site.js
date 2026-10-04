@@ -6,6 +6,8 @@
     d.dataset.theme = next;
     try { localStorage.setItem('pe-theme', next); } catch (e) {}
   });
+  var langSel = document.querySelector('.lang-select');
+  if (langSel) langSel.addEventListener('change', function () { location.href = langSel.value; });
   // The OS setting "reduce motion" switches the logo effect off. For testing it can be overridden: add ?motion=on (or ?motion=off to undo).
   try {
     var mp = new URLSearchParams(location.search).get('motion');

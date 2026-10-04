@@ -216,7 +216,7 @@ abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, 
 | Call-to-Action | Discord (primär), WhatsApp, E-Mail; am Seitenende jeder Seite |
 | Schrägstrich | Signatur: Trenner, Fortschrittsbalken (oben, 4 px), Hover; immer `--accent` |
 | Scrollbars | 8 px, `--accent` (Seite); in Leisten 6 px, `--accent-dim` (58 % Akzent), Hover `--accent` |
-| Umschalter | Sprache (EN/DE) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
+| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
 
 ## 7. Formate
 Nur Website, responsiv. Keine Thumbnails, Slides oder PDFs in dieser Runde.
@@ -224,7 +224,7 @@ Nur Website, responsiv. Keine Thumbnails, Slides oder PDFs in dieser Runde.
 ## 8. Text
 Deutsch mit „du", sachlich und direkt. Der Originaltext der Bewegung bleibt wörtlich
 (nur Tippfehler korrigiert). Neu geschrieben werden nur Buttons, Zwischenüberschriften und
-Hinweise. Fehlende deutsche Seiten: KI-Übersetzung, **sichtbar gekennzeichnet** („KI").
+Hinweise. Fehlende Seiten in DE, PL, ES und IT: KI-Übersetzung aus dem Englischen, **sichtbar gekennzeichnet** („(AI)" im Menütitel plus Hinweis auf der Seite).
 Gut: „Wir wollen so viel Leid wie möglich beenden, ohne Kompromisse."
 Schlecht: „Gemeinsam für eine bessere Welt voller Hoffnung!"
 Verboten in neu geschriebenen Texten: „revolutionär", „bahnbrechend", „Reise", „Community"

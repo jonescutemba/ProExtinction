@@ -1,4 +1,4 @@
-/* Single-page presentation: concept switcher, light/dark, EN/DE, hash router, and the per-view behaviours. */
+/* Single-page presentation: concept switcher, light/dark, languages, hash router, and the per-view behaviours. */
 (function () {
   var d = document.documentElement;
   var CONCEPTS = { 'a-ember': { n: 'Ember', mode: 'dark' }, 'b-poster': { n: 'Poster', mode: 'dark' }, 'c-ring': { n: 'Ring', mode: 'light' } };
@@ -40,17 +40,17 @@
   // ---- router
   var views = {}; [].forEach.call(document.querySelectorAll('.view'), function (v) { views[v.dataset.view] = v; });
   var navs = [].slice.call(document.querySelectorAll('.sitenav'));
-  var langLink = document.querySelector('.lang'), brand = document.querySelector('.brand');
+  var langCode = document.querySelector('.lang'), langSel = document.querySelector('.lang-select'), brand = document.querySelector('.brand');
   var langBlocks = [].slice.call(document.querySelectorAll('[data-lang]'));
   var PAIR = JSON.parse(document.getElementById('pair-map').textContent);
   var current = null, curKey = '';
-  function parse() { var m = /^#\/(en|de)\/([\w-]+)/.exec(location.hash); return m ? { lang: m[1], slug: m[2] } : null; }
+  function parse() { var m = /^#\/(en|de|pl|es|it)\/([\w-]+)/.exec(location.hash); return m ? { lang: m[1], slug: m[2] } : null; }
   function updateTitle() {
     var v = views[curKey]; document.title = (v ? v.dataset.title + ' – ' : '') + 'Pro Extinction · ' + (CONCEPTS[d.dataset.concept] || {}).n;
   }
   function show() {
     var r = parse();
-    if (!r) { if (current) return; r = { lang: store('pe-lang') === 'de' ? 'de' : 'en', slug: 'home' }; }
+    if (!r) { if (current) return; var sl = store('pe-lang'); r = { lang: PAIR.ui[sl] ? sl : 'en', slug: 'home' }; }
     var key = r.lang + '/' + r.slug;
     if (!views[key]) { r = { lang: r.lang, slug: 'home' }; key = r.lang + '/home'; history.replaceState(null, '', '#/' + key); }
     var changed = key !== curKey;
@@ -61,19 +61,22 @@
       [].forEach.call(n.querySelectorAll('a'), function (a) { if (a.dataset.slug === r.slug) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     });
     langBlocks.forEach(function (b) { if (b.dataset.lang && !b.classList.contains('sitenav')) b.hidden = b.dataset.lang !== r.lang; });
-    var other = r.lang === 'en' ? 'de' : 'en';
-    var otherSlug = r.lang === 'en' ? (PAIR.en2de[r.slug] || 'home') : (PAIR.de2en[r.slug] || 'home');
-    if (!views[other + '/' + otherSlug]) otherSlug = 'home';
-    langLink.href = '#/' + other + '/' + otherSlug; langLink.textContent = other.toUpperCase(); langLink.lang = other; langLink.hreflang = other;
-    langLink.setAttribute('aria-label', (r.lang === 'en' ? 'Language' : 'Sprache') + ': ' + other.toUpperCase());
-    brand.href = '#/' + r.lang + '/home';
+    var en = PAIR.en_of[r.lang][r.slug];
+    [].forEach.call(langSel.options, function (o) {
+      var l = o.lang, s = (en && PAIR.of_en[l][en]) || 'home';
+      if (!views[l + '/' + s]) s = 'home';
+      o.value = '#/' + l + '/' + s; o.selected = l === r.lang;
+    });
+    langCode.textContent = r.lang.toUpperCase(); langSel.setAttribute('aria-label', PAIR.ui[r.lang].lang);
+    brand.href = '#/' + r.lang + '/home'; brand.setAttribute('aria-label', PAIR.ui[r.lang].home);
     var mb = document.querySelector('.menu-toggle');
-    if (mb) { mb.setAttribute('aria-controls', 'nav-' + r.lang); mb.querySelector('.menu-t').textContent = r.lang === 'de' ? 'Menü' : 'Menu'; }
+    if (mb) { mb.setAttribute('aria-controls', 'nav-' + r.lang); mb.querySelector('.menu-t').textContent = PAIR.ui[r.lang].menu; }
     updateTitle();
     if (changed) { d.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); d.style.scrollBehavior = ''; }
     bindToc(); railMore(); bindLogos();
   }
   window.addEventListener('hashchange', show);
+  langSel.addEventListener('change', function () { location.hash = langSel.value; });
 
 
   // ---- expandable menu below 1000px
