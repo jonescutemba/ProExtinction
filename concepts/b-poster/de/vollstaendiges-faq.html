@@ -8,7 +8,7 @@
 <script>(function(){var d=document.documentElement,m=null;try{m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pe-theme')}catch(e){}
 if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':d.dataset.default)}d.dataset.theme=m})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body class="page">
@@ -20,7 +20,7 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
     <a class="back" href="../../index.html" title="Zurück zur Konzeptübersicht"><span aria-hidden="true">←</span><span class="back-t">Konzepte</span></a>
   </div>
   <div class="tools">
-    <label class="lang-wrap"><span class="lang" aria-hidden="true">DE</span><select class="lang-select" aria-label="Sprache"><option value="../en/full-faq.html" lang="en">EN · English</option><option value="../de/vollstaendiges-faq.html" lang="de" selected>DE · Deutsch</option><option value="../pl/full-faq.html" lang="pl">PL · Polski</option><option value="../es/pmf-completas.html" lang="es">ES · Español</option><option value="../it/faq-completo.html" lang="it">IT · Italiano</option></select></label>
+    <label class="lang-wrap"><span class="lang" aria-hidden="true">DE</span><select class="lang-select" aria-label="Sprache"><option value="../en/full-faq.html" lang="en">EN · English</option><option value="../de/vollstaendiges-faq.html" lang="de" selected>DE · Deutsch</option><option value="../pl/full-faq.html" lang="pl">PL · Polski</option><option value="../es/pmf-completas.html" lang="es">ES · Español</option><option value="../it/faq-completo.html" lang="it">IT · Italiano</option><option value="../fr/full-faq.html" lang="fr">FR (AI) · Français</option><option value="../pt/full-faq.html" lang="pt">PT (AI) · Português</option><option value="../ru/full-faq.html" lang="ru">RU (AI) · Русский</option><option value="../zh/full-faq.html" lang="zh">ZH (AI) · 中文</option><option value="../hi/full-faq.html" lang="hi">HI (AI) · हिन्दी</option></select></label>
     <button class="theme" type="button" aria-label="Hell/Dunkel umschalten" title="Hell/Dunkel umschalten"><span></span></button>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitenav"><span class="bars" aria-hidden="true"></span><span class="menu-t">Menü</span></button>
   </div>

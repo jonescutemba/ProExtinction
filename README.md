@@ -1,11 +1,11 @@
 # Pro Extinction · Website-Redesign (Konzeptphase)
 
-Drei Designkonzepte für die Seite, in fünf Sprachen (EN, DE, PL, ES, IT), Hell und Dunkel.
+Drei Designkonzepte für die Seite, in zehn Sprachen (EN, DE, PL, ES, IT sowie die komplett KI-übersetzten FR, PT, RU, ZH, HI), Hell und Dunkel.
 **Die Konzeptwahl steht noch aus:** `DECISIONS.md`.
 
 | Pfad | Inhalt |
 |---|---|
-| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** alle drei Designs, fünf Sprachen, Hell/Dunkel, per Umschalter oben rechts. Schriften lokal in `fonts/` |
+| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** alle drei Designs, zehn Sprachen, Hell/Dunkel, per Umschalter oben rechts. Schriften lokal in `fonts/` |
 | `DEPLOY.md`, `vercel.json` | Livegang auf Vercel, Checkliste |
 | `concepts/index.html` | Vorläufer: die drei Konzepte als getrennte Mehrseiten-Prototypen |
 | `brand/` | je Konzept ein Brand Kit (Tokens, `BRAND.md`, Referenzseiten) |

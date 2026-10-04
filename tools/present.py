@@ -1,4 +1,4 @@
-"""Build presentation/index.html: ONE self-contained page with all three concepts, five languages, light/dark."""
+"""Build presentation/index.html: ONE self-contained page with all three concepts, all languages, light/dark."""
 import json, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import build as B
@@ -10,11 +10,16 @@ FONTS = ('family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..7
 DRAFT = {'en': 'Draft · design options for review · not live', 'de': 'Entwurf · Designvarianten zur Auswahl · nicht live',
          'pl': 'Wersja robocza · warianty projektu do wyboru · nie jest opublikowana',
          'es': 'Borrador · opciones de diseño para revisar · no publicado',
-         'it': 'Bozza · opzioni di design da valutare · non pubblicato'}
+         'it': 'Bozza · opzioni di design da valutare · non pubblicato',
+         'fr': 'Brouillon · options de design à évaluer · pas en ligne',
+         'pt': 'Rascunho · opções de design para avaliar · não publicado',
+         'ru': 'Черновик · варианты дизайна на выбор · не опубликовано',
+         'zh': '草稿 · 待评审的设计方案 · 未上线',
+         'hi': 'ड्राफ़्ट · समीक्षा के लिए डिज़ाइन विकल्प · लाइव नहीं'}
 
 def nav(lang):
     items = ''.join('<li><a href="#/%s/%s" data-slug="%s">%s</a></li>' % (lang, s, s, esc(B.NAV[lang][s])) for s, _ in B.PAGES[lang])
-    return f'<nav class="sitenav" id="nav-{lang}" aria-label="Main" data-lang="{lang}" hidden><ul>{items}</ul></nav>'
+    return f'<nav class="sitenav" id="nav-{lang}" aria-label="Main" data-lang="{lang}" lang="{lang}" hidden><ul>{items}</ul></nav>'
 
 def build():
     views, navs, tails = [], [], []
@@ -23,13 +28,13 @@ def build():
         for slug, kind in B.PAGES[lang]:
             B.ID_PREFIX = f'{lang}-{slug}-'
             title, main, _ = B.page_main(lang, slug, kind, href=lambda s, l=lang: f'#/{l}/{s}')
-            views.append(f'<section class="view" data-view="{lang}/{slug}" data-title="{esc(title)}" hidden>\n{main}\n</section>')
+            views.append(f'<section class="view" data-view="{lang}/{slug}" lang="{lang}" data-title="{esc(title)}" hidden>\n{main}\n</section>')
         B.ID_PREFIX = ''
-        tails.append(f'<div data-lang="{lang}" hidden>{B.footer(lang).replace(B.T[lang]["foot"], B.T[lang]["foot"] + " · " + DRAFT[lang])}</div>')
+        tails.append(f'<div data-lang="{lang}" lang="{lang}" hidden>{B.footer(lang).replace(B.T[lang]["foot"], B.T[lang]["foot"] + " · " + DRAFT[lang])}</div>')
     logo = B.logo_css()
     styles = f'<style id="logo">\n{logo}</style>\n' + ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text(encoding="utf-8").replace(logo, "")}\n</style>\n' for c in B.CONCEPTS)
     switch = ''.join(f'<button type="button" data-concept="{c}" aria-pressed="false" title="{B.CONCEPTS[c]["name"]}"><span class="k">{c[0].upper()}</span><span class="n">{B.CONCEPTS[c]["name"]}</span></button>' for c in B.CONCEPTS)
-    pair = json.dumps({'en_of': B.EN_OF, 'of_en': B.OF_EN, 'ui': {l: {'menu': B.T[l]['menu'], 'lang': B.T[l]['lang'], 'home': B.T[l]['home_link']} for l in B.LANGS}}, ensure_ascii=False)
+    pair = json.dumps({'en_of': B.EN_OF, 'of_en': B.OF_EN, 'ui': {l: {'code': B.CODE[l], 'menu': B.T[l]['menu'], 'lang': B.T[l]['lang'], 'home': B.T[l]['home_link']} for l in B.LANGS}}, ensure_ascii=False)
     js = (ROOT / 'tools' / 'present.js').read_text(encoding='utf-8')
     page = f'''<!doctype html>
 <html lang="en" data-concept="a-ember" data-default="dark">

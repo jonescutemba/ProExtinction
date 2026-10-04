@@ -8,7 +8,7 @@
 <script>(function(){var d=document.documentElement,m=null;try{m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pe-theme')}catch(e){}
 if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':d.dataset.default)}d.dataset.theme=m})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body class="home">
@@ -20,7 +20,7 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
     <a class="back" href="../../index.html" title="Torna alla panoramica dei concept"><span aria-hidden="true">←</span><span class="back-t">Concept</span></a>
   </div>
   <div class="tools">
-    <label class="lang-wrap"><span class="lang" aria-hidden="true">IT</span><select class="lang-select" aria-label="Lingua"><option value="../en/home.html" lang="en">EN · English</option><option value="../de/home.html" lang="de">DE · Deutsch</option><option value="../pl/home.html" lang="pl">PL · Polski</option><option value="../es/home.html" lang="es">ES · Español</option><option value="../it/home.html" lang="it" selected>IT · Italiano</option></select></label>
+    <label class="lang-wrap"><span class="lang" aria-hidden="true">IT</span><select class="lang-select" aria-label="Lingua"><option value="../en/home.html" lang="en">EN · English</option><option value="../de/home.html" lang="de">DE · Deutsch</option><option value="../pl/home.html" lang="pl">PL · Polski</option><option value="../es/home.html" lang="es">ES · Español</option><option value="../it/home.html" lang="it" selected>IT · Italiano</option><option value="../fr/home.html" lang="fr">FR (AI) · Français</option><option value="../pt/home.html" lang="pt">PT (AI) · Português</option><option value="../ru/home.html" lang="ru">RU (AI) · Русский</option><option value="../zh/home.html" lang="zh">ZH (AI) · 中文</option><option value="../hi/home.html" lang="hi">HI (AI) · हिन्दी</option></select></label>
     <button class="theme" type="button" aria-label="Cambia modalità chiara/scura" title="Cambia modalità chiara/scura"><span></span></button>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitenav"><span class="bars" aria-hidden="true"></span><span class="menu-t">Menu</span></button>
   </div>

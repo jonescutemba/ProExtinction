@@ -44,7 +44,7 @@
   var langBlocks = [].slice.call(document.querySelectorAll('[data-lang]'));
   var PAIR = JSON.parse(document.getElementById('pair-map').textContent);
   var current = null, curKey = '';
-  function parse() { var m = /^#\/(en|de|pl|es|it)\/([\w-]+)/.exec(location.hash); return m ? { lang: m[1], slug: m[2] } : null; }
+  function parse() { var m = /^#\/([a-z]{2})\/([\w-]+)/.exec(location.hash); return m && PAIR.ui[m[1]] ? { lang: m[1], slug: m[2] } : null; }
   function updateTitle() {
     var v = views[curKey]; document.title = (v ? v.dataset.title + ' – ' : '') + 'Pro Extinction · ' + (CONCEPTS[d.dataset.concept] || {}).n;
   }
@@ -67,7 +67,7 @@
       if (!views[l + '/' + s]) s = 'home';
       o.value = '#/' + l + '/' + s; o.selected = l === r.lang;
     });
-    langCode.textContent = r.lang.toUpperCase(); langSel.setAttribute('aria-label', PAIR.ui[r.lang].lang);
+    langCode.textContent = PAIR.ui[r.lang].code; langSel.setAttribute('aria-label', PAIR.ui[r.lang].lang);
     brand.href = '#/' + r.lang + '/home'; brand.setAttribute('aria-label', PAIR.ui[r.lang].home);
     var mb = document.querySelector('.menu-toggle');
     if (mb) { mb.setAttribute('aria-controls', 'nav-' + r.lang); mb.querySelector('.menu-t').textContent = PAIR.ui[r.lang].menu; }

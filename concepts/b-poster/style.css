@@ -201,12 +201,18 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
   html .sitenav a[aria-current=page]::after{display:none}
 }
 @media (max-width:480px){.menu-t{display:none}.menu-toggle{padding:0 .7rem}}
+/* Chinese and Hindi have no capitals: no tracking (it breaks Devanagari shaping and spreads Chinese apart),
+   no synthetic italics (neither script has real italics), and taller lines so Devanagari vowel signs are not clipped. The Latin wordmark keeps its tracking. */
+:lang(zh) :not(.wordmark),:lang(hi) :not(.wordmark){letter-spacing:0}
+:lang(zh) :is(em,i,blockquote,.lede),:lang(hi) :is(em,i,blockquote,.lede){font-style:normal}
+:lang(hi) :is(h1,h2,h3,.faq summary,.mission blockquote,.sitenav a,.btn){line-height:1.4}
+:lang(zh) :is(h1,h2,h3,.faq summary,.mission blockquote){line-height:1.3}
 
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
    Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
 :root{
-  --display:"Anton",Impact,"Arial Narrow",sans-serif;
+  --display:"Anton","Oswald",Impact,"Arial Narrow",sans-serif;
   --body:"Barlow","Helvetica Neue",Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --display-weight:400;

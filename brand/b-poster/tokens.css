@@ -2,7 +2,7 @@
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
    Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
 :root{
-  --display:"Anton",Impact,"Arial Narrow",sans-serif;
+  --display:"Anton","Oswald",Impact,"Arial Narrow",sans-serif;
   --body:"Barlow","Helvetica Neue",Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --display-weight:400;

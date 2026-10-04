@@ -40,27 +40,29 @@ def abridge(blocks, limit=230):
     while kept and kept[-1][0] == 'h': kept.pop()
     return kept, len(kept) < len(blocks)
 
-def faq_pairs(lines):
+def faq_pairs(lines, like=None):
     """Pairs of (question, [answer paragraphs]); returns (intro_lines, pairs). A numbered line whose number
     goes backwards (1., 2. inside answer 9) is a list inside the answer.
 
     Questions are lines starting with "N." (the source numbers them inconsistently, so the
     number is stripped and re-counted by CSS). Before question 10, short unnumbered lines
     ending in "?" also count (the English source forgets numbers on some early questions).
+    like: the English lines a translation mirrors 1:1; questions are then found in them (Chinese and
+    Hindi have no capitals and end questions with "？" or "।").
     """
     intro, pairs, cur, seen_late, last = [], [], None, False, 0
-    for l in lines:
-        l = l.strip()
+    for t, l in (zip(lines, like) if like else zip(lines, lines)):
+        t, l = t.strip(), l.strip()
         if not l: continue
         m = re.match(r'^(\d+)\.\s*(.+)$', l)
         if m and cur and int(m.group(1)) < last:  # numbering restarts inside an answer: a sub-list, not a question
-            cur[1].append(l)
+            cur[1].append(t)
         elif m:
             last = int(m.group(1))
             if last >= 10: seen_late = True
-            cur = (m.group(2).strip(), []); pairs.append(cur)
+            cur = (re.sub(r'^\d+[.．、]\s*', '', t), []); pairs.append(cur)
         elif (l.endswith('?') or (l.isupper() and '?' in l)) and len(l) <= 62 and l.lstrip('¿¡')[:1].isupper() and not seen_late:
-            cur = (l, []); pairs.append(cur)
-        elif cur: cur[1].append(l)
-        else: intro.append(l)
+            cur = (t, []); pairs.append(cur)
+        elif cur: cur[1].append(t)
+        else: intro.append(t)
     return intro, pairs

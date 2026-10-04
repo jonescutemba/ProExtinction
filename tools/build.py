@@ -1,4 +1,4 @@
-"""Build the three design concepts (EN + DE) into concepts/<concept>/<lang>/*.html."""
+"""Build the three design concepts (all languages) into concepts/<concept>/<lang>/*.html."""
 import json, re, html, pathlib, sys, urllib.parse
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from blocks import blocks_of, abridge, faq_pairs
@@ -7,8 +7,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'concepts'
 esc = html.escape
 
-LANGS = ['en', 'de', 'pl', 'es', 'it']   # English is the source; other languages fill gaps with AI translations
-LANG_NAME = {'en': 'English', 'de': 'Deutsch', 'pl': 'Polski', 'es': 'Español', 'it': 'Italiano'}
+LANGS = ['en', 'de', 'pl', 'es', 'it', 'fr', 'pt', 'ru', 'zh', 'hi']   # English is the source; other languages fill gaps with AI translations
+FULL_AI = {'fr', 'pt', 'ru', 'zh', 'hi'}   # no original site: every page is AI-translated, marked once in the language picker
+LANG_NAME = {'en': 'English', 'de': 'Deutsch', 'pl': 'Polski', 'es': 'Español', 'it': 'Italiano',
+             'fr': 'Français', 'pt': 'Português', 'ru': 'Русский', 'zh': '中文', 'hi': 'हिन्दी'}
 KINDS = {'home': 'home', 'basic-faq': 'faq', 'full-faq': 'faq'}  # by English slug, default 'doc'
 AI_MARK = ' (AI)'
 
@@ -63,13 +65,29 @@ SITE = {
   ('canali-social', 'social-media-channels', 'Canali social', None), ('contatti', 'contact', 'Contatti', None),
   ('donazioni', 'donate', 'Donazioni', 'donazioni')],
 }
+# Menu labels of the fully AI-translated languages, in English menu order (slugs stay English).
+AI_MENU = {
+ 'fr': ['Accueil', 'Manifeste', 'FAQ de base', 'FAQ complète', 'Critique des idéologies pro-vie', 'Principes du mouvement',
+        'La souffrance en détail', 'Extinction cosmique', 'Histoire', 'Nous rejoindre', 'Réseaux sociaux', 'Contact', 'Faire un don'],
+ 'pt': ['Início', 'Manifesto', 'FAQ básico', 'FAQ completo', 'Crítica das ideologias pró-vida', 'Princípios do movimento',
+        'O sofrimento em detalhe', 'Extinção cósmica', 'História', 'Junte-se a nós', 'Redes sociais', 'Contato', 'Doar'],
+ 'ru': ['Главная', 'Манифест', 'Основные вопросы', 'Все вопросы', 'Критика идеологий pro-life', 'Принципы движения',
+        'Страдание в деталях', 'Космическое вымирание', 'История', 'Присоединяйтесь', 'Соцсети', 'Контакты', 'Пожертвовать'],
+ 'zh': ['首页', '宣言', '基础问答', '完整问答', '批判各种 pro-life 意识形态', '运动原则', '苦难详述', '宇宙灭绝', '历史',
+        '加入我们', '社交媒体', '联系', '捐款'],
+ 'hi': ['होम', 'घोषणापत्र', 'बुनियादी FAQ', 'पूरा FAQ', 'प्रो-लाइफ़ विचारधाराओं की आलोचना', 'आंदोलन के सिद्धांत',
+        'पीड़ा विस्तार से', 'ब्रह्मांडीय विलुप्ति', 'इतिहास', 'हमसे जुड़ें', 'सोशल मीडिया', 'संपर्क', 'दान करें'],
+}
+for _l, _labels in AI_MENU.items():
+    SITE[_l] = [(s, s, lab, None) for (s, _, _, _), lab in zip(SITE['en'], _labels)]
 ORIGINAL = {'en': 'https://www.proextinction.com/{}', 'de': 'https://sites.google.com/view/proextinctionwebsitegerman/{}',
             'pl': 'https://sites.google.com/view/proextinction-website-polish/{}',
             'es': 'https://sites.google.com/view/proextinction-website-spanish/{}',
             'it': 'https://sites.google.com/view/proextinction-website-italian/{}'}
 AI = {l: {s for s, _, _, o in SITE[l] if o is None} for l in LANGS}
 PAGES = {l: [(s, KINDS.get(e, 'doc')) for s, e, _, _ in SITE[l]] for l in LANGS}
-NAV = {l: {s: lab + (AI_MARK if s in AI[l] else '') for s, _, lab, _ in SITE[l]} for l in LANGS}
+NAV = {l: {s: lab + (AI_MARK if s in AI[l] and l not in FULL_AI else '') for s, _, lab, _ in SITE[l]} for l in LANGS}
+CODE = {l: l.upper() + (AI_MARK if l in FULL_AI else '') for l in LANGS}   # picker label, e.g. 'RU (AI)'
 EN_OF = {l: {s: e for s, e, _, _ in SITE[l]} for l in LANGS}          # slug -> English slug
 OF_EN = {l: {e: s for s, e, _, _ in SITE[l] if e} for l in LANGS}     # English slug -> slug
 ORIG = {l: {s: o for s, _, _, o in SITE[l]} for l in LANGS}
@@ -145,16 +163,84 @@ T = {
    'Pienamente razionale, empatico, ateo, logico, e giusto.'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
 }
+T.update({
+ 'fr': dict(menu='Menu', skip='Aller au contenu', lang='Langue', theme='Basculer entre mode clair et sombre',
+  tagline='Together, we end suffering.', sub="L'organisation qui se consacre à mettre fin à l'existence forcée et à la souffrance",
+  cta1='Nous rejoindre', cta2='Lire le manifeste', mission='Notre mission',
+  mission_text='Empêcher autant de souffrance que physiquement possible, sans compromis.',
+  effort='Engagement', questions='Des questions ?', questions_text="Écrivez à info@proextinction.com pour en savoir plus sur le projet",
+  action='Agir', toc='Sur cette page', abridged="Aperçu : ce concept laisse de côté la longue liste des chaînes. La liste complète se trouve sur le site actuel :",
+  abridged_link='Ouvrir la page complète', ki="Traduction automatique de l'anglais (AI). Il n'existe pas de site original en français.",
+  ki_tag='AI', back='Concepts', back_title="Retour à l'aperçu des concepts", progress='Progression de lecture', home_link='Pro Extinction – accueil',
+  efforts=["Faire grandir le mouvement pour rendre possible la prévention de milliards d'années de souffrance.",
+   'Une aide universelle et sans discrimination pour autant de victimes que physiquement possible. Pour les animaux, pour autant de vie extraterrestre que possible et pour les humains.',
+   "Une action purement organisée, fondée sur l'activisme. Pas de lamentations aux dépens des victimes.",
+   'Entièrement rationnel, empathique, athée, logique et juste.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'pt': dict(menu='Menu', skip='Ir para o conteúdo', lang='Idioma', theme='Alternar modo claro/escuro',
+  tagline='Together, we end suffering.', sub='A organização dedicada a acabar com a existência forçada e o sofrimento',
+  cta1='Junte-se a nós', cta2='Ler o manifesto', mission='Nossa missão',
+  mission_text='Evitar o máximo de sofrimento fisicamente possível, sem concessões.',
+  effort='Frente', questions='Dúvidas?', questions_text='Escreva para info@proextinction.com para saber mais sobre o projeto',
+  action='Aja', toc='Nesta página', abridged='Prévia: este conceito deixa de fora a longa lista de canais. A lista completa está no site atual:',
+  abridged_link='Abrir a página completa', ki='Tradução automática do inglês (AI). Não existe um site original em português.',
+  ki_tag='AI', back='Conceitos', back_title='Voltar à visão geral dos conceitos', progress='Progresso de leitura', home_link='Pro Extinction – início',
+  efforts=['Fazer o movimento crescer para tornar possível evitar bilhões de anos de sofrimento.',
+   'Ajuda universal e sem discriminação para o maior número de vítimas fisicamente possível. Para animais, para o máximo possível de vida extraterrestre e para humanos.',
+   'Ação puramente organizada, baseada em ativismo. Nada de lamentar à custa das vítimas.',
+   'Totalmente racional, empático, ateu, lógico e justo.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'ru': dict(menu='Меню', skip='Перейти к содержанию', lang='Язык', theme='Переключить светлую/тёмную тему',
+  tagline='Together, we end suffering.', sub='Организация, которая стремится положить конец вынужденному существованию и страданию',
+  cta1='Присоединиться', cta2='Читать манифест', mission='Наша миссия',
+  mission_text='Предотвратить столько страданий, сколько физически возможно, без компромиссов.',
+  effort='Направление', questions='Есть вопросы?', questions_text='Пишите на info@proextinction.com, чтобы узнать больше о проекте',
+  action='Действуйте', toc='На этой странице', abridged='Превью: в этом концепте длинный список каналов опущен. Полный список есть на текущем сайте:',
+  abridged_link='Открыть полную страницу', ki='Машинный перевод с английского (AI). Оригинального сайта на русском языке нет.',
+  ki_tag='AI', back='Концепты', back_title='Назад к обзору концептов', progress='Прогресс чтения', home_link='Pro Extinction – главная',
+  efforts=['Развивать движение, чтобы сделать возможным предотвращение миллиардов лет страданий.',
+   'Всеобщая помощь без дискриминации для стольких жертв, сколько физически возможно. Для животных, для как можно большего числа внеземной жизни и для людей.',
+   'Только организованные действия и активизм. Никаких причитаний за счёт жертв.',
+   'Полностью рационально, эмпатично, атеистично, логично и справедливо.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'zh': dict(menu='菜单', skip='跳到正文', lang='语言', theme='切换浅色/深色模式',
+  tagline='Together, we end suffering.', sub='致力于终结被迫存在与苦难的组织',
+  cta1='加入我们', cta2='阅读宣言', mission='我们的使命',
+  mission_text='在物理上可能的范围内尽量防止苦难，绝不妥协。',
+  effort='方向', questions='有疑问？', questions_text='请联系 info@proextinction.com 了解项目详情',
+  action='行动起来', toc='本页内容', abridged='预览：此设计方案省略了较长的频道列表。完整列表见现有网站：',
+  abridged_link='打开完整页面', ki='由英文机器翻译 (AI)。原网站没有中文版本。',
+  ki_tag='AI', back='方案', back_title='返回设计方案总览', progress='阅读进度', home_link='Pro Extinction – 首页',
+  efforts=['壮大运动，让防止数十亿年的苦难成为可能。',
+   '为物理上可能的最多受害者提供普遍、无差别的帮助。包括动物、尽可能多的地外生命以及人类。',
+   '完全以有组织的行动和行动主义为本。不以受害者为代价空发哀叹。',
+   '完全理性、富有同理心、无神论、合乎逻辑且公平。'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'hi': dict(menu='मेनू', skip='सामग्री पर जाएँ', lang='भाषा', theme='लाइट/डार्क मोड बदलें',
+  tagline='Together, we end suffering.', sub='वह संगठन जो थोपे गए अस्तित्व और पीड़ा को ख़त्म करने के लिए समर्पित है',
+  cta1='हमसे जुड़ें', cta2='घोषणापत्र पढ़ें', mission='हमारा मिशन',
+  mission_text='बिना किसी समझौते के, भौतिक रूप से जितनी हो सके उतनी पीड़ा को रोकना।',
+  effort='प्रयास', questions='कोई सवाल?', questions_text='परियोजना के बारे में और जानकारी के लिए info@proextinction.com पर संपर्क करें',
+  action='कदम उठाएँ', toc='इस पेज पर', abridged='प्रीव्यू: इस कॉन्सेप्ट में चैनलों की लंबी सूची छोड़ दी गई है। पूरी सूची मौजूदा साइट पर है:',
+  abridged_link='पूरा पेज खोलें', ki='अंग्रेज़ी से मशीन अनुवाद (AI)। मूल साइट का हिन्दी संस्करण नहीं है।',
+  ki_tag='AI', back='कॉन्सेप्ट', back_title='कॉन्सेप्ट की सूची पर वापस जाएँ', progress='पढ़ने की प्रगति', home_link='Pro Extinction – होम',
+  efforts=['आंदोलन को बढ़ाना, ताकि अरबों वर्षों की पीड़ा को रोकना संभव हो सके।',
+   'भौतिक रूप से जितने संभव हों उतने पीड़ितों के लिए सार्वभौमिक, बिना भेदभाव की मदद। जानवरों के लिए, जितना हो सके उतने पृथ्वी से बाहर के जीवन के लिए, और इंसानों के लिए।',
+   'पूरी तरह संगठित कार्रवाई और एक्टिविज़्म पर आधारित। पीड़ितों की कीमत पर कोई विलाप नहीं।',
+   'पूरी तरह तार्किक, सहानुभूतिपूर्ण, नास्तिक, विवेकपूर्ण और न्यायसंगत।'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+})
 DISCORD = 'https://discord.gg/nb2K8y846R'
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
             'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
             'es': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG'}  # as linked on each original site
+WHATSAPP.update({l: WHATSAPP['en'] for l in FULL_AI})
 EMAIL = 'info@proextinction.com'
 
 CONCEPTS = {
- 'a-ember':  dict(name='Ember',  mode='dark',  fonts='family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500'),
- 'b-poster': dict(name='Poster', mode='dark',  fonts='family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500'),
- 'c-ring':   dict(name='Ring',   mode='light', fonts='family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500'),
+ 'a-ember':  dict(name='Ember',  mode='dark',  fonts='family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500'),
+ 'b-poster': dict(name='Poster', mode='dark',  fonts='family=Oswald:wght@400;600&family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500'),
+ 'c-ring':   dict(name='Ring',   mode='light', fonts='family=Bebas+Neue&family=Oswald:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500'),
 }
 
 def linkify(s):
@@ -174,8 +260,8 @@ def render_blocks(blocks, used):
     out, toc = [], []
     for b in blocks:
         if b[0] == 'h':
-            i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':')))
-            out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":"))}</h2>')
+            i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：')))
+            out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":："))}</h2>')
         elif b[0] == 'ul':
             out.append('<ul>' + ''.join(f'<li>{linkify(i)}</li>' for i in b[1]) + '</ul>')
         else:
@@ -191,7 +277,7 @@ def head_lede(lines, like=None):
     r = like[1:]
     if len(r) > 1 and len(r[0]) <= 90 and not r[0].endswith('?') \
             and (r[0].endswith('.') or is_heading(r[0])) and is_heading(r[1]) and not r[1].endswith('?'):
-        lede, rest = rest[0].rstrip(':'), rest[1:]
+        lede, rest = rest[0].rstrip(':：'), rest[1:]
     return title, lede, rest
 
 def doc_body(lang, slug, lines, full_url, like=None):
@@ -206,10 +292,10 @@ def doc_body(lang, slug, lines, full_url, like=None):
     body, toc = render_blocks(bl, used)
     return title, lede, body, toc, truncated
 
-def faq_body(lang, slug, lines):
+def faq_body(lang, slug, lines, like=None):
     t = T[lang]
-    title, lede, rest = head_lede(lines)
-    intro, pairs = faq_pairs(rest)
+    title, lede, rest = head_lede(lines, like)
+    intro, pairs = faq_pairs(rest, like[len(lines) - len(rest):] if like else None)
     shown = pairs
     intro_html = ''.join(f'<p>{linkify(l)}</p>' for l in intro)
     items = []
@@ -225,8 +311,8 @@ def sitenav(lang, slug):
 def lang_select(lang, url):
     """Language picker. url(other_lang) gives each option's target; site.js / present.js navigate on change."""
     t = T[lang]
-    opts = ''.join(f'<option value="{url(l)}" lang="{l}"{" selected" if l == lang else ""}>{l.upper()} · {LANG_NAME[l]}</option>' for l in LANGS)
-    return f'<label class="lang-wrap"><span class="lang" aria-hidden="true">{lang.upper()}</span><select class="lang-select" aria-label="{t["lang"]}">{opts}</select></label>'
+    opts = ''.join(f'<option value="{url(l)}" lang="{l}"{" selected" if l == lang else ""}>{CODE[l]} · {LANG_NAME[l]}</option>' for l in LANGS)
+    return f'<label class="lang-wrap"><span class="lang" aria-hidden="true">{CODE[lang]}</span><select class="lang-select" aria-label="{t["lang"]}">{opts}</select></label>'
 
 def header(c, lang, slug, ctx):
     t = T[lang]
@@ -262,9 +348,9 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     if kind == 'home':
         return NAV[lang]['home'], home_main(lang, href), 'home'
     lines = json.loads((ROOT / 'content' / lang / f'{slug}.json').read_text(encoding='utf-8'))
-    if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines)
+    like = json.loads((ROOT / 'content' / 'en' / f'{EN_OF[lang][slug]}.json').read_text(encoding='utf-8')) if ki else None
+    if kind == 'faq': title, lede, body, toc, truncated = faq_body(lang, slug, lines, like)
     else:
-        like = json.loads((ROOT / 'content' / 'en' / f'{EN_OF[lang][slug]}.json').read_text(encoding='utf-8')) if ki else None
         title, lede, body, toc, truncated = doc_body(lang, EN_OF[lang][slug], lines, '', like)
     if ki: orig = ORIGINAL['en'].format(EN_OF[lang][slug])
     else: orig = ORIGINAL[lang].format(urllib.parse.quote(ORIG[lang][slug]))
@@ -310,6 +396,7 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 
 def home_main(lang, href=lambda s: s + '.html'):
     t = T[lang]
+    ki = f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>' if lang in FULL_AI else ''
     efforts = ''.join(f'<li><span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
     return f'''<section class="hero">
   {HERO_LOGO}
@@ -320,7 +407,7 @@ def home_main(lang, href=lambda s: s + '.html'):
 </section>
 <section class="mission"><hr class="slash"><p class="mono kicker">{t["mission"]}</p><blockquote>{esc(t["mission_text"])}</blockquote></section>
 <section class="efforts"><ol>{efforts}</ol></section>
-<section class="questions"><h2>{t["questions"]}</h2><p>{linkify(t["questions_text"])}</p></section>'''
+<section class="questions"><h2>{t["questions"]}</h2><p>{linkify(t["questions_text"])}</p>{ki}</section>'''
 
 def _svg_uri(name):
     svg = (OUT / 'assets' / f'{name}.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
@@ -359,12 +446,12 @@ h1{font:600 clamp(2rem,6vw,3.4rem)/1 "Arial Narrow",Impact,sans-serif;text-trans
 p{color:var(--muted)}li{border-top:1px solid var(--line);padding:1.2rem 0;list-style:none}ul{padding:0;margin:2rem 0}
 h2{font:600 1.5rem "Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0 0 .3rem}a{color:var(--accent);margin-right:1.2rem}</style></head>
 <body><h1>Pro Extinction – design concepts</h1>
-<p>Three directions for the redesign. All have a light/dark switch (button top right) and five languages. Pages marked (AI) are machine-translated from English.</p>
+<p>Three directions for the redesign. All have a light/dark switch (button top right) and ten languages. Pages and languages marked (AI) are machine-translated from English.</p>
 <ul>
 <li><h2>A · Ember</h2><p>Angular, editorial, asymmetric. Red/black/silver, serif body text.</p>%s</li>
 <li><h2>B · Poster</h2><p>Angular, centred, loud. Red/black/silver, sans-serif body text.</p>%s</li>
 <li><h2>C · Ring</h2><p>Round, sepia and ink, editorial. Serif body text.</p>%s</li>
 </ul></body></html>
 '''
-LINKS = lambda c: ''.join(f'<a href="{c}/{l}/home.html">{LANG_NAME[l]}</a>' for l in LANGS)
+LINKS = lambda c: ''.join(f'<a href="{c}/{l}/home.html" lang="{l}">{LANG_NAME[l]}{AI_MARK if l in FULL_AI else ""}</a>' for l in LANGS)
 (OUT / 'index.html').write_text(INDEX % tuple(LINKS(c) for c in CONCEPTS), encoding='utf-8')

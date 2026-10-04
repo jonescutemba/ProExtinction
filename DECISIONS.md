@@ -18,7 +18,7 @@ Bis dahin werden alle drei Konzepte parallel gepflegt.
 | Hosting und Domain der neuen Seite | nicht besprochen | nach der Konzeptwahl |
 
 **Wie wir entscheiden:** Die Konzepte nebeneinander öffnen (`concepts/index.html`), dieselben
-Seiten in Hell und Dunkel, in allen fünf Sprachen, auf Handy und Desktop ansehen. Danach ein Konzept
+Seiten in Hell und Dunkel, in allen zehn Sprachen, auf Handy und Desktop ansehen. Danach ein Konzept
 wählen, ggf. einzelne Bausteine aus einem anderen übernehmen, und das hier eintragen.
 Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandkit-publish` baut die echte Seite.
 
@@ -28,7 +28,7 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 3. **Ziel:** Neulinge überzeugen, nicht die Community mobilisieren.
 4. **Persönlichkeit:** ernst, rational, empathisch, entschlossen, ruhig-düster. Nicht reißerisch, esoterisch, verspielt, hoffnungslos.
 5. **Modi:** Hell und Dunkel, umschaltbar per Button oben rechts.
-6. **Sprachen der Konzepte:** EN (Standard und Vorlage), DE, PL, ES, IT. Fehlt eine englische Seite in einer anderen Sprache, wird sie per KI aus dem Englischen übersetzt und im Menütitel mit "(AI)" markiert, zusätzlich mit einem Hinweis auf der Seite. Seiten, die es nur in einer Sprache gibt (z. B. DE Ressourcen, ES Equipo/Recursos/Mapa del sitio, PL Zasoby), bleiben erhalten. Die Übersetzungen folgen den Regeln des unslop-Skills (cursor/plugins). Tippfehler werden korrigiert.
+6. **Sprachen der Konzepte:** EN (Standard und Vorlage), DE, PL, ES, IT. Fehlt eine englische Seite in einer anderen Sprache, wird sie per KI aus dem Englischen übersetzt und im Menütitel mit "(AI)" markiert, zusätzlich mit einem Hinweis auf der Seite. Seiten, die es nur in einer Sprache gibt (DE Ressourcen, PL Zasoby, ES Recursos/Mapa del sitio), bleiben erhalten. Dazu kommen FR, PT, RU, ZH (Chinesisch, vereinfacht) und HI (Hindi) ohne Originalseite: komplett aus dem Englischen übersetzt, in der Sprachauswahl als z. B. "RU (AI)" markiert und mit Hinweis auf jeder Seite, aber ohne "(AI)" an jedem Menüpunkt. Kyrillisch kommt aus lokalen Schriftdateien (Oswald, Source Serif 4, JetBrains Mono), Chinesisch und Hindi aus den Systemschriften. Die Übersetzungen folgen den Regeln des unslop-Skills (cursor/plugins). Tippfehler werden korrigiert.
 7. **Inhalt:** Originaltext bleibt wörtlich. Neu geschrieben werden nur Buttons, Zwischenüberschriften, Hinweise (du-Ansprache, sachlich, Verbotsliste in `BRAND.md`).
 8. **Farbe:** Akzent unter etwa 5 % der Fläche, Silber nur in Logo und Wordmark.
 9. **Typografie:** schwere Versalien-Grotesk für Display, Mono sparsam, nie Inter oder Roboto als Hauptschrift. Wordmark als Schrift mit CSS-Metall, kein Flyer-Bild.

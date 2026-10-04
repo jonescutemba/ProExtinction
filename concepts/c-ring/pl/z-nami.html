@@ -8,7 +8,7 @@
 <script>(function(){var d=document.documentElement,m=null;try{m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pe-theme')}catch(e){}
 if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':d.dataset.default)}d.dataset.theme=m})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body class="page">
@@ -20,7 +20,7 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
     <a class="back" href="../../index.html" title="Powrót do przeglądu konceptów"><span aria-hidden="true">←</span><span class="back-t">Koncepty</span></a>
   </div>
   <div class="tools">
-    <label class="lang-wrap"><span class="lang" aria-hidden="true">PL</span><select class="lang-select" aria-label="Język"><option value="../en/join-us.html" lang="en">EN · English</option><option value="../de/aktiv-werden.html" lang="de">DE · Deutsch</option><option value="../pl/z-nami.html" lang="pl" selected>PL · Polski</option><option value="../es/equipo.html" lang="es">ES · Español</option><option value="../it/unisciti-a-noi.html" lang="it">IT · Italiano</option></select></label>
+    <label class="lang-wrap"><span class="lang" aria-hidden="true">PL</span><select class="lang-select" aria-label="Język"><option value="../en/join-us.html" lang="en">EN · English</option><option value="../de/aktiv-werden.html" lang="de">DE · Deutsch</option><option value="../pl/z-nami.html" lang="pl" selected>PL · Polski</option><option value="../es/equipo.html" lang="es">ES · Español</option><option value="../it/unisciti-a-noi.html" lang="it">IT · Italiano</option><option value="../fr/join-us.html" lang="fr">FR (AI) · Français</option><option value="../pt/join-us.html" lang="pt">PT (AI) · Português</option><option value="../ru/join-us.html" lang="ru">RU (AI) · Русский</option><option value="../zh/join-us.html" lang="zh">ZH (AI) · 中文</option><option value="../hi/join-us.html" lang="hi">HI (AI) · हिन्दी</option></select></label>
     <button class="theme" type="button" aria-label="Przełącz tryb jasny/ciemny" title="Przełącz tryb jasny/ciemny"><span></span></button>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitenav"><span class="bars" aria-hidden="true"></span><span class="menu-t">Menu</span></button>
   </div>
