@@ -22,16 +22,14 @@ body{font-size:1.125rem}
 .doc .slash{margin-inline:auto;max-width:20rem}
 .doc .slash::after{left:50%;transform:translateX(-50%)}
 .lede{font-style:normal}
-.toc{margin:1.2rem auto 2rem;max-width:44rem}
-.toc ol{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem .6rem}
-.toc li{margin:0}
-.toc a{display:inline-block;border:1px solid var(--line);padding:.25rem .7rem;font-size:.85rem}
-.toc a:hover{border-color:var(--accent)}
-.prose{text-align:left;margin-inline:auto}
+/* chapter overview as in A: accent rule, numbered list; sticky right column from 1280 px */
+.toc{text-align:start;border-inline-start:2px solid var(--accent);padding-inline-start:1rem;margin:1.6rem auto;max-width:68ch}
+@media (min-width:1280px){.doc:has(>.toc){display:grid;grid-template-columns:minmax(0,68ch) 14rem;column-gap:3rem;justify-content:center}.doc:has(>.toc) .doc-head{grid-column:1/-1}.doc:has(>.toc) .prose{grid-column:1;grid-row:2;margin-inline:0}.toc{grid-column:2;grid-row:2;position:sticky;top:7.5rem;align-self:start;margin:0;max-height:calc(100vh - 9rem);overflow:auto}}
+.prose{text-align:start;margin-inline:auto}
 .prose h2{text-align:center;font-size:clamp(1.8rem,5vw,2.8rem);margin-top:3.2rem}
 .prose h2::after{content:"";display:block;width:3rem;height:4px;margin:.9rem auto 0;background:var(--accent);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
-.note{text-align:left}
-.faq{text-align:left;max-width:68ch;margin-inline:auto}
+.note{text-align:start}
+.faq{text-align:start;max-width:68ch;margin-inline:auto}
 .faq summary{font-size:1.4rem}
 .cta{text-align:center}
 .cta .slash::after{left:50%;transform:translateX(-50%)}

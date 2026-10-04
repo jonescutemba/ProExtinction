@@ -21,20 +21,20 @@ main{flex:1;width:100%}
 a{color:var(--link);text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 100%/0 2px;transition:background-size .25s}
 a:hover,a:focus-visible{background-size:100% 2px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.skip{position:absolute;left:-999px;top:0;background:var(--bg);color:var(--text);padding:.6rem 1rem;z-index:100}
-.skip:focus{left:0}
+.skip{position:absolute;inset-inline-start:-999px;top:0;background:var(--bg);color:var(--text);padding:.6rem 1rem;z-index:100}
+.skip:focus{inset-inline-start:0}
 .mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 h1,h2,h3{font-family:var(--display);font-weight:var(--display-weight,600);line-height:1.05;margin:0;text-transform:uppercase;letter-spacing:.01em}
 p{margin:0 0 1.15em}
 /* progress bar with slash end */
-.progress{position:fixed;top:0;left:0;right:0;height:4px;z-index:60;pointer-events:none}
+.progress{position:fixed;top:0;inset-inline-start:0;inset-inline-end:0;height:4px;z-index:60;pointer-events:none}
 .progress i{display:block;height:100%;width:0;background:var(--accent);clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%)}
 /* header */
 .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem var(--gutter);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:40}
 .lead{display:flex;align-items:center;gap:1rem;min-width:0}
 .back{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:var(--r-ui);height:2.1rem;padding:0 .75rem;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap;background:none}
 .back:hover{color:var(--text);border-color:var(--accent)}
-.back-t{margin-left:.4rem}
+.back-t{margin-inline-start:.4rem}
 .brand .wordmark{white-space:nowrap}
 .tools{flex:none}
 .brand{display:flex;align-items:center;gap:.7rem;color:var(--text);background:none}
@@ -46,7 +46,7 @@ p{margin:0 0 1.15em}
 .lang,.theme{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text);background:none;border:1px solid var(--line);height:2.4rem;min-width:2.4rem;padding:0 .8rem;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:var(--r-ui);list-style:none}
 .lang:hover,.theme:hover{border-color:var(--accent);color:var(--text)}
 .lang-wrap{position:relative;display:inline-flex}
-.lang-wrap .lang::after{content:"";width:.38rem;height:.38rem;margin-left:.45rem;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-.15rem) rotate(45deg);opacity:.7}
+.lang-wrap .lang::after{content:"";width:.38rem;height:.38rem;margin-inline-start:.45rem;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-.15rem) rotate(45deg);opacity:.7}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
 .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
@@ -61,12 +61,12 @@ p{margin:0 0 1.15em}
 .sitenav a{display:block;white-space:nowrap;line-height:1.2;padding:.85rem .7rem;color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;position:relative;transition:color .2s}
 .sitenav a:hover{color:var(--link)}
 .sitenav a[aria-current=page]{color:var(--link)}
-.sitenav a[aria-current=page]::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:.3rem;height:3px;background:var(--accent);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.sitenav a[aria-current=page]::after{content:"";position:absolute;inset-inline-start:.7rem;inset-inline-end:.7rem;bottom:.3rem;height:3px;background:var(--accent);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
 .toc a[aria-current=true]{color:var(--link)}
-.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--link);padding:.05rem .35rem;margin-left:.5rem;border-radius:var(--r-ui)}
+.tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;border:1px solid var(--accent);color:var(--link);padding:.05rem .35rem;margin-inline-start:.5rem;border-radius:var(--r-ui)}
 /* slash divider: signature */
 .slash{border:0;height:10px;margin:2rem 0;background:linear-gradient(var(--line),var(--line)) 0 50%/100% 1px no-repeat;position:relative;overflow:visible}
-.slash::after{content:"";position:absolute;left:0;top:0;width:5.5rem;height:10px;background:var(--accent);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%)}
+.slash::after{content:"";position:absolute;inset-inline-start:0;top:0;width:5.5rem;height:10px;background:var(--accent);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%)}
 /* buttons */
 .btn{display:inline-flex;align-items:center;min-height:3rem;padding:.7rem 1.4rem;border:1px solid var(--text);color:var(--text);background:none;font-family:var(--display);font-weight:var(--display-weight,600);letter-spacing:.08em;text-transform:uppercase;font-size:1rem;border-radius:var(--r-ui);transition:background-color .2s,color .2s,border-color .2s;background-image:none}
 .btn:hover,.btn:focus-visible{background:var(--text);color:var(--bg);background-image:none}
@@ -120,25 +120,25 @@ html,body{overflow-x:clip}
 .lede{font-size:1.3rem;color:var(--muted);font-style:italic;margin:1rem 0 0}
 .prose{max-width:68ch}
 .prose h2{font-size:clamp(1.4rem,3.2vw,2rem);margin:2.6rem 0 1rem;scroll-margin-top:5rem}
-.prose ul{padding-left:1.2rem;margin:0 0 1.15em}
-.prose li{margin-bottom:.5rem;padding-left:.2rem}
+.prose ul{padding-inline-start:1.2rem;margin:0 0 1.15em}
+.prose li{margin-bottom:.5rem;padding-inline-start:.2rem}
 .prose li::marker{color:var(--accent)}
 .prose a{overflow-wrap:anywhere}
-.note{font-size:.95rem;color:var(--muted);border-left:3px solid var(--accent);padding:.4rem 0 .4rem 1rem;margin-bottom:2rem}
+.note{font-size:.95rem;color:var(--muted);border-inline-start:3px solid var(--accent);padding:.4rem 0 .4rem 1rem;margin-bottom:2rem}
 .toc ol{list-style:none;margin:.6rem 0 0;padding:0;counter-reset:t}
 .toc li{counter-increment:t;margin:.35rem 0;font-size:.95rem}
-.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--link);margin-right:.4rem}
+.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--link);margin-inline-end:.4rem}
 .toc a{color:var(--text)}
 .prose{counter-reset:ch}
 .prose h2{counter-increment:ch}
 /* faq */
 .faq{counter-reset:q}
 .faq details{border-top:1px solid var(--line);counter-increment:q}
-.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--link);margin-right:.9rem;vertical-align:.25em}
+.faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--link);margin-inline-end:.9rem;vertical-align:.25em}
 .faq details:last-child{border-bottom:1px solid var(--line)}
 .faq summary{cursor:pointer;list-style:none;padding:1.1rem 2.4rem 1.1rem 0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.02em;font-size:1.2rem;line-height:1.25;position:relative}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"";position:absolute;right:.2rem;top:50%;width:1.1rem;height:2px;background:var(--accent);transform:translateY(-50%) rotate(-30deg);transition:transform .25s}
+.faq summary::after{content:"";position:absolute;inset-inline-end:.2rem;top:50%;width:1.1rem;height:2px;background:var(--accent);transform:translateY(-50%) rotate(-30deg);transition:transform .25s}
 .faq details[open] summary::after{transform:translateY(-50%) rotate(30deg)}
 .faq summary:hover{color:var(--link)}
 .faq .a{padding:0 0 1rem}
@@ -168,8 +168,8 @@ html,body{overflow-x:clip}
 /* ---- single-page presentation: views, concept switcher ---- */
 [hidden]{display:none!important}
 .concepts{display:flex;border:1px solid var(--line);border-radius:var(--r-ui);overflow:hidden;height:2.4rem}
-.concepts button{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:0;border-right:1px solid var(--line);color:var(--muted);padding:0 .75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:background-color .2s,color .2s}
-.concepts button:last-child{border-right:0}
+.concepts button{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:0;border-inline-end:1px solid var(--line);color:var(--muted);padding:0 .75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:background-color .2s,color .2s}
+.concepts button:last-child{border-inline-end:0}
 .concepts button:hover{color:var(--text)}
 .concepts button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
 .concepts .n{display:none}
@@ -181,7 +181,7 @@ html,body{overflow-x:clip}
 .menu-toggle{display:none;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text);background:none;border:1px solid var(--line);height:2.4rem;padding:0 .8rem;align-items:center;gap:.6rem;cursor:pointer;border-radius:var(--r-ui)}
 .menu-toggle:hover{border-color:var(--accent)}
 .menu-toggle .bars{position:relative;display:block;width:1.1rem;height:2px;background:currentColor;transition:background-color .2s}
-.menu-toggle .bars::before,.menu-toggle .bars::after{content:"";position:absolute;left:0;width:100%;height:2px;background:currentColor;transition:transform .25s}
+.menu-toggle .bars::before,.menu-toggle .bars::after{content:"";position:absolute;inset-inline-start:0;width:100%;height:2px;background:currentColor;transition:transform .25s}
 .menu-toggle .bars::before{transform:translateY(-6px)}
 .menu-toggle .bars::after{transform:translateY(6px)}
 html.nav-open .menu-toggle .bars{background:transparent}
@@ -190,20 +190,31 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 @media (max-width:999.98px){
   .menu-toggle{display:inline-flex}
   html:not(.nav-open) .sitenav{display:none}
-  html .sitenav{position:fixed;left:0;right:0;top:var(--top-h,4.3rem);z-index:45;width:auto;margin:0;
+  html .sitenav{position:fixed;inset-inline-start:0;inset-inline-end:0;top:var(--top-h,4.3rem);z-index:45;width:auto;margin:0;
     max-height:calc(100vh - var(--top-h,4.3rem));overflow-y:auto;background:var(--bg);border:0;border-bottom:1px solid var(--line);
     border-radius:0;padding:.4rem var(--gutter) 1.4rem;-webkit-mask-image:none;mask-image:none}
   html .sitenav ul{flex-direction:column;overflow:visible;gap:0;max-height:none;padding:0;-webkit-mask-image:none;mask-image:none}
   html .sitenav li{border-bottom:1px solid var(--line)}
   html .sitenav a{white-space:normal;padding:.95rem .2rem;font-size:1.15rem;border:0;border-radius:0;background:none;color:var(--text)}
   html .sitenav a:hover{color:var(--link)}
-  html .sitenav a[aria-current=page]{color:var(--link);background:none;box-shadow:inset 3px 0 0 var(--accent);padding-left:.9rem}
+  html .sitenav a[aria-current=page]{color:var(--link);background:none;box-shadow:inset 3px 0 0 var(--accent);padding-inline-start:.9rem}
   html .sitenav a[aria-current=page]::after{display:none}
 }
 @media (max-width:480px){.menu-t{display:none}.menu-toggle{padding:0 .7rem}}
-/* Chinese and Hindi have no capitals: no tracking (it breaks Devanagari shaping and spreads Chinese apart),
-   no synthetic italics (neither script has real italics), and taller lines so Devanagari vowel signs are not clipped. The Latin wordmark keeps its tracking. */
-:lang(zh) :not(.wordmark),:lang(hi) :not(.wordmark){letter-spacing:0}
-:lang(zh) :is(em,i,blockquote,.lede),:lang(hi) :is(em,i,blockquote,.lede){font-style:normal}
-:lang(hi) :is(h1,h2,h3,.faq summary,.mission blockquote,.sitenav a,.btn){line-height:1.4}
+/* Scripts without capitals (Chinese, Hindi, Bengali, Arabic, Urdu): no tracking (it breaks Devanagari and Bengali
+   shaping, cuts Arabic letters apart and spreads Chinese out), no synthetic italics (none of these scripts has real
+   italics), and taller lines so vowel signs and Arabic dots are not clipped. The Latin wordmark keeps its tracking. */
+:is(:lang(zh),:lang(hi),:lang(bn),:lang(ar),:lang(ur)) :not(.wordmark){letter-spacing:0!important}
+:is(:lang(zh),:lang(hi),:lang(bn),:lang(ar),:lang(ur)) :is(em,i,blockquote,.lede){font-style:normal}
+/* monospace fonts have no glyphs for these scripts, and the fallback can break Arabic joining: use the body font */
+:is(:lang(zh),:lang(hi),:lang(bn),:lang(ar),:lang(ur)) :is(.mono,.toc li){font-family:var(--body)}
+:is(:lang(hi),:lang(bn),:lang(ar),:lang(ur)) :is(h1,h2,h3,.faq summary,.mission blockquote,.sitenav a,.btn){line-height:1.4}
+:lang(ur) :is(h1,h2,h3,.faq summary,.mission blockquote){line-height:1.6}
 :lang(zh) :is(h1,h2,h3,.faq summary,.mission blockquote){line-height:1.3}
+/* Right-to-left (Arabic, Urdu): the layout uses logical properties; only shorthands and arrows need flipping here. */
+[dir=rtl] .note{padding:.4rem 1rem .4rem 0}
+[dir=rtl] .faq summary{padding:1.1rem 0 1.1rem 2.4rem}
+[dir=rtl] .back>span[aria-hidden]{display:inline-block;transform:scaleX(-1)}
+/* the English wordmark and slogan stay left-to-right (so the full stop stays at the end) but keep the page alignment */
+[dir=rtl] :is(.wordmark,.hero-tag,.cta-sub){direction:ltr;text-align:-webkit-match-parent;text-align:match-parent}
+@media (max-width:999.98px){[dir=rtl] .sitenav a[aria-current=page]{box-shadow:inset -3px 0 0 var(--accent)}}

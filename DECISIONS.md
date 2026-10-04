@@ -1,12 +1,12 @@
 # Entscheidungen · Pro Extinction Website-Redesign
 
 Stand: laufend gepflegt. **Die Wahl des Konzepts ist bewusst offen und fällt später.**
-Bis dahin werden alle drei Konzepte parallel gepflegt.
+Bis dahin werden A und B parallel gepflegt. **C Ring ist verworfen** und entfernt.
 
 ## Offen (später festlegen)
 | Frage | Stand | Wann |
 |---|---|---|
-| **Welches Konzept gilt** (A Ember, B Poster, C Ring) oder eine Mischung | offen, nicht vorentschieden | nach dem Vergleich im Browser und der Rückmeldung von Beteiligten |
+| **Welches Konzept gilt** (A Ember oder B Poster) oder eine Mischung | offen, nicht vorentschieden | nach dem Vergleich im Browser und der Rückmeldung von Beteiligten |
 | Endgültige Hex-Werte | je Konzept vorläufig in `brand/<konzept>/tokens.css` | mit der Konzeptwahl |
 | Original-Logo als Vektor | fehlt, `mark.svg` ist eine Nachzeichnung | sobald auffindbar |
 | Schriften selbst hosten | **erledigt für `presentation/`** (lokal, OFL). Prototyp-Seiten und `brand-helmet.html` laden noch von Google | vor Livegang der übrigen Teile |
@@ -18,7 +18,7 @@ Bis dahin werden alle drei Konzepte parallel gepflegt.
 | Hosting und Domain der neuen Seite | nicht besprochen | nach der Konzeptwahl |
 
 **Wie wir entscheiden:** Die Konzepte nebeneinander öffnen (`concepts/index.html`), dieselben
-Seiten in Hell und Dunkel, in allen zehn Sprachen, auf Handy und Desktop ansehen. Danach ein Konzept
+Seiten in Hell und Dunkel, in allen 14 Sprachen, auf Handy und Desktop ansehen. Danach ein Konzept
 wählen, ggf. einzelne Bausteine aus einem anderen übernehmen, und das hier eintragen.
 Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandkit-publish` baut die echte Seite.
 
@@ -28,7 +28,7 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 3. **Ziel:** Neulinge überzeugen, nicht die Community mobilisieren.
 4. **Persönlichkeit:** ernst, rational, empathisch, entschlossen, ruhig-düster. Nicht reißerisch, esoterisch, verspielt, hoffnungslos.
 5. **Modi:** Hell und Dunkel, umschaltbar per Button oben rechts.
-6. **Sprachen der Konzepte:** EN (Standard und Vorlage), DE, PL, ES, IT. Fehlt eine englische Seite in einer anderen Sprache, wird sie per KI aus dem Englischen übersetzt und im Menütitel mit "(AI)" markiert, zusätzlich mit einem Hinweis auf der Seite. Seiten, die es nur in einer Sprache gibt (DE Ressourcen, PL Zasoby, ES Recursos/Mapa del sitio), bleiben erhalten. Dazu kommen FR, PT, RU, ZH (Chinesisch, vereinfacht) und HI (Hindi) ohne Originalseite: komplett aus dem Englischen übersetzt, in der Sprachauswahl als z. B. "RU (AI)" markiert und mit Hinweis auf jeder Seite, aber ohne "(AI)" an jedem Menüpunkt. Kyrillisch kommt aus lokalen Schriftdateien (Oswald, Source Serif 4, JetBrains Mono), Chinesisch und Hindi aus den Systemschriften. Die Übersetzungen folgen den Regeln des unslop-Skills (cursor/plugins). Tippfehler werden korrigiert.
+6. **Sprachen der Konzepte:** EN (Standard und Vorlage), DE, PL, ES, IT. Fehlt eine englische Seite in einer anderen Sprache, wird sie per KI aus dem Englischen übersetzt und im Menütitel mit "(AI)" markiert, zusätzlich mit einem Hinweis auf der Seite. Seiten, die es nur in einer Sprache gibt (DE Ressourcen, PL Zasoby, ES Recursos/Mapa del sitio), bleiben erhalten. Dazu kommen FR, PT, RU, ZH (Chinesisch, vereinfacht) HI (Hindi), AR (Arabisch), BN (Bengalisch), UR (Urdu) und ID (Indonesisch) ohne Originalseite: komplett aus dem Englischen übersetzt, in der Sprachauswahl als z. B. "RU (AI)" markiert und mit Hinweis auf jeder Seite, aber ohne "(AI)" an jedem Menüpunkt. Kyrillisch kommt aus lokalen Schriftdateien (Oswald, Source Serif 4, JetBrains Mono), Chinesisch, Hindi, Arabisch, Bengalisch und Urdu aus den Systemschriften. Arabisch und Urdu laufen von rechts nach links (`dir="rtl"`): das CSS nutzt logische Eigenschaften (inline-start/end), damit Navigation, Kapitelübersicht und Randlinien gespiegelt werden; Wordmark und englischer Slogan bleiben links nach rechts. Die Übersetzungen folgen den Regeln des unslop-Skills (cursor/plugins). Tippfehler werden korrigiert.
 7. **Inhalt:** Originaltext bleibt wörtlich. Neu geschrieben werden nur Buttons, Zwischenüberschriften, Hinweise (du-Ansprache, sachlich, Verbotsliste in `BRAND.md`).
 8. **Farbe:** Akzent unter etwa 5 % der Fläche, Silber nur in Logo und Wordmark.
 9. **Typografie:** schwere Versalien-Grotesk für Display, Mono sparsam, nie Inter oder Roboto als Hauptschrift. Wordmark als Schrift mit CSS-Metall, kein Flyer-Bild.
@@ -41,17 +41,18 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 16. **Zielplattform:** nur Website, responsiv. Keine PDFs, Slides, Thumbnails.
 
 ## Konzeptspezifisch (der eigentliche Vergleich)
-| | A · Ember | B · Poster | C · Ring |
-|---|---|---|---|
-| Form | eckig | eckig | rund |
-| Aufbau | redaktionell, asymmetrisch | zentriert, plakativ | redaktionell |
-| Navigation | Leiste links | Navbar oben | runde Karte rechts |
-| Farbwelt | Rot/Schwarz/Silber | Rot/Schwarz/Silber | Sepia und Tinte (Bernstein) |
-| Fließtext | Serif (Newsreader) | Sans (Barlow) | Serif (Source Serif 4) |
-| Standardmodus | dunkel | dunkel | hell |
+| | A · Ember | B · Poster |
+|---|---|---|
+| Form | eckig | eckig |
+| Aufbau | redaktionell, asymmetrisch | zentriert, plakativ |
+| Navigation | Leiste links | Navbar oben |
+| Kapitelübersicht | rechts mitlaufend ab 1280 px | wie A (übernommen, ersetzt die Kapitel-Buttons) |
+| Farbwelt | Rot/Schwarz/Silber | Rot/Schwarz/Silber |
+| Fließtext | Serif (Newsreader) | Sans (Barlow) |
+| Standardmodus | dunkel | dunkel |
 
 ## Kundenpräsentation
-`presentation/index.html` zeigt alle drei Konzepte in **einer** Seite mit Umschalter (Design, Sprache, Hell/Dunkel).
+`presentation/index.html` zeigt beide Konzepte in **einer** Seite mit Umschalter (Design, Sprache, Hell/Dunkel).
 Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Der Stand dort ist ein **Entwurf**
 (Fußzeile sagt das), mit Original-Texten, lokalen Schriften, ohne Fotos, auf „noindex“. Livegang: `DEPLOY.md`.
 

@@ -1,7 +1,7 @@
 # BRAND · Pro Extinction · Konzept Ember
 
 Verbindliche Kurzfassung. Begründungen stehen in `../REFERENCE.md`. **Status: Konzept,
-nicht final.** Welches der drei Konzepte gilt, ist noch offen (`/DECISIONS.md`). Alle Werte
+nicht final.** Welches der zwei Konzepte gilt, ist noch offen (`/DECISIONS.md`). Alle Werte
 unten sind vorläufig, aber innerhalb dieses Konzepts verbindlich.
 
 ## 1. Marke
@@ -95,7 +95,7 @@ abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, 
 | Call-to-Action | Discord (primär), WhatsApp, E-Mail; am Seitenende jeder Seite |
 | Schrägstrich | Signatur: Trenner, Fortschrittsbalken (oben, 4 px), Hover; immer `--accent` |
 | Scrollbars | 8 px, `--accent` (Seite); in Leisten 6 px, `--accent-dim` (58 % Akzent), Hover `--accent` |
-| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT sowie FR, PT, RU, ZH, HI als „(AI)“) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
+| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT sowie FR, PT, RU, ZH, HI, AR, BN, UR, ID als „(AI)“; AR und UR von rechts nach links) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
 
 ## 7. Formate
 Nur Website, responsiv. Keine Thumbnails, Slides oder PDFs in dieser Runde.

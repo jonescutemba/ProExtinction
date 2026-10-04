@@ -7,10 +7,13 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'concepts'
 esc = html.escape
 
-LANGS = ['en', 'de', 'pl', 'es', 'it', 'fr', 'pt', 'ru', 'zh', 'hi']   # English is the source; other languages fill gaps with AI translations
-FULL_AI = {'fr', 'pt', 'ru', 'zh', 'hi'}   # no original site: every page is AI-translated, marked once in the language picker
+LANGS = ['en', 'de', 'pl', 'es', 'it', 'fr', 'pt', 'ru', 'zh', 'hi', 'ar', 'bn', 'ur', 'id']   # English is the source; other languages fill gaps with AI translations
+FULL_AI = {'fr', 'pt', 'ru', 'zh', 'hi', 'ar', 'bn', 'ur', 'id'}   # no original site: every page is AI-translated, marked once in the language picker
 LANG_NAME = {'en': 'English', 'de': 'Deutsch', 'pl': 'Polski', 'es': 'Español', 'it': 'Italiano',
-             'fr': 'Français', 'pt': 'Português', 'ru': 'Русский', 'zh': '中文', 'hi': 'हिन्दी'}
+             'fr': 'Français', 'pt': 'Português', 'ru': 'Русский', 'zh': '中文', 'hi': 'हिन्दी',
+             'ar': 'العربية', 'bn': 'বাংলা', 'ur': 'اردو', 'id': 'Bahasa Indonesia'}
+RTL = {'ar', 'ur'}   # written right to left: pages get dir="rtl" and the CSS mirrors
+DIR = lambda l: 'rtl' if l in RTL else 'ltr'
 KINDS = {'home': 'home', 'basic-faq': 'faq', 'full-faq': 'faq'}  # by English slug, default 'doc'
 AI_MARK = ' (AI)'
 
@@ -77,6 +80,14 @@ AI_MENU = {
         '加入我们', '社交媒体', '联系', '捐款'],
  'hi': ['होम', 'घोषणापत्र', 'बुनियादी FAQ', 'पूरा FAQ', 'प्रो-लाइफ़ विचारधाराओं की आलोचना', 'आंदोलन के सिद्धांत',
         'पीड़ा विस्तार से', 'ब्रह्मांडीय विलुप्ति', 'इतिहास', 'हमसे जुड़ें', 'सोशल मीडिया', 'संपर्क', 'दान करें'],
+ 'ar': ['الرئيسية', 'البيان', 'أسئلة أساسية', 'كل الأسئلة', 'نقد أيديولوجيات pro-life', 'مبادئ الحركة',
+        'المعاناة بالتفصيل', 'الانقراض الكوني', 'التاريخ', 'انضم إلينا', 'وسائل التواصل', 'تواصل معنا', 'تبرّع'],
+ 'bn': ['হোম', 'ইশতেহার', 'প্রাথমিক FAQ', 'সম্পূর্ণ FAQ', 'প্রো-লাইফ মতাদর্শের সমালোচনা', 'আন্দোলনের নীতি',
+        'দুঃখভোগ বিস্তারিত', 'মহাজাগতিক বিলুপ্তি', 'ইতিহাস', 'আমাদের সাথে যোগ দিন', 'সোশ্যাল মিডিয়া', 'যোগাযোগ', 'দান করুন'],
+ 'ur': ['ہوم', 'منشور', 'بنیادی سوالات', 'تمام سوالات', 'پرو لائف نظریات پر تنقید', 'تحریک کے اصول',
+        'تکلیف تفصیل سے', 'کائناتی معدومیت', 'تاریخ', 'ہمارے ساتھ شامل ہوں', 'سوشل میڈیا', 'رابطہ', 'عطیہ کریں'],
+ 'id': ['Beranda', 'Manifesto', 'FAQ dasar', 'FAQ lengkap', 'Kritik ideologi pro-life', 'Prinsip gerakan',
+        'Penderitaan secara rinci', 'Kepunahan kosmik', 'Sejarah', 'Bergabung', 'Media sosial', 'Kontak', 'Donasi'],
 }
 for _l, _labels in AI_MENU.items():
     SITE[_l] = [(s, s, lab, None) for (s, _, _, _), lab in zip(SITE['en'], _labels)]
@@ -229,6 +240,58 @@ T.update({
    'पूरी तरह संगठित कार्रवाई और एक्टिविज़्म पर आधारित। पीड़ितों की कीमत पर कोई विलाप नहीं।',
    'पूरी तरह तार्किक, सहानुभूतिपूर्ण, नास्तिक, विवेकपूर्ण और न्यायसंगत।'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'ar': dict(menu='القائمة', skip='انتقل إلى المحتوى', lang='اللغة', theme='التبديل بين الوضع الفاتح والداكن',
+  tagline='Together, we end suffering.', sub='المنظمة المكرّسة لإنهاء الوجود القسري والمعاناة',
+  cta1='انضم إلينا', cta2='اقرأ البيان', mission='مهمتنا',
+  mission_text='منع أكبر قدر ممكن فيزيائيًا من المعاناة، دون تنازلات.',
+  effort='محور', questions='لديك أسئلة؟', questions_text='راسلنا على info@proextinction.com لمعرفة المزيد عن المشروع',
+  action='تحرّك', toc='في هذه الصفحة', abridged='معاينة: يحذف هذا التصميم القائمة الطويلة للقنوات. القائمة الكاملة موجودة على الموقع الحالي:',
+  abridged_link='افتح الصفحة كاملة', ki='ترجمة آلية من الإنجليزية (AI). لا توجد نسخة عربية من الموقع الأصلي.',
+  ki_tag='AI', back='التصاميم', back_title='العودة إلى نظرة عامة على التصاميم', progress='تقدّم القراءة', home_link='Pro Extinction – الرئيسية',
+  efforts=['تنمية الحركة لكي يصبح منع مليارات السنين من المعاناة ممكنًا.',
+   'مساعدة شاملة ودون تمييز لأكبر عدد ممكن فيزيائيًا من الضحايا. للحيوانات، ولأكبر قدر ممكن من الحياة خارج الأرض، وللبشر.',
+   'عمل منظّم ونشاط ميداني فقط. لا نوح على حساب الضحايا.',
+   'عقلانية تامة وتعاطف وإلحاد ومنطق وعدل.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'bn': dict(menu='মেনু', skip='মূল বিষয়ে যান', lang='ভাষা', theme='লাইট/ডার্ক মোড বদলান',
+  tagline='Together, we end suffering.', sub='যে সংগঠন জোর করে চাপিয়ে দেওয়া অস্তিত্ব আর দুঃখভোগের অবসানে নিবেদিত',
+  cta1='আমাদের সাথে যোগ দিন', cta2='ইশতেহার পড়ুন', mission='আমাদের লক্ষ্য',
+  mission_text='কোনো আপস ছাড়াই, শারীরিকভাবে যতটা সম্ভব দুঃখভোগ ঠেকানো।',
+  effort='প্রচেষ্টা', questions='কোনো প্রশ্ন?', questions_text='প্রকল্প সম্পর্কে আরও জানতে info@proextinction.com-এ যোগাযোগ করুন',
+  action='পদক্ষেপ নিন', toc='এই পাতায়', abridged='প্রিভিউ: এই ডিজাইনে চ্যানেলের লম্বা তালিকা বাদ রাখা হয়েছে। পুরো তালিকা বর্তমান সাইটে আছে:',
+  abridged_link='পুরো পাতা খুলুন', ki='ইংরেজি থেকে যন্ত্রে অনুবাদ (AI)। মূল সাইটের কোনো বাংলা সংস্করণ নেই।',
+  ki_tag='AI', back='ডিজাইন', back_title='ডিজাইনের তালিকায় ফিরে যান', progress='পড়ার অগ্রগতি', home_link='Pro Extinction – হোম',
+  efforts=['আন্দোলনকে বড় করা, যাতে কোটি কোটি বছরের দুঃখভোগ ঠেকানো সম্ভব হয়।',
+   'শারীরিকভাবে যত বেশি সম্ভব ভুক্তভোগীর জন্য সর্বজনীন, বৈষম্যহীন সাহায্য। প্রাণীদের জন্য, যত বেশি সম্ভব পৃথিবীর বাইরের প্রাণের জন্য, আর মানুষের জন্য।',
+   'কেবল সংগঠিত কাজ আর অ্যাক্টিভিজমের ওপর ভিত্তি করে। ভুক্তভোগীদের মূল্যে কোনো বিলাপ নয়।',
+   'পুরোপুরি যুক্তিনিষ্ঠ, সহমর্মী, নাস্তিক, যৌক্তিক আর ন্যায্য।'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'ur': dict(menu='مینو', skip='مواد پر جائیں', lang='زبان', theme='لائٹ/ڈارک موڈ بدلیں',
+  tagline='Together, we end suffering.', sub='وہ تنظیم جو زبردستی کے وجود اور تکلیف کو ختم کرنے کے لیے وقف ہے',
+  cta1='ہمارے ساتھ شامل ہوں', cta2='منشور پڑھیں', mission='ہمارا مشن',
+  mission_text='بغیر کسی سمجھوتے کے، جسمانی طور پر جتنی ممکن ہو اتنی تکلیف کو روکنا۔',
+  effort='کوشش', questions='کوئی سوال؟', questions_text='منصوبے کے بارے میں مزید جاننے کے لیے info@proextinction.com پر رابطہ کریں',
+  action='قدم اٹھائیں', toc='اس صفحے پر', abridged='پیش نظارہ: اس ڈیزائن میں چینلز کی لمبی فہرست شامل نہیں۔ پوری فہرست موجودہ سائٹ پر ہے:',
+  abridged_link='پورا صفحہ کھولیں', ki='انگریزی سے مشینی ترجمہ (AI)۔ اصل سائٹ کا کوئی اردو ورژن نہیں ہے۔',
+  ki_tag='AI', back='ڈیزائن', back_title='ڈیزائنز کی فہرست پر واپس جائیں', progress='پڑھنے کی پیش رفت', home_link='Pro Extinction – ہوم',
+  efforts=['تحریک کو بڑھانا، تاکہ اربوں سال کی تکلیف کو روکنا ممکن ہو سکے۔',
+   'جسمانی طور پر جتنے ممکن ہوں اتنے متاثرین کے لیے عالمگیر، بلا امتیاز مدد۔ جانوروں کے لیے، زمین سے باہر جتنی ممکن ہو اتنی زندگی کے لیے، اور انسانوں کے لیے۔',
+   'صرف منظم عمل اور ایکٹیوزم پر مبنی۔ متاثرین کی قیمت پر کوئی ماتم نہیں۔',
+   'مکمل طور پر عقلی، ہمدرد، ملحد، منطقی اور منصفانہ۔'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'id': dict(menu='Menu', skip='Langsung ke isi', lang='Bahasa', theme='Ganti mode terang/gelap',
+  tagline='Together, we end suffering.', sub='Organisasi yang berjuang untuk mengakhiri keberadaan yang dipaksakan dan penderitaan',
+  cta1='Bergabung', cta2='Baca manifesto', mission='Misi kami',
+  mission_text='Mencegah penderitaan sebanyak yang secara fisik mungkin, tanpa kompromi.',
+  effort='Upaya', questions='Ada pertanyaan?', questions_text='Hubungi info@proextinction.com untuk informasi lebih lanjut tentang proyek ini',
+  action='Bertindak', toc='Di halaman ini', abridged='Pratinjau: konsep ini tidak menampilkan daftar kanal yang panjang. Daftar lengkapnya ada di situs saat ini:',
+  abridged_link='Buka halaman lengkap', ki='Terjemahan mesin dari bahasa Inggris (AI). Situs aslinya tidak memiliki versi bahasa Indonesia.',
+  ki_tag='AI', back='Konsep', back_title='Kembali ke ringkasan konsep', progress='Kemajuan membaca', home_link='Pro Extinction – beranda',
+  efforts=['Membesarkan gerakan agar pencegahan miliaran tahun penderitaan menjadi mungkin.',
+   'Bantuan universal tanpa diskriminasi bagi sebanyak mungkin korban yang secara fisik bisa dijangkau. Bagi hewan, bagi sebanyak mungkin kehidupan di luar Bumi, dan bagi manusia.',
+   'Murni berbasis aksi dan aktivisme yang terorganisasi. Tidak meratap dengan mengorbankan para korban.',
+   'Sepenuhnya rasional, empatik, ateis, logis, dan adil.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
 })
 DISCORD = 'https://discord.gg/nb2K8y846R'
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
@@ -240,7 +303,6 @@ EMAIL = 'info@proextinction.com'
 CONCEPTS = {
  'a-ember':  dict(name='Ember',  mode='dark',  fonts='family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500'),
  'b-poster': dict(name='Poster', mode='dark',  fonts='family=Oswald:wght@400;600&family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500'),
- 'c-ring':   dict(name='Ring',   mode='light', fonts='family=Bebas+Neue&family=Oswald:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500'),
 }
 
 def linkify(s):
@@ -368,7 +430,7 @@ def page_html(c, lang, slug, kind):
     t = T[lang]; cdef = CONCEPTS[c]
     title, main, body_class = page_main(lang, slug, kind)
     return f'''<!doctype html>
-<html lang="{lang}" data-concept="{c}" data-default="{cdef["mode"]}">
+<html lang="{lang}" dir="{DIR(lang)}" data-concept="{c}" data-default="{cdef["mode"]}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -446,11 +508,10 @@ h1{font:600 clamp(2rem,6vw,3.4rem)/1 "Arial Narrow",Impact,sans-serif;text-trans
 p{color:var(--muted)}li{border-top:1px solid var(--line);padding:1.2rem 0;list-style:none}ul{padding:0;margin:2rem 0}
 h2{font:600 1.5rem "Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0 0 .3rem}a{color:var(--accent);margin-right:1.2rem}</style></head>
 <body><h1>Pro Extinction – design concepts</h1>
-<p>Three directions for the redesign. All have a light/dark switch (button top right) and ten languages. Pages and languages marked (AI) are machine-translated from English.</p>
+<p>Two directions for the redesign. All have a light/dark switch (button top right) and 14 languages. Pages and languages marked (AI) are machine-translated from English.</p>
 <ul>
 <li><h2>A · Ember</h2><p>Angular, editorial, asymmetric. Red/black/silver, serif body text.</p>%s</li>
 <li><h2>B · Poster</h2><p>Angular, centred, loud. Red/black/silver, sans-serif body text.</p>%s</li>
-<li><h2>C · Ring</h2><p>Round, sepia and ink, editorial. Serif body text.</p>%s</li>
 </ul></body></html>
 '''
 LINKS = lambda c: ''.join(f'<a href="{c}/{l}/home.html" lang="{l}">{LANG_NAME[l]}{AI_MARK if l in FULL_AI else ""}</a>' for l in LANGS)

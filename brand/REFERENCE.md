@@ -60,7 +60,7 @@ stammen vom Auftraggeber. Wo etwas offen ist, steht es ausdrücklich dabei.
 - Haarlinien in Rot oder Silber als Trenner.
 - **Konzept A "Ember":** eckig, redaktionell asymmetrisch, Kapitelnummern am Rand.
 - **Konzept B "Poster":** eckig, zentriert und plakativ.
-- **Konzept C "Ring":** rund (abgerundete Buttons und Karten, Ring als Gestaltungselement).
+- **Konzept C "Ring":** rund (abgerundete Buttons und Karten, Ring als Gestaltungselement). *Später verworfen.*
 
 ## 8. Bausteine
 1. Langtext-Seite mit Kapiteln, mitlaufendes Inhaltsverzeichnis, Lesefortschritt.

@@ -6,7 +6,6 @@ Drei Brand-Kit-Konzepte für Pro Extinction. **Welches gilt, ist offen** (siehe 
 |---|---|
 | `a-ember/` | eckig, redaktionell, Leiste links, Rot/Schwarz/Silber, Serif |
 | `b-poster/` | eckig, zentriert, Navbar oben, Rot/Schwarz/Silber, Sans |
-| `c-ring/` | rund, Sepia und Tinte, Karte rechts, Serif |
 
 Gemeinsam: `REFERENCE.md` (Rohfassung des Markeninterviews, mit Begründungen).
 Jeder Konzeptordner hat `BRAND.md`, `CLAUDE.md`, `README.md`, `tokens.css`, `brand-helmet.html`,

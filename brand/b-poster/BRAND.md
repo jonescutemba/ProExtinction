@@ -1,7 +1,7 @@
 # BRAND · Pro Extinction · Konzept Poster
 
 Verbindliche Kurzfassung. Begründungen stehen in `../REFERENCE.md`. **Status: Konzept,
-nicht final.** Welches der drei Konzepte gilt, ist noch offen (`/DECISIONS.md`). Alle Werte
+nicht final.** Welches der zwei Konzepte gilt, ist noch offen (`/DECISIONS.md`). Alle Werte
 unten sind vorläufig, aber innerhalb dieses Konzepts verbindlich.
 
 ## 1. Marke
@@ -87,7 +87,7 @@ abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, 
 | Baustein | Maße und Regeln |
 |---|---|
 | Navigation | Navbar oben unter der Kopfzeile, zentriert, ab 900 px auf zwei Zeilen umbrechend, klebt oben (sticky). Darunter waagerechter Streifen. Aktive Seite: rot und unterstrichen. Keine Seitenleiste, daher kein Scrollproblem in der Navigation. |
-| Kapitelübersicht | Kapitelchips mit Nummern zentriert über dem Text, immer inline. Aktives Kapitel in `--link`, nummeriert 01, 02 … |
+| Kapitelübersicht | Kapitelübersicht wie in A: Akzentlinie links, nummeriert; ab 1280 px rechts neben dem Text, 14 rem, mitlaufend (sticky). Darunter über dem Text. Aktives Kapitel in `--link`, nummeriert 01, 02 … |
 | Langtext | Zentriert: Titel, Trenner, Kapitelüberschriften mittig, Fließtext linksbündig in 68-ch-Spalte. Absatzabstand 1,15 em |
 | Vier Efforts | Container-Breite: unter 38 rem 1 Spalte, ab 38 rem 2×2. Nummer als Konturziffer 4–7 rem (Anton, 2 px Akzent-Kontur). |
 | Mission-Zitat | Display, Versalien (C: Serif kursiv), bis 3,2 rem, höchstens 22–28 Zeichen Breite |
@@ -95,7 +95,7 @@ abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, 
 | Call-to-Action | Discord (primär), WhatsApp, E-Mail; am Seitenende jeder Seite |
 | Schrägstrich | Signatur: Trenner, Fortschrittsbalken (oben, 4 px), Hover; immer `--accent` |
 | Scrollbars | 8 px, `--accent` (Seite); in Leisten 6 px, `--accent-dim` (58 % Akzent), Hover `--accent` |
-| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT sowie FR, PT, RU, ZH, HI als „(AI)“) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
+| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT sowie FR, PT, RU, ZH, HI, AR, BN, UR, ID als „(AI)“; AR und UR von rechts nach links) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
 
 ## 7. Formate
 Nur Website, responsiv. Keine Thumbnails, Slides oder PDFs in dieser Runde.

@@ -1,8 +1,8 @@
 /* Single-page presentation: concept switcher, light/dark, languages, hash router, and the per-view behaviours. */
 (function () {
   var d = document.documentElement;
-  var CONCEPTS = { 'a-ember': { n: 'Ember', mode: 'dark' }, 'b-poster': { n: 'Poster', mode: 'dark' }, 'c-ring': { n: 'Ring', mode: 'light' } };
-  var SHORT = { a: 'a-ember', b: 'b-poster', c: 'c-ring' };
+  var CONCEPTS = { 'a-ember': { n: 'Ember', mode: 'dark' }, 'b-poster': { n: 'Poster', mode: 'dark' } };
+  var SHORT = { a: 'a-ember', b: 'b-poster' };
   function qs(k) { try { return new URLSearchParams(location.search).get(k); } catch (e) { return null; } }
   function store(k, v) {
     try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {}
@@ -55,7 +55,7 @@
     if (!views[key]) { r = { lang: r.lang, slug: 'home' }; key = r.lang + '/home'; history.replaceState(null, '', '#/' + key); }
     var changed = key !== curKey;
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== key; });
-    current = r; curKey = key; d.lang = r.lang; store('pe-lang', r.lang);
+    current = r; curKey = key; d.lang = r.lang; d.dir = PAIR.ui[r.lang].dir; store('pe-lang', r.lang);
     navs.forEach(function (n) {
       n.hidden = n.dataset.lang !== r.lang;
       [].forEach.call(n.querySelectorAll('a'), function (a) { if (a.dataset.slug === r.slug) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });

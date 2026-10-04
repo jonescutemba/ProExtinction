@@ -3,11 +3,11 @@ body{font-size:1.125rem}
 .hero{display:grid;grid-template-columns:1fr;max-width:var(--wide);margin-inline:auto}
 @media (min-width:1000px){
   .shell{flex-direction:row;align-items:flex-start;background:linear-gradient(var(--line),var(--line)) 17.5rem 0/1px 100% no-repeat}
-  .sitenav{position:sticky;top:4.3rem;width:17.5rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-right:0;padding:1.6rem 1.2rem 2rem calc(var(--gutter) / 2)}
+  .sitenav{position:sticky;top:4.3rem;width:17.5rem;flex:none;max-height:calc(100vh - 4.3rem);overflow:auto;border-bottom:0;border-inline-end:0;padding:1.6rem 1.2rem 2rem calc(var(--gutter) / 2)}
   .sitenav ul{flex-direction:column;overflow:visible;gap:0}
-  .sitenav a{padding:.36rem 0 .36rem 1rem;font-size:.97rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-left:1px solid var(--line)}
-  .sitenav a:hover{border-left-color:var(--accent)}
-  .sitenav a[aria-current=page]{border-left:3px solid var(--accent);padding-left:calc(1rem - 2px)}
+  .sitenav a{padding:.36rem 0 .36rem 1rem;font-size:.97rem;line-height:1.2;letter-spacing:.04em;white-space:normal;border-inline-start:1px solid var(--line)}
+  .sitenav a:hover{border-inline-start-color:var(--accent)}
+  .sitenav a[aria-current=page]{border-inline-start:3px solid var(--accent);padding-inline-start:calc(1rem - 2px)}
   .sitenav a[aria-current=page]::after{display:none}
 }
 @media (min-width:1280px){.hero{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-areas:"w l" "t l" "s l" "c l";align-items:start;column-gap:3rem}.hero .wordmark{grid-area:w;font-size:clamp(2.6rem,5.2vw,5rem)}.hero-tag{grid-area:t}.hero-sub{grid-area:s}.hero-cta{grid-area:c}.hero-logo{grid-area:l;width:100%;max-width:24rem;justify-self:end;margin:0}}
@@ -18,11 +18,19 @@ body{font-size:1.125rem}
 .efforts li{border-top:1px solid var(--line);padding:1.5rem 1.4rem 1.5rem 0}
 .doc{display:grid;grid-template-columns:minmax(0,1fr);column-gap:3rem;max-width:none}
 .doc-head{grid-column:1/-1}
-.toc{border-left:2px solid var(--accent);padding-left:1rem;margin:1.6rem 0}
+.toc{border-inline-start:2px solid var(--accent);padding-inline-start:1rem;margin:1.6rem 0}
 @media (min-width:1280px){.doc{grid-template-columns:minmax(0,68ch) 14rem}.prose{grid-column:1;grid-row:2}.toc{grid-column:2;grid-row:2;position:sticky;top:5.5rem;align-self:start;margin-top:0;max-height:calc(100vh - 7rem);overflow:auto}}
 .prose h2::before{content:counter(ch,decimal-leading-zero) "  ";font-family:var(--mono);font-size:.55em;color:var(--link);letter-spacing:.08em;vertical-align:.35em}
-.mission blockquote{border-left:6px solid var(--accent);padding-left:1.2rem;max-width:26ch}
+.mission blockquote{border-inline-start:6px solid var(--accent);padding-inline-start:1.2rem;max-width:26ch}
 
 /* efforts hover: the number gets underlined, nothing moves or scales */
 .efforts .num{display:inline-block;padding-bottom:.15rem;background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 100%/0 3px;transition:background-size .35s cubic-bezier(.2,.8,.2,1),color .3s}
 .efforts li:hover .num{background-size:100% 3px;color:var(--link)}
+
+/* right-to-left: mirror the rail and the shorthands */
+[dir=rtl] .efforts li{padding:1.5rem 0 1.5rem 1.4rem}
+@media (min-width:1000px){
+  [dir=rtl] .shell{background-position:calc(100% - 17.5rem) 0}
+  [dir=rtl] .sitenav{padding:1.6rem calc(var(--gutter) / 2) 2rem 1.2rem}
+  [dir=rtl] .sitenav a{padding:.36rem 1rem .36rem 0}
+}

@@ -1,4 +1,4 @@
-"""Generate the three brand kits (brand/<concept>/) from tokens.css + concept facts.
+"""Generate the two brand kits (brand/<concept>/) from tokens.css + concept facts.
 
 Run after editing a tokens.css:  python3 tools/kit.py && python3 tools/build.py
 """
@@ -39,7 +39,7 @@ CONCEPTS = {
   shape='eckig (Radius 0 überall)', shape_short='eckig',
   accent_share='unter 5 % der Fläche',
   nav='Navbar oben unter der Kopfzeile, zentriert, ab 900 px auf zwei Zeilen umbrechend, klebt oben (sticky). Darunter waagerechter Streifen. Aktive Seite: rot und unterstrichen.',
-  toc='Kapitelchips mit Nummern zentriert über dem Text, immer inline.',
+  toc='Kapitelübersicht wie in A: Akzentlinie links, nummeriert; ab 1280 px rechts neben dem Text, 14 rem, mitlaufend (sticky). Darunter über dem Text.',
   layout='Zentriert: Titel, Trenner, Kapitelüberschriften mittig, Fließtext linksbündig in 68-ch-Spalte.',
   efforts='Container-Breite: unter 38 rem 1 Spalte, ab 38 rem 2×2. Nummer als Konturziffer 4–7 rem (Anton, 2 px Akzent-Kontur).',
   h1='clamp(2,6 rem, 9 vw, 6 rem)', wordmark_hero='clamp(2,2 rem, 11,5 vw, 9,5 rem)',
@@ -47,21 +47,6 @@ CONCEPTS = {
   bp='640 (Kopfzeile kompakt) · 760 (Kopfzeile dreispaltig) · 900 (Navbar umbrechend)',
   banned_extra=['Runde Formen', 'Linksbündige Überschriften', 'Serifen im Fließtext'],
   rail_note='Keine Seitenleiste, daher kein Scrollproblem in der Navigation.'),
- 'c-ring': dict(
-  name='Ring', fonts='family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500',
-  display='Bebas Neue', body='Source Serif 4', body_kind='Serif', default_mode='hell (Sepia-Papier)',
-  one_liner='Rund, Sepia und Tinte, redaktionell: Archiv-Anmutung statt Metal.',
-  shape='rund (Pillen für Buttons und Navigation, Karten 1,4 rem, Ringe als Zahlen-Marker)', shape_short='rund',
-  accent_share='unter 5 % der Fläche (Bernstein/Sepia)',
-  nav='Runde Karte rechts, 16,5 rem, ab 1000 px, klebt oben. Die Liste scrollt innerhalb der Karte, der Rand bleibt intakt. Darunter Pillen-Streifen. Aktive Seite: gefüllte Pille.',
-  toc='Karte mit zwei Spalten über dem Text.',
-  layout='Redaktionell, Inhalt linksbündig, maximal 58 rem. Kapitelnummern in Ringen (2,4 rem).',
-  efforts='Container-Breite: unter 34 rem 1 Spalte, ab 34 rem 2 (bleibt 2: Karten mit Ring-Nummer links brauchen Breite).',
-  h1='clamp(2,4 rem, 6,5 vw, 4,6 rem)', wordmark_hero='clamp(2,6 rem, 6 vw, 5,2 rem) ab 900 px, sonst bis 6,5 rem',
-  gutter='clamp(1,1 rem, 5 vw, 3 rem)', wide='72 rem', body_size='1,15 rem / Zeilenhöhe 1,65',
-  bp='640 (Kopfzeile kompakt) · 900 (Hero zweispaltig) · 1000 (Navigation als rechte Karte)',
-  banned_extra=['Eckige Buttons', 'Metallic-Verläufe außerhalb der Wordmark', 'Rotes Blutrot als Akzent (nur im Logo-Effekt)'],
-  rail_note='Nur die Liste in der Karte scrollt und blendet unten aus; der Kartenrand bleibt vollständig.'),
 }
 
 # ---------- helpers
@@ -131,7 +116,7 @@ def brand_md(c):
     return f'''# BRAND · Pro Extinction · Konzept {d["name"]}
 
 Verbindliche Kurzfassung. Begründungen stehen in `../REFERENCE.md`. **Status: Konzept,
-nicht final.** Welches der drei Konzepte gilt, ist noch offen (`/DECISIONS.md`). Alle Werte
+nicht final.** Welches der zwei Konzepte gilt, ist noch offen (`/DECISIONS.md`). Alle Werte
 unten sind vorläufig, aber innerhalb dieses Konzepts verbindlich.
 
 ## 1. Marke
@@ -216,7 +201,7 @@ abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, 
 | Call-to-Action | Discord (primär), WhatsApp, E-Mail; am Seitenende jeder Seite |
 | Schrägstrich | Signatur: Trenner, Fortschrittsbalken (oben, 4 px), Hover; immer `--accent` |
 | Scrollbars | 8 px, `--accent` (Seite); in Leisten 6 px, `--accent-dim` (58 % Akzent), Hover `--accent` |
-| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT sowie FR, PT, RU, ZH, HI als „(AI)“) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
+| Umschalter | Sprachauswahl (EN, DE, PL, ES, IT sowie FR, PT, RU, ZH, HI, AR, BN, UR, ID als „(AI)“; AR und UR von rechts nach links) und Hell/Dunkel oben rechts; Zurück-Knopf zur Konzeptübersicht nur im Prototyp |
 
 ## 7. Formate
 Nur Website, responsiv. Keine Thumbnails, Slides oder PDFs in dieser Runde.
