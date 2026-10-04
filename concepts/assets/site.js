@@ -76,12 +76,12 @@
   var links = [].slice.call(document.querySelectorAll('.toc a'));
   if (links.length && 'IntersectionObserver' in window) {
     var map = {};
-    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    links.forEach(function (a) { var k = a.getAttribute('href').slice(1); (map[k] = map[k] || []).push(a); });
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (e.isIntersecting) {
           links.forEach(function (a) { a.removeAttribute('aria-current'); });
-          var a = map[e.target.id]; if (a) a.setAttribute('aria-current', 'true');
+          (map[e.target.id] || []).forEach(function (a) { a.setAttribute('aria-current', 'true'); });
         }
       });
     }, { rootMargin: '-15% 0px -75% 0px' });

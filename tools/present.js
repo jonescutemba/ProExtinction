@@ -108,9 +108,9 @@
     if (io) io.disconnect();
     var v = views[curKey]; if (!v || !('IntersectionObserver' in window)) return;
     var links = [].slice.call(v.querySelectorAll('.toc a')); if (!links.length) return;
-    var map = {}; links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var map = {}; links.forEach(function (a) { var k = a.getAttribute('href').slice(1); (map[k] = map[k] || []).push(a); });
     io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (a) { a.removeAttribute('aria-current'); }); var a = map[e.target.id]; if (a) a.setAttribute('aria-current', 'true'); } });
+      es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (a) { a.removeAttribute('aria-current'); }); (map[e.target.id] || []).forEach(function (a) { a.setAttribute('aria-current', 'true'); }); } });
     }, { rootMargin: '-15% 0px -75% 0px' });
     [].forEach.call(v.querySelectorAll('.prose h2'), function (h) { io.observe(h); });
   }

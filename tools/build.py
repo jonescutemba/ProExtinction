@@ -459,7 +459,10 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
     toc_html = ''
     if len(toc) > 1:
-        toc_html = f'<nav class="toc" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>' + ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc) + '</ol></nav>'
+        items = ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc)
+        # two copies: above the text on narrow screens, beside the first paragraph after the first chapter heading on wide ones
+        toc_html = f'<nav class="toc toc-top" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
+        body = body.replace('</h2>', f'</h2><nav class="toc toc-side" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>', 1)
     lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
     return title, main, 'page'
