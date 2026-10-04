@@ -1,7 +1,7 @@
 """Build the three design concepts (all languages) into concepts/<concept>/<lang>/*.html."""
 import json, re, html, pathlib, sys, urllib.parse
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from blocks import blocks_of, abridge, faq_pairs
+from blocks import blocks_of, abridge, faq_pairs, pic_anchors, place_pics
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'concepts'
@@ -307,6 +307,39 @@ icon = lambda n: f'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusa
 JOIN = {('es', 'equipo'): {16}, ('pl', 'z-nami'): {12}}
 DROP = {('pl', 'z-nami'): {9}}
 
+# Pictures from the English site (content/images.json, files in presentation/img), numbered so unwanted ones can be named.
+IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
+IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/'
+
+def figure(n, cls='pic'):
+    x = next(i for i in IMAGES if i['n'] == n)
+    return (f'<figure class="{cls}"><img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="">'
+            f'<figcaption>#{n}</figcaption></figure>')
+
+def pics_for(en_slug):
+    """{English line index: picture number} for a page."""
+    return {i['where'][1]: i['n'] for i in IMAGES if i['page'] == en_slug and i['where'][0] == 'after'}
+
+# History: protest photos sit above the caption naming their country, whatever the order on that language's page.
+PROTEST = {'Germany': ('germany', 'deutschland', 'germania', 'alemania', 'niemc'), 'Poland': ('poland', 'polen', 'polonia', 'polsk'),
+           'India': ('india', 'indien', 'indi')}
+
+def own_pics(slug, rest):
+    """{line index: picture} found by text on an original-language page, or None to place by chapter position."""
+    if slug != 'history': return None
+    en = json.loads((ROOT / 'content' / 'en' / 'history.json').read_text(encoding='utf-8'))
+    found, last = {}, None
+    for x in (i for i in IMAGES if i['page'] == 'history'):
+        country = next((c for c in PROTEST if c in en[x['where'][1] + 1]), None)
+        if not country: continue
+        hit = next((k for k, l in enumerate(rest) if l.lower().startswith('prot') and any(w in l.lower() for w in PROTEST[country])), None)
+        if hit is not None: found[hit - 1] = x['n']; last = max(last or 0, hit)
+    left = [i['n'] for i in IMAGES if i['page'] == 'history' and i['n'] not in found.values()]
+    if not found: return None
+    for n in left:   # no caption for this country on this page: after the last protest photo's caption
+        found[last] = n; last += 1
+    return found
+
 def join_buttons(lang):
     return (f'<p class="cta-links join"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a>'
             f'<a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a></p>')
@@ -337,6 +370,8 @@ def render_blocks(blocks, used, lang='en'):
             out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":："))}</h2>')
         elif b[0] == 'join':
             out.append(join_buttons(lang))
+        elif b[0] == 'pic':
+            out.append(figure(b[1]))
         elif b[0] == 'ul':
             out.append('<ul>' + ''.join(f'<li>{linkify(i)}</li>' for i in b[1]) + '</ul>')
         else:
@@ -365,6 +400,14 @@ def doc_body(lang, slug, lines, full_url, like=None):
         return title, lede, body, toc, truncated
     off, key = len(lines) - len(rest), (lang, OF_EN[lang].get(slug, slug))
     bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())})
+    pics = pics_for(slug)
+    if pics:   # anchors from the English page, so original-language pages get the pictures in the same chapter
+        en = json.loads((ROOT / 'content' / 'en' / f'{slug}.json').read_text(encoding='utf-8'))
+        _, _, en_rest = head_lede(en); eoff = len(en) - len(en_rest)
+        en_bl = blocks_of(en_rest, None, (), (), {i - eoff: n for i, n in pics.items()})
+        own = own_pics(slug, rest) if not like else None
+        if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own)
+        else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
     body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 
@@ -387,7 +430,7 @@ def social_body(lang, lines, used):
             out.append(f'<h3 class="plat">{icon(pl["name"].lower())}{pl["name"]}</h3>')
             if 'note' in pl: out.append(f'<p class="plat-note">{esc(L(pl["note"]))}</p>')
             out.append('<ul class="channels">' + ''.join(
-                f'<li><a href="{esc(x["url"])}" rel="noopener">{esc(x["label"])}</a>' + (f'<span class="bio">{esc(x["desc"])}</span>' if x.get('desc') else '') + '</li>'
+                f'<li>' + (figure(x['pic'], 'avatar') if x.get('pic') else '') + f'<a href="{esc(x["url"])}" rel="noopener">{esc(x["label"])}</a>' + (f'<span class="bio">{esc(x["desc"])}</span>' if x.get('desc') else '') + '</li>'
                 for x in pl['items']) + '</ul>')
     out.append(f'<p class="note">{esc(L(94))}</p>')
     return '\n'.join(out), toc
@@ -500,7 +543,8 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 def home_main(lang, href=lambda s: s + '.html'):
     t = T[lang]
     ki = f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>' if lang in FULL_AI else ''
-    efforts = ''.join(f'<li><span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
+    eff_pic = {i['where'][1]: i['n'] for i in IMAGES if i['page'] == 'home'}
+    efforts = ''.join(f'<li>{figure(eff_pic[i], "pic eff-pic") if i in eff_pic else ""}<span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
     return f'''<section class="hero">
   {HERO_LOGO}
   <h1 class="wordmark">PRO EXTINCTION</h1>

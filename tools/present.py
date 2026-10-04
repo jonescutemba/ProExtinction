@@ -13,6 +13,7 @@ def nav(lang):
 
 def build():
     views, navs, tails = [], [], []
+    B.IMG_BASE = 'img/'
     for lang in B.LANGS:
         navs.append(nav(lang))
         for slug, kind in B.PAGES[lang]:

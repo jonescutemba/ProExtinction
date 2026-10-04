@@ -35,7 +35,7 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 10. **Anmutung:** Leerraum, schmale Textspalte (68 ch), Körnung, Haarlinien, keine Schatten oder Glaseffekte.
 11. **Signatur:** der rote Schrägstrich (Trenner, Fortschritt, Hover).
 12. **Bausteine:** Navigation immer sichtbar (kein Hamburger-Menü), Kapitelübersicht, FAQ aufklappbar, Zitatblock, vier Efforts, Call-to-Action, Sprach- und Theme-Umschalter.
-13. **Bilder:** Hauptbildsprache im Code (Linien, Ringe, Schrägstrich, Körnung). Keine Stockfotos. Drastische Bilder nur hinter einem Klick.
+13. **Bilder:** Hauptbildsprache im Code (Linien, Ringe, Schrägstrich, Körnung). Keine Stockfotos. Drastische Bilder nur hinter einem Klick. **Stand jetzt:** die 30 Inhaltsbilder der englischen Originalseite sind zur Sichtung eingebaut, durchnummeriert (#1 bis #30, Liste in `content/images.json`, Dateien in `presentation/img/`). Danach wird entschieden, welche bleiben und welche hinter einen Klick kommen.
 14. **Logo-Effekt:** nur das große Logo, beim 1. Hover und jedem 10., maximal 1,5×, 4 s, respektiert „Bewegung reduzieren".
 15. **Scrollbars:** dünn, Akzentfarbe; innen dunkler als außen.
 16. **Zielplattform:** nur Website, responsiv. Keine PDFs, Slides, Thumbnails.
