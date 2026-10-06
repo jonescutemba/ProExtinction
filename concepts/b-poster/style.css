@@ -235,6 +235,36 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .pic{margin:1.6rem 0 2rem}
 .pic img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain;background:var(--surface)}
 .pic figcaption,.avatar figcaption{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:.4rem;letter-spacing:.04em}
+/* Manifesto diagrams (tools/diagrams.py): theme colours, a slow loop, the hovered part lights up. */
+.diagram{padding:1.2rem 0;background:var(--surface);border:1px solid var(--line)}
+.dg{display:block;width:100%;max-width:40rem;height:auto;margin-inline:auto;overflow:visible}
+.dg text{fill:var(--text);font-family:var(--mono);text-anchor:middle;dominant-baseline:central;letter-spacing:.02em}
+.dg .node rect{fill:var(--bg);stroke:var(--line);stroke-width:2;transition:stroke .3s,fill .3s}
+.dg .tip{fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.dg .hot-tip{stroke:var(--accent)}
+.dg-cycle .ring{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:3 7}
+.dg-cycle .arc{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.dg-cycle .runner{fill:var(--accent);filter:drop-shadow(0 0 6px var(--accent))}
+.dg-cycle .center{font-family:var(--display);font-weight:var(--display-weight,600);font-size:40px;text-transform:uppercase;letter-spacing:.03em}
+.dg .hot,.dg .verdict{fill:var(--link,var(--accent))}
+.dg-cycle .node rect{animation:dg-lit 6s infinite}
+.dg-cycle .n1 rect{animation-delay:2s}.dg-cycle .n2 rect{animation-delay:4s}
+@keyframes dg-lit{0%,6%{stroke:var(--accent)}22%,100%{stroke:var(--line)}}
+.dg-tree .wire{fill:none;stroke:var(--muted);stroke-width:2}
+.dg-tree .flow{fill:none;stroke:var(--accent);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1;animation:dg-flow 8s infinite}
+.dg-tree .flow.r{animation-delay:4s}
+@keyframes dg-flow{0%{stroke-dashoffset:1;opacity:1}25%,45%{stroke-dashoffset:0;opacity:1}50%,100%{stroke-dashoffset:0;opacity:0}}
+.dg-tree .side .node rect{animation:dg-side 8s infinite}
+.dg-tree .side.r .node rect{animation-delay:4s}
+@keyframes dg-side{0%,15%{stroke:var(--line)}25%,45%{stroke:var(--accent)}52%,100%{stroke:var(--line)}}
+.dg-tree .root rect{stroke:var(--accent)}
+.dg-tree .end text{fill:var(--link,var(--accent))}
+.dg-tree .verdict{font-family:var(--display);font-weight:var(--display-weight,600);font-size:30px;text-transform:uppercase;letter-spacing:.03em}
+.dg:hover *{animation-play-state:paused}
+.dg .node:hover rect,.dg-tree .side:hover .node rect{stroke:var(--accent);fill:var(--surface)}
+.dg-tree .side:hover .flow{animation:none;stroke-dashoffset:0;opacity:1}
+.dg-tree:has(.side:hover) .side:not(:hover) .flow{animation:none;opacity:0}
+.dg-tree:has(.side:hover) .side:not(:hover) .node rect{animation:none;stroke:var(--line)}
 .eff-pic{margin:0 0 1rem}
 .eff-pic .zoom{display:block;overflow:hidden}
 .eff-pic img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}

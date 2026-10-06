@@ -2,6 +2,7 @@
 import json, re, html, pathlib, sys, urllib.parse
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from blocks import blocks_of, abridge, faq_pairs, pic_anchors, place_pics
+import diagrams
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'concepts'
@@ -467,7 +468,9 @@ DROP = {('pl', 'z-nami'): {9}}
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
 IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/'
 
-def figure(n, cls='pic'):
+def figure(n, cls='pic', lang='en'):
+    if n in diagrams.NUMBERS:   # redrawn as animated SVG in the theme colours
+        return f'<figure class="{cls} diagram">{diagrams.diagram(n, lang)}</figure>'
     x = next(i for i in IMAGES if i['n'] == n)
     img = f'<img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="">'
     if 'eff-pic' in cls:   # frame clips the hover zoom, so the picture keeps its size
@@ -529,7 +532,7 @@ def render_blocks(blocks, used, lang='en'):
         elif b[0] == 'join':
             out.append(join_buttons(lang))
         elif b[0] == 'pic':
-            out.append(figure(b[1]))
+            out.append(figure(b[1], lang=lang))
         elif b[0] == 'ul':
             out.append('<ul>' + ''.join(f'<li>{linkify(i)}</li>' for i in b[1]) + '</ul>')
         else:
