@@ -469,8 +469,10 @@ IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/
 
 def figure(n, cls='pic'):
     x = next(i for i in IMAGES if i['n'] == n)
-    return (f'<figure class="{cls}"><img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="">'
-            f'<figcaption>#{n}</figcaption></figure>')
+    img = f'<img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="">'
+    if 'eff-pic' in cls:   # frame clips the hover zoom, so the picture keeps its size
+        img = f'<span class="zoom">{img}</span>'
+    return f'<figure class="{cls}">{img}<figcaption>#{n}</figcaption></figure>'
 
 def pics_for(en_slug):
     """{English line index: picture number} for a page."""
