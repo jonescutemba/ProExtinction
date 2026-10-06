@@ -466,6 +466,7 @@ DROP = {('pl', 'z-nami'): {9}}
 
 # Pictures from the English site (content/images.json, files in presentation/img), numbered so unwanted ones can be named.
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
+PROLIFE_JS = (ROOT / 'tools' / 'prolife.js').read_text(encoding='utf-8')
 IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/'
 
 def figure(n, cls='pic', lang='en'):
@@ -666,7 +667,10 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
         items = ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc)
         # two copies: above the text on narrow screens, beside the first paragraph after the first chapter heading on wide ones
         toc_html = f'<nav class="toc toc-top" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
-        body = body.replace('</h2>', f'</h2><nav class="toc toc-side" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>', 1)
+        side = f'<nav class="toc toc-side" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
+        if (lang, slug) == ('en', 'criticism-of-different-pro-life-ideologies'):   # joke button, shown by theme B only
+            side += f'<button class="prolife" type="button" tabindex="-1" aria-hidden="true">I\'m pro-life</button><script>{PROLIFE_JS}</script>'
+        body = body.replace('</h2>', '</h2>' + side, 1)
     lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
     return title, main, 'page'

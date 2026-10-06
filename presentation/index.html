@@ -105,6 +105,19 @@ p{margin:0 0 1.15em}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
 .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
+/* Styled language list where the browser allows it (Chrome/Edge 135+); other browsers keep the native list. */
+@supports (appearance:base-select){
+  .lang-select,.lang-select::picker(select){appearance:base-select}
+  .lang-select::picker(select){margin-top:.35rem;padding:.35rem;min-width:15rem;max-height:min(70vh,30rem);overflow-y:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--r-ui);box-shadow:0 12px 32px rgb(0 0 0/.35);scrollbar-color:var(--accent) transparent;scrollbar-width:thin;scrollbar-gutter:stable;overscroll-behavior:contain;position-area:block-end span-inline-start}
+  /* two columns: all languages fit without a scrollbar; one column with a slim inset scrollbar on narrow screens */
+  @media (min-width:40rem) and (min-height:30rem){.lang-select::picker(select){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px .35rem;min-width:27rem;max-height:none;overflow:visible}}
+  .lang-select::picker(select)::-webkit-scrollbar{width:6px}
+  .lang-select::picker(select)::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .lang-select option{padding:.5rem .7rem;border-radius:var(--r-ui);font-size:.95rem;line-height:1.35;cursor:pointer;color:var(--text);background:none}
+  .lang-select option::checkmark{display:none}
+  .lang-select option:hover,.lang-select option:focus-visible{background:color-mix(in srgb,var(--accent) 18%,transparent);outline:none}
+  .lang-select option:checked{background:var(--accent);color:var(--on-accent,#fff)}
+}
 .theme{padding:0}
 .theme span{width:1.05rem;height:1.05rem;border-radius:50%;border:2px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
 :root[data-theme=light] .theme span{transform:rotate(180deg)}
@@ -329,6 +342,9 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .avatar{margin:0;grid-row:span 2}
 .avatar img{width:3rem;height:3rem;border-radius:50%;object-fit:cover;display:block}
 .avatar figcaption{font-size:.7rem;text-align:center;margin-top:.2rem}
+
+/* joke button on the criticism page; theme B shows it on wide screens (b.css) */
+.prolife{display:none}
 
 /* Pro Extinction · Konzept Ember · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
@@ -467,6 +483,19 @@ p{margin:0 0 1.15em}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
 .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
+/* Styled language list where the browser allows it (Chrome/Edge 135+); other browsers keep the native list. */
+@supports (appearance:base-select){
+  .lang-select,.lang-select::picker(select){appearance:base-select}
+  .lang-select::picker(select){margin-top:.35rem;padding:.35rem;min-width:15rem;max-height:min(70vh,30rem);overflow-y:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--r-ui);box-shadow:0 12px 32px rgb(0 0 0/.35);scrollbar-color:var(--accent) transparent;scrollbar-width:thin;scrollbar-gutter:stable;overscroll-behavior:contain;position-area:block-end span-inline-start}
+  /* two columns: all languages fit without a scrollbar; one column with a slim inset scrollbar on narrow screens */
+  @media (min-width:40rem) and (min-height:30rem){.lang-select::picker(select){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px .35rem;min-width:27rem;max-height:none;overflow:visible}}
+  .lang-select::picker(select)::-webkit-scrollbar{width:6px}
+  .lang-select::picker(select)::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .lang-select option{padding:.5rem .7rem;border-radius:var(--r-ui);font-size:.95rem;line-height:1.35;cursor:pointer;color:var(--text);background:none}
+  .lang-select option::checkmark{display:none}
+  .lang-select option:hover,.lang-select option:focus-visible{background:color-mix(in srgb,var(--accent) 18%,transparent);outline:none}
+  .lang-select option:checked{background:var(--accent);color:var(--on-accent,#fff)}
+}
 .theme{padding:0}
 .theme span{width:1.05rem;height:1.05rem;border-radius:50%;border:2px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
 :root[data-theme=light] .theme span{transform:rotate(180deg)}
@@ -692,6 +721,9 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .avatar img{width:3rem;height:3rem;border-radius:50%;object-fit:cover;display:block}
 .avatar figcaption{font-size:.7rem;text-align:center;margin-top:.2rem}
 
+/* joke button on the criticism page; theme B shows it on wide screens (b.css) */
+.prolife{display:none}
+
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
    Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
@@ -789,6 +821,14 @@ body{font-size:1.125rem}
 .efforts li:hover::after{width:4.5rem}
 .toc-side{display:none}
 @media (min-width:1280px){.toc-top{display:none}.toc-side{display:block;float:inline-end;clear:inline-end;width:14rem;margin:0 -17rem 0 0;margin-inline:0 -17rem;position:sticky;top:7.5rem;max-height:calc(100vh - 9rem);overflow:auto}}
+
+/* "I'm pro-life" joke button (tools/prolife.js): right of the side table of contents, runs away from the pointer */
+@media (min-width:1500px){
+  .prolife{display:block;position:fixed;left:0;top:0;z-index:5;font-family:var(--display);font-weight:var(--display-weight,400);font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--on-accent,#fff);background:var(--accent);border:0;padding:.75rem 1.4rem;cursor:pointer;white-space:nowrap;
+    clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);transition:transform .28s cubic-bezier(.2,.9,.25,1.25)}
+  .prolife.off{visibility:hidden}
+}
 
 
 </style>
@@ -916,7 +956,48 @@ d.dataset.theme=(t==='light'||t==='dark')?t:'dark'})()</script>
 <details><summary>But what about balance? It is the natural balance!</summary><div class="a"><p>This is the stupidest pseudo argument against extinctionism. It&#x27;s not even an argument but still people randomly blurt this out in debates against us.</p><p>Yeah suffering is how nature balances itself! It controls the population and maintains ecological balance through starvation, diseases and  predation. But nature doesn&#x27;t suffer. Animals suffer from nature. Should you focus on Nature (which is just a concept) which doesn&#x27;t suffer or focus on conscious victims who suffer? The answer is obvious. Your animal brain just values Nature over the actual wellbeing of the life forms inside it, and that&#x27;s selfish and wrong. &quot;What about the beauty?&quot; is also a disgusting question which gives zero moral consideration to the victims who are suffering terribly.</p></div></details></div></div></article>
 </section>
 <section class="view" data-view="en/criticism-of-different-pro-life-ideologies" lang="en" dir="ltr" data-title="Criticism of different pro-life ideologies" hidden>
-<article class="doc"><header class="doc-head"><p class="mono kicker">Criticism of pro-life ideologies</p><h1>Criticism of different pro-life ideologies</h1><hr class="slash"></header><nav class="toc toc-top" aria-label="On this page"><p class="mono">On this page</p><ol><li><a href="#en-criticism-of-different-pro-life-ideologies-human-rights">Human Rights</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-left-wing-politics">Left wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-wing-politics">Right wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-democracy">Democracy</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-antinatalism">Antinatalism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-vhemt">VHEMT</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-anarchism">Anarchism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-communism">Communism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-veganism">Veganism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-legal-impossibility">The Legal Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-economic-impossibility">The Economic Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-problem-of-enforcement">The Problem of Enforcement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-who-would-know">Who would know?</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-animals-cannot-report-crimes">Animals Cannot Report Crimes</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-surveillance-problem">The Surveillance Problem</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-anti-speciesist-paradox">The Anti-Speciesist Paradox</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-a-hypothetical-impossibility">A Hypothetical Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-contradiction">The Contradiction</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-feminism">Feminism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-lgbtq-movement">LGBTQ+ Movement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-transhumanism">Transhumanism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-to-die">Right to die</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-environmentalism-and-wildlife-conservati">Environmentalism and Wildlife Conservation</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-efilism">Efilism</a></li></ol></nav><div class="prose"><h2 id="en-criticism-of-different-pro-life-ideologies-human-rights">Human Rights</h2><nav class="toc toc-side" aria-label="On this page"><p class="mono">On this page</p><ol><li><a href="#en-criticism-of-different-pro-life-ideologies-human-rights">Human Rights</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-left-wing-politics">Left wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-wing-politics">Right wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-democracy">Democracy</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-antinatalism">Antinatalism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-vhemt">VHEMT</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-anarchism">Anarchism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-communism">Communism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-veganism">Veganism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-legal-impossibility">The Legal Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-economic-impossibility">The Economic Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-problem-of-enforcement">The Problem of Enforcement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-who-would-know">Who would know?</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-animals-cannot-report-crimes">Animals Cannot Report Crimes</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-surveillance-problem">The Surveillance Problem</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-anti-speciesist-paradox">The Anti-Speciesist Paradox</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-a-hypothetical-impossibility">A Hypothetical Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-contradiction">The Contradiction</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-feminism">Feminism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-lgbtq-movement">LGBTQ+ Movement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-transhumanism">Transhumanism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-to-die">Right to die</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-environmentalism-and-wildlife-conservati">Environmentalism and Wildlife Conservation</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-efilism">Efilism</a></li></ol></nav>
+<article class="doc"><header class="doc-head"><p class="mono kicker">Criticism of pro-life ideologies</p><h1>Criticism of different pro-life ideologies</h1><hr class="slash"></header><nav class="toc toc-top" aria-label="On this page"><p class="mono">On this page</p><ol><li><a href="#en-criticism-of-different-pro-life-ideologies-human-rights">Human Rights</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-left-wing-politics">Left wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-wing-politics">Right wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-democracy">Democracy</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-antinatalism">Antinatalism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-vhemt">VHEMT</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-anarchism">Anarchism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-communism">Communism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-veganism">Veganism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-legal-impossibility">The Legal Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-economic-impossibility">The Economic Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-problem-of-enforcement">The Problem of Enforcement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-who-would-know">Who would know?</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-animals-cannot-report-crimes">Animals Cannot Report Crimes</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-surveillance-problem">The Surveillance Problem</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-anti-speciesist-paradox">The Anti-Speciesist Paradox</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-a-hypothetical-impossibility">A Hypothetical Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-contradiction">The Contradiction</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-feminism">Feminism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-lgbtq-movement">LGBTQ+ Movement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-transhumanism">Transhumanism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-to-die">Right to die</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-environmentalism-and-wildlife-conservati">Environmentalism and Wildlife Conservation</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-efilism">Efilism</a></li></ol></nav><div class="prose"><h2 id="en-criticism-of-different-pro-life-ideologies-human-rights">Human Rights</h2><nav class="toc toc-side" aria-label="On this page"><p class="mono">On this page</p><ol><li><a href="#en-criticism-of-different-pro-life-ideologies-human-rights">Human Rights</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-left-wing-politics">Left wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-wing-politics">Right wing politics</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-democracy">Democracy</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-antinatalism">Antinatalism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-vhemt">VHEMT</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-anarchism">Anarchism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-communism">Communism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-veganism">Veganism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-legal-impossibility">The Legal Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-economic-impossibility">The Economic Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-problem-of-enforcement">The Problem of Enforcement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-who-would-know">Who would know?</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-animals-cannot-report-crimes">Animals Cannot Report Crimes</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-surveillance-problem">The Surveillance Problem</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-anti-speciesist-paradox">The Anti-Speciesist Paradox</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-a-hypothetical-impossibility">A Hypothetical Impossibility</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-the-contradiction">The Contradiction</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-feminism">Feminism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-lgbtq-movement">LGBTQ+ Movement</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-transhumanism">Transhumanism</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-right-to-die">Right to die</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-environmentalism-and-wildlife-conservati">Environmentalism and Wildlife Conservation</a></li><li><a href="#en-criticism-of-different-pro-life-ideologies-efilism">Efilism</a></li></ol></nav><button class="prolife" type="button" tabindex="-1" aria-hidden="true">I'm pro-life</button><script>/* "I'm pro-life" joke button on the criticism page (theme B, wide screens only).
+   It lives in the free space right of the side table of contents and jumps away before anyone can press it. */
+(function () {
+  var b = document.currentScript.previousElementSibling, toc = b.previousElementSibling, fx = .5, fy = .3, raf = 0;
+  function zone() {
+    if (getComputedStyle(b).display === 'none') return null;
+    var r = toc.getBoundingClientRect(), w = b.offsetWidth, h = b.offsetHeight;
+    if (!r.width || r.bottom < 0 || r.top > innerHeight) return null;
+    var x0 = r.right + 32, x1 = innerWidth - 24 - w, y0 = Math.max(r.top, 90), y1 = Math.min(innerHeight - 24, y0 + Math.max(r.height, 360)) - h;
+    return x1 - x0 < 60 || y1 - y0 < 60 ? null : { x0: x0, x1: x1, y0: y0, y1: y1 };
+  }
+  function place() {
+    raf = 0;
+    var z = zone();
+    b.classList.toggle('off', !z);
+    if (z) b.style.transform = 'translate(' + (z.x0 + fx * (z.x1 - z.x0)) + 'px,' + (z.y0 + fy * (z.y1 - z.y0)) + 'px)';
+  }
+  function later() { if (!raf) raf = requestAnimationFrame(place); }
+  function flee(px, py) {   // new spot, far enough from the pointer
+    var z = zone(); if (!z) return;
+    for (var i = 0; i < 12; i++) {
+      var nx = Math.random(), ny = Math.random(),
+          x = z.x0 + nx * (z.x1 - z.x0) + b.offsetWidth / 2, y = z.y0 + ny * (z.y1 - z.y0) + b.offsetHeight / 2;
+      if (Math.hypot(x - px, y - py) > 140) break;
+    }
+    fx = nx; fy = ny; place();
+  }
+  document.addEventListener('pointermove', function (e) {
+    if (b.classList.contains('off')) return;
+    var r = b.getBoundingClientRect();
+    if (e.clientX > r.left - 70 && e.clientX < r.right + 70 && e.clientY > r.top - 60 && e.clientY < r.bottom + 60) flee(e.clientX, e.clientY);
+  }, { passive: true });
+  b.addEventListener('pointerdown', function (e) { e.preventDefault(); flee(e.clientX, e.clientY); });
+  b.addEventListener('focus', function () { var r = b.getBoundingClientRect(); flee(r.left, r.top); b.blur(); });
+  b.addEventListener('click', function (e) { e.preventDefault(); var r = b.getBoundingClientRect(); flee(r.left, r.top); });
+  addEventListener('scroll', later, { passive: true, capture: true });
+  addEventListener('resize', later);
+  addEventListener('hashchange', function () { setTimeout(later, 50); });
+  new MutationObserver(later).observe(document.documentElement, { attributes: true, attributeFilter: ['data-concept'] });
+  later();
+})();
+</script>
 <p>Human rights are often treated as absolute protections that should continually expand. This is the wrong framework. Rights are useful only because they serve the greater objective of helping to cause extinction.</p>
 <p>Human rights do not eradicate or reduce suffering. Laws can prohibit rape, abuse, discrimination, and slavery, but making something illegal does not make it disappear. These things continue even where strong legal protections exist, including through unreported cases. Rights can regulate how society responds to suffering; they cannot eliminate the capacity for suffering itself. Furthermore, maintaining human rights relies on systems of punishment, such as imprisonment. While incarcerating or penalizing perpetrators is treated as a necessary evil to keep society stable, the intense suffering of those in prison cannot simply be dismissed or ignored. Rights systems regulate societal stability, but they rely on inflicting suffering and cannot eliminate the capacity for suffering itself.</p>
 <p>The primary usefulness of human rights is providing the necessary conditions for activism. Freedom of speech, association, and basic protections allow people to organize and advocate. Because human empathy naturally drives people to fight for basic human rights, those protections will inevitably be established by society at large. Once people gain the freedom to do activism, our specific role as extinctionists is to reach and gather those individuals capable of understanding and fighting for extinctionism. With our time and resources being extremely limited, we must focus our efforts on engaging existing activists rather than slightly increase the work of human rights movements.</p>

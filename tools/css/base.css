@@ -50,6 +50,19 @@ p{margin:0 0 1.15em}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
 .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
+/* Styled language list where the browser allows it (Chrome/Edge 135+); other browsers keep the native list. */
+@supports (appearance:base-select){
+  .lang-select,.lang-select::picker(select){appearance:base-select}
+  .lang-select::picker(select){margin-top:.35rem;padding:.35rem;min-width:15rem;max-height:min(70vh,30rem);overflow-y:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--r-ui);box-shadow:0 12px 32px rgb(0 0 0/.35);scrollbar-color:var(--accent) transparent;scrollbar-width:thin;scrollbar-gutter:stable;overscroll-behavior:contain;position-area:block-end span-inline-start}
+  /* two columns: all languages fit without a scrollbar; one column with a slim inset scrollbar on narrow screens */
+  @media (min-width:40rem) and (min-height:30rem){.lang-select::picker(select){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px .35rem;min-width:27rem;max-height:none;overflow:visible}}
+  .lang-select::picker(select)::-webkit-scrollbar{width:6px}
+  .lang-select::picker(select)::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+  .lang-select option{padding:.5rem .7rem;border-radius:var(--r-ui);font-size:.95rem;line-height:1.35;cursor:pointer;color:var(--text);background:none}
+  .lang-select option::checkmark{display:none}
+  .lang-select option:hover,.lang-select option:focus-visible{background:color-mix(in srgb,var(--accent) 18%,transparent);outline:none}
+  .lang-select option:checked{background:var(--accent);color:var(--on-accent,#fff)}
+}
 .theme{padding:0}
 .theme span{width:1.05rem;height:1.05rem;border-radius:50%;border:2px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
 :root[data-theme=light] .theme span{transform:rotate(180deg)}
@@ -274,3 +287,6 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .avatar{margin:0;grid-row:span 2}
 .avatar img{width:3rem;height:3rem;border-radius:50%;object-fit:cover;display:block}
 .avatar figcaption{font-size:.7rem;text-align:center;margin-top:.2rem}
+
+/* joke button on the criticism page; theme B shows it on wide screens (b.css) */
+.prolife{display:none}
