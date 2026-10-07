@@ -858,7 +858,10 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
         side = f'<nav class="toc toc-side" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
         if (lang, slug) == ('en', 'criticism-of-different-pro-life-ideologies'):   # joke button, shown by theme B only
             side += f'<button class="prolife" type="button" tabindex="-1" aria-hidden="true">Press me if you\'re pro-life</button><script>{PROLIFE_JS}</script>'
-        body = body.replace('</h2>', '</h2>' + side, 1)
+        # beside the first paragraph of the first chapter when the text opens with a chapter heading (manifesto);
+        # otherwise at the very top of the text, so intro paragraphs don't push it down
+        if body.lstrip().startswith('<h2'): body = body.replace('</h2>', '</h2>' + side, 1)
+        else: notes = side + notes
     lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
     soc = next((x for x, _ in PAGES[lang] if EN_OF[lang][x] == 'social-media-channels'), None)
     body = body.replace('<!--social-link-->', f'<p class="go"><a class="btn" href="{href(soc)}">{esc(NAV[lang][soc])} <span aria-hidden="true">&rarr;</span></a></p>' if soc else '')
