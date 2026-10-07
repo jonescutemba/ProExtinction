@@ -325,6 +325,16 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 /* joke button on the criticism page; theme B shows it on wide screens (b.css) */
 .prolife{display:none}
 
+/* scroll-to-top: red square bottom right, fades in once the reader has scrolled a screen */
+.to-top{position:fixed;right:max(1rem,env(safe-area-inset-right));bottom:max(1rem,env(safe-area-inset-bottom));z-index:40;width:3rem;height:3rem;display:grid;place-items:center;
+  background:var(--accent);color:var(--on-accent,#fff);border:0;border-radius:var(--r-ui,0);cursor:pointer;box-shadow:0 6px 20px rgb(0 0 0/.35);
+  opacity:0;visibility:hidden;transform:translateY(.6rem);transition:opacity .25s,transform .25s,visibility .25s,background-color .2s}
+.to-top.on{opacity:1;visibility:visible;transform:none}
+.to-top:hover{background:color-mix(in srgb,var(--accent) 82%,#fff)}
+.to-top:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.to-top svg{width:1.35rem;height:1.35rem}
+@media print{.to-top{display:none}}
+
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
    Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */
@@ -549,6 +559,11 @@ body{font-size:1.125rem}
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // ---- scroll-to-top button: shown once the reader is a screen down
+  var up = document.querySelector('.to-top');
+  function upShow() { if (up) up.classList.toggle('on', (d.scrollTop || document.body.scrollTop) > innerHeight * .8); }
+  window.addEventListener('scroll', upShow, { passive: true }); upShow();
   var links = [].slice.call(document.querySelectorAll('.toc a'));
   if (links.length && 'IntersectionObserver' in window) {
     var map = {};

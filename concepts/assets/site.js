@@ -73,6 +73,11 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // ---- scroll-to-top button: shown once the reader is a screen down
+  var up = document.querySelector('.to-top');
+  function upShow() { if (up) up.classList.toggle('on', (d.scrollTop || document.body.scrollTop) > innerHeight * .8); }
+  window.addEventListener('scroll', upShow, { passive: true }); upShow();
   var links = [].slice.call(document.querySelectorAll('.toc a'));
   if (links.length && 'IntersectionObserver' in window) {
     var map = {};

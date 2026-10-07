@@ -25,7 +25,7 @@ def build():
     logo = B.logo_css()
     styles = f'<style id="logo">\n{logo}</style>\n' + ''.join(f'<style data-concept="{c}" media="{"all" if c == "a-ember" else "not all"}">\n{(ROOT / "concepts" / c / "style.css").read_text(encoding="utf-8").replace(logo, "")}\n</style>\n' for c in B.CONCEPTS)
     switch = ''.join(f'<button type="button" data-concept="{c}" aria-pressed="false" title="{B.CONCEPTS[c]["name"]}"><span class="k">{c[0].upper()}</span><span class="n">{B.CONCEPTS[c]["name"]}</span></button>' for c in B.CONCEPTS)
-    pair = json.dumps({'en_of': B.EN_OF, 'of_en': B.OF_EN, 'ui': {l: {'code': B.CODE[l], 'dir': B.DIR(l), 'menu': B.T[l]['menu'], 'lang': B.T[l]['lang'], 'home': B.T[l]['home_link']} for l in B.LANGS}}, ensure_ascii=False)
+    pair = json.dumps({'en_of': B.EN_OF, 'of_en': B.OF_EN, 'ui': {l: {'code': B.CODE[l], 'dir': B.DIR(l), 'menu': B.T[l]['menu'], 'lang': B.T[l]['lang'], 'home': B.T[l]['home_link'], 'top': B.TOP[l]} for l in B.LANGS}}, ensure_ascii=False)
     js = (ROOT / 'tools' / 'present.js').read_text(encoding='utf-8')
     page = f'''<!doctype html>
 <html lang="en" data-concept="a-ember" data-default="dark">
@@ -46,6 +46,7 @@ d.dataset.theme=(t==='light'||t==='dark')?t:'dark'}})()</script>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"><i></i></div>
+{B.top_button("en")}
 <header class="top">
   <div class="lead"><a class="brand" href="#/en/home" aria-label="Pro Extinction – home"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a></div>
   <div class="tools">

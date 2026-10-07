@@ -71,6 +71,7 @@
     brand.href = '#/' + r.lang + '/home'; brand.setAttribute('aria-label', PAIR.ui[r.lang].home);
     var mb = document.querySelector('.menu-toggle');
     if (mb) { mb.setAttribute('aria-controls', 'nav-' + r.lang); mb.querySelector('.menu-t').textContent = PAIR.ui[r.lang].menu; }
+    var tb = document.querySelector('.to-top'); if (tb) { tb.setAttribute('aria-label', PAIR.ui[r.lang].top); tb.title = PAIR.ui[r.lang].top; }
     updateTitle();
     if (changed) { d.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); d.style.scrollBehavior = ''; }
     bindToc(); railMore(); bindLogos();
@@ -101,6 +102,11 @@
   var bar = document.querySelector('.progress i');
   function onScroll() { if (!bar) return; var h = d.scrollHeight - d.clientHeight; bar.style.width = (h > 0 ? Math.min(100, (d.scrollTop / h) * 100) : 0) + '%'; }
   window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll);
+
+  // ---- scroll-to-top button: shown once the reader is a screen down
+  var up = document.querySelector('.to-top');
+  function upShow() { if (up) up.classList.toggle('on', (d.scrollTop || document.body.scrollTop) > innerHeight * .8); }
+  window.addEventListener('scroll', upShow, { passive: true }); upShow();
 
   // ---- chapter overview: highlight the chapter being read
   var io = null;

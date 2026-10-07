@@ -8,7 +8,7 @@
     if (getComputedStyle(b).display === 'none') return {};
     var t = toc.getBoundingClientRect(), p = prose.getBoundingClientRect(), w = b.offsetWidth, h = b.offsetHeight;
     if (!t.width || t.bottom < 0 || t.top > innerHeight) return {};
-    var y0 = Math.max(t.top, 90), y1 = Math.min(innerHeight - 24, y0 + Math.max(t.height, 360)) - h;
+    var y0 = Math.max(t.top, 90), y1 = Math.min(innerHeight - 96, y0 + Math.max(t.height, 360)) - h;   // keep clear of the scroll-to-top button
     if (y1 - y0 < 60) return {};
     var z = {}, rx0 = t.right + 32, rx1 = innerWidth - 24 - w, lx0 = 24, lx1 = p.left - 40 - w;
     if (rx1 - rx0 > 40) z.r = { x0: rx0, x1: rx1, y0: y0, y1: y1 };

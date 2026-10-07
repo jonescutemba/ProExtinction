@@ -529,6 +529,37 @@ def give_blocks(bl, lang):
         out.append(b)
     return out
 
+# Label of the round "scroll to the top" button (aria-label and tooltip).
+TOP = {
+ 'en': 'Scroll to the top',
+ 'de': 'Nach oben scrollen',
+ 'pl': 'Przewiń na górę',
+ 'es': 'Volver arriba',
+ 'it': "Torna all'inizio",
+ 'fr': 'Remonter en haut',
+ 'pt': 'Voltar ao topo',
+ 'ru': 'Наверх',
+ 'zh': '回到顶部',
+ 'hi': 'ऊपर जाएँ',
+ 'ar': 'العودة إلى الأعلى',
+ 'bn': 'উপরে যান',
+ 'ur': 'اوپر جائیں',
+ 'id': 'Kembali ke atas',
+ 'ja': 'ページの先頭へ',
+ 'tr': 'Başa dön',
+ 'vi': 'Lên đầu trang',
+ 'ko': '맨 위로',
+ 'fa': 'بازگشت به بالا',
+ 'mr': 'वर जा',
+ 'te': 'పైకి వెళ్ళండి',
+ 'ta': 'மேலே செல்',
+ 'sw': 'Rudi juu',
+ 'th': 'กลับขึ้นด้านบน',
+}
+def top_button(lang):
+    return (f'<button class="to-top" type="button" aria-label="{esc(TOP[lang])}" title="{esc(TOP[lang])}" onclick="window.scrollTo(0,0)">'
+            '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg></button>')
+
 DISCORD = 'https://discord.gg/nb2K8y846R'
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
             'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
@@ -745,6 +776,7 @@ def header(c, lang, slug, ctx):
     picker = lang_select(lang, lambda l: f'../{l}/{counterpart(lang, slug, l)}.html')
     return f'''<a class="skip" href="#main">{t["skip"]}</a>
 <div class="progress" aria-hidden="true"><i></i></div>
+{top_button(lang)}
 <header class="top">
   <div class="lead">
     <a class="brand" href="home.html" aria-label="{t["home_link"]}"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a>
