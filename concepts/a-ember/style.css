@@ -248,6 +248,16 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .pic{margin:1.6rem 0 2rem}
 .pic img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain;background:var(--surface)}
 .pic figcaption,.avatar figcaption{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:.4rem;letter-spacing:.04em}
+/* graphic photos on the suffering page: blurred behind a warning until the reader clicks "show image" */
+.sensitive .veil-wrap{position:relative;display:block;overflow:hidden;background:var(--surface)}
+.sensitive img{filter:blur(32px) brightness(.55) saturate(.6);transform:scale(1.15);transition:filter .5s,transform .5s}
+.sensitive.shown img{filter:none;transform:none}
+.veil{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:1.2rem;text-align:center;
+  background:color-mix(in srgb,var(--bg) 35%,transparent);color:var(--text);border:0;font:inherit;cursor:pointer}
+.veil-p{max-width:28rem;font-family:var(--display);font-weight:var(--display-weight,600);font-size:1.35rem;line-height:1.25;text-transform:uppercase;letter-spacing:.03em}
+.veil-b{margin-top:.4rem;font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--accent);padding:.5rem 1rem;transition:background .2s,color .2s}
+.veil:hover .veil-b,.veil:focus-visible .veil-b{background:var(--accent);color:var(--on-accent,#fff)}
+.sensitive.shown .veil{display:none}
 /* Manifesto diagrams (tools/diagrams.py): theme colours, a slow loop, the hovered part lights up. */
 .diagram{padding:1.2rem 0;background:var(--surface);border:1px solid var(--line)}
 .dg{display:block;width:100%;max-width:40rem;height:auto;margin-inline:auto;overflow:visible}

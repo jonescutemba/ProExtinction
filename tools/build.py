@@ -450,6 +450,33 @@ T.update({
    'มีเหตุผล เห็นอกเห็นใจ ไม่เชื่อในพระเจ้า มีตรรกะ และยุติธรรมอย่างสมบูรณ์'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
 })
+# Warning over blurred pictures on the suffering page: line, button.
+VEIL = {
+ 'en': ('Picture contains depictions of extreme suffering', 'Show image'),
+ 'de': ('Das Bild zeigt extremes Leid', 'Bild anzeigen'),
+ 'pl': ('Zdjęcie przedstawia skrajne cierpienie', 'Pokaż zdjęcie'),
+ 'es': ('La imagen muestra sufrimiento extremo', 'Mostrar imagen'),
+ 'it': ("L'immagine mostra sofferenza estrema", 'Mostra immagine'),
+ 'fr': ("L'image montre une souffrance extrême", "Afficher l'image"),
+ 'pt': ('A imagem mostra sofrimento extremo', 'Mostrar imagem'),
+ 'ru': ('На изображении показаны крайние страдания', 'Показать изображение'),
+ 'zh': ('图片包含极端痛苦的画面', '显示图片'),
+ 'hi': ('इस तस्वीर में अत्यधिक पीड़ा दिखाई गई है', 'तस्वीर दिखाएँ'),
+ 'ar': ('تُظهر الصورة معاناة شديدة', 'عرض الصورة'),
+ 'bn': ('এই ছবিতে চরম কষ্টের দৃশ্য আছে', 'ছবি দেখান'),
+ 'ur': ('اس تصویر میں شدید تکلیف دکھائی گئی ہے', 'تصویر دکھائیں'),
+ 'id': ('Gambar ini menampilkan penderitaan ekstrem', 'Tampilkan gambar'),
+ 'ja': ('この画像には極度の苦しみが写っています', '画像を表示'),
+ 'tr': ('Görsel aşırı acı içeren sahneler gösteriyor', 'Görseli göster'),
+ 'vi': ('Hình ảnh có cảnh đau đớn tột cùng', 'Hiện hình ảnh'),
+ 'ko': ('이 이미지에는 극심한 고통이 담겨 있습니다', '이미지 보기'),
+ 'fa': ('این تصویر رنج شدید را نشان می‌دهد', 'نمایش تصویر'),
+ 'mr': ('या चित्रात तीव्र दुःख दाखवले आहे', 'चित्र दाखवा'),
+ 'te': ('ఈ చిత్రంలో తీవ్రమైన బాధ కనిపిస్తుంది', 'చిత్రాన్ని చూపించు'),
+ 'ta': ('இந்தப் படத்தில் கடுமையான துன்பம் காட்டப்படுகிறது', 'படத்தைக் காட்டு'),
+ 'sw': ('Picha hii inaonyesha mateso makali', 'Onyesha picha'),
+ 'th': ('ภาพนี้แสดงความทุกข์ทรมานอย่างรุนแรง', 'แสดงภาพ'),
+}
 DISCORD = 'https://discord.gg/nb2K8y846R'
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
             'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
@@ -474,6 +501,11 @@ def figure(n, cls='pic', lang='en'):
         return f'<figure class="{cls} diagram">{diagrams.diagram(n, lang)}</figure>'
     x = next(i for i in IMAGES if i['n'] == n)
     img = f'<img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="">'
+    if x['page'] == 'suffering-in-detail':   # graphic photos: blurred until the reader chooses to see them
+        line, btn = VEIL.get(lang, VEIL['en'])
+        img = (f'<span class="veil-wrap">{img}<button class="veil" type="button" onclick="this.closest(\'figure\').classList.add(\'shown\')">'
+               f'<span class="veil-p">{esc(line)}</span><span class="veil-b">{esc(btn)}</span></button></span>')
+        cls += ' sensitive'
     if 'eff-pic' in cls:   # frame clips the hover zoom, so the picture keeps its size
         img = f'<span class="zoom">{img}</span>'
     return f'<figure class="{cls}">{img}<figcaption>#{n}</figcaption></figure>'
