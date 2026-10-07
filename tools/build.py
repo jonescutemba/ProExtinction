@@ -725,6 +725,42 @@ def sched_html(days):
         + ''.join(f'<li><span class="day-t mono" dir="ltr">{esc(t.replace("-", "–"))}</span><span class="day-p">{esc(p)}</span></li>' for t, p in slots)
         + '</ul></section>' for d, slots in days) + '</div>'
 
+NUM = re.compile(r'^\s*\d+\)\s*')
+URL = re.compile(r'(https?://\S+)')
+def cosmic_outline(bl, ref=None):
+    """Cosmic extinction page. Decisions come from the English blocks (ref) a 1:1 translation mirrors:
+    follow-up questions ("So what if ...", "What if ...") and "Evidence number ..." are sub-chapters,
+    a "...:" line followed by "1) 2) 3)" lines is a lead-in with a numbered list,
+    "Source:" plus bare links (or "Source: <link>") become a compact source line, "Notes:" stays a chapter."""
+    if ref is None or [b[0] for b in ref] != [b[0] for b in bl]: ref = bl
+    t = lambda k: ref[k][1].strip() if len(ref[k]) > 1 and isinstance(ref[k][1], str) else ''
+    own = lambda k: bl[k][1].strip()
+    out, n = [], 0
+    while n < len(bl):
+        kind, en = ref[n][0], t(n)
+        if kind in ('h', 'p') and en.endswith(':') and n + 1 < len(bl) and NUM.match(t(n + 1)):
+            k = n + 1
+            while k < len(bl) and NUM.match(t(k)): k += 1
+            out += [('lead', own(n)), ('ol', [NUM.sub('', own(x)) for x in range(n + 1, k)])]; n = k; continue
+        if kind == 'h' and en.rstrip(':') in ('Source', 'Sources'):
+            k, urls = n + 1, []
+            while k < len(bl) and URL.fullmatch(t(k)): urls.append(own(k)); k += 1
+            out.append(('src', own(n).rstrip(':： '), urls)); n = k; continue
+        m = URL.search(own(n)) if kind == 'p' else None
+        if m and re.match(r'^(Source|Survey)\s*:', en):
+            out.append(('src', own(n)[:m.start()].strip().rstrip(':： '), [m.group(1)])); n += 1; continue
+        if kind == 'h' or (kind == 'p' and len(en) <= 100 and en.endswith(('?', ')')) and '?' in en and 'http' not in en):
+            if en.startswith(('So what if', 'What if', 'Evidence')): out.append(('h3', own(n))); n += 1; continue
+            if kind == 'p': out.append(('h', own(n))); n += 1; continue   # longer question lines are chapters too
+        out.append(bl[n]); n += 1
+    return out
+
+def src_html(label, urls):
+    """Sources as short links (site name), the full address in the title."""
+    def host(u): return re.sub(r'^www\.', '', urllib.parse.urlsplit(u).netloc)
+    links = ', '.join(f'<a href="{esc(u)}" title="{esc(u)}" rel="noopener">{esc(host(u))}</a>' for u in urls)
+    return f'<p class="src"><span class="src-k mono">{esc(label)}</span> {links}</p>'
+
 def render_blocks(blocks, used, lang='en'):
     out, toc = [], []
     for b in blocks:
@@ -746,6 +782,10 @@ def render_blocks(blocks, used, lang='en'):
             out.append(join_buttons(lang))
         elif b[0] == 'pic':
             out.append(figure(b[1], lang=lang))
+        elif b[0] == 'ol':
+            out.append('<ol class="nl">' + ''.join(f'<li>{linkify(i)}</li>' for i in b[1]) + '</ol>')
+        elif b[0] == 'src':
+            out.append(src_html(b[1], b[2]))
         elif b[0] == 'ul':
             out.append('<ul>' + ''.join(f'<li>{linkify(i)}</li>' for i in b[1]) + '</ul>')
         else:
@@ -784,6 +824,8 @@ def doc_body(lang, slug, lines, full_url, like=None):
         else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
     if slug == 'donate': bl = give_blocks(bl, lang)
     if slug == 'history': bl = history_outline(bl)
+    if slug == 'cosmic-extinction':
+        bl = cosmic_outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     if slug == 'principles-of-the-movement':
         bl = outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     body, toc = render_blocks(bl, used, lang)
