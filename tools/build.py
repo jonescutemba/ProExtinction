@@ -477,6 +477,58 @@ VEIL = {
  'sw': ('Picha hii inaonyesha mateso makali', 'Onyesha picha'),
  'th': ('ภาพนี้แสดงความทุกข์ทรมานอย่างรุนแรง', 'แสดงภาพ'),
 }
+# Donate page: the IBAN and Ko-fi lines become two cards. Labels: card title, copy button, after copying, Ko-fi button.
+IBAN, KOFI = 'DE80 1001 0178 0592 6010 31', 'https://ko-fi.com/abolishsuffering'
+GIVE = {
+ 'en': ('Bank transfer', 'Copy IBAN', 'Copied', 'Donate on Ko-fi'),
+ 'de': ('Überweisung', 'IBAN kopieren', 'Kopiert', 'Auf Ko-fi spenden'),
+ 'pl': ('Przelew bankowy', 'Kopiuj IBAN', 'Skopiowano', 'Wesprzyj na Ko-fi'),
+ 'es': ('Transferencia bancaria', 'Copiar IBAN', 'Copiado', 'Donar en Ko-fi'),
+ 'it': ('Bonifico bancario', 'Copia IBAN', 'Copiato', 'Dona su Ko-fi'),
+ 'fr': ('Virement bancaire', "Copier l'IBAN", 'Copié', 'Faire un don sur Ko-fi'),
+ 'pt': ('Transferência bancária', 'Copiar IBAN', 'Copiado', 'Doar no Ko-fi'),
+ 'ru': ('Банковский перевод', 'Скопировать IBAN', 'Скопировано', 'Поддержать на Ko-fi'),
+ 'zh': ('银行转账', '复制 IBAN', '已复制', '在 Ko-fi 上捐款'),
+ 'hi': ('बैंक ट्रांसफ़र', 'IBAN कॉपी करें', 'कॉपी हो गया', 'Ko-fi पर दान करें'),
+ 'ar': ('تحويل بنكي', 'نسخ رقم IBAN', 'تم النسخ', 'تبرّع عبر Ko-fi'),
+ 'bn': ('ব্যাংক ট্রান্সফার', 'IBAN কপি করুন', 'কপি হয়েছে', 'Ko-fi-তে দান করুন'),
+ 'ur': ('بینک ٹرانسفر', 'IBAN کاپی کریں', 'کاپی ہو گیا', 'Ko-fi پر عطیہ کریں'),
+ 'id': ('Transfer bank', 'Salin IBAN', 'Tersalin', 'Donasi lewat Ko-fi'),
+ 'ja': ('銀行振込', 'IBAN をコピー', 'コピーしました', 'Ko-fi で寄付する'),
+ 'tr': ('Banka havalesi', "IBAN'ı kopyala", 'Kopyalandı', "Ko-fi'de bağış yap"),
+ 'vi': ('Chuyển khoản ngân hàng', 'Sao chép IBAN', 'Đã sao chép', 'Ủng hộ qua Ko-fi'),
+ 'ko': ('계좌 이체', 'IBAN 복사', '복사됨', 'Ko-fi로 후원하기'),
+ 'fa': ('واریز بانکی', 'کپی IBAN', 'کپی شد', 'کمک مالی در Ko-fi'),
+ 'mr': ('बँक ट्रान्सफर', 'IBAN कॉपी करा', 'कॉपी झाले', 'Ko-fi वर देणगी द्या'),
+ 'te': ('బ్యాంక్ బదిలీ', 'IBAN కాపీ చేయండి', 'కాపీ అయింది', 'Ko-fi లో విరాళం ఇవ్వండి'),
+ 'ta': ('வங்கிப் பரிமாற்றம்', 'IBAN-ஐ நகலெடு', 'நகலெடுக்கப்பட்டது', 'Ko-fi-இல் நன்கொடை அளி'),
+ 'sw': ('Uhamisho wa benki', 'Nakili IBAN', 'Imenakiliwa', 'Changia kupitia Ko-fi'),
+ 'th': ('โอนผ่านธนาคาร', 'คัดลอก IBAN', 'คัดลอกแล้ว', 'บริจาคผ่าน Ko-fi'),
+}
+
+def give_box(lang):
+    bank, copy, done, kofi = GIVE.get(lang, GIVE['en'])
+    plain = IBAN.replace(' ', '')
+    js = ("var b=this;navigator.clipboard.writeText(b.dataset.iban).then(function(){b.classList.add('ok');"
+          "setTimeout(function(){b.classList.remove('ok')},1800)})")
+    return (f'<div class="give">'
+            f'<section class="give-card"><p class="give-k mono">{esc(bank)}</p><p class="give-iban mono" dir="ltr" translate="no">{IBAN}</p>'
+            f'<button class="give-btn" type="button" data-iban="{plain}" onclick="{js}"><span class="c">{esc(copy)}</span><span class="d" aria-live="polite">{esc(done)}</span></button></section>'
+            f'<section class="give-card"><p class="give-k mono">Ko-fi</p><p class="give-url mono" dir="ltr" translate="no">ko-fi.com/abolishsuffering</p>'
+            f'<a class="give-btn" href="{KOFI}" target="_blank" rel="noopener">{esc(kofi)} <span aria-hidden="true">&#8599;</span></a></section></div>')
+
+def give_blocks(bl, lang):
+    """Swap the IBAN line for the donate cards and drop the bare Ko-fi line (IT: its "Dona qui" line)."""
+    out, done = [], False
+    for b in bl:
+        txt = b[1] if len(b) > 1 and isinstance(b[1], str) else ''
+        hit = IBAN in txt or 'ko-fi.com' in txt.lower() or (lang == 'it' and txt.strip() == 'Dona qui')
+        if hit:
+            if not done: out.append(('give',)); done = True
+            continue
+        out.append(b)
+    return out
+
 DISCORD = 'https://discord.gg/nb2K8y846R'
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
             'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
@@ -562,6 +614,8 @@ def render_blocks(blocks, used, lang='en'):
         if b[0] == 'h':
             i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：')))
             out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":："))}</h2>')
+        elif b[0] == 'give':
+            out.append(give_box(lang))
         elif b[0] == 'join':
             out.append(join_buttons(lang))
         elif b[0] == 'pic':
@@ -602,6 +656,7 @@ def doc_body(lang, slug, lines, full_url, like=None):
         own = own_pics(slug, rest) if not like else None
         if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own)
         else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
+    if slug == 'donate': bl = give_blocks(bl, lang)
     body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 

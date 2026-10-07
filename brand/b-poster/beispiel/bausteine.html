@@ -255,6 +255,17 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .pic{margin:1.6rem 0 2rem}
 .pic img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain;background:var(--surface)}
 .pic figcaption,.avatar figcaption{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-top:.4rem;letter-spacing:.04em}
+/* donate page: bank transfer and Ko-fi cards */
+.give{display:grid;gap:1rem;margin:2.2rem 0;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))}
+.give-card{container-type:inline-size;display:flex;flex-direction:column;gap:.6rem;padding:1.4rem 1.5rem;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);text-align:start}
+.give-k{margin:0;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.give-iban{margin:0;font-size:min(1.3rem,5.6cqi);letter-spacing:.03em;word-spacing:.05em;white-space:nowrap;text-transform:none;color:var(--text);user-select:all}
+.give-url{margin:0;font-size:1rem;text-transform:none;letter-spacing:.02em;color:var(--text)}
+.give-btn{margin-top:auto;align-self:flex-start;display:inline-flex;gap:.4rem;align-items:center;font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text);background:none;border:1px solid var(--accent);padding:.6rem 1rem;cursor:pointer;text-decoration:none;transition:background .2s,color .2s}
+.give-btn:hover,.give-btn:focus-visible{background:var(--accent);color:var(--on-accent,#fff)}
+.give-btn .d{display:none}.give-btn.ok .c{display:none}.give-btn.ok .d{display:inline}
+.give-btn.ok{background:var(--accent);color:var(--on-accent,#fff)}
 /* graphic photos on the suffering page: blurred behind a warning until the reader clicks "show image" */
 .sensitive .veil-wrap{position:relative;display:block;overflow:hidden;background:var(--surface)}
 .sensitive img{filter:blur(32px) brightness(.55) saturate(.6);transform:scale(1.15);transition:filter .5s,transform .5s}
