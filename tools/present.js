@@ -112,7 +112,7 @@
     io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (a) { a.removeAttribute('aria-current'); }); (map[e.target.id] || []).forEach(function (a) { a.setAttribute('aria-current', 'true'); }); } });
     }, { rootMargin: '-15% 0px -75% 0px' });
-    [].forEach.call(v.querySelectorAll('.prose h2'), function (h) { io.observe(h); });
+    [].forEach.call(v.querySelectorAll('.prose h2, .prose h3.sub'), function (h) { io.observe(h); });
   }
 
   // ---- rail fade when the list is taller than the window

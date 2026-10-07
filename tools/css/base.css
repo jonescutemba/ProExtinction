@@ -140,8 +140,14 @@ html,body{overflow-x:clip}
 .prose a{overflow-wrap:anywhere}
 .note{font-size:.95rem;color:var(--muted);border-inline-start:3px solid var(--accent);padding:.4rem 0 .4rem 1rem;margin-bottom:2rem}
 .toc ol{list-style:none;margin:.6rem 0 0;padding:0;counter-reset:t}
-.toc li{counter-increment:t;margin:.35rem 0;font-size:.95rem}
-.toc li::before{content:counter(t,decimal-leading-zero) " ";font-family:var(--mono);font-size:.75rem;color:var(--link);margin-inline-end:.4rem}
+.toc li{counter-increment:t;margin:.35rem 0;font-size:.95rem;display:grid;grid-template-columns:1.9rem 1fr;align-items:baseline}
+.toc li::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:.75rem;color:var(--link)}
+/* sub-chapters: indented under their chapter, no number, smaller */
+.toc li.sub{counter-increment:none;margin:.2rem 0;font-size:.85rem;grid-template-columns:1.9rem .9rem 1fr}
+.toc li.sub::before{content:"";grid-column:2;width:.45rem;height:1px;background:var(--muted);align-self:start;margin-top:.62em}
+.toc li.sub a{grid-column:3;color:var(--muted)}.toc li.sub a:hover,.toc li.sub a[aria-current=true]{color:var(--link)}
+.prose h3.sub{font-size:clamp(1.1rem,2.2vw,1.3rem);margin:2rem 0 .7rem;scroll-margin-top:5rem}
+.prose .lead-in{font-weight:600;margin-bottom:.4rem}
 .toc a{color:var(--text)}
 .prose{counter-reset:ch}
 .prose h2{counter-increment:ch}

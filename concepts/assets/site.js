@@ -85,7 +85,7 @@
         }
       });
     }, { rootMargin: '-15% 0px -75% 0px' });
-    [].slice.call(document.querySelectorAll('.prose h2')).forEach(function (h) { io.observe(h); });
+    [].slice.call(document.querySelectorAll('.prose h2, .prose h3.sub')).forEach(function (h) { io.observe(h); });
   }
   var rail = document.querySelector('.sitenav');
   var railList = rail && rail.querySelector('ul');

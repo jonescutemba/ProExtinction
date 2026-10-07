@@ -608,12 +608,41 @@ def slug_id(s, used):
     while i in used: i = f'{base}-{k}'; k += 1
     used.add(i); return ID_PREFIX + i
 
+QM, COLON = '?？؟', ':：'
+def outline(bl, ref=None):
+    """Principles page: questions and short "Label:" lines become sub-chapters (h3); a "So to summarize:" line with
+    two or more short points after it becomes a lead-in and a list. Uses punctuation and length only.
+    ref: the English blocks a 1:1 translation mirrors; the decisions are read from them, the text comes from bl."""
+    if ref is None or [b[0] for b in ref] != [b[0] for b in bl]: ref = bl
+    t = lambda k: ref[k][1].rstrip() if len(ref[k]) > 1 and isinstance(ref[k][1], str) else ''
+    own = lambda k: bl[k][1]
+    short = lambda k: ref[k][0] in ('h', 'p') and len(t(k)) <= 100 and t(k)[-1:] not in QM + COLON
+    # a heading followed by a long paragraph opens the next chapter, so it is not a summary point
+    point = lambda k: short(k) and not (ref[k][0] == 'h' and k + 1 < len(ref) and ref[k + 1][0] == 'p' and len(t(k + 1)) > 100)
+    out, n = [], 0
+    while n < len(bl):
+        if ref[n][0] in ('h', 'p') and t(n)[-1:] in COLON and len(t(n)) <= 40:
+            k = n + 1
+            while k < len(bl) and point(k): k += 1
+            if k - n > 2:
+                out += [('lead', own(n)), ('ul', [own(x) for x in range(n + 1, k)])]; n = k; continue
+            out.append(('h3', own(n))); n += 1; continue
+        if ref[n][0] == 'h' and t(n)[-1:] in QM:
+            out.append(('h3', own(n))); n += 1; continue
+        out.append(bl[n]); n += 1
+    return out
+
 def render_blocks(blocks, used, lang='en'):
     out, toc = [], []
     for b in blocks:
         if b[0] == 'h':
             i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：')))
             out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":："))}</h2>')
+        elif b[0] == 'h3':
+            i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：'), 3))
+            out.append(f'<h3 class="sub" id="{i}">{esc(b[1].rstrip(":："))}</h3>')
+        elif b[0] == 'lead':
+            out.append(f'<p class="lead-in">{esc(b[1])}</p>')
         elif b[0] == 'give':
             out.append(give_box(lang))
         elif b[0] == 'join':
@@ -657,6 +686,8 @@ def doc_body(lang, slug, lines, full_url, like=None):
         if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own)
         else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
     if slug == 'donate': bl = give_blocks(bl, lang)
+    if slug == 'principles-of-the-movement':
+        bl = outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 
@@ -751,7 +782,7 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
     toc_html = ''
     if len(toc) > 1:
-        items = ''.join(f'<li><a href="#{i}">{esc(n)}</a></li>' for i, n in toc)
+        items = ''.join(f'<li{" class=sub" if x[2:] == (3,) else ""}><a href="#{x[0]}">{esc(x[1])}</a></li>' for x in toc)
         # two copies: above the text on narrow screens, beside the first paragraph after the first chapter heading on wide ones
         toc_html = f'<nav class="toc toc-top" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
         side = f'<nav class="toc toc-side" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'

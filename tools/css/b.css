@@ -27,7 +27,8 @@ body{font-size:1.125rem}
 /* narrow screens: the chapter overview above the text as tiles, as theme B had it before 4e6f26f */
 .toc-top{text-align:center;border:0;padding:0;margin:1.2rem auto 2rem;max-width:44rem}
 .toc-top ol{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem .6rem}
-.toc-top li{margin:0}
+.toc-top li{margin:0;display:block}
+.toc-top li.sub a{font-size:.78rem;color:var(--muted);border-style:dashed}
 .toc-top li::before{content:none}
 .toc-top a{display:inline-block;border:1px solid var(--line);padding:.25rem .7rem;font-size:.85rem;transition:border-color .2s,color .2s}
 .toc-top a:hover{border-color:var(--accent);color:var(--link)}
@@ -68,3 +69,6 @@ body{font-size:1.125rem}
   .prolife:hover{color:var(--link)}
   .prolife.off{visibility:hidden}
 }
+
+/* principles page: sub-chapters stay quiet next to the big centred chapter headings */
+.prose h3.sub{text-align:center;font-family:var(--display);font-weight:var(--display-weight,400);text-transform:uppercase;letter-spacing:.03em;color:var(--link)}
