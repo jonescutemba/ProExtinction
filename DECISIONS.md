@@ -52,7 +52,7 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 | Standardmodus | dunkel | dunkel |
 
 ## Kundenpräsentation
-`presentation/index.html` zeigt beide Konzepte in **einer** Seite mit Umschalter (Design, Sprache, Hell/Dunkel).
+`presentation/index.html` zeigt beide Konzepte in **einer** Seite. Standard ist Design B, der sichtbare Design-Umschalter ist entfernt; Design A erreicht man nur noch über vier schnelle Klicks auf „Global“ in der Fußzeile (oder `?concept=a`). Sprache und Hell/Dunkel bleiben als Umschalter.
 Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Sie ist als **finale Version** aufgebaut (keine Entwurfs-Hinweise, alle Seiten vollständig,
 Join-Buttons als WhatsApp + Discord, Icons im Footer), mit lokalen Schriften, ohne Fotos, vorerst noch auf „noindex“. Livegang: `DEPLOY.md`.
 

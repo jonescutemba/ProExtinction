@@ -185,15 +185,8 @@ html,body{overflow-x:clip}
   .theme{padding:0}
 }
 
-/* ---- single-page presentation: views, concept switcher ---- */
+/* ---- single-page presentation: views (design B by default; four clicks on "Global" in the footer toggle design A) ---- */
 [hidden]{display:none!important}
-.concepts{display:flex;border:1px solid var(--line);border-radius:var(--r-ui);overflow:hidden;height:2.4rem}
-.concepts button{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:0;border-inline-end:1px solid var(--line);color:var(--muted);padding:0 .75rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;transition:background-color .2s,color .2s}
-.concepts button:last-child{border-inline-end:0}
-.concepts button:hover{color:var(--text)}
-.concepts button[aria-pressed=true]{background:var(--accent);color:var(--on-accent)}
-.concepts .n{display:none}
-@media (min-width:1180px){.concepts .n{display:inline}}
 @media (max-width:640px){.top{flex-wrap:wrap;row-gap:.5rem}.tools{width:100%;justify-content:flex-end}}
 .draft-note{margin:0}
 
@@ -328,3 +321,4 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .to-top:focus-visible{outline:2px solid var(--text);outline-offset:3px}
 .to-top svg{width:1.35rem;height:1.35rem}
 @media print{.to-top{display:none}}
+.glob{cursor:default;user-select:none}

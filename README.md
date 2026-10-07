@@ -5,7 +5,7 @@ Zwei Designkonzepte (A Ember, B Poster; C Ring wurde verworfen) für die Seite, 
 
 | Pfad | Inhalt |
 |---|---|
-| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** beide Designs, 24 Sprachen, Hell/Dunkel, per Umschalter oben rechts. Schriften lokal in `fonts/` |
+| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** Design B, 24 Sprachen, Hell/Dunkel (Design A versteckt: viermal schnell auf „Global“ in der Fußzeile klicken). Schriften lokal in `fonts/` |
 | `DEPLOY.md`, `vercel.json` | Livegang auf Vercel, Checkliste |
 | `concepts/index.html` | Vorläufer: die Konzepte als getrennte Mehrseiten-Prototypen |
 | `brand/` | je Konzept ein Brand Kit (Tokens, `BRAND.md`, Referenzseiten) |
@@ -22,7 +22,7 @@ Das ist ein Prototyp: Google-Fonts-Einbindung und Auszüge/Platzhalter sind noch
 Oben rechts: **A Ember · B Poster** (Design), **EN ▾** (Sprachauswahl; Seiten mit "(AI)" sind KI-Übersetzungen aus dem Englischen), **Hell/Dunkel**. Die Auswahl bleibt gespeichert.
 
 Direktlinks für einzelne Varianten (an die Adresse hängen):
-- Design: `?concept=a`, `?concept=b` oder `?concept=c` · Modus: `&theme=light` oder `&theme=dark`
+- Design: Standard ist B; `?concept=a` oder `?concept=b` erzwingt eins (wird gespeichert) · Modus: `&theme=light` oder `&theme=dark`
 - Seite: `#/en/manifesto`, `#/de/manifest`, `#/en/full-faq` …
 - Beispiel: `index.html?concept=b&theme=dark#/en/manifesto`
 - Logo-Effekt testen: `?scare=reset` (Zähler zurück), `?motion=on` (trotz „Bewegung reduzieren")

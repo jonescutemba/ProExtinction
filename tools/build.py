@@ -797,7 +797,7 @@ def footer(lang):
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>
 </section>
-<footer class="foot"><p class="mono">{t["foot"]}</p></footer>'''
+<footer class="foot"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p></footer>'''
 
 def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     """Title and <main> content of one page (shared by the multi-page prototype and the single-file presentation)."""

@@ -22,16 +22,23 @@
   else { var ts = store('pe-theme'); if (ts === 'light' || ts === 'dark') userTheme = ts; }
   function setTheme(m) { d.dataset.theme = m; }
   function applyConcept(c, save) {
-    if (!CONCEPTS[c]) c = 'a-ember';
+    if (!CONCEPTS[c]) c = 'b-poster';
     d.dataset.concept = c; d.dataset.default = CONCEPTS[c].mode;
     styles.forEach(function (s) { s.media = s.dataset.concept === c ? 'all' : 'not all'; });
     btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.concept === c ? 'true' : 'false'); });
     setTheme(userTheme || CONCEPTS[c].mode);
-    if (save) store('pe-concept', c);
+    if (save) store('pe-design', c);
     updateTitle(); setTimeout(railMore, 60); setTimeout(bindToc, 60);
   }
-  var cq = qs('concept'); var concept = SHORT[cq] || (CONCEPTS[cq] && cq) || store('pe-concept') || 'a-ember';
+  var cq = qs('concept'); var concept = SHORT[cq] || (CONCEPTS[cq] && cq) || store('pe-design') || 'b-poster';
   btns.forEach(function (b) { b.addEventListener('click', function () { applyConcept(b.dataset.concept, true); }); });
+  // hidden way back to design A: click "Global" in the footer four times in quick succession (toggles A/B)
+  var glob = 0, globT = 0;
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.glob')) return;
+    glob = Date.now() - globT < 600 ? glob + 1 : 1; globT = Date.now();
+    if (glob >= 4) { glob = 0; applyConcept(d.dataset.concept === 'b-poster' ? 'a-ember' : 'b-poster', true); }
+  });
   var themeBtn = document.querySelector('.theme');
   if (themeBtn) themeBtn.addEventListener('click', function () {
     userTheme = d.dataset.theme === 'dark' ? 'light' : 'dark'; setTheme(userTheme); store('pe-theme', userTheme);
