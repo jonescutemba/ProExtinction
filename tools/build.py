@@ -560,6 +560,35 @@ def top_button(lang):
     return (f'<button class="to-top" type="button" aria-label="{esc(TOP[lang])}" title="{esc(TOP[lang])}" onclick="window.scrollTo(0,0)">'
             '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg></button>')
 
+# Full FAQ search: placeholder, count, no hits, closing line ({mail}, {tiktok} become links), word for the mail link.
+FAQ_FIND = {
+ 'en': ('Search the questions', '{n} of {t} questions', 'No question matches your search.', "Your question isn't listed? Contact us via {mail} or debate us on {tiktok}.", 'mail'),
+ 'de': ('Fragen durchsuchen', '{n} von {t} Fragen', 'Keine Frage passt zu deiner Suche.', 'Deine Frage ist nicht dabei? Schreib uns per {mail} oder diskutiere mit uns auf {tiktok}.', 'Mail'),
+ 'pl': ('Szukaj w pytaniach', '{n} z {t} pytań', 'Żadne pytanie nie pasuje do wyszukiwania.', 'Nie ma tu twojego pytania? Napisz do nas {mail} albo podyskutuj z nami na {tiktok}.', 'mailem'),
+ 'es': ('Buscar en las preguntas', '{n} de {t} preguntas', 'Ninguna pregunta coincide con tu búsqueda.', '¿No encuentras tu pregunta? Escríbenos por {mail} o debate con nosotros en {tiktok}.', 'correo'),
+ 'it': ('Cerca tra le domande', '{n} di {t} domande', 'Nessuna domanda corrisponde alla ricerca.', "La tua domanda non c'è? Scrivici via {mail} o discuti con noi su {tiktok}.", 'mail'),
+ 'fr': ('Rechercher dans les questions', '{n} sur {t} questions', 'Aucune question ne correspond à ta recherche.', "Ta question n'y est pas ? Écris-nous par {mail} ou débats avec nous sur {tiktok}.", 'mail'),
+ 'pt': ('Pesquisar perguntas', '{n} de {t} perguntas', 'Nenhuma pergunta corresponde à pesquisa.', 'Sua pergunta não está aqui? Fale conosco por {mail} ou debata conosco no {tiktok}.', 'e-mail'),
+ 'ru': ('Поиск по вопросам', '{n} из {t} вопросов', 'Ни один вопрос не подходит под запрос.', 'Вашего вопроса нет в списке? Напишите нам на {mail} или поспорьте с нами в {tiktok}.', 'почту'),
+ 'zh': ('搜索问题', '{t} 个问题中的 {n} 个', '没有匹配的问题。', '没有找到你的问题？通过{mail}联系我们，或在 {tiktok} 上和我们辩论。', '邮件'),
+ 'hi': ('सवाल खोजें', '{t} में से {n} सवाल', 'आपकी खोज से कोई सवाल नहीं मिला।', 'आपका सवाल सूची में नहीं है? हमें {mail} करें या {tiktok} पर हमसे बहस करें।', 'मेल'),
+ 'ar': ('ابحث في الأسئلة', '{n} من {t} سؤالًا', 'لا يوجد سؤال يطابق بحثك.', 'سؤالك غير موجود؟ راسلنا عبر {mail} أو ناقشنا على {tiktok}.', 'البريد'),
+ 'bn': ('প্রশ্ন খুঁজুন', '{t}টির মধ্যে {n}টি প্রশ্ন', 'আপনার খোঁজের সাথে কোনো প্রশ্ন মেলেনি।', 'আপনার প্রশ্ন তালিকায় নেই? {mail}-এ আমাদের লিখুন বা {tiktok}-এ আমাদের সাথে বিতর্ক করুন।', 'মেইল'),
+ 'ur': ('سوالات تلاش کریں', '{t} میں سے {n} سوال', 'آپ کی تلاش سے کوئی سوال نہیں ملا۔', 'آپ کا سوال فہرست میں نہیں؟ ہمیں {mail} کریں یا {tiktok} پر ہم سے بحث کریں۔', 'میل'),
+ 'id': ('Cari pertanyaan', '{n} dari {t} pertanyaan', 'Tidak ada pertanyaan yang cocok.', 'Pertanyaanmu tidak ada? Hubungi kami lewat {mail} atau berdebat dengan kami di {tiktok}.', 'email'),
+ 'ja': ('質問を検索', '{t} 件中 {n} 件', '検索に一致する質問はありません。', '質問が見つかりませんか？{mail}で連絡するか、{tiktok}で私たちと議論してください。', 'メール'),
+ 'tr': ('Sorularda ara', '{t} sorudan {n} tanesi', 'Aramana uyan soru yok.', 'Sorun listede yok mu? Bize {mail} ile yaz ya da {tiktok} üzerinde bizimle tartış.', 'e-posta'),
+ 'vi': ('Tìm câu hỏi', '{n} / {t} câu hỏi', 'Không có câu hỏi nào khớp.', 'Không thấy câu hỏi của bạn? Liên hệ qua {mail} hoặc tranh luận với chúng tôi trên {tiktok}.', 'email'),
+ 'ko': ('질문 검색', '{t}개 중 {n}개 질문', '검색과 일치하는 질문이 없습니다.', '질문이 목록에 없나요? {mail}로 연락하거나 {tiktok}에서 우리와 토론하세요.', '메일'),
+ 'fa': ('جست‌وجو در پرسش‌ها', '{n} از {t} پرسش', 'هیچ پرسشی با جست‌وجوی شما جور نیست.', 'پرسش شما در فهرست نیست؟ از راه {mail} با ما تماس بگیرید یا در {tiktok} با ما بحث کنید.', 'ایمیل'),
+ 'mr': ('प्रश्न शोधा', '{t} पैकी {n} प्रश्न', 'तुमच्या शोधाशी जुळणारा प्रश्न नाही.', 'तुमचा प्रश्न यादीत नाही? आम्हाला {mail} करा किंवा {tiktok} वर आमच्याशी वाद घाला.', 'मेल'),
+ 'te': ('ప్రశ్నలను వెతకండి', '{t} లో {n} ప్రశ్నలు', 'మీ శోధనకు సరిపోయే ప్రశ్న లేదు.', 'మీ ప్రశ్న జాబితాలో లేదా? {mail} ద్వారా మమ్మల్ని సంప్రదించండి లేదా {tiktok} లో మాతో చర్చించండి.', 'మెయిల్'),
+ 'ta': ('கேள்விகளில் தேடு', '{t} இல் {n} கேள்விகள்', 'உங்கள் தேடலுக்குப் பொருந்தும் கேள்வி இல்லை.', 'உங்கள் கேள்வி பட்டியலில் இல்லையா? {mail} மூலம் எங்களைத் தொடர்புகொள்ளுங்கள் அல்லது {tiktok} இல் எங்களுடன் விவாதியுங்கள்.', 'மின்னஞ்சல்'),
+ 'sw': ('Tafuta maswali', 'Maswali {n} kati ya {t}', 'Hakuna swali linalolingana na utafutaji wako.', 'Swali lako halipo? Wasiliana nasi kwa {mail} au jadiliana nasi kwenye {tiktok}.', 'barua pepe'),
+ 'th': ('ค้นหาคำถาม', '{n} จาก {t} คำถาม', 'ไม่มีคำถามที่ตรงกับการค้นหา', 'ไม่พบคำถามของคุณ? ติดต่อเราทาง{mail} หรือมาโต้แย้งกับเราบน {tiktok}', 'อีเมล'),
+}
+FAQ_JS = (ROOT / 'tools' / 'faqsearch.js').read_text(encoding='utf-8')
+
 DISCORD = 'https://discord.gg/nb2K8y846R'
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
             'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
@@ -791,9 +820,18 @@ def faq_body(lang, slug, lines, like=None, href=lambda s: s + '.html'):
     shown = pairs
     intro_html = ''.join(f'<p>{linkify(l)}</p>' for l in intro)
     items = []
-    for q, a in shown:
-        items.append(f'<details><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a) + '</div></details>')
+    for k, (q, a) in enumerate(shown, 1):   # counter-set keeps each question's number while the search hides others
+        items.append(f'<details style="counter-set:q {k}"><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a) + '</div></details>')
     more = ''
+    if EN_OF[lang][slug] == 'full-faq':
+        ph, cnt, none, end, mail = FAQ_FIND[lang]
+        soc = next((x for x, _ in PAGES[lang] if EN_OF[lang][x] == 'social-media-channels'), None)
+        end = esc(end).replace('{mail}', f'<a href="mailto:{EMAIL}">{esc(mail)}</a>').replace('{tiktok}', f'<a href="{href(soc)}">TikTok</a>' if soc else 'TikTok')
+        find = (f'<div class="faq-find" data-count="{esc(cnt)}"><label><span class="sr">{esc(ph)}</span>'
+                f'<input type="search" placeholder="{esc(ph)}" autocomplete="off" spellcheck="false"></label>'
+                f'<p class="faq-count mono" aria-live="polite"></p></div>')
+        return (title, lede, intro_html + find + '<div class="faq">' + '\n'.join(items) + '</div>'
+                + f'<p class="faq-none" hidden>{esc(none)}</p><p class="faq-ask">{end}</p><script>{FAQ_JS}</script>', [], False)
     if EN_OF[lang][slug] == 'basic-faq':
         more = f'<p class="cta-links faq-more"><a class="btn primary" href="{href(OF_EN[lang]["full-faq"])}">{T[lang]["full_faq"]} <span aria-hidden="true" class="arr">→</span></a></p>'
     return title, lede, intro_html + '<div class="faq">' + '\n'.join(items) + '</div>' + more, [], len(shown) < len(pairs)

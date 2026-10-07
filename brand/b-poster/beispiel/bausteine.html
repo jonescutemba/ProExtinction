@@ -161,7 +161,7 @@ html,body{overflow-x:clip}
 .faq{counter-reset:q}
 .faq details{border-top:1px solid var(--line);counter-increment:q}
 .faq summary::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--link);margin-inline-end:.9rem;vertical-align:.25em}
-.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq{border-bottom:1px solid var(--line)}   /* on the list, so it stays under the last question the search leaves */
 .faq summary{cursor:pointer;list-style:none;padding:1.1rem 2.4rem 1.1rem 0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;letter-spacing:.02em;font-size:1.2rem;line-height:1.25;position:relative}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"";position:absolute;inset-inline-end:.2rem;top:50%;width:1.1rem;height:2px;background:var(--accent);transform:translateY(-50%) rotate(-30deg);transition:transform .25s}
@@ -337,6 +337,22 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .day-t{font-size:.85rem;color:var(--muted);white-space:nowrap}
 @media (max-width:30rem){.day li{grid-template-columns:1fr;gap:0}}
 .prose .go{margin:1rem 0 2rem}
+
+/* full FAQ search */
+.faq-find{max-width:68ch;margin:1.6rem auto 1rem}
+.faq-find input{width:100%;font:inherit;font-size:1.05rem;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-ui,0);
+  padding:.8rem 1rem .8rem 2.8rem;outline:none;transition:border-color .2s;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-size:1.1rem;background-position:1rem center}
+[dir=rtl] .faq-find input{padding:.8rem 2.8rem .8rem 1rem;background-position:calc(100% - 1rem) center}
+.faq-find input:focus{border-color:var(--accent)}
+.faq-count{min-height:1.2em;margin:.5rem 0 0;font-size:.75rem;letter-spacing:.08em;color:var(--muted)}
+.faq details[hidden]{display:none}
+.faq-none{max-width:68ch;margin:1rem auto;color:var(--muted)}
+.faq-ask{max-width:68ch;margin:2rem auto;padding:1rem 1.2rem;border-inline-start:3px solid var(--accent);background:var(--surface)}
+.faq-ask a{color:var(--link)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.faq-find input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;width:1rem;height:1rem;cursor:pointer;background:var(--accent);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5 5 19' stroke='black' stroke-width='3'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5 5 19' stroke='black' stroke-width='3'/%3E%3C/svg%3E") center/contain no-repeat}
 
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
