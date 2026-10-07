@@ -591,7 +591,7 @@ def figure(n, cls='pic', lang='en'):
         cls += ' sensitive'
     if 'eff-pic' in cls:   # frame clips the hover zoom, so the picture keeps its size
         img = f'<span class="zoom">{img}</span>'
-    return f'<figure class="{cls}">{img}<figcaption>#{n}</figcaption></figure>'
+    return f'<figure class="{cls}">{img}</figure>'
 
 def pics_for(en_slug):
     """{English line index: picture number} for a page."""
