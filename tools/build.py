@@ -669,7 +669,7 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
         toc_html = f'<nav class="toc toc-top" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
         side = f'<nav class="toc toc-side" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
         if (lang, slug) == ('en', 'criticism-of-different-pro-life-ideologies'):   # joke button, shown by theme B only
-            side += f'<button class="prolife" type="button" tabindex="-1" aria-hidden="true">I\'m pro-life</button><script>{PROLIFE_JS}</script>'
+            side += f'<button class="prolife" type="button" tabindex="-1" aria-hidden="true">Press me if you\'re pro-life</button><script>{PROLIFE_JS}</script>'
         body = body.replace('</h2>', '</h2>' + side, 1)
     lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
