@@ -327,6 +327,17 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 @media print{.to-top{display:none}}
 .glob{cursor:default;user-select:none}
 
+/* history: protest schedule, one block per day */
+.sched{display:grid;gap:.8rem;margin:1rem 0 2rem}
+.day{border:1px solid var(--line);border-inline-start:3px solid var(--accent);background:var(--surface);padding:.9rem 1.1rem}
+.day-d{margin:0 0 .5rem;font-size:.8rem;letter-spacing:.12em;color:var(--link)}
+.day ul{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+.day li{display:grid;grid-template-columns:7.5rem 1fr;gap:.8rem;align-items:baseline;margin:0}
+.day li::before{content:none}
+.day-t{font-size:.85rem;color:var(--muted);white-space:nowrap}
+@media (max-width:30rem){.day li{grid-template-columns:1fr;gap:0}}
+.prose .go{margin:1rem 0 2rem}
+
 /* Pro Extinction · Konzept Ember · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
    Rollen und Kontraste stehen in BRAND.md. Im Layout nur var(--…) benutzen, keine rohen Hex-Werte. */

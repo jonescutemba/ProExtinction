@@ -663,6 +663,39 @@ def outline(bl, ref=None):
         out.append(bl[n]); n += 1
     return out
 
+DATE = re.compile(r'^\d{1,2}\.\d{1,2}\.\d{4}$')
+SLOT = re.compile(r'^(.*?)[\s,]*(\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2})\s*[,;.]?$')
+def history_outline(bl):
+    """History page: a lead-in ending in ":" with nothing after it gets the social media link (the original embedded
+    it there); a "City:" heading followed by dates becomes a sub-chapter with a day-by-day schedule;
+    a heading ending in ":" that only introduces a paragraph becomes a lead-in."""
+    txt = lambda k: bl[k][1].strip() if k < len(bl) and len(bl[k]) > 1 and isinstance(bl[k][1], str) else ''
+    out, n = [], 0
+    while n < len(bl):
+        b, t = bl[n], txt(n)
+        nxt = bl[n + 1][0] if n + 1 < len(bl) else ''
+        if b[0] == 'p' and t[-1:] in COLON and nxt == 'h':
+            out += [b, ('social',)]; n += 1; continue
+        if b[0] in ('h', 'p') and t[-1:] in COLON and DATE.match(txt(n + 1)):
+            out.append(('h3', t)); n += 1; days = []
+            while n < len(bl) and bl[n][0] in ('p', 'h') and (DATE.match(txt(n)) or (days and SLOT.match(txt(n)))):
+                if DATE.match(txt(n)): days.append((txt(n), []))
+                else: m = SLOT.match(txt(n)); days[-1][1].append((m.group(2).replace(' ', ''), m.group(1).strip(' ,;')))
+                n += 1
+            out.append(('sched', days)); continue
+        if b[0] == 'h' and t[-1:] in COLON and nxt == 'p' and len(txt(n + 1)) > 100:
+            out.append(('lead', t)); n += 1; continue
+        out.append(b); n += 1
+    # a heading directly followed by another heading has no text of its own (PL: titles of embedded videos): plain line
+    return [('p', b[1]) if b[0] == 'h' and k + 1 < len(out) and out[k + 1][0] == 'h' and b[1].strip()[-1:] not in COLON else b
+            for k, b in enumerate(out)]
+
+def sched_html(days):
+    return '<div class="sched">' + ''.join(
+        f'<section class="day"><p class="day-d mono">{esc(d)}</p><ul>'
+        + ''.join(f'<li><span class="day-t mono" dir="ltr">{esc(t.replace("-", "–"))}</span><span class="day-p">{esc(p)}</span></li>' for t, p in slots)
+        + '</ul></section>' for d, slots in days) + '</div>'
+
 def render_blocks(blocks, used, lang='en'):
     out, toc = [], []
     for b in blocks:
@@ -672,6 +705,10 @@ def render_blocks(blocks, used, lang='en'):
         elif b[0] == 'h3':
             i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：'), 3))
             out.append(f'<h3 class="sub" id="{i}">{esc(b[1].rstrip(":："))}</h3>')
+        elif b[0] == 'sched':
+            out.append(sched_html(b[1]))
+        elif b[0] == 'social':
+            out.append('<!--social-link-->')
         elif b[0] == 'lead':
             out.append(f'<p class="lead-in">{esc(b[1])}</p>')
         elif b[0] == 'give':
@@ -717,6 +754,7 @@ def doc_body(lang, slug, lines, full_url, like=None):
         if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own)
         else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
     if slug == 'donate': bl = give_blocks(bl, lang)
+    if slug == 'history': bl = history_outline(bl)
     if slug == 'principles-of-the-movement':
         bl = outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     body, toc = render_blocks(bl, used, lang)
@@ -813,7 +851,7 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     notes = ''
     if ki: notes += f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>'
     toc_html = ''
-    if len(toc) > 1:
+    if len(toc) > 1 and EN_OF[lang][slug] != 'join-us':   # join us is two short blocks, no overview needed
         items = ''.join(f'<li{" class=sub" if x[2:] == (3,) else ""}><a href="#{x[0]}">{esc(x[1])}</a></li>' for x in toc)
         # two copies: above the text on narrow screens, beside the first paragraph after the first chapter heading on wide ones
         toc_html = f'<nav class="toc toc-top" aria-label="{t["toc"]}"><p class="mono">{t["toc"]}</p><ol>{items}</ol></nav>'
@@ -822,6 +860,8 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
             side += f'<button class="prolife" type="button" tabindex="-1" aria-hidden="true">Press me if you\'re pro-life</button><script>{PROLIFE_JS}</script>'
         body = body.replace('</h2>', '</h2>' + side, 1)
     lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
+    soc = next((x for x, _ in PAGES[lang] if EN_OF[lang][x] == 'social-media-channels'), None)
+    body = body.replace('<!--social-link-->', f'<p class="go"><a class="btn" href="{href(soc)}">{esc(NAV[lang][soc])} <span aria-hidden="true">&rarr;</span></a></p>' if soc else '')
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
     return title, main, 'page'
 

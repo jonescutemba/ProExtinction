@@ -3,7 +3,7 @@ import re
 
 def is_heading(l):
     return (len(l) <= 70 and not re.search(r'[.,;!]$', l) and ',' not in l and '/' not in l
-            and not l[:1].isdigit() and not l.startswith(('*', '–', '-', '•', 'http', 'Protest')))
+            and not l[:1].isdigit() and not l.startswith(('*', '–', '-', '•', 'http')) and not l.lower().startswith('protest'))
 
 def is_list_line(l):
     return l.startswith(('*', '–', '- ', '•', '-')) and len(l) > 2
