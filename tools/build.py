@@ -679,13 +679,17 @@ def outline(bl, ref=None):
     short = lambda k: ref[k][0] in ('h', 'p') and len(t(k)) <= 100 and t(k)[-1:] not in QM + COLON
     # a heading followed by a long paragraph opens the next chapter, so it is not a summary point
     point = lambda k: short(k) and not (ref[k][0] == 'h' and k + 1 < len(ref) and ref[k + 1][0] == 'p' and len(t(k + 1)) > 100)
+    label = lambda k: 0 <= k < len(ref) and ref[k][0] in ('h', 'p') and t(k)[-1:] in COLON and len(t(k)) <= 40
     out, n = [], 0
     while n < len(bl):
-        if ref[n][0] in ('h', 'p') and t(n)[-1:] in COLON and len(t(n)) <= 40:
+        if label(n):
             k = n + 1
             while k < len(bl) and point(k): k += 1
             if k - n > 2:
                 out += [('lead', own(n)), ('ul', [own(x) for x in range(n + 1, k)])]; n = k; continue
+            # a run of "Label:" + one paragraph sections (Afterlife/Rebirth:, Karma:, ...) are chapters of their own
+            if label(n + 2) or label(n - 2):
+                out.append(('h', own(n).rstrip().rstrip(COLON).rstrip())); n += 1; continue
             out.append(('h3', own(n))); n += 1; continue
         if ref[n][0] == 'h' and t(n)[-1:] in QM:
             out.append(('h3', own(n))); n += 1; continue
