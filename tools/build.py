@@ -602,6 +602,10 @@ icon = lambda n: f'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusa
 # (lang, slug): line indices. DROP: PL line 9 is a "join" link right above the same heading and its buttons.
 JOIN = {('es', 'equipo'): {16}, ('pl', 'z-nami'): {12}}
 DROP = {('pl', 'z-nami'): {9}}
+# Chapter titles set by hand (line index in the page file). ('en', slug) also covers the AI translations of that page.
+# Principles: Afterlife/Rebirth, Karma and Spirituality are chapters of their own, like Materialism.
+HEADS = {('en', 'principles-of-the-movement'): {22, 24, 26}, ('es', 'principios-del-movimiento'): {22, 24, 26},
+         ('it', 'principi-del-movimento'): {22, 24, 26}, ('pl', 'zasady-ruchu'): {23, 25, 27}}
 
 # Pictures from the English site (content/images.json, files in presentation/img), numbered so unwanted ones can be named.
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
@@ -679,17 +683,13 @@ def outline(bl, ref=None):
     short = lambda k: ref[k][0] in ('h', 'p') and len(t(k)) <= 100 and t(k)[-1:] not in QM + COLON
     # a heading followed by a long paragraph opens the next chapter, so it is not a summary point
     point = lambda k: short(k) and not (ref[k][0] == 'h' and k + 1 < len(ref) and ref[k + 1][0] == 'p' and len(t(k + 1)) > 100)
-    label = lambda k: 0 <= k < len(ref) and ref[k][0] in ('h', 'p') and t(k)[-1:] in COLON and len(t(k)) <= 40
     out, n = [], 0
     while n < len(bl):
-        if label(n):
+        if ref[n][0] in ('h', 'p') and t(n)[-1:] in COLON and len(t(n)) <= 40:
             k = n + 1
             while k < len(bl) and point(k): k += 1
             if k - n > 2:
                 out += [('lead', own(n)), ('ul', [own(x) for x in range(n + 1, k)])]; n = k; continue
-            # a run of "Label:" + one paragraph sections (Afterlife/Rebirth:, Karma:, ...) are chapters of their own
-            if label(n + 2) or label(n - 2):
-                out.append(('h', own(n).rstrip().rstrip(COLON).rstrip())); n += 1; continue
             out.append(('h3', own(n))); n += 1; continue
         if ref[n][0] == 'h' and t(n)[-1:] in QM:
             out.append(('h3', own(n))); n += 1; continue
@@ -817,21 +817,22 @@ def doc_body(lang, slug, lines, full_url, like=None):
         body, toc = social_body(lang, lines, used)
         return title, lede, body, toc, truncated
     off, key = len(lines) - len(rest), (lang, OF_EN[lang].get(slug, slug))
-    bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())})
+    heads = {i - off for i in HEADS.get(('en', slug) if like else key, ())}
+    bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, heads=heads)
     pics = pics_for(slug)
     if pics:   # anchors from the English page, so original-language pages get the pictures in the same chapter
         en = json.loads((ROOT / 'content' / 'en' / f'{slug}.json').read_text(encoding='utf-8'))
         _, _, en_rest = head_lede(en); eoff = len(en) - len(en_rest)
         en_bl = blocks_of(en_rest, None, (), (), {i - eoff: n for i, n in pics.items()})
         own = own_pics(slug, rest) if not like else None
-        if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own)
+        if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own, heads)
         else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
     if slug == 'donate': bl = give_blocks(bl, lang)
     if slug == 'history': bl = history_outline(bl)
     if slug == 'cosmic-extinction':
         bl = cosmic_outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     if slug == 'principles-of-the-movement':
-        bl = outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
+        bl = outline(bl, blocks_of(rest_like, None, (), (), heads=heads) if rest_like else None)
     body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 

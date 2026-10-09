@@ -8,10 +8,11 @@ def is_heading(l):
 def is_list_line(l):
     return l.startswith(('*', '–', '- ', '•', '-')) and len(l) > 2
 
-def blocks_of(lines, like=None, join=(), drop=(), pics=None):
+def blocks_of(lines, like=None, join=(), drop=(), pics=None, heads=()):
     """Typed blocks. like: the English lines a translation mirrors 1:1; the structure is then read from them.
     join: indices (into lines) of join buttons; each run of them becomes one ('join',) block (WhatsApp + Discord).
-    pics: {line index: picture number}; a ('pic', n) block follows the block of that line."""
+    pics: {line index: picture number}; a ('pic', n) block follows the block of that line.
+    heads: indices (into lines) of chapter titles set by hand; shown as chapters, without a trailing colon."""
     out = []
     btn = {'Discord', 'Whatsapp', 'WhatsApp'}
     keep = lambda l: l.strip() and not l.startswith('Proextinction Website -')
@@ -22,6 +23,8 @@ def blocks_of(lines, like=None, join=(), drop=(), pics=None):
     for n, (i, text, l) in enumerate(pairs):
         nxt = clean[n + 1] if n + 1 < len(clean) else ''
         if n and pairs[n - 1][0] in pics: out.append(('pic', pics[pairs[n - 1][0]]))
+        if i in heads:
+            out.append(('h', text.rstrip(':：').rstrip())); continue
         if l in btn or i in join:
             if not (out and out[-1][0] == 'join'): out.append(('join',))
             continue
