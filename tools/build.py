@@ -1073,15 +1073,16 @@ def peace(lang):
     if lang in PEACE_OVERRIDE: return PEACE_OVERRIDE[lang]
     return json.loads((ROOT / 'content' / lang / f'{OF_EN[lang]["manifesto"]}.json').read_text(encoding='utf-8'))[-1]
 
-def footer(lang):
+def footer(lang, cta=True):
+    """Call to action with the contact buttons (left out on the contact page, which shows them under its text), then the footer."""
     t = T[lang]
-    return f'''<section class="cta" aria-label="{t["action"]}">
+    return (f'''<section class="cta" aria-label="{t["action"]}">
   <hr class="slash">
   <h2>{t["action"]}</h2>
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>
 </section>
-<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p>{born_line(lang)}{legal_links(lang)}</footer>'''
+''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p>{born_line(lang)}{legal_links(lang)}</footer>'''
 
 def born_line(lang):
     label, humans, animals, wild, insects = BORN[lang]
@@ -1225,7 +1226,7 @@ def page_html(lang, slug, kind, title=None, main=None, desc=None, index=True):
 {main}
 </main>
 </div>
-{footer(lang)}
+{footer(lang, EN_OF[lang].get(slug) != 'contact')}
 <script src="/site.js" defer></script>
 <script>{SMOKE_JS}</script>
 <script>{EGGS_JS}</script>
