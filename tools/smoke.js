@@ -20,6 +20,12 @@
   addEventListener('hashchange', function () { key = null; });
 
   function dark() { return d.dataset.theme !== 'light'; }
+  // the smoke stays low: it rises only a little above the top of the footer
+  function ceiling() {
+    var f = [].filter.call(document.querySelectorAll('.foot'), function (el) { return el.getClientRects().length; })[0];
+    var top = f ? f.getBoundingClientRect().top : innerHeight * .7;
+    return Math.max(0, Math.min(top, innerHeight - 120) - 50);
+  }
 
   function fire() {
     if (reduce) return haze();
@@ -50,8 +56,8 @@
   }
 
   function haze() {
-    var el = layer('div');
-    el.style.background = 'linear-gradient(to top,' + (dark() ? 'rgba(70,62,60,.35)' : 'rgba(25,20,20,.22)') + ',transparent 70%)';
+    var el = layer('div'), band = innerHeight - ceiling();
+    el.style.background = 'linear-gradient(to top,' + (dark() ? 'rgba(70,62,60,.35)' : 'rgba(150,145,143,.4)') + ',transparent ' + band + 'px)';
     el.style.opacity = 0;
     if (!el.animate) return el.remove();
     el.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 3200, easing: 'ease-in-out' }).onfinish = function () { el.remove(); };
@@ -80,17 +86,20 @@
     if (!g) return cv.remove();
     var dpr = Math.min(devicePixelRatio || 1, 1.5), W = innerWidth, H = innerHeight;
     cv.width = W * dpr; cv.height = H * dpr; g.scale(dpr, dpr);
-    // dark smoke: charcoal on the dark theme (a little lighter than the page so it shows), near-black on the light theme
-    var pics = sprites(dark() ? '78,70,68' : '28,24,24');
+    // charcoal on the dark theme (a little lighter than the page so it shows), light grey on the light theme
+    var pics = sprites(dark() ? '78,70,68' : '150,145,143');
+    var top = ceiling(), band = Math.max(140, H - top), k = .18;
     var parts = [], total = Math.round(Math.min(130, Math.max(45, W / 15))), spawnFor = 1900, made = 0, t0 = performance.now(), prev = t0;
     function add() {
-      var big = Math.random();
+      var big = Math.random(), life = 3600 + Math.random() * 2600, y = H + 30 + Math.random() * 40;
+      // speed chosen so the puff's centre ends up between the footer top and a little above it (rising slows down at rate k)
+      var rise = (y - top) * (.55 + Math.random() * .5);
       parts.push({
-        x: Math.random() * W, y: H + 40 + Math.random() * 60,
-        vx: (Math.random() - .5) * 30, vy: -(70 + Math.random() * 110),
-        s: 70 + big * 120, grow: 1.6 + Math.random() * 1.6, rot: Math.random() * 6.3, vr: (Math.random() - .5) * .6,
-        life: 3600 + Math.random() * 2600, age: 0, seed: Math.random() * 100, pic: pics[(Math.random() * pics.length) | 0],
-        peak: dark() ? .25 + Math.random() * .17 : .3 + Math.random() * .15
+        x: Math.random() * W, y: y,
+        vx: (Math.random() - .5) * 30, vy: -rise * k / (1 - Math.exp(-k * life / 1000)),
+        s: Math.min(70 + big * 120, band * .28), grow: 1.4 + Math.random() * 1.2, rot: Math.random() * 6.3, vr: (Math.random() - .5) * .6,
+        life: life, age: 0, seed: Math.random() * 100, pic: pics[(Math.random() * pics.length) | 0],
+        peak: dark() ? .25 + Math.random() * .17 : .35 + Math.random() * .17
       });
     }
     function frame(now) {
@@ -103,10 +112,11 @@
         if (p.age >= p.life) { parts.splice(i, 1); continue; }
         var f = p.age / p.life, sec = dt / 1000;
         p.vx += Math.sin(now / 700 + p.seed) * 14 * sec;   // swirl
-        p.vy *= 1 - .18 * sec;                            // rising slows down
+        p.vy *= 1 - k * sec;                            // rising slows down
         p.x += p.vx * sec; p.y += p.vy * sec; p.rot += p.vr * sec;
         var size = p.s * (1 + (p.grow - 1) * f);
-        var a = (f < .15 ? f / .15 : 1 - (f - .15) / .85) * p.peak;
+        var a = (f < .15 ? f / .15 : 1 - (f - .15) / .85) * p.peak
+          * Math.max(0, Math.min(1, (p.y - top + size * .6) / (size * 1.2)));   // thins out as it reaches the ceiling
         g.globalAlpha = Math.max(0, a);
         g.save(); g.translate(p.x, p.y); g.rotate(p.rot);
         g.drawImage(p.pic, -size, -size, size * 2, size * 2);
