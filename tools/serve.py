@@ -7,10 +7,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **k): super().__init__(*a, directory=str(SITE), **k)
     def send_head(self):
         path = self.path.split('?', 1)[0].split('#', 1)[0].rstrip('/') or '/'
-        f = SITE / path.lstrip('/')
-        if path != '/' and not f.is_file():
-            for c in (f / 'index.html', f.with_name(f.name + '.html')):
-                if c.is_file(): self.path = '/' + str(c.relative_to(SITE)); break
+        if path != '/':
+            f = SITE / path.lstrip('/')
+            for c in (f, f / 'index.html', f.with_name(f.name + '.html')):
+                if c.is_file():
+                    self.path = '/' + c.relative_to(SITE).as_posix()   # forward slashes on Windows too
+                    break
             else:
                 self.send_response(404); self.send_header('Content-Type', 'text/html; charset=utf-8'); self.end_headers()
                 self.wfile.write((SITE / '404.html').read_bytes()); return None
