@@ -234,8 +234,9 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
         var s = document.createElement('i');
         s.style.left = (Math.random() * 100).toFixed(2) + '%';
         s.style.top = (Math.random() * 100).toFixed(2) + '%';
-        var size = Math.random() < .12 ? 3 : Math.random() < .5 ? 2 : 1.4;
+        var r = Math.random(), size = r < .07 ? 5 : r < .2 ? 3.5 : r < .55 ? 2 : 1.4;   // a few big ones, most small
         s.style.width = s.style.height = size + 'px';
+        if (size >= 3.5) s.className = 'big';
         s.style.animationDelay = (-Math.random() * 4).toFixed(2) + 's';
         s.style.animationDuration = (2.5 + Math.random() * 3).toFixed(2) + 's';
         box.appendChild(s);

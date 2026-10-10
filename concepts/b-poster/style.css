@@ -371,7 +371,9 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .stars i{position:absolute;border-radius:50%;background:var(--text);opacity:.55;animation:pe-twinkle 4s ease-in-out infinite;transition:opacity 1.6s ease,transform 1.6s ease}
 .stars i.out{opacity:0!important;transform:scale(.2);animation:none}
 @keyframes pe-twinkle{0%,100%{opacity:.55}50%{opacity:.2}}
+.stars i.big{box-shadow:0 0 6px 1px color-mix(in srgb,var(--text) 55%,transparent)}
 [data-theme=light] .stars i{opacity:.3;animation:none}
+[data-theme=light] .stars i.big{box-shadow:none}
 @media (prefers-reduced-motion:reduce){.stars i{animation:none}}
 .void-line{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:0 var(--gutter);text-align:center;pointer-events:none;z-index:2147483001;opacity:0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;font-size:clamp(1.6rem,5vw,3.4rem);line-height:1.15;color:var(--text)}
 
