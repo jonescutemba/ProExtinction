@@ -141,8 +141,9 @@ OF_EN = {l: {e: s for s, e, _, _ in SITE[l] if e} for l in LANGS}     # English 
 ORIG = {l: {s: o for s, _, _, o in SITE[l]} for l in LANGS}
 
 def url(lang, slug):
-    """Site path of a page: /en for home, /en/manifesto otherwise (Vercel serves en/index.html and en/manifesto.html there)."""
-    return f'/{lang}' if slug == 'home' else f'/{lang}/{slug}'
+    """Site path of a page: /en/ for home, /en/manifesto otherwise. Cloudflare Pages serves en/index.html at /en/ and
+    en/manifesto.html at /en/manifesto, and redirects /en and /en/manifesto.html there, so links use exactly these forms."""
+    return f'/{lang}/' if slug == 'home' else f'/{lang}/{slug}'
 
 def counterpart(lang, slug, other):
     """Slug of the same page in another language, or 'home'."""
@@ -1279,7 +1280,7 @@ def build():
     (OUT / '404.html').write_text(not_found(), encoding='utf-8')
     (OUT / 'sitemap.xml').write_text(sitemap(paths), encoding='utf-8')
     (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n' if INDEXABLE else 'User-agent: *\nDisallow: /\n', encoding='utf-8')
-    vercel()
+    hosting()
     print('built', len(paths), 'pages into site/')
 
 def sitemap(paths):
@@ -1301,9 +1302,9 @@ def root_page():
 <head>
 {head('en', '/', 'Pro Extinction – ' + T['en']['tagline'], SEO['en']['home'], alts)}
 <script>(function(){{var k={json.dumps(known, separators=(',', ':'))},h=location.hash.match(/^#\/([a-z]+)\/([^\/?#]+)/),l;
-if(h&&k[h[1]]){{location.replace(k[h[1]].indexOf(h[2])>0?'/'+h[1]+'/'+h[2]:'/'+h[1]);return}}
-var w=navigator.languages||[navigator.language||'en'];for(var i=0;i<w.length;i++){{l=String(w[i]).toLowerCase().split('-')[0];if(l==='fil')l='tl';if(k[l]){{location.replace('/'+l);return}}}}
-location.replace('/en')}})()</script>
+if(h&&k[h[1]]){{location.replace(k[h[1]].indexOf(h[2])>0?'/'+h[1]+'/'+h[2]:'/'+h[1]+'/');return}}
+var w=navigator.languages||[navigator.language||'en'];for(var i=0;i<w.length;i++){{l=String(w[i]).toLowerCase().split('-')[0];if(l==='fil')l='tl';if(k[l]){{location.replace('/'+l+'/');return}}}}
+location.replace('/en/')}})()</script>
 </head>
 <body class="page">
 <main id="main" class="shell"><article class="doc"><header class="doc-head"><h1 class="wordmark">PRO EXTINCTION</h1><p class="lede">{T['en']['tagline']}</p><hr class="slash"></header>
@@ -1326,19 +1327,24 @@ def not_found():
 </html>
 '''
 
-def vercel():
-    """vercel.json follows INDEXABLE, so the switch lives in one place."""
-    hdr = [{'key': 'X-Content-Type-Options', 'value': 'nosniff'}, {'key': 'Referrer-Policy', 'value': 'strict-origin-when-cross-origin'},
-           {'key': 'X-Frame-Options', 'value': 'SAMEORIGIN'}, {'key': 'Permissions-Policy', 'value': 'camera=(), microphone=(), geolocation=()'},
-           {'key': 'Content-Security-Policy', 'value': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'"}]
-    if not INDEXABLE: hdr.insert(0, {'key': 'X-Robots-Tag', 'value': 'noindex, nofollow'})
-    # old English addresses (/manifesto, /home ...) lead to the new ones
-    old = [{'source': '/home', 'destination': '/en', 'permanent': True}] + [
-        {'source': f'/{s}', 'destination': f'/en/{s}', 'permanent': True} for s, _ in PAGES['en'] if s != 'home']
+HEADERS = {
+    'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'X-Frame-Options': 'SAMEORIGIN',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; "
+                               "img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'"}
+
+def hosting():
+    """Cloudflare Pages reads site/_headers and site/_redirects (neither is served as a page). Both follow INDEXABLE."""
+    hdr = ({} if INDEXABLE else {'X-Robots-Tag': 'noindex, nofollow'}) | HEADERS
+    (OUT / '_headers').write_text('/*\n' + ''.join(f'  {k}: {v}\n' for k, v in hdr.items())
+                                  + '\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n', encoding='utf-8')
+    # old addresses: the English Google Site (/manifesto, /home ...)
+    old = ['/home /en/ 301'] + [f'/{s} /en/{s} 301' for s, _ in PAGES['en'] if s != 'home']
+    (OUT / '_redirects').write_text('\n'.join(old) + '\n', encoding='utf-8')
+    # Vercel only shows previews until the move to Cloudflare; never indexed
     conf = {'$schema': 'https://openapi.vercel.sh/vercel.json', 'framework': None, 'buildCommand': None, 'installCommand': None,
-            'outputDirectory': 'site', 'cleanUrls': True, 'trailingSlash': False, 'redirects': old,
-            'headers': [{'source': '/(.*)', 'headers': hdr},
-                        {'source': '/fonts/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]}]}
-    (ROOT / 'vercel.json').write_text(json.dumps(conf, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+            'outputDirectory': 'site', 'cleanUrls': True,
+            'headers': [{'source': '/(.*)', 'headers': [{'key': 'X-Robots-Tag', 'value': 'noindex, nofollow'}]}]}
+    (ROOT / 'vercel.json').write_text(json.dumps(conf, indent=2) + '\n', encoding='utf-8')
 
 if __name__ == '__main__': build()

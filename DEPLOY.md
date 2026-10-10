@@ -1,37 +1,37 @@
-# Livegang auf Vercel
+# Livegang auf Cloudflare Pages
 
 **Was live geht:** der Ordner `site/`: eine Datei pro Seite, dazu Sprachwahl, 404-Seite, Sitemap, `robots.txt`, Schriften und Bilder.
-Es gibt keinen Build-Schritt. Die Konfiguration steht in `vercel.json` (Ausgabeordner, Sicherheits-Header,
-Cache für Schriften). Die Seite ist statisch und als finale Version gebaut, aber noch **bewusst auf „noindex"**.
+Es gibt keinen Build-Schritt bei Cloudflare: Die Seiten werden hier mit `python tools/build_all.py` gebaut und fertig committet.
+Cloudflare liest zwei Steuerdateien in `site/` (beide werden nicht als Seite ausgeliefert, beide schreibt `tools/build.py`):
+- `_headers`: Sicherheits-Header, Cache für Schriften, solange gesperrt auch `X-Robots-Tag: noindex`
+- `_redirects`: alte englische Adressen der Google Site (`/manifesto`, `/home` …) auf die neuen (`/en/manifesto`, `/en/`)
 
-## Einrichten (einmalig, im Vercel-Dashboard)
-1. vercel.com → **Add New… → Project** → GitHub-Repository `appsofuse/proextinction` importieren.
-2. **Framework Preset: Other.** Build Command, Install Command und Output Directory leer lassen
-   (kommt aus `vercel.json`, Ausgabeordner ist `site`).
-3. **Deploy.** Die Adresse sieht aus wie `proextinction-….vercel.app`.
-4. Branch: Die Arbeit liegt auf `claude/amazing-pascal-ej4vzp`. Vercel baut jeden Branch als **Preview**.
-   Für die Produktions-Adresse entweder diesen Branch nach `main` mergen oder unter
-   *Settings → Git → Production Branch* den Branch eintragen.
+Die Domain `proextinction.com` liegt schon im Cloudflare-Konto von James. Die Website kommt in **dasselbe Konto**, damit nichts an einer Einzelperson hängt.
+Schritt-für-Schritt-Anleitung für James (Englisch): `HOSTING.md`.
 
-Alternativ per Kommandozeile im Repo-Ordner: `npm i -g vercel`, dann `vercel` (Preview) oder `vercel --prod`.
+## Adressen
+- Startseite einer Sprache: `/en/`, `/de/` (mit Schrägstrich; Cloudflare leitet `/en` dorthin um)
+- Seiten: `/en/manifesto`, `/de/manifest` (Cloudflare leitet `…/manifest.html` dorthin um)
+- `/` wählt die Sprache nach dem Browser und leitet alte Links der Ein-Datei-Version (`#/de/manifest`) weiter
+- Jede Änderung auf einem anderen Branch bekommt bei Cloudflare automatisch eine eigene Vorschau-Adresse (`<branch>.<projekt>.pages.dev`)
 
 ## Vor dem Teilen prüfen
 | Punkt | Stand |
 |---|---|
-| Suchmaschinen | gesperrt. Freischalten: in `tools/build.py` `INDEXABLE = True` setzen, `python tools/build_all.py`, committen. Das ändert Meta-Tag, `X-Robots-Tag`-Header (`vercel.json`) und `robots.txt` zusammen. Vorher Impressum und Datenschutz ausfüllen |
-| Domain | `SITE_URL` in `tools/build.py` (`https://proextinction.com`). In Vercel unter *Settings → Domains* eintragen, die www-Variante auf die Domain ohne www umleiten lassen |
-| Zugriffsschutz | Die Adresse ist öffentlich erreichbar, nur nicht gelistet. Passwortschutz bietet Vercel in bezahlten Plänen (*Deployment Protection*); sonst Adresse nur direkt an Kunden geben |
-| Vercel-Tarif | Der kostenlose Hobby-Tarif ist laut Vercel nur für nicht-kommerzielle Nutzung. Für Kundenarbeit den Pro-Tarif nehmen oder einen anderen statischen Host (Cloudflare Pages, Netlify, GitHub Pages: derselbe Ordner `presentation/`) |
+| Suchmaschinen | gesperrt. Freischalten: in `tools/build.py` `INDEXABLE = True` setzen, `python tools/build_all.py`, committen. Das ändert Meta-Tag, `X-Robots-Tag` (`site/_headers`) und `robots.txt` zusammen. Vorher Impressum und Datenschutz ausfüllen. Danach `https://proextinction.com/sitemap.xml` in der Google Search Console einreichen |
+| Domain | `SITE_URL` in `tools/build.py` (`https://proextinction.com`, ohne www). www leitet per Cloudflare-Regel auf die Domain ohne www (siehe `HOSTING.md`) |
+| Impressum, Datenschutz | **Entwurf** in `content/legal/de.json` und `en.json`, im Footer jeder Seite verlinkt. Die Angaben in eckigen Klammern (Name, Anschrift, verantwortliche Person, Stand) fehlen noch. Keine Rechtsberatung: vor Livegang prüfen lassen |
 | Schriften | lokal gehostet, kein Google-Abruf (Lizenz OFL, `site/fonts/licenses/`) |
-| Impressum, Datenschutz | **Entwurf** in `content/legal/de.json` und `en.json`, im Footer jeder Seite verlinkt. Die Angaben in eckigen Klammern (Name, Anschrift, Verantwortliche Person, Stand) fehlen noch. Keine Rechtsberatung: vor Livegang prüfen lassen |
 | Inhalte | Texte, Name, Logo und Spenden-IBAN stammen unverändert von der Original-Seite. Vorher sicherstellen, dass der Auftraggeber der Veröffentlichung zustimmt |
 | Telefonnummer | steht auf der deutschen Startseite (Wunsch), vor Livegang bestätigen lassen |
-| Fehlende DE-Seiten | 4 Seiten fehlen noch (Übersetzung ist ein eigener Schritt) |
 
 ## Aktualisieren
-Nach Änderungen: `python tools/build_all.py`,
-Ergebnis committen und pushen. Vercel veröffentlicht automatisch neu.
+Nach Änderungen: `python tools/build_all.py`, Ergebnis committen und pushen. Cloudflare veröffentlicht automatisch neu.
+Lokal ansehen: `python tools/serve.py`. Genau wie Cloudflare (mit `_headers` und `_redirects`): `npx wrangler pages dev site`.
+
+## Vercel (Übergang)
+`vercel.json` zeigt nur noch Vorschauen von `site/` (immer `noindex`), bis die Seite auf Cloudflare läuft. Danach kann das Vercel-Projekt gelöscht werden.
 
 ## Schriften neu beziehen
-Quelle: npm-Pakete `@fontsource/*` (Oswald, Newsreader, Anton, Barlow, Bebas Neue, Source Serif 4, JetBrains Mono).
+Quelle: npm-Pakete `@fontsource/*` (Oswald, Anton, Barlow, JetBrains Mono).
 Verwendet werden nur `latin` und `latin-ext`, `woff2`. Die `@font-face`-Regeln stehen in `tools/fonts.css`.
