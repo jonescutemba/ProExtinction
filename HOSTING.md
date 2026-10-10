@@ -34,7 +34,7 @@ Cloudflare needs permission to read the GitHub repository. Only the repository's
 - **Previews:** a push to any other branch gets its own preview address (`<branch>.proextinction.pages.dev`). The live site doesn't change until that branch is merged into `main`.
 - **Undo:** Pages project → **Deployments** → open an older deployment → **Rollback to this deployment**.
 - **The old Google Site** stays where it is at its `sites.google.com` address. Old English links like `proextinction.com/manifesto` forward to the new pages.
-- **Search engines:** the site starts hidden from Google on purpose, until the legal notice and privacy policy are filled in. That is switched on in the code, not in Cloudflare (see `DEPLOY.md`). Once it is switched on:
+- **Search engines:** the site starts hidden from Google on purpose, until we decide to go public. That is switched on in the code, not in Cloudflare (see `DEPLOY.md`). Once it is switched on:
   - Cloudflare → **Caching** → **Configuration** → turn on **Crawler Hints**. It tells Bing and other search engines about changes right away (IndexNow), free.
   - Add the site to **Google Search Console** (search.google.com/search-console, *Domain* property; Cloudflare can add the verification record for you) and submit `https://proextinction.com/sitemap.xml`. The same for **Bing Webmaster Tools**, which can import it from Search Console.
 

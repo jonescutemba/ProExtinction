@@ -11,7 +11,7 @@ Design A (Ember) ist entfernt; er liegt noch auf dem Branch `backup/vercel-2026-
 | `content/` | Text als JSON pro Sprache: Originaltext der jeweiligen Sprachseite plus KI-Übersetzungen der fehlenden Seiten (welche das sind, steht in `SITE` in `tools/build.py`) |
 | `content/seo/` | Suchmaschinen-Beschreibung jeder Seite pro Sprache; `en.json` ist die Vorlage |
 | `content/alt/` | Bildbeschreibungen (alt-Text) für Screenreader und Bildersuche pro Sprache, Schlüssel = Bildnummer aus `content/images.json`; `en.json` ist die Vorlage. Kanal-Profilbilder neben ihrem Namen haben bewusst keine |
-| `content/legal/` | Impressum und Datenschutz (DE, EN), Entwurf mit Platzhaltern in eckigen Klammern |
+| `content/legal/` | Datenschutz (DE, EN, live) und Impressum (Entwurf, nicht veröffentlicht; Schalter `IMPRINT` in `tools/build.py`) |
 | `content/diagrams/` | Texte der zwei Manifest-Grafiken (Kreislauf des Leidens, Grausames Design mit allen Beispielen) pro Sprache, eine Zeile pro Text, Felder mit `|` getrennt; `en.txt` ist die Vorlage (`tools/diagrams.py`, `tools/dg.js`) |
 | `raw/` | Rohtext der Google-Sites-Seiten PL/ES/IT (`tools/scrape.py`, dann `tools/parse_raw.py`) |
 | `tools/` | Generator: `build.py` (Seiten, SEO, Sitemap, Cloudflare-Steuerdateien), `kit.py` (Brand Kit), `serve.py` (Vorschau), `og.js` (Teilen-Bild), `blocks.py`, `parse.py`, CSS-Quellen, `assets/` (Logo, `site.js`) |
@@ -22,7 +22,7 @@ Ansehen: `python tools/serve.py`, dann http://localhost:8000 öffnen. Die Seiten
 
 ## Suchmaschinen (SEO)
 Jede Seite hat Titel, Beschreibung (`content/seo/`), Canonical-Link, `hreflang`-Verweise auf alle Sprachfassungen, Open-Graph-Angaben fürs Teilen (Bild `site/og.png`) und auf den Startseiten Schema.org-Daten zur Organisation. `site/sitemap.xml` listet alle Seiten mit ihren Sprachfassungen.
-**Noch gesperrt:** `INDEXABLE = False` in `tools/build.py`. Auf `True` stellen und neu bauen schaltet Meta-Tag, `X-Robots-Tag` (in `site/_headers`) und `robots.txt` gemeinsam frei. Impressum und Datenschutz bleiben für Suchmaschinen gesperrt, solange sie Platzhalter enthalten.
+**Noch gesperrt:** `INDEXABLE = False` in `tools/build.py`. Auf `True` stellen und neu bauen schaltet Meta-Tag, `X-Robots-Tag` (in `site/_headers`) und `robots.txt` gemeinsam frei. Eine Rechtsseite mit Platzhaltern in eckigen Klammern bleibt für Suchmaschinen gesperrt.
 Domain: `SITE_URL` in `tools/build.py` (`https://proextinction.com`). Alte englische Adressen (`/manifesto`, `/home` …) leiten auf die neuen um, alte Links der Ein-Datei-Version (`#/de/manifest`) leitet `/` weiter.
 
 Adresszusätze zum Testen: `?theme=light` oder `?theme=dark`, Logo-Effekt `?scare=reset` (Zähler zurück), `?motion=on` (trotz „Bewegung reduzieren").

@@ -363,9 +363,8 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .foot .born b{font-weight:600;color:var(--text)}
 .foot .born .bn{white-space:nowrap}
 .foot .born [dir=ltr]{direction:ltr;unicode-bidi:isolate}
-.foot .legal{margin-top:.6rem;font-size:.7rem;letter-spacing:.06em}
-.foot .legal a{color:var(--muted);text-decoration:underline;text-underline-offset:.2em}
-.foot .legal a:hover{color:var(--text)}
+.foot a.legal{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+.foot a.legal:hover{color:var(--text)}
 .lang-list{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.4rem 1.2rem}   /* / and 404: language list */
 .lang-list a{display:block;padding:.45rem 0;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
 .lang-list a:hover{color:var(--link)}

@@ -18,9 +18,10 @@ Schritt-für-Schritt-Anleitung für James (Englisch): `HOSTING.md`.
 ## Vor dem Teilen prüfen
 | Punkt | Stand |
 |---|---|
-| Suchmaschinen | gesperrt. Freischalten: in `tools/build.py` `INDEXABLE = True` setzen, `python tools/build_all.py`, committen. Das ändert Meta-Tag, `X-Robots-Tag` (`site/_headers`) und `robots.txt` zusammen. Vorher Impressum und Datenschutz ausfüllen. Danach `https://proextinction.com/sitemap.xml` in der Google Search Console einreichen |
+| Suchmaschinen | gesperrt. Freischalten: in `tools/build.py` `INDEXABLE = True` setzen, `python tools/build_all.py`, committen. Das ändert Meta-Tag, `X-Robots-Tag` (`site/_headers`) und `robots.txt` zusammen. Danach `https://proextinction.com/sitemap.xml` in der Google Search Console einreichen |
 | Domain | `SITE_URL` in `tools/build.py` (`https://proextinction.com`, ohne www). www leitet per Cloudflare-Regel auf die Domain ohne www (siehe `HOSTING.md`) |
-| Impressum, Datenschutz | **Entwurf** in `content/legal/de.json` und `en.json`, im Footer jeder Seite verlinkt. Die Angaben in eckigen Klammern (Name, Anschrift, verantwortliche Person, Stand) fehlen noch. Keine Rechtsberatung: vor Livegang prüfen lassen |
+| Datenschutz | fertig (`content/legal/<de|en>.json`, `privacy`), im Footer jeder Seite verlinkt; Verantwortliche: Pro Extinction als Gruppe von Privatpersonen, info@proextinction.com. Keine Rechtsberatung |
+| Impressum | bewusst **nicht veröffentlicht** (Betreiber nicht in Deutschland/Österreich). Liegt als Entwurf bereit (`imprint` in denselben Dateien); `IMPRINT = True` in `tools/build.py` baut und verlinkt es, vorher die Platzhalter in eckigen Klammern ausfüllen |
 | Schriften | lokal gehostet, kein Google-Abruf (Lizenz OFL, `site/fonts/licenses/`) |
 | Inhalte | Texte, Name, Logo und Spenden-IBAN stammen unverändert von der Original-Seite. Vorher sicherstellen, dass der Auftraggeber der Veröffentlichung zustimmt |
 | Telefonnummer | steht auf der deutschen Startseite (Wunsch), vor Livegang bestätigen lassen |

@@ -1082,7 +1082,7 @@ def footer(lang, cta=True):
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>
 </section>
-''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p>{born_line(lang)}{legal_links(lang)}</footer>'''
+''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}{legal_links(lang)}</p>{born_line(lang)}</footer>'''
 
 def born_line(lang):
     label, humans, animals, wild, insects = BORN[lang]
@@ -1133,6 +1133,7 @@ SITE_URL = 'https://proextinction.com'
 INDEXABLE = False   # the one switch: True lets search engines in (robots.txt, X-Robots-Tag header in vercel.json, meta robots)
 HREFLANG = {'zh': 'zh-Hans'}
 SEO = {l: json.loads((ROOT / 'content' / 'seo' / f'{l}.json').read_text(encoding='utf-8')) for l in LANGS}
+IMPRINT = False   # legal notice (content/legal/<lang>.json "imprint") kept ready but not published; True builds it and links it in the footer
 LEGAL = {l: json.loads((ROOT / 'content' / 'legal' / f'{l}.json').read_text(encoding='utf-8')) for l in ('de', 'en')}
 DRAFT = re.compile(r'\[[^\]]*[A-ZÄÖÜ]{3,}[^\]]*\]')   # a placeholder like [STREET AND NUMBER]: the page stays out of search engines
 # Footer links to the legal pages; languages without their own version link to the English one.
@@ -1150,10 +1151,11 @@ LEGAL_LABEL = {
 }
 
 def legal_links(lang):
+    """Privacy (and, if IMPRINT, legal notice) links, appended to the footer's first line."""
     src = lang if lang in LEGAL else 'en'
     a, b = LEGAL_LABEL[lang]
-    return (f'<p class="legal mono"><a href="{url(src, LEGAL[src]["imprint"]["slug"])}">{esc(a)}</a>'
-            f'<span aria-hidden="true"> · </span><a href="{url(src, LEGAL[src]["privacy"]["slug"])}">{esc(b)}</a></p>')
+    keys = [('imprint', a)] * IMPRINT + [('privacy', b)]
+    return ''.join(f' · <a class="legal" href="{url(src, LEGAL[src][k]["slug"])}">{esc(lab)}</a>' for k, lab in keys)
 
 def legal_main(lang, key):
     """A legal page from content/legal/<lang>.json: '## ' starts a heading, '! ' a draft note, other lines are paragraphs."""
@@ -1283,7 +1285,7 @@ def build():
             (d / ('index.html' if slug == 'home' else f'{slug}.html')).write_text(page_html(lang, slug, kind), encoding='utf-8')
             paths.append((url(lang, slug), alternates(lang, slug)))
     for lang in LEGAL:
-        for key in ('imprint', 'privacy'):
+        for key in ('imprint', 'privacy')[not IMPRINT:]:
             p = LEGAL[lang][key]; title, main = legal_main(lang, key)
             draft = any(DRAFT.search(x) for x in p['text'])
             (OUT / lang / f'{p["slug"]}.html').write_text(page_html(lang, p['slug'], 'doc', title, main, p['description'], not draft), encoding='utf-8')

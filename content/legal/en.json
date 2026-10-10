@@ -27,11 +27,10 @@
   "title": "Privacy policy",
   "description": "Privacy policy of Pro Extinction: no cookies, no tracking. What data a visit to this website involves and what your rights are.",
   "text": [
-   "! Draft: the details in square brackets are still missing. Until they are filled in, search engines may not index this page.",
    "## In short",
    "This website sets no cookies, uses no analytics or tracking services and loads nothing from other servers. Fonts and images are hosted on our own server.",
    "## Controller",
-   "[NAME OR NAME OF THE ASSOCIATION], [ADDRESS], email: info@proextinction.com",
+   "Pro Extinction, an informal group of private individuals, not a registered association. Contact: info@proextinction.com",
    "## Hosting and server logs",
    "The website is hosted by Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA (Cloudflare Pages). On every visit Cloudflare processes the data it technically needs: IP address, time, page requested, browser and operating system. This keeps the website safe and running (Art. 6(1)(f) GDPR).",
    "Cloudflare is certified under the EU-US Data Privacy Framework. How long Cloudflare keeps this data is set out in Cloudflare's privacy policy: https://www.cloudflare.com/privacypolicy/",
@@ -47,7 +46,7 @@
    "## Your rights",
    "You have the right to access, correct and delete your data, to restrict its processing, to data portability and to object to processing (Art. 15 to 21 GDPR). Write to info@proextinction.com.",
    "You can also complain to a data protection authority, for example in the country where you live.",
-   "Last updated: [MONTH AND YEAR]"
+   "Last updated: October 2026"
   ]
  }
 }

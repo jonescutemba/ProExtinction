@@ -8,8 +8,8 @@ Stand: laufend gepflegt. **Entschieden: Design B (Poster).** A Ember ist entfern
 | Endgültige Hex-Werte | vorläufig in `brand/b-poster/tokens.css` | offen |
 | Original-Logo als Vektor | fehlt, `mark.svg` ist eine Nachzeichnung | sobald auffindbar |
 | Schriften selbst hosten | **erledigt** für `site/` (lokal, OFL). Nur `brand-helmet.html` lädt noch von Google | – |
-| Impressum, Datenschutz | **Entwurf** in `content/legal/`, Platzhalter für Name und Anschrift fehlen | vor öffentlichem Livegang |
-| Suchmaschinen freischalten | gesperrt, `INDEXABLE` in `tools/build.py` | nach Impressum und Datenschutz |
+| Impressum | **entschieden: vorerst keins** (lose Gruppe, Betreiber nicht in DE/AT). Entwurf liegt bereit, `IMPRINT` in `tools/build.py` | wieder prüfen, sobald jemand aus DE/AT als Betreiber auftritt |
+| Suchmaschinen freischalten | gesperrt, `INDEXABLE` in `tools/build.py`; entschieden: dann alle 29 Sprachen und alle Crawler (auch KI) zulassen | beim Livegang |
 | Bilder von „Suffering in detail" (16) | hinter einem Klick verschwommen | – |
 | Deutsche Übersetzung der 4 fehlenden Seiten | Entwürfe in `content/_translation-pending/`, nicht eingebaut | eigener Schritt |
 | Telefonnummer auf der deutschen Seite | bleibt (Wunsch), vor Livegang bestätigen | vor Livegang |
