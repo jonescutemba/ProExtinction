@@ -364,6 +364,16 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .prose .src{font-size:.85rem;color:var(--muted);margin:.4rem 0 1.6rem}
 .prose .src-k{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-inline-end:.5rem}
 .prose .src a{color:var(--link)}
+/* easter eggs (tools/eggs.js) */
+.foot .born{margin-top:.35rem;color:var(--muted);font-size:.7rem;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.foot .born b{font-weight:600;color:var(--text)}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.stars i{position:absolute;border-radius:50%;background:var(--text);opacity:.55;animation:pe-twinkle 4s ease-in-out infinite;transition:opacity 1.6s ease,transform 1.6s ease}
+.stars i.out{opacity:0!important;transform:scale(.2);animation:none}
+@keyframes pe-twinkle{0%,100%{opacity:.55}50%{opacity:.2}}
+[data-theme=light] .stars i{opacity:.3;animation:none}
+@media (prefers-reduced-motion:reduce){.stars i{animation:none}}
+.void-line{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:0 var(--gutter);text-align:center;pointer-events:none;z-index:2147483001;opacity:0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;font-size:clamp(1.6rem,5vw,3.4rem);line-height:1.15;color:var(--text)}
 
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).

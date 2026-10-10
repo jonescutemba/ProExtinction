@@ -66,6 +66,7 @@ d.dataset.theme=(t==='light'||t==='dark')?t:'dark'}})()</script>
 {js}
 </script>
 <script>{B.SMOKE_JS}</script>
+<script>{B.EGGS_JS}</script>
 </body>
 </html>
 '''

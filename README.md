@@ -27,3 +27,5 @@ Direktlinks für einzelne Varianten (an die Adresse hängen):
 - Seite: `#/en/manifesto`, `#/de/manifest`, `#/en/full-faq` …
 - Beispiel: `index.html?concept=b&theme=dark#/en/manifesto`
 - Logo-Effekt testen: `?scare=reset` (Zähler zurück), `?motion=on` (trotz „Bewegung reduzieren")
+
+Versteckte Effekte (`tools/smoke.js`, `tools/eggs.js`): Rauch am Ende langer Seiten; Sterne, die auf „Cosmic Extinction“ beim Lesen verlöschen; Logo fünfmal schnell anklicken (die Seite verblasst, der letzte Satz des Manifests erscheint); Geburtenzähler in der Fusszeile (Schätzung aus UN- und FAOSTAT-Jahreszahlen, `BORN` in `tools/build.py`); Gruss in der Browser-Konsole. Mit „Bewegung reduzieren“ nur sanfte Überblendungen.

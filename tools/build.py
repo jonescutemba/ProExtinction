@@ -717,6 +717,7 @@ KINDS_BY_HAND = {
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
 PROLIFE_JS = (ROOT / 'tools' / 'prolife.js').read_text(encoding='utf-8')
 SMOKE_JS = (ROOT / 'tools' / 'smoke.js').read_text(encoding='utf-8')   # shake and dark smoke at the end of long pages
+EGGS_JS = (ROOT / 'tools' / 'eggs.js').read_text(encoding='utf-8')     # stars, logo x5, birth counter, console note
 IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/'
 
 def figure(n, cls='pic', lang='en'):
@@ -1020,6 +1021,46 @@ def header(c, lang, slug, ctx):
   </div>
 </header>'''
 
+# Footer counter: humans and farm animals born since the page was opened. Per second, from yearly figures:
+# about 132 million human births (UN World Population Prospects) and about 83 billion land animals raised and killed for food (FAOSTAT).
+BORN_RATES = '4.18,2630'
+BORN = {
+    'en': ('Born since you opened this page', 'humans', 'farm animals'),
+    'de': ('Geboren, seit du diese Seite geöffnet hast', 'Menschen', 'Nutztiere'),
+    'pl': ('Urodzonych od otwarcia tej strony', 'ludzi', 'zwierząt hodowlanych'),
+    'es': ('Nacidos desde que abriste esta página', 'personas', 'animales de granja'),
+    'it': ('Nati da quando hai aperto questa pagina', 'persone', 'animali da allevamento'),
+    'fr': ('Nés depuis que vous avez ouvert cette page', 'humains', "animaux d'élevage"),
+    'pt': ('Nascidos desde que você abriu esta página', 'pessoas', 'animais de criação'),
+    'ru': ('Родилось, пока открыта эта страница', 'людей', 'животных на фермах'),
+    'zh': ('自你打开本页以来出生', '人', '养殖动物'),
+    'hi': ('यह पेज खोलने के बाद से जन्मे', 'इंसान', 'फ़ार्म के जानवर'),
+    'ar': ('وُلد منذ فتحت هذه الصفحة', 'إنسانا', 'حيوانا في المزارع'),
+    'bn': ('পাতাটি খোলার পর থেকে জন্মেছে', 'মানুষ', 'খামারের প্রাণী'),
+    'ur': ('یہ صفحہ کھولنے کے بعد سے پیدا ہوئے', 'انسان', 'فارم کے جانور'),
+    'id': ('Lahir sejak kamu membuka halaman ini', 'manusia', 'hewan ternak'),
+    'ja': ('このページを開いてから生まれた数', '人', '家畜'),
+    'tr': ('Bu sayfayı açtığından beri doğanlar', 'insan', 'çiftlik hayvanı'),
+    'vi': ('Số sinh ra từ khi bạn mở trang này', 'người', 'vật nuôi'),
+    'ko': ('이 페이지를 연 뒤 태어난 수', '사람', '가축'),
+    'fa': ('از وقتی این صفحه را باز کردی به دنیا آمده‌اند', 'انسان', 'دام'),
+    'mr': ('हे पान उघडल्यापासून जन्मलेले', 'माणसे', 'शेतीतील प्राणी'),
+    'te': ('ఈ పేజీ తెరిచినప్పటి నుంచి పుట్టినవి', 'మనుషులు', 'పశువులు'),
+    'ta': ('இந்தப் பக்கத்தைத் திறந்ததிலிருந்து பிறந்தவை', 'மனிதர்கள்', 'பண்ணை விலங்குகள்'),
+    'sw': ('Waliozaliwa tangu ufungue ukurasa huu', 'binadamu', 'wanyama wa shambani'),
+    'th': ('เกิดขึ้นตั้งแต่คุณเปิดหน้านี้', 'คน', 'สัตว์ในฟาร์ม'),
+    'nl': ('Geboren sinds je deze pagina opende', 'mensen', 'landbouwdieren'),
+    'uk': ('Народилося, відколи відкрито цю сторінку', 'людей', 'тварин на фермах'),
+    'tl': ('Isinilang mula nang buksan mo ang pahinang ito', 'tao', 'hayop sa bukid'),
+    'pa': ('ਇਹ ਪੰਨਾ ਖੋਲ੍ਹਣ ਤੋਂ ਬਾਅਦ ਜਨਮੇ', 'ਇਨਸਾਨ', 'ਫ਼ਾਰਮ ਦੇ ਜਾਨਵਰ'),
+    'gu': ('આ પાનું ખોલ્યા પછી જન્મેલા', 'માણસો', 'ફાર્મનાં પ્રાણીઓ'),
+}
+# Logo clicked five times: the page fades away and the manifesto's last line appears (its own last line in each language).
+PEACE_OVERRIDE = {'es': 'Abolamos el sufrimiento. ¡Viva la paz!'}   # the Spanish manifesto ends with a different paragraph
+def peace(lang):
+    if lang in PEACE_OVERRIDE: return PEACE_OVERRIDE[lang]
+    return json.loads((ROOT / 'content' / lang / f'{OF_EN[lang]["manifesto"]}.json').read_text(encoding='utf-8'))[-1]
+
 def footer(lang):
     t = T[lang]
     return f'''<section class="cta" aria-label="{t["action"]}">
@@ -1028,7 +1069,12 @@ def footer(lang):
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>
 </section>
-<footer class="foot"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p></footer>'''
+<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p>{born_line(lang)}</footer>'''
+
+def born_line(lang):
+    label, humans, animals = BORN[lang]
+    return (f'<p class="born mono" data-rates="{BORN_RATES}" title="Estimate from yearly figures (UN, FAOSTAT)">{esc(label)}: '
+            f'<b data-i="0">0</b> {esc(humans)} · <b data-i="1">0</b> {esc(animals)}</p>')
 
 def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     """Title and <main> content of one page (shared by the multi-page prototype and the single-file presentation)."""
@@ -1059,6 +1105,8 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
     soc = next((x for x, _ in PAGES[lang] if EN_OF[lang][x] == 'social-media-channels'), None)
     body = body.replace('<!--social-link-->', f'<p class="go"><a class="btn" href="{href(soc)}">{esc(NAV[lang][soc])} <span aria-hidden="true">&rarr;</span></a></p>' if soc else '')
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
+    if EN_OF[lang][slug] == 'cosmic-extinction':   # easter egg: the stars go out while reading (eggs.js)
+        main = '<div class="stars" aria-hidden="true"></div>' + main
     return title, main, 'page'
 
 def page_html(c, lang, slug, kind):
@@ -1088,6 +1136,7 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 {footer(lang)}
 <script src="../../assets/site.js" defer></script>
 <script>{SMOKE_JS}</script>
+<script>{EGGS_JS}</script>
 </body>
 </html>
 '''
