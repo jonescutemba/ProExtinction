@@ -716,6 +716,7 @@ KINDS_BY_HAND = {
 # Pictures from the English site (content/images.json, files in presentation/img), numbered so unwanted ones can be named.
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
 PROLIFE_JS = (ROOT / 'tools' / 'prolife.js').read_text(encoding='utf-8')
+SMOKE_JS = (ROOT / 'tools' / 'smoke.js').read_text(encoding='utf-8')   # shake and dark smoke at the end of long pages
 IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/'
 
 def figure(n, cls='pic', lang='en'):
@@ -1086,6 +1087,7 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 </div>
 {footer(lang)}
 <script src="../../assets/site.js" defer></script>
+<script>{SMOKE_JS}</script>
 </body>
 </html>
 '''
