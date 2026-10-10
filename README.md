@@ -10,7 +10,7 @@ Design A (Ember) ist entfernt; er liegt noch auf dem Branch `backup/vercel-2026-
 | `brand/` | Brand Kit von Design B (Tokens, `BRAND.md`, Referenzseiten) |
 | `content/` | Text als JSON pro Sprache: Originaltext der jeweiligen Sprachseite plus KI-Übersetzungen der fehlenden Seiten (welche das sind, steht in `SITE` in `tools/build.py`) |
 | `content/seo/` | Suchmaschinen-Beschreibung jeder Seite pro Sprache; `en.json` ist die Vorlage |
-| `content/alt/` | Bildbeschreibungen (alt-Text) für Screenreader und Bildersuche pro Sprache, Schlüssel = Bildnummer aus `content/images.json`; `en.json` ist die Vorlage. Die Fotos auf „Suffering in detail“ haben bewusst keine, Kanal-Profilbilder neben ihrem Namen auch nicht |
+| `content/alt/` | Bildbeschreibungen (alt-Text) für Screenreader und Bildersuche pro Sprache, Schlüssel = Bildnummer aus `content/images.json`; `en.json` ist die Vorlage. Kanal-Profilbilder neben ihrem Namen haben bewusst keine |
 | `content/legal/` | Impressum und Datenschutz (DE, EN), Entwurf mit Platzhaltern in eckigen Klammern |
 | `content/diagrams/` | Texte der zwei Manifest-Grafiken (Kreislauf des Leidens, Grausames Design mit allen Beispielen) pro Sprache, eine Zeile pro Text, Felder mit `|` getrennt; `en.txt` ist die Vorlage (`tools/diagrams.py`, `tools/dg.js`) |
 | `raw/` | Rohtext der Google-Sites-Seiten PL/ES/IT (`tools/scrape.py`, dann `tools/parse_raw.py`) |

@@ -726,7 +726,7 @@ SMOKE_JS = (ROOT / 'tools' / 'smoke.js').read_text(encoding='utf-8')   # shake a
 EGGS_JS = (ROOT / 'tools' / 'eggs.js').read_text(encoding='utf-8')     # stars, logo x5, birth counter, console note
 IMG_BASE = '/img/'
 # Picture descriptions for screen readers and image search, per language (content/alt/<lang>.json, English as source).
-# Not for the photos on "Suffering in detail": nobody on the project looks at those, so they stay without a description.
+# The photos on "Suffering in detail" (8 to 21) are described from a list the project gave; the build never looks at them.
 ALT = {f.stem: json.loads(f.read_text(encoding='utf-8')) for f in (ROOT / 'content' / 'alt').glob('*.json')}
 
 def figure(n, cls='pic', lang='en'):
