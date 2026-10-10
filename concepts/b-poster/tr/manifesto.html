@@ -61,6 +61,25 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
     svg.querySelectorAll('.center').forEach(t => shrink(t, 270, 40));
   };
   fitAll();
+  // cycle: a box lights up exactly when the red dot reaches it. Both read the SVG's own clock (the dot is SMIL, 6 s a lap,
+  // nodes at 0, 2 and 4 s), so they stay in step even after the view was hidden or the tab was in the background.
+  if (!tree && svg.getCurrentTime) {
+    const d = document.documentElement;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches && d.dataset.motion !== 'on') svg.pauseAnimations();
+    else {
+      const nodes = svg.querySelectorAll('.node');
+      let on = true;
+      const tick = () => {
+        if (on) {
+          const t = svg.getCurrentTime() % 6;
+          nodes.forEach((g, i) => g.classList.toggle('lit', ((t - 2 * i) % 6 + 6) % 6 < .45));
+        }
+        requestAnimationFrame(tick);
+      };
+      if (window.IntersectionObserver) new IntersectionObserver(es => { on = es.some(e => e.isIntersecting); }).observe(svg);
+      requestAnimationFrame(tick);
+    }
+  }
   if (document.fonts) document.fonts.ready.then(fitAll);
   if (window.IntersectionObserver) new IntersectionObserver(es => es.some(e => e.isIntersecting) && fitAll()).observe(svg);
   if (!btn) return;
@@ -116,6 +135,25 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
     svg.querySelectorAll('.center').forEach(t => shrink(t, 270, 40));
   };
   fitAll();
+  // cycle: a box lights up exactly when the red dot reaches it. Both read the SVG's own clock (the dot is SMIL, 6 s a lap,
+  // nodes at 0, 2 and 4 s), so they stay in step even after the view was hidden or the tab was in the background.
+  if (!tree && svg.getCurrentTime) {
+    const d = document.documentElement;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches && d.dataset.motion !== 'on') svg.pauseAnimations();
+    else {
+      const nodes = svg.querySelectorAll('.node');
+      let on = true;
+      const tick = () => {
+        if (on) {
+          const t = svg.getCurrentTime() % 6;
+          nodes.forEach((g, i) => g.classList.toggle('lit', ((t - 2 * i) % 6 + 6) % 6 < .45));
+        }
+        requestAnimationFrame(tick);
+      };
+      if (window.IntersectionObserver) new IntersectionObserver(es => { on = es.some(e => e.isIntersecting); }).observe(svg);
+      requestAnimationFrame(tick);
+    }
+  }
   if (document.fonts) document.fonts.ready.then(fitAll);
   if (window.IntersectionObserver) new IntersectionObserver(es => es.some(e => e.isIntersecting) && fitAll()).observe(svg);
   if (!btn) return;

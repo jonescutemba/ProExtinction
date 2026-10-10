@@ -284,9 +284,8 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .dg-cycle .runner{fill:var(--accent);filter:drop-shadow(0 0 6px var(--accent))}
 .dg-cycle .center{font-family:var(--display);font-weight:var(--display-weight,600);font-size:40px;text-transform:uppercase;letter-spacing:.03em}
 .dg .hot,.dg .verdict{fill:var(--link,var(--accent))}
-.dg-cycle .node rect{animation:dg-lit 6s infinite}
-.dg-cycle .n1 rect{animation-delay:2s}.dg-cycle .n2 rect{animation-delay:4s}
-@keyframes dg-lit{0%,6%{stroke:var(--accent)}22%,100%{stroke:var(--line)}}
+.dg-cycle .node rect{transition:stroke .9s ease}   /* lit by dg.js when the dot passes */
+.dg-cycle .node.lit rect{stroke:var(--accent);transition:stroke .12s}
 .dg-tree .wire{fill:none;stroke:var(--muted);stroke-width:2}
 .dg-tree .flow{fill:none;stroke:var(--accent);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1;animation:dg-flow 8s infinite}
 .dg-tree .flow.r{animation-delay:4s}
