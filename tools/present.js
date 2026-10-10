@@ -85,6 +85,9 @@
   }
   window.addEventListener('hashchange', show);
   langSel.addEventListener('change', function () { location.hash = langSel.value; });
+  // Chromium marks a mouse-opened select as :focus-visible, so the ring stayed on the language button; show it only after keyboard use.
+  document.addEventListener('keydown', function () { d.dataset.kb = '1'; }, true);
+  document.addEventListener('pointerdown', function () { delete d.dataset.kb; }, true);
 
 
   // ---- expandable menu below 1000px

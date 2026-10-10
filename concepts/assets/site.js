@@ -6,6 +6,9 @@
     d.dataset.theme = next;
     try { localStorage.setItem('pe-theme', next); } catch (e) {}
   });
+  // Chromium marks a mouse-opened select as :focus-visible, so the ring stayed on the language button; show it only after keyboard use.
+  document.addEventListener('keydown', function () { d.dataset.kb = '1'; }, true);
+  document.addEventListener('pointerdown', function () { delete d.dataset.kb; }, true);
   var langSel = document.querySelector('.lang-select');
   if (langSel) langSel.addEventListener('change', function () { location.href = langSel.value; });
   // The OS setting "reduce motion" switches the logo effect off. For testing it can be overridden: add ?motion=on (or ?motion=off to undo).

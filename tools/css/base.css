@@ -49,7 +49,7 @@ p{margin:0 0 1.15em}
 .lang-wrap .lang::after{content:"";width:.38rem;height:.38rem;margin-inline-start:.45rem;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-.15rem) rotate(45deg);opacity:.7}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
-.lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
+:root[data-kb] .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
 /* Styled language list where the browser allows it (Chrome/Edge 135+); other browsers keep the native list. */
 @supports (appearance:base-select){
   .lang-select,.lang-select::picker(select){appearance:base-select}

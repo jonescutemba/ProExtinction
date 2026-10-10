@@ -104,7 +104,7 @@ p{margin:0 0 1.15em}
 .lang-wrap .lang::after{content:"";width:.38rem;height:.38rem;margin-inline-start:.45rem;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-.15rem) rotate(45deg);opacity:.7}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
-.lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
+:root[data-kb] .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
 /* Styled language list where the browser allows it (Chrome/Edge 135+); other browsers keep the native list. */
 @supports (appearance:base-select){
   .lang-select,.lang-select::picker(select){appearance:base-select}
@@ -555,7 +555,7 @@ p{margin:0 0 1.15em}
 .lang-wrap .lang::after{content:"";width:.38rem;height:.38rem;margin-inline-start:.45rem;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-.15rem) rotate(45deg);opacity:.7}
 .lang-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font:inherit;font-size:16px;color:var(--text);background:var(--bg)}
 .lang-wrap:hover .lang{border-color:var(--accent)}
-.lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
+:root[data-kb] .lang-wrap:has(.lang-select:focus-visible) .lang{outline:2px solid var(--focus,var(--accent));outline-offset:2px}
 /* Styled language list where the browser allows it (Chrome/Edge 135+); other browsers keep the native list. */
 @supports (appearance:base-select){
   .lang-select,.lang-select::picker(select){appearance:base-select}
@@ -18448,6 +18448,9 @@ d.dataset.theme=(t==='light'||t==='dark')?t:'dark'})()</script>
   }
   window.addEventListener('hashchange', show);
   langSel.addEventListener('change', function () { location.hash = langSel.value; });
+  // Chromium marks a mouse-opened select as :focus-visible, so the ring stayed on the language button; show it only after keyboard use.
+  document.addEventListener('keydown', function () { d.dataset.kb = '1'; }, true);
+  document.addEventListener('pointerdown', function () { delete d.dataset.kb; }, true);
 
 
   // ---- expandable menu below 1000px
