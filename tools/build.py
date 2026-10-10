@@ -725,12 +725,16 @@ PROLIFE_JS = (ROOT / 'tools' / 'prolife.js').read_text(encoding='utf-8')
 SMOKE_JS = (ROOT / 'tools' / 'smoke.js').read_text(encoding='utf-8')   # shake and dark smoke at the end of long pages
 EGGS_JS = (ROOT / 'tools' / 'eggs.js').read_text(encoding='utf-8')     # stars, logo x5, birth counter, console note
 IMG_BASE = '/img/'
+# Picture descriptions for screen readers and image search, per language (content/alt/<lang>.json, English as source).
+# Not for the photos on "Suffering in detail": nobody on the project looks at those, so they stay without a description.
+ALT = {f.stem: json.loads(f.read_text(encoding='utf-8')) for f in (ROOT / 'content' / 'alt').glob('*.json')}
 
 def figure(n, cls='pic', lang='en'):
     if n in diagrams.NUMBERS:   # redrawn as animated SVG in the theme colours
         return f'<figure class="{cls} diagram">{diagrams.diagram(n, lang)}</figure>'
     x = next(i for i in IMAGES if i['n'] == n)
-    img = f'<img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="">'
+    alt = ALT.get(lang, {}).get(str(n), ALT['en'].get(str(n), ''))   # empty for channel avatars beside their name
+    img = f'<img src="{IMG_BASE}{x["file"]}" width="{x["w"]}" height="{x["h"]}" loading="lazy" decoding="async" alt="{esc(alt)}">'
     if x['page'] == 'suffering-in-detail':   # graphic photos: blurred until the reader chooses to see them
         line, btn = VEIL.get(lang, VEIL['en'])
         img = (f'<span class="veil-wrap">{img}<button class="veil" type="button" onclick="this.closest(\'figure\').classList.add(\'shown\')">'
@@ -1113,6 +1117,10 @@ def page_main(lang, slug, kind, href=None):
         else: notes = side + notes
     lede_html = f'<p class="lede">{esc(lede)}</p>' if lede else ''
     soc = next((x for x, _ in PAGES[lang] if EN_OF[lang][x] == 'social-media-channels'), None)
+    if EN_OF[lang][slug] == 'contact':   # every way to reach us right on the contact page, not only in the footer
+        body += (f'<p class="cta-links join"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a>'
+                 f'<a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>'
+                 + ('<!--social-link-->' if soc else ''))
     body = body.replace('<!--social-link-->', f'<p class="go"><a class="btn" href="{href(soc)}">{esc(NAV[lang][soc])} <span aria-hidden="true">&rarr;</span></a></p>' if soc else '')
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
     if EN_OF[lang][slug] == 'cosmic-extinction':   # easter egg: the stars go out while reading (eggs.js)
@@ -1229,7 +1237,7 @@ def home_main(lang, href):
     t = T[lang]
     ki = f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>' if lang in FULL_AI else ''
     eff_pic = {i['where'][1]: i['n'] for i in IMAGES if i['page'] == 'home'}
-    efforts = ''.join(f'<li>{figure(eff_pic[i], "pic eff-pic") if i in eff_pic else ""}<span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
+    efforts = ''.join(f'<li>{figure(eff_pic[i], "pic eff-pic", lang) if i in eff_pic else ""}<span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
     # "Questions?": the pages that answer most questions first, the email only as the last option
     read = [OF_EN[lang][e] for e in ('manifesto', 'basic-faq', 'full-faq', 'principles-of-the-movement', 'suffering-in-detail') if e in OF_EN[lang]]
     read_more = '<ul class="q-links">' + ''.join(f'<li><a class="btn" href="{href(s)}">{esc(NAV[lang][s])}</a></li>' for s in read) + '</ul>'
