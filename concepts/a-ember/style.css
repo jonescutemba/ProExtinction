@@ -224,7 +224,7 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 :is(:lang(zh),:lang(ja),:lang(ko),:lang(th),:lang(hi),:lang(mr),:lang(bn),:lang(te),:lang(ta),:lang(ar),:lang(ur),:lang(fa),:lang(pa),:lang(gu)) :not(.wordmark){letter-spacing:0!important}
 :is(:lang(zh),:lang(ja),:lang(ko),:lang(th),:lang(hi),:lang(mr),:lang(bn),:lang(te),:lang(ta),:lang(ar),:lang(ur),:lang(fa),:lang(pa),:lang(gu)) :is(em,i,blockquote,.lede){font-style:normal}
 /* monospace fonts have no glyphs for these scripts, and the fallback can break Arabic joining: use the body font */
-:is(:lang(zh),:lang(ja),:lang(ko),:lang(th),:lang(hi),:lang(mr),:lang(bn),:lang(te),:lang(ta),:lang(ar),:lang(ur),:lang(fa),:lang(pa),:lang(gu)) :is(.mono,.toc li){font-family:var(--body)}
+:is(:lang(zh),:lang(ja),:lang(ko),:lang(th),:lang(hi),:lang(mr),:lang(bn),:lang(te),:lang(ta),:lang(ar),:lang(ur),:lang(fa),:lang(pa),:lang(gu)) :is(.mono,.toc li,.dg text){font-family:var(--body)}
 :is(:lang(hi),:lang(mr),:lang(bn),:lang(te),:lang(ta),:lang(th),:lang(ar),:lang(ur),:lang(fa),:lang(pa),:lang(gu)) :is(h1,h2,h3,.faq summary,.mission blockquote,.sitenav a,.btn){line-height:1.4}
 :lang(ur) :is(h1,h2,h3,.faq summary,.mission blockquote){line-height:1.6}
 :is(:lang(zh),:lang(ja),:lang(ko)) :is(h1,h2,h3,.faq summary,.mission blockquote){line-height:1.3}

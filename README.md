@@ -10,6 +10,7 @@ Zwei Designkonzepte (A Ember, B Poster; C Ring wurde verworfen) für die Seite, 
 | `concepts/index.html` | Vorläufer: die Konzepte als getrennte Mehrseiten-Prototypen |
 | `brand/` | je Konzept ein Brand Kit (Tokens, `BRAND.md`, Referenzseiten) |
 | `content/` | Text als JSON pro Sprache (`en/ de/ pl/ es/ it/`): Originaltext der jeweiligen Sprachseite plus KI-Übersetzungen der fehlenden Seiten (welche das sind, steht in `SITE` in `tools/build.py`) |
+| `content/diagrams/` | Texte der zwei Manifest-Grafiken (Kreislauf des Leidens, Grausames Design mit allen Beispielen) pro Sprache, eine Zeile pro Text, Felder mit `|` getrennt; `en.txt` ist die Vorlage (`tools/diagrams.py`, `tools/dg.js`) |
 | `raw/` | Rohtext der Google-Sites-Seiten PL/ES/IT (`tools/scrape.py`, dann `tools/parse_raw.py`) |
 | `tools/` | Generator: `build.py` (Seiten), `kit.py` (Kits), `blocks.py`, `parse.py`, CSS-Quellen |
 | `DECISIONS.md` | was entschieden und was offen ist |
