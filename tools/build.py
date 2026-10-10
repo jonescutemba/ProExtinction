@@ -9,14 +9,15 @@ OUT = ROOT / 'concepts'
 esc = html.escape
 
 LANGS = ['en', 'de', 'pl', 'es', 'it', 'fr', 'pt', 'ru', 'zh', 'hi', 'ar', 'bn', 'ur', 'id',
-         'ja', 'tr', 'vi', 'ko', 'fa', 'mr', 'te', 'ta', 'sw', 'th']   # English is the source; other languages fill gaps with AI translations
+         'ja', 'tr', 'vi', 'ko', 'fa', 'mr', 'te', 'ta', 'sw', 'th', 'nl', 'uk', 'tl', 'pa', 'gu']   # English is the source; other languages fill gaps with AI translations
 FULL_AI = {'fr', 'pt', 'ru', 'zh', 'hi', 'ar', 'bn', 'ur', 'id',
-           'ja', 'tr', 'vi', 'ko', 'fa', 'mr', 'te', 'ta', 'sw', 'th'}   # no original site: every page is AI-translated, marked once in the language picker
+           'ja', 'tr', 'vi', 'ko', 'fa', 'mr', 'te', 'ta', 'sw', 'th', 'nl', 'uk', 'tl', 'pa', 'gu'}   # no original site: every page is AI-translated, marked once in the language picker
 LANG_NAME = {'en': 'English', 'de': 'Deutsch', 'pl': 'Polski', 'es': 'Español', 'it': 'Italiano',
              'fr': 'Français', 'pt': 'Português', 'ru': 'Русский', 'zh': '中文', 'hi': 'हिन्दी',
              'ar': 'العربية', 'bn': 'বাংলা', 'ur': 'اردو', 'id': 'Bahasa Indonesia',
              'ja': '日本語', 'tr': 'Türkçe', 'vi': 'Tiếng Việt', 'ko': '한국어', 'fa': 'فارسی',
-             'mr': 'मराठी', 'te': 'తెలుగు', 'ta': 'தமிழ்', 'sw': 'Kiswahili', 'th': 'ไทย'}
+             'mr': 'मराठी', 'te': 'తెలుగు', 'ta': 'தமிழ்', 'sw': 'Kiswahili', 'th': 'ไทย',
+             'nl': 'Nederlands', 'uk': 'Українська', 'tl': 'Filipino', 'pa': 'ਪੰਜਾਬੀ', 'gu': 'ગુજરાતી'}
 RTL = {'ar', 'ur', 'fa'}   # written right to left: pages get dir="rtl" and the CSS mirrors
 DIR = lambda l: 'rtl' if l in RTL else 'ltr'
 KINDS = {'home': 'home', 'basic-faq': 'faq', 'full-faq': 'faq'}  # by English slug, default 'doc'
@@ -113,6 +114,16 @@ AI_MENU = {
         'Mateso kwa undani', 'Kutoweka kwa ulimwengu', 'Historia', 'Jiunge nasi', 'Mitandao ya kijamii', 'Mawasiliano', 'Changia'],
  'th': ['หน้าแรก', 'แถลงการณ์', 'FAQ พื้นฐาน', 'FAQ ฉบับเต็ม', 'วิพากษ์อุดมการณ์ pro-life', 'หลักการของขบวนการ',
         'ความทุกข์ทรมานโดยละเอียด', 'การสูญพันธุ์ระดับจักรวาล', 'ประวัติ', 'เข้าร่วมกับเรา', 'โซเชียลมีเดีย', 'ติดต่อ', 'บริจาค'],
+ 'nl': ['Home', 'Manifest', 'Basis-FAQ', 'Volledige FAQ', 'Kritiek op pro-life-ideologieën', 'Principes van de beweging',
+        'Lijden in detail', 'Kosmische uitsterving', 'Geschiedenis', 'Doe mee', 'Sociale media', 'Contact', 'Doneren'],
+ 'uk': ['Головна', 'Маніфест', 'Основні запитання', 'Усі запитання', 'Критика пролайф-ідеологій', 'Принципи руху',
+        'Страждання докладно', 'Космічне вимирання', 'Історія', 'Приєднуйтеся', 'Соцмережі', 'Контакти', 'Підтримати'],
+ 'tl': ['Home', 'Manifesto', 'Batayang FAQ', 'Buong FAQ', 'Kritika sa mga pro-life na ideolohiya', 'Mga prinsipyo ng kilusan',
+        'Ang pagdurusa nang detalyado', 'Kosmikong extinction', 'Kasaysayan', 'Sumali sa amin', 'Social media', 'Makipag-ugnayan', 'Mag-donate'],
+ 'pa': ['ਮੁੱਖ ਪੰਨਾ', 'ਮੈਨੀਫ਼ੈਸਟੋ', 'ਮੁੱਢਲੇ ਸਵਾਲ', 'ਸਾਰੇ ਸਵਾਲ', 'ਪ੍ਰੋ-ਲਾਈਫ਼ ਵਿਚਾਰਧਾਰਾਵਾਂ ਦੀ ਆਲੋਚਨਾ', 'ਲਹਿਰ ਦੇ ਸਿਧਾਂਤ',
+        'ਦੁੱਖ ਵਿਸਥਾਰ ਵਿੱਚ', 'ਬ੍ਰਹਿਮੰਡੀ ਵਿਲੁਪਤੀ', 'ਇਤਿਹਾਸ', 'ਸਾਡੇ ਨਾਲ ਜੁੜੋ', 'ਸੋਸ਼ਲ ਮੀਡੀਆ', 'ਸੰਪਰਕ', 'ਦਾਨ ਕਰੋ'],
+ 'gu': ['મુખ્ય પાનું', 'મેનિફેસ્ટો', 'મૂળભૂત પ્રશ્નો', 'બધા પ્રશ્નો', 'પ્રો-લાઇફ વિચારધારાઓની ટીકા', 'આંદોલનના સિદ્ધાંતો',
+        'દુઃખ વિગતવાર', 'બ્રહ્માંડીય વિલુપ્તિ', 'ઇતિહાસ', 'અમારી સાથે જોડાઓ', 'સોશિયલ મીડિયા', 'સંપર્ક', 'દાન કરો'],
 }
 for _l, _labels in AI_MENU.items():
     SITE[_l] = [(s, s, lab, None) for (s, _, _, _), lab in zip(SITE['en'], _labels)]
@@ -449,6 +460,71 @@ T.update({
    'ตั้งอยู่บนการกระทำและการเคลื่อนไหวที่มีการจัดตั้งเท่านั้น ไม่คร่ำครวญโดยแลกกับเหยื่อ',
    'มีเหตุผล เห็นอกเห็นใจ ไม่เชื่อในพระเจ้า มีตรรกะ และยุติธรรมอย่างสมบูรณ์'],
   foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'nl': dict(full_faq='Lees de volledige FAQ', menu='Menu', skip='Naar de inhoud', lang='Taal', theme='Licht/donker wisselen',
+  tagline='Together, we end suffering.', sub='Een organisatie die zich inzet om gedwongen bestaan en lijden te beëindigen',
+  cta1='Doe mee', cta2='Lees het manifest', mission='Onze missie',
+  mission_text='Zoveel lijden voorkomen als fysiek mogelijk is, zonder compromissen.',
+  effort='Inzet', questions='Vragen?', questions_text='Schrijf naar info@proextinction.com voor meer informatie over het project',
+  action='Kom in actie', toc='Op deze pagina',
+  ki='Machinevertaling uit het Engels (AI).',
+  ki_tag='AI', back='Concepten', back_title='Terug naar het conceptoverzicht', progress='Leesvoortgang', home_link='Pro Extinction – home',
+  efforts=['De beweging laten groeien, zodat het voorkomen van miljarden jaren lijden mogelijk wordt.',
+   'Universele hulp zonder discriminatie aan zoveel slachtoffers als fysiek mogelijk is. Aan dieren, aan zoveel mogelijk buitenaards leven en aan mensen.',
+   'Alleen gebaseerd op georganiseerde actie en activisme. Geen geklaag ten koste van de slachtoffers.',
+   'Volledig rationeel, empathisch, atheïstisch, logisch en rechtvaardig.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'uk': dict(full_faq='Читати всі запитання', menu='Меню', skip='Перейти до змісту', lang='Мова', theme='Перемкнути світлу/темну тему',
+  tagline='Together, we end suffering.', sub='Організація, що прагне покласти край вимушеному існуванню і стражданням',
+  cta1='Приєднуйтеся', cta2='Читати маніфест', mission='Наша місія',
+  mission_text='Запобігти стількам стражданням, скільки фізично можливо, без компромісів.',
+  effort='Зусилля', questions='Є запитання?', questions_text='Пишіть на info@proextinction.com, щоб дізнатися більше про проєкт',
+  action='Дійте', toc='На цій сторінці',
+  ki='Машинний переклад з англійської (AI).',
+  ki_tag='AI', back='Концепти', back_title='Назад до огляду концептів', progress='Прогрес читання', home_link='Pro Extinction – головна',
+  efforts=['Розвивати рух, щоб стало можливим запобігти мільярдам років страждань.',
+   'Всесвітня допомога без дискримінації якомога більшій кількості жертв, скільки фізично можливо. Тваринам, якомога більшій частині позаземного життя і людям.',
+   'Лише на основі організованих дій і активізму. Жодних нарікань за рахунок жертв.',
+   'Повністю раціонально, емпатично, атеїстично, логічно і справедливо.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'tl': dict(full_faq='Basahin ang buong FAQ', menu='Menu', skip='Lumaktaw sa nilalaman', lang='Wika', theme='Palitan ang maliwanag/madilim',
+  tagline='Together, we end suffering.', sub='Isang organisasyong nakatuon sa pagwawakas ng sapilitang pag-iral at pagdurusa',
+  cta1='Sumali sa amin', cta2='Basahin ang manifesto', mission='Ang aming misyon',
+  mission_text='Pigilan ang pinakamaraming pagdurusa hangga\'t pisikal na posible, nang walang kompromiso.',
+  effort='Pagsisikap', questions='May tanong?', questions_text='Sumulat sa info@proextinction.com para malaman pa ang tungkol sa proyekto',
+  action='Kumilos', toc='Sa pahinang ito',
+  ki='Machine translation mula sa Ingles (AI).',
+  ki_tag='AI', back='Mga konsepto', back_title='Bumalik sa listahan ng mga konsepto', progress='Pag-usad ng pagbasa', home_link='Pro Extinction – home',
+  efforts=['Palakihin ang kilusan para maging posible ang pagpigil sa bilyun-bilyong taon ng pagdurusa.',
+   'Pandaigdigang tulong nang walang diskriminasyon sa pinakamaraming biktima hangga\'t pisikal na posible. Sa mga hayop, sa pinakamaraming buhay sa ibang planeta hangga\'t maaari, at sa mga tao.',
+   'Nakabatay lang sa organisadong aksyon at aktibismo. Walang pagrereklamo na ang mga biktima ang nagbabayad.',
+   'Ganap na makatwiran, may empatiya, ateista, lohikal at makatarungan.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'pa': dict(full_faq='ਸਾਰੇ ਸਵਾਲ ਪੜ੍ਹੋ', menu='ਮੀਨੂ', skip='ਸਮੱਗਰੀ ਵੱਲ ਜਾਓ', lang='ਭਾਸ਼ਾ', theme='ਹਲਕਾ/ਗੂੜ੍ਹਾ ਮੋਡ ਬਦਲੋ',
+  tagline='Together, we end suffering.', sub='ਜ਼ਬਰਦਸਤੀ ਹੋਂਦ ਅਤੇ ਦੁੱਖ ਨੂੰ ਖ਼ਤਮ ਕਰਨ ਲਈ ਸਮਰਪਿਤ ਇੱਕ ਸੰਸਥਾ',
+  cta1='ਸਾਡੇ ਨਾਲ ਜੁੜੋ', cta2='ਮੈਨੀਫ਼ੈਸਟੋ ਪੜ੍ਹੋ', mission='ਸਾਡਾ ਮਿਸ਼ਨ',
+  mission_text='ਜਿੰਨਾ ਸਰੀਰਕ ਤੌਰ \'ਤੇ ਸੰਭਵ ਹੋਵੇ ਓਨਾ ਦੁੱਖ ਰੋਕਣਾ, ਬਿਨਾਂ ਕਿਸੇ ਸਮਝੌਤੇ ਦੇ।',
+  effort='ਯਤਨ', questions='ਕੋਈ ਸਵਾਲ?', questions_text='ਪ੍ਰੋਜੈਕਟ ਬਾਰੇ ਹੋਰ ਜਾਣਨ ਲਈ info@proextinction.com \'ਤੇ ਲਿਖੋ',
+  action='ਕਦਮ ਚੁੱਕੋ', toc='ਇਸ ਪੰਨੇ \'ਤੇ',
+  ki='ਅੰਗਰੇਜ਼ੀ ਤੋਂ ਮਸ਼ੀਨੀ ਅਨੁਵਾਦ (AI)।',
+  ki_tag='AI', back='ਸੰਕਲਪ', back_title='ਸੰਕਲਪਾਂ ਦੀ ਝਲਕ \'ਤੇ ਵਾਪਸ ਜਾਓ', progress='ਪੜ੍ਹਨ ਦੀ ਤਰੱਕੀ', home_link='Pro Extinction – ਮੁੱਖ ਪੰਨਾ',
+  efforts=['ਲਹਿਰ ਨੂੰ ਵਧਾਉਣਾ ਤਾਂ ਜੋ ਅਰਬਾਂ ਸਾਲਾਂ ਦੇ ਦੁੱਖ ਨੂੰ ਰੋਕਣਾ ਸੰਭਵ ਹੋ ਸਕੇ।',
+   'ਜਿੰਨੇ ਸਰੀਰਕ ਤੌਰ \'ਤੇ ਸੰਭਵ ਹੋਣ ਓਨੇ ਪੀੜਤਾਂ ਲਈ ਬਿਨਾਂ ਵਿਤਕਰੇ ਦੇ ਸਰਬ-ਵਿਆਪੀ ਮਦਦ। ਜਾਨਵਰਾਂ ਲਈ, ਜਿੰਨਾ ਹੋ ਸਕੇ ਬਾਹਰੀ ਗ੍ਰਹਿਆਂ ਦੇ ਜੀਵਨ ਲਈ, ਅਤੇ ਮਨੁੱਖਾਂ ਲਈ।',
+   'ਸਿਰਫ਼ ਸੰਗਠਿਤ ਕਾਰਵਾਈ ਅਤੇ ਸਰਗਰਮੀ \'ਤੇ ਆਧਾਰਿਤ। ਪੀੜਤਾਂ ਦੀ ਕੀਮਤ \'ਤੇ ਕੋਈ ਸ਼ਿਕਾਇਤਬਾਜ਼ੀ ਨਹੀਂ।',
+   'ਪੂਰੀ ਤਰ੍ਹਾਂ ਤਰਕਸ਼ੀਲ, ਹਮਦਰਦ, ਨਾਸਤਿਕ, ਤਾਰਕਿਕ ਅਤੇ ਨਿਆਂਪੂਰਨ।'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
+ 'gu': dict(full_faq='બધા પ્રશ્નો વાંચો', menu='મેનુ', skip='સામગ્રી પર જાઓ', lang='ભાષા', theme='લાઇટ/ડાર્ક મોડ બદલો',
+  tagline='Together, we end suffering.', sub='બળજબરીથી અસ્તિત્વ અને દુઃખનો અંત લાવવા માટે સમર્પિત એક સંસ્થા',
+  cta1='અમારી સાથે જોડાઓ', cta2='મેનિફેસ્ટો વાંચો', mission='અમારું મિશન',
+  mission_text='શારીરિક રીતે શક્ય હોય તેટલું દુઃખ અટકાવવું, કોઈ સમાધાન વિના.',
+  effort='પ્રયાસ', questions='કોઈ પ્રશ્ન?', questions_text='પ્રોજેક્ટ વિશે વધુ જાણવા info@proextinction.com પર લખો',
+  action='પગલું ભરો', toc='આ પાના પર',
+  ki='અંગ્રેજીમાંથી મશીન અનુવાદ (AI).',
+  ki_tag='AI', back='કન્સેપ્ટ', back_title='કન્સેપ્ટની ઝાંખી પર પાછા જાઓ', progress='વાંચનની પ્રગતિ', home_link='Pro Extinction – મુખ્ય પાનું',
+  efforts=['આંદોલનને વધારવું જેથી અબજો વર્ષોના દુઃખને અટકાવવું શક્ય બને.',
+   'શારીરિક રીતે શક્ય હોય તેટલા પીડિતોને ભેદભાવ વિના સાર્વત્રિક મદદ. પ્રાણીઓને, શક્ય તેટલા પરગ્રહી જીવનને અને માણસોને.',
+   'ફક્ત સંગઠિત કાર્યવાહી અને સક્રિયતા પર આધારિત. પીડિતોના ભોગે કોઈ ફરિયાદ નહીં.',
+   'સંપૂર્ણપણે તાર્કિક, સહાનુભૂતિશીલ, નાસ્તિક, તર્કસંગત અને ન્યાયી.'],
+  foot='Pro Extinction · Global', page_title='Pro Extinction'),
 })
 # Warning over blurred pictures on the suffering page: line, button.
 VEIL = {
@@ -476,6 +552,11 @@ VEIL = {
  'ta': ('இந்தப் படத்தில் கடுமையான துன்பம் காட்டப்படுகிறது', 'படத்தைக் காட்டு'),
  'sw': ('Picha hii inaonyesha mateso makali', 'Onyesha picha'),
  'th': ('ภาพนี้แสดงความทุกข์ทรมานอย่างรุนแรง', 'แสดงภาพ'),
+ 'nl': ('Afbeelding toont extreem lijden', 'Afbeelding tonen'),
+ 'uk': ('Зображення показує надзвичайні страждання', 'Показати зображення'),
+ 'tl': ('Ipinapakita ng larawan ang matinding pagdurusa', 'Ipakita ang larawan'),
+ 'pa': ('ਇਸ ਤਸਵੀਰ ਵਿੱਚ ਭਿਆਨਕ ਦੁੱਖ ਦਿਖਾਇਆ ਗਿਆ ਹੈ', 'ਤਸਵੀਰ ਦਿਖਾਓ'),
+ 'gu': ('આ ચિત્રમાં ભયાનક દુઃખ દર્શાવ્યું છે', 'ચિત્ર બતાવો'),
 }
 # Donate page: the IBAN and Ko-fi lines become two cards. Labels: card title, copy button, after copying, Ko-fi button.
 IBAN, KOFI = 'DE80 1001 0178 0592 6010 31', 'https://ko-fi.com/abolishsuffering'
@@ -504,6 +585,11 @@ GIVE = {
  'ta': ('வங்கிப் பரிமாற்றம்', 'IBAN-ஐ நகலெடு', 'நகலெடுக்கப்பட்டது', 'Ko-fi-இல் நன்கொடை அளி'),
  'sw': ('Uhamisho wa benki', 'Nakili IBAN', 'Imenakiliwa', 'Changia kupitia Ko-fi'),
  'th': ('โอนผ่านธนาคาร', 'คัดลอก IBAN', 'คัดลอกแล้ว', 'บริจาคผ่าน Ko-fi'),
+ 'nl': ('Bankoverschrijving', 'IBAN kopiëren', 'Gekopieerd', 'Doneer via Ko-fi'),
+ 'uk': ('Банківський переказ', 'Скопіювати IBAN', 'Скопійовано', 'Підтримати через Ko-fi'),
+ 'tl': ('Bank transfer', 'Kopyahin ang IBAN', 'Nakopya na', 'Mag-donate sa Ko-fi'),
+ 'pa': ('ਬੈਂਕ ਟ੍ਰਾਂਸਫ਼ਰ', 'IBAN ਕਾਪੀ ਕਰੋ', 'ਕਾਪੀ ਹੋ ਗਿਆ', 'Ko-fi ਰਾਹੀਂ ਦਾਨ ਕਰੋ'),
+ 'gu': ('બેંક ટ્રાન્સફર', 'IBAN કૉપિ કરો', 'કૉપિ થઈ ગયું', 'Ko-fi દ્વારા દાન કરો'),
 }
 
 def give_box(lang):
@@ -555,6 +641,11 @@ TOP = {
  'ta': 'மேலே செல்',
  'sw': 'Rudi juu',
  'th': 'กลับขึ้นด้านบน',
+ 'nl': 'Naar boven',
+ 'uk': 'Нагору',
+ 'tl': 'Bumalik sa itaas',
+ 'pa': 'ਉੱਪਰ ਜਾਓ',
+ 'gu': 'ઉપર જાઓ',
 }
 def top_button(lang):
     return (f'<button class="to-top" type="button" aria-label="{esc(TOP[lang])}" title="{esc(TOP[lang])}" onclick="window.scrollTo(0,0)">'
@@ -586,6 +677,11 @@ FAQ_FIND = {
  'ta': ('கேள்விகளில் தேடு', '{t} இல் {n} கேள்விகள்', 'உங்கள் தேடலுக்குப் பொருந்தும் கேள்வி இல்லை.', 'உங்கள் கேள்வி பட்டியலில் இல்லையா? {mail} மூலம் எங்களைத் தொடர்புகொள்ளுங்கள் அல்லது {tiktok} இல் எங்களுடன் விவாதியுங்கள்.', 'மின்னஞ்சல்'),
  'sw': ('Tafuta maswali', 'Maswali {n} kati ya {t}', 'Hakuna swali linalolingana na utafutaji wako.', 'Swali lako halipo? Wasiliana nasi kwa {mail} au jadiliana nasi kwenye {tiktok}.', 'barua pepe'),
  'th': ('ค้นหาคำถาม', '{n} จาก {t} คำถาม', 'ไม่มีคำถามที่ตรงกับการค้นหา', 'ไม่พบคำถามของคุณ? ติดต่อเราทาง{mail} หรือมาโต้แย้งกับเราบน {tiktok}', 'อีเมล'),
+ 'nl': ('Vragen doorzoeken', '{n} van {t} vragen', 'Geen vraag past bij je zoekopdracht.', 'Staat je vraag er niet bij? Neem contact op via {mail} of ga met ons in debat op {tiktok}.', 'e-mail'),
+ 'uk': ('Пошук запитань', '{n} з {t} запитань', 'Жодне запитання не відповідає пошуку.', 'Вашого запитання немає в списку? Напишіть нам на {mail} або подискутуйте з нами в {tiktok}.', 'пошту'),
+ 'tl': ('Maghanap ng tanong', '{n} sa {t} na tanong', 'Walang tanong na tugma sa hinanap mo.', 'Wala sa listahan ang tanong mo? Makipag-ugnayan sa amin sa {mail} o makipagdebate sa amin sa {tiktok}.', 'email'),
+ 'pa': ('ਸਵਾਲ ਖੋਜੋ', '{t} ਵਿੱਚੋਂ {n} ਸਵਾਲ', 'ਤੁਹਾਡੀ ਖੋਜ ਨਾਲ ਮੇਲ ਖਾਂਦਾ ਕੋਈ ਸਵਾਲ ਨਹੀਂ।', 'ਤੁਹਾਡਾ ਸਵਾਲ ਸੂਚੀ ਵਿੱਚ ਨਹੀਂ? ਸਾਨੂੰ {mail} ਕਰੋ ਜਾਂ {tiktok} \'ਤੇ ਸਾਡੇ ਨਾਲ ਬਹਿਸ ਕਰੋ।', 'ਈਮੇਲ'),
+ 'gu': ('પ્રશ્નો શોધો', '{t}માંથી {n} પ્રશ્નો', 'તમારી શોધ સાથે મેળ ખાતો કોઈ પ્રશ્ન નથી.', 'તમારો પ્રશ્ન યાદીમાં નથી? અમને {mail} કરો અથવા {tiktok} પર અમારી સાથે ચર્ચા કરો.', 'ઈમેલ'),
 }
 FAQ_JS = (ROOT / 'tools' / 'faqsearch.js').read_text(encoding='utf-8')
 

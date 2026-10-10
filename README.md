@@ -1,11 +1,11 @@
 # Pro Extinction · Website-Redesign (Konzeptphase)
 
-Zwei Designkonzepte (A Ember, B Poster; C Ring wurde verworfen) für die Seite, in 24 Sprachen (EN, DE, PL, ES, IT sowie die komplett KI-übersetzten FR, PT, RU, ZH, HI, AR, BN, UR, ID, JA, TR, VI, KO, FA, MR, TE, TA, SW, TH; Arabisch, Urdu und Persisch von rechts nach links), Hell und Dunkel.
+Zwei Designkonzepte (A Ember, B Poster; C Ring wurde verworfen) für die Seite, in 29 Sprachen (EN, DE, PL, ES, IT sowie die komplett KI-übersetzten FR, PT, RU, ZH, HI, AR, BN, UR, ID, JA, TR, VI, KO, FA, MR, TE, TA, SW, TH, NL, UK, TL, PA, GU; Arabisch, Urdu und Persisch von rechts nach links), Hell und Dunkel.
 **Die Konzeptwahl steht noch aus:** `DECISIONS.md`.
 
 | Pfad | Inhalt |
 |---|---|
-| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** Design B, 24 Sprachen, Hell/Dunkel (Design A versteckt: viermal schnell auf „Global“ in der Fußzeile klicken). Schriften lokal in `fonts/` |
+| **`presentation/`** | **Eine einzige Seite für Kundentermine (live-fähig):** Design B, 29 Sprachen, Hell/Dunkel (Design A versteckt: viermal schnell auf „Global“ in der Fußzeile klicken). Schriften lokal in `fonts/` |
 | `DEPLOY.md`, `vercel.json` | Livegang auf Vercel, Checkliste |
 | `concepts/index.html` | Vorläufer: die Konzepte als getrennte Mehrseiten-Prototypen |
 | `brand/` | je Konzept ein Brand Kit (Tokens, `BRAND.md`, Referenzseiten) |
