@@ -133,7 +133,7 @@ ORIGINAL = {'en': 'https://www.proextinction.com/{}', 'de': 'https://sites.googl
             'it': 'https://sites.google.com/view/proextinction-website-italian/{}'}
 AI = {l: {s for s, _, _, o in SITE[l] if o is None} for l in LANGS}
 PAGES = {l: [(s, KINDS.get(e, 'doc')) for s, e, _, _ in SITE[l]] for l in LANGS}
-NAV = {l: {s: lab + (AI_MARK if s in AI[l] and l not in FULL_AI else '') for s, _, lab, _ in SITE[l]} for l in LANGS}
+NAV = {l: {s: lab for s, _, lab, _ in SITE[l]} for l in LANGS}   # no (AI) in the menu: the note on the page says it
 CODE = {l: l.upper() + (AI_MARK if l in FULL_AI else '') for l in LANGS}   # picker label, e.g. 'RU (AI)'
 EN_OF = {l: {s: e for s, e, _, _ in SITE[l]} for l in LANGS}          # slug -> English slug
 OF_EN = {l: {e: s for s, e, _, _ in SITE[l] if e} for l in LANGS}     # English slug -> slug
@@ -1146,7 +1146,7 @@ h1{font:600 clamp(2rem,6vw,3.4rem)/1 "Arial Narrow",Impact,sans-serif;text-trans
 p{color:var(--muted)}li{border-top:1px solid var(--line);padding:1.2rem 0;list-style:none}ul{padding:0;margin:2rem 0}
 h2{font:600 1.5rem "Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0 0 .3rem}a{color:var(--accent);margin-right:1.2rem}</style></head>
 <body><h1>Pro Extinction – design concepts</h1>
-<p>Two directions for the redesign. All have a light/dark switch (button top right) and 24 languages. Pages and languages marked (AI) are machine-translated from English.</p>
+<p>Two directions for the redesign. All have a light/dark switch (button top right) and 24 languages. Languages marked (AI) are machine-translated from English; machine-translated pages carry a note.</p>
 <ul>
 <li><h2>A · Ember</h2><p>Angular, editorial, asymmetric. Red/black/silver, serif body text.</p>%s</li>
 <li><h2>B · Poster</h2><p>Angular, centred, loud. Red/black/silver, sans-serif body text.</p>%s</li>

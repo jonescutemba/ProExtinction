@@ -209,7 +209,7 @@ Nur Website, responsiv. Keine Thumbnails, Slides oder PDFs in dieser Runde.
 ## 8. Text
 Deutsch mit „du", sachlich und direkt. Der Originaltext der Bewegung bleibt wörtlich
 (nur Tippfehler korrigiert). Neu geschrieben werden nur Buttons, Zwischenüberschriften und
-Hinweise. Fehlende Seiten in DE, PL, ES und IT: KI-Übersetzung aus dem Englischen, **sichtbar gekennzeichnet** („(AI)" im Menütitel plus Hinweis auf der Seite). FR, PT, RU, ZH und HI sind komplett KI-übersetzt und in der Sprachauswahl als „(AI)“ markiert, plus Hinweis auf jeder Seite.
+Hinweise. Fehlende Seiten in DE, PL, ES und IT: KI-Übersetzung aus dem Englischen, **sichtbar gekennzeichnet** (Hinweis auf der Seite, kein „(AI)“ im Menü). FR, PT, RU, ZH und HI sind komplett KI-übersetzt und in der Sprachauswahl als „(AI)“ markiert, plus Hinweis auf jeder Seite.
 Gut: „Wir wollen so viel Leid wie möglich beenden, ohne Kompromisse."
 Schlecht: „Gemeinsam für eine bessere Welt voller Hoffnung!"
 Verboten in neu geschriebenen Texten: „revolutionär", „bahnbrechend", „Reise", „Community"
