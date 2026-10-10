@@ -8,11 +8,12 @@ def is_heading(l):
 def is_list_line(l):
     return l.startswith(('*', '–', '- ', '•', '-')) and len(l) > 2
 
-def blocks_of(lines, like=None, join=(), drop=(), pics=None, heads=()):
+def blocks_of(lines, like=None, join=(), drop=(), pics=None, kinds=None):
     """Typed blocks. like: the English lines a translation mirrors 1:1; the structure is then read from them.
     join: indices (into lines) of join buttons; each run of them becomes one ('join',) block (WhatsApp + Discord).
     pics: {line index: picture number}; a ('pic', n) block follows the block of that line.
-    heads: indices (into lines) of chapter titles set by hand; shown as chapters, without a trailing colon."""
+    kinds: {index (into lines): 'h' | 'h3' | 'p'} set by hand; titles lose a trailing colon."""
+    kinds = kinds or {}
     out = []
     btn = {'Discord', 'Whatsapp', 'WhatsApp'}
     keep = lambda l: l.strip() and not l.startswith('Proextinction Website -')
@@ -23,8 +24,9 @@ def blocks_of(lines, like=None, join=(), drop=(), pics=None, heads=()):
     for n, (i, text, l) in enumerate(pairs):
         nxt = clean[n + 1] if n + 1 < len(clean) else ''
         if n and pairs[n - 1][0] in pics: out.append(('pic', pics[pairs[n - 1][0]]))
-        if i in heads:
-            out.append(('h', text.rstrip(':：').rstrip())); continue
+        if i in kinds:
+            k = kinds[i]
+            out.append((k, text.rstrip(':：').rstrip() if k != 'p' else text)); continue
         if l in btn or i in join:
             if not (out and out[-1][0] == 'join'): out.append(('join',))
             continue
@@ -40,11 +42,13 @@ def blocks_of(lines, like=None, join=(), drop=(), pics=None, heads=()):
     if pairs and pairs[-1][0] in pics: out.append(('pic', pics[pairs[-1][0]]))
     return out
 
+HEADS = ('h', 'h3')   # chapters and sub-chapters both anchor pictures
+
 def pic_anchors(blocks):
     """Where pictures sit, as (heading ordinal, blocks after that heading, picture number)."""
     h, off, out = -1, 0, []
     for b in blocks:
-        if b[0] == 'h': h += 1; off = 0
+        if b[0] in HEADS: h += 1; off = 0
         elif b[0] == 'pic': out.append((h, off, b[1]))
         else: off += 1
     return out
@@ -52,14 +56,14 @@ def pic_anchors(blocks):
 def place_pics(blocks, anchors, en_heads):
     """Put pictures into a page with the same chapters but its own paragraphs: same chapter, same paragraph position
     (or the chapter's end if the chapter is shorter). A page with extra chapters is aligned from its end."""
-    shift = max(0, sum(b[0] == 'h' for b in blocks) - en_heads)
+    shift = max(0, sum(b[0] in HEADS for b in blocks) - en_heads)
     out, h, off = [], -1, 0
     todo = [(a[0] + shift if a[0] >= 0 else a[0], a[1], a[2]) for a in anchors]
     def flush(final=False):
         for a in [a for a in todo if a[0] == h and (final or a[1] <= off)]:
             out.append(('pic', a[2])); todo.remove(a)
     for b in blocks:
-        if b[0] == 'h': flush(True); h += 1; off = 0; out.append(b); flush(); continue
+        if b[0] in HEADS: flush(True); h += 1; off = 0; out.append(b); flush(); continue
         out.append(b); off += 1; flush()
     flush(True)
     out += [('pic', a[2]) for a in todo]

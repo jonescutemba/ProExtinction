@@ -698,10 +698,20 @@ icon = lambda n: f'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusa
 # (lang, slug): line indices. DROP: PL line 9 is a "join" link right above the same heading and its buttons.
 JOIN = {('es', 'equipo'): {16}, ('pl', 'z-nami'): {12}}
 DROP = {('pl', 'z-nami'): {9}}
-# Chapter titles set by hand (line index in the page file). ('en', slug) also covers the AI translations of that page.
+# Page structure set by hand (line index in the page file): 'h' chapter, 'h3' sub-chapter, 'p' plain paragraph.
+# ('en', slug) also covers the AI translations of that page.
+def _kinds(h=(), h3=(), p=()): return {**{i: 'h' for i in h}, **{i: 'h3' for i in h3}, **{i: 'p' for i in p}}
 # Principles: Afterlife/Rebirth, Karma and Spirituality are chapters of their own, like Materialism.
-HEADS = {('en', 'principles-of-the-movement'): {22, 24, 26}, ('es', 'principios-del-movimiento'): {22, 24, 26},
-         ('it', 'principi-del-movimento'): {22, 24, 26}, ('pl', 'zasady-ruchu'): {23, 25, 27}}
+# Suffering in detail: wild animals, farm animals and humans are the chapters, the forms of suffering their sub-chapters;
+# "Let's start with the biggest group of victims:" only leads into the first chapter.
+_SUF = _kinds(h=(4, 14, 26), h3=(6, 8, 10, 12, 16, 18, 20, 22, 24, 28, 30, 32, 34, 36), p=(3,))
+KINDS_BY_HAND = {
+    ('en', 'principles-of-the-movement'): _kinds(h=(22, 24, 26)), ('es', 'principios-del-movimiento'): _kinds(h=(22, 24, 26)),
+    ('it', 'principi-del-movimento'): _kinds(h=(22, 24, 26)), ('pl', 'zasady-ruchu'): _kinds(h=(23, 25, 27)),
+    ('en', 'suffering-in-detail'): _SUF, ('es', 'sufrimiento-en-detalle'): _SUF, ('it', 'la-sofferenza-nei-dettagli'): _SUF,
+    ('de', 'leid-im-detail'): _kinds(h=(4, 14, 26), h3=(6, 8, 10, 12, 16, 18, 20, 22, 24, 29, 31, 33, 35, 37), p=(3,)),
+    ('pl', 'znaczenie-cierpienia'): _kinds(h=(1, 18, 30), h3=(8, 10, 12, 14, 16, 20, 22, 24, 26, 28, 32, 34, 36, 38, 40), p=(5,)),
+}
 
 # Pictures from the English site (content/images.json, files in presentation/img), numbered so unwanted ones can be named.
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
@@ -913,22 +923,23 @@ def doc_body(lang, slug, lines, full_url, like=None):
         body, toc = social_body(lang, lines, used)
         return title, lede, body, toc, truncated
     off, key = len(lines) - len(rest), (lang, OF_EN[lang].get(slug, slug))
-    heads = {i - off for i in HEADS.get(('en', slug) if like else key, ())}
-    bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, heads=heads)
+    kinds = {i - off: k for i, k in KINDS_BY_HAND.get(('en', slug) if like else key, {}).items()}
+    bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, kinds=kinds)
     pics = pics_for(slug)
     if pics:   # anchors from the English page, so original-language pages get the pictures in the same chapter
         en = json.loads((ROOT / 'content' / 'en' / f'{slug}.json').read_text(encoding='utf-8'))
         _, _, en_rest = head_lede(en); eoff = len(en) - len(en_rest)
-        en_bl = blocks_of(en_rest, None, (), (), {i - eoff: n for i, n in pics.items()})
+        en_bl = blocks_of(en_rest, None, (), (), {i - eoff: n for i, n in pics.items()},
+                          {i - eoff: k for i, k in KINDS_BY_HAND.get(('en', slug), {}).items()})
         own = own_pics(slug, rest) if not like else None
-        if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own, heads)
-        else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] == 'h' for b in en_bl))
+        if own is not None: bl = blocks_of(rest, rest_like, {i - off for i in JOIN.get(key, ())}, {i - off for i in DROP.get(key, ())}, own, kinds)
+        else: bl = place_pics(bl, pic_anchors(en_bl), sum(b[0] in ('h', 'h3') for b in en_bl))
     if slug == 'donate': bl = give_blocks(bl, lang)
     if slug == 'history': bl = history_outline(bl)
     if slug == 'cosmic-extinction':
         bl = cosmic_outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     if slug == 'principles-of-the-movement':
-        bl = outline(bl, blocks_of(rest_like, None, (), (), heads=heads) if rest_like else None)
+        bl = outline(bl, blocks_of(rest_like, None, (), (), kinds=kinds) if rest_like else None)
     body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 
