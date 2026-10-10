@@ -16,6 +16,41 @@ TEXT = {
     },
 }
 
+# More "two paths, both end in suffering" examples for diagram 6; a button cycles through them (English only for now).
+# Shape: root, left (choice, end), right (choice, step, end), verdict. Node labels stay short so the boxes fit.
+EXAMPLES = [
+    ('Drought season', ('Herd stays put', 'Dies of thirst'), ('Herd migrates', 'Crocodiles wait', 'Torn apart in river'), 'Both paths end in suffering.'),
+    ('Winter comes', ('Bird stays', 'Freezes to death'), ('Bird migrates', 'Storm over the sea', 'Drowns exhausted'), 'Both paths end in suffering.'),
+    ('Parasitic wasp', ('Wasp finds a host', 'Host eaten from inside'), ('No host found', 'Larvae cannot grow', 'Offspring starve'), 'Both paths end in suffering.'),
+    ('Sea turtle hatching', ('Run to the sea', 'Eaten by birds'), ('Reach the water', 'Sharks and nets', 'Most die young'), 'Both paths end in suffering.'),
+    ('A child is born', ('Born into poverty', 'Hunger and disease'), ('Born into wealth', 'Grows old anyway', 'Illness and death'), 'Every birth ends in death.'),
+    ('Egg industry', ('Chick is female', 'Spent, then killed'), ('Chick is male', 'Useless to industry', 'Shredded on day one'), 'Both paths end in suffering.'),
+    ('Dairy industry', ('Calf is female', 'Milked, then killed'), ('Calf is male', 'Taken from mother', 'Killed for veal'), 'Both paths end in suffering.'),
+    ('Population boom', ('Rabbits multiply', 'Mass starvation'), ('Foxes multiply', 'Rabbits are hunted', 'Then foxes starve'), 'Both paths end in suffering.'),
+    ('Old age', ('Body keeps going', 'Pain and dementia'), ('Body gives up', 'Organs fail', 'Dies in a hospital'), 'Both paths end in suffering.'),
+    ('War breaks out', ('Soldier fights', 'Killed or maimed'), ('Soldier refuses', 'Prison or exile', 'Family is punished'), 'Both paths end in suffering.'),
+    ('The flood comes', ('Flee the flood', 'Lose home and land'), ('Stay and hold on', 'Water keeps rising', 'Drowns with the house'), 'Both paths end in suffering.'),
+    ('Cheetah mother', ('Leaves to hunt', 'Cubs taken by hyenas'), ('Stays with cubs', 'No food comes', 'Cubs starve'), 'Both paths end in suffering.'),
+    ('Spider web', ('Fly is caught', 'Eaten alive slowly'), ('Fly escapes', 'Web stays empty', 'Spider starves'), 'Both paths end in suffering.'),
+    ('Fishing boat', ('Fish is caught', 'Suffocates on deck'), ('Fish escapes', 'Bigger fish waits', 'Eaten alive'), 'Both paths end in suffering.'),
+    ('Chronic pain', ('Live with it', 'Years of agony'), ('Take painkillers', 'Addiction grows', 'Withdrawal or overdose'), 'Both paths end in suffering.'),
+    ('Stray dog', ('Left on the street', 'Hunger and cars'), ('Taken to a shelter', 'Shelter is full', 'Caged for years'), 'Both paths end in suffering.'),
+    ('Love someone', ('You die first', 'They grieve'), ('They die first', 'You stay behind', 'You grieve'), 'Every bond ends in grief.'),
+    ('Wildfire', ('Deer runs', 'Burned in the smoke'), ('Deer hides', 'Fire reaches it', 'Burned alive'), 'Both paths end in suffering.'),
+    ('Pack hierarchy', ('Wolf fights leader', 'Wounded or killed'), ('Wolf submits', 'Eats last', 'Starves in winter'), 'Both paths end in suffering.'),
+    ('Infection spreads', ('Sick deer stays', 'Herd gets infected'), ('Deer is cast out', 'Alone and weak', 'Wolves find it'), 'Both paths end in suffering.'),
+    # a few lighter ones
+    ('Monday morning', ('Get up for work', 'Tired all day'), ('Keep sleeping', 'Boss calls', 'Fired, still tired'), 'Both paths end in suffering.'),
+    ('Last slice of pizza', ('Eat it', 'Stomach ache'), ('Leave it', 'Roommate eats it', 'Eternal regret'), 'Both paths end in suffering.'),
+    ('Phone at 1%', ('Look for a charger', 'Every outlet taken'), ('Keep scrolling', 'Screen goes black', 'Alone with thoughts'), 'Both paths end in suffering.'),
+    ('Group project', ('Do all the work', 'Others get credit'), ('Do nothing', 'Nobody else does', 'Everyone fails'), 'There is no winning.'),
+    ('Hot summer night', ('Open the window', 'Mosquitoes feast'), ('Keep it closed', 'Room is a sauna', 'No sleep at all'), 'Both paths end in suffering.'),
+    ('Software update', ('Install now', 'Everything breaks'), ('Remind me later', 'It asks again', 'Restarts mid-work'), 'Both paths end in suffering.'),
+    ('Gym membership', ('Go to the gym', 'Sore for a week'), ('Stay on the couch', 'Still paying fees', 'Guilt and back pain'), 'Both paths end in suffering.'),
+]
+for _r, _l, _rt, _v in EXAMPLES:
+    assert all(len(x) <= 22 for x in (*_l, *_rt)) and len(_r) <= 28 and len(_v) <= 32 and '—' not in _r + _v, _r
+
 _uid = [0]
 
 def _id(name):
@@ -69,8 +104,16 @@ def tree(t):
             f'{box(320, root_y, t["root"], "node root")}'
             f'<text class="verdict" x="320" y="425">{esc(t["end"])}</text></svg>')
 
+NEW_EXAMPLE = 'Generate new example'
+_JS = open(__file__.rsplit('/', 1)[0] + '/dgexamples.js', encoding='utf-8').read()
+
 def diagram(n, lang='en'):
     t = TEXT.get(lang, TEXT['en']).get(n) or TEXT['en'][n]
-    return (cycle if n == 5 else tree)(t)
+    if n == 5: return cycle(t)
+    import json
+    first = (t['root'], t['left'], t['right'], t['end'])
+    data = esc(json.dumps([first] + EXAMPLES, ensure_ascii=False))
+    return (tree(t) + f'<button class="btn dg-new" type="button" data-examples="{data}">{esc(NEW_EXAMPLE)}</button>'
+            f'<script>{_JS}</script>')
 
 NUMBERS = {5, 6}
