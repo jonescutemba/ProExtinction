@@ -161,7 +161,7 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
 
   function haze() {
     var el = layer('div');
-    el.style.background = 'linear-gradient(to top,' + (dark() ? 'rgba(70,62,60,.55)' : 'rgba(25,20,20,.35)') + ',transparent 70%)';
+    el.style.background = 'linear-gradient(to top,' + (dark() ? 'rgba(70,62,60,.35)' : 'rgba(25,20,20,.22)') + ',transparent 70%)';
     el.style.opacity = 0;
     if (!el.animate) return el.remove();
     el.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 3200, easing: 'ease-in-out' }).onfinish = function () { el.remove(); };
@@ -192,7 +192,7 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
     cv.width = W * dpr; cv.height = H * dpr; g.scale(dpr, dpr);
     // dark smoke: charcoal on the dark theme (a little lighter than the page so it shows), near-black on the light theme
     var pics = sprites(dark() ? '78,70,68' : '28,24,24');
-    var parts = [], total = Math.round(Math.min(220, Math.max(70, W / 9))), spawnFor = 1900, made = 0, t0 = performance.now(), prev = t0;
+    var parts = [], total = Math.round(Math.min(130, Math.max(45, W / 15))), spawnFor = 1900, made = 0, t0 = performance.now(), prev = t0;
     function add() {
       var big = Math.random();
       parts.push({
@@ -200,7 +200,7 @@ if(m!=='light'&&m!=='dark'){m=window.matchMedia&&matchMedia('(prefers-color-sche
         vx: (Math.random() - .5) * 30, vy: -(70 + Math.random() * 110),
         s: 70 + big * 120, grow: 1.6 + Math.random() * 1.6, rot: Math.random() * 6.3, vr: (Math.random() - .5) * .6,
         life: 3600 + Math.random() * 2600, age: 0, seed: Math.random() * 100, pic: pics[(Math.random() * pics.length) | 0],
-        peak: dark() ? .45 + Math.random() * .3 : .55 + Math.random() * .25
+        peak: dark() ? .25 + Math.random() * .17 : .3 + Math.random() * .15
       });
     }
     function frame(now) {
