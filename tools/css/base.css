@@ -127,6 +127,9 @@ html,body{overflow-x:clip}
 .eff-label{margin:.4rem 0 .6rem!important}
 .questions{padding-block:1rem 4rem}
 .questions h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:.8rem}
+.q-links{list-style:none;padding:0;margin:1.4rem 0 2rem;display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center}
+.q-links .btn{min-height:2.6rem;padding:.55rem 1.1rem}
+.q-mail{text-align:center;color:var(--muted)}
 /* documents */
 .doc{padding:clamp(2.5rem,6vw,4.5rem) var(--gutter) 4rem;max-width:var(--wide);margin-inline:auto}
 .doc h1{font-size:clamp(2.4rem,7vw,5rem);max-width:16ch}

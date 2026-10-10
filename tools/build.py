@@ -1095,6 +1095,9 @@ def home_main(lang, href=lambda s: s + '.html'):
     ki = f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>' if lang in FULL_AI else ''
     eff_pic = {i['where'][1]: i['n'] for i in IMAGES if i['page'] == 'home'}
     efforts = ''.join(f'<li>{figure(eff_pic[i], "pic eff-pic") if i in eff_pic else ""}<span class="num mono">{i+1:02d}</span><p class="eff-label mono">{t["effort"]} {i+1}</p><p>{esc(x)}</p></li>' for i, x in enumerate(t['efforts']))
+    # "Questions?": the pages that answer most questions first, the email only as the last option
+    read = [OF_EN[lang][e] for e in ('manifesto', 'basic-faq', 'full-faq', 'principles-of-the-movement', 'suffering-in-detail') if e in OF_EN[lang]]
+    read_more = '<ul class="q-links">' + ''.join(f'<li><a class="btn" href="{href(s)}">{esc(NAV[lang][s])}</a></li>' for s in read) + '</ul>'
     return f'''<section class="hero">
   {HERO_LOGO}
   <h1 class="wordmark">PRO EXTINCTION</h1>
@@ -1104,7 +1107,7 @@ def home_main(lang, href=lambda s: s + '.html'):
 </section>
 <section class="mission"><hr class="slash"><p class="mono kicker">{t["mission"]}</p><blockquote>{esc(t["mission_text"])}</blockquote></section>
 <section class="efforts"><ol>{efforts}</ol></section>
-<section class="questions"><h2>{t["questions"]}</h2><p>{linkify(t["questions_text"])}</p>{ki}</section>'''
+<section class="questions"><h2>{t["questions"]}</h2>{read_more}<p class="q-mail">{linkify(t["questions_text"])}</p>{ki}</section>'''
 
 def _svg_uri(name):
     svg = (OUT / 'assets' / f'{name}.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
