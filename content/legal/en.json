@@ -1,0 +1,50 @@
+{
+ "imprint": {
+  "slug": "legal-notice",
+  "title": "Legal notice",
+  "text": [
+   "! Draft: the details in square brackets are still missing. Until they are filled in, search engines may not index this page.",
+   "## Information under § 5 DDG (German Digital Services Act)",
+   "[NAME OR NAME OF THE ASSOCIATION]",
+   "[STREET AND NUMBER]",
+   "[POSTCODE AND CITY]",
+   "[COUNTRY]",
+   "Represented by: [NAME OF THE AUTHORISED REPRESENTATIVE] (associations only)",
+   "Register entry: [REGISTER COURT AND NUMBER] (registered associations only)",
+   "## Contact",
+   "Email: info@proextinction.com",
+   "## Responsible for the content under § 18 (2) MStV",
+   "[NAME AND ADDRESS OF THE RESPONSIBLE PERSON]",
+   "## Translations",
+   "Many language versions of this website are machine-translated from English. These pages carry a note. If versions differ, the English version applies.",
+   "## Links",
+   "This website links to services run by others, such as WhatsApp, Discord and TikTok. Those providers are responsible for their own content."
+  ]
+ },
+ "privacy": {
+  "slug": "privacy",
+  "title": "Privacy policy",
+  "text": [
+   "! Draft: the details in square brackets are still missing. Until they are filled in, search engines may not index this page.",
+   "## In short",
+   "This website sets no cookies, uses no analytics or tracking services and loads nothing from other servers. Fonts and images are hosted on our own server.",
+   "## Controller",
+   "[NAME OR NAME OF THE ASSOCIATION], [ADDRESS], email: info@proextinction.com",
+   "## Hosting and server logs",
+   "The website is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. On every visit Vercel processes the data it technically needs: IP address, time, page requested, browser and operating system. This keeps the website safe and running (Art. 6(1)(f) GDPR).",
+   "Vercel is certified under the EU-US Data Privacy Framework. How long Vercel keeps this data is set out in Vercel's privacy policy: https://vercel.com/legal/privacy-policy",
+   "## Storage in your browser",
+   "The website keeps a few settings in your browser's storage (localStorage and sessionStorage): light or dark mode, your animation setting and a counter for a logo effect. This data never leaves your browser and is not sent to us. You can delete it in your browser at any time.",
+   "## Contact by email",
+   "If you write to us, we use your address and message only to reply to you (Art. 6(1)(f) GDPR). We delete them once the conversation is over, unless the law requires us to keep them.",
+   "## Links to other services",
+   "Links to WhatsApp, Discord, TikTok, Instagram, YouTube and other services are plain links. A service only receives data from you once you click its link. Its own privacy policy then applies.",
+   "## Donations",
+   "If you donate by bank transfer, we see the details your bank sends with it: name, IBAN, amount and reference. We use them only for our accounts and keep them as long as the law requires (Art. 6(1)(c) GDPR).",
+   "## Your rights",
+   "You have the right to access, correct and delete your data, to restrict its processing, to data portability and to object to processing (Art. 15 to 21 GDPR). Write to info@proextinction.com.",
+   "You can also complain to a data protection authority, for example in the country where you live.",
+   "Last updated: [MONTH AND YEAR]"
+  ]
+ }
+}

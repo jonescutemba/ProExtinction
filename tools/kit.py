@@ -1,4 +1,4 @@
-"""Generate the two brand kits (brand/<concept>/) from tokens.css + concept facts.
+"""Generate the brand kit (brand/<concept>/) from tokens.css + concept facts.
 
 Run after editing a tokens.css:  python3 tools/kit.py && python3 tools/build.py
 """
@@ -17,21 +17,6 @@ ROLES = {
 ORDER = ['bg', 'surface', 'text', 'muted', 'line', 'accent', 'link', 'on-accent', 'scare']
 
 CONCEPTS = {
- 'a-ember': dict(
-  name='Ember', fonts='family=Oswald:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500',
-  display='Oswald', body='Newsreader', body_kind='Serif', default_mode='dunkel',
-  one_liner='Eckig, redaktionell, asymmetrisch: Flyer-Ästhetik, aber lesbar.',
-  shape='eckig (Radius 0 überall: Buttons, Karten, Scrollbar)', shape_short='eckig',
-  accent_share='unter 5 % der Fläche',
-  nav='Feste Leiste links, 17,5 rem breit, ab 900 px. Darunter waagerechter Streifen. Aktive Seite: roter 3-px-Balken links.',
-  toc='Kapitelübersicht rechts, 14 rem, mitlaufend (sticky), ab 1280 px. Darunter über dem Text.',
-  layout='Asymmetrisch: Text linksbündig, Spalte 68 ch. Kapitelnummern inline vor der H2 (01, 02 …).',
-  efforts='Container-Breite: unter 34 rem 1 Spalte, ab 34 rem 2, ab 66 rem 4. Nummer 2,2 rem in Mono, Haarlinie oben.',
-  h1='clamp(2,4 rem, 7 vw, 5 rem)', wordmark_hero='clamp(2,6 rem, 6,4 vw, 5,4 rem) ab 1280 px, sonst bis 8 rem',
-  gutter='clamp(1,1 rem, 5 vw, 3,5 rem)', wide='78 rem', body_size='1,125 rem / Zeilenhöhe 1,65',
-  bp='640 (Kopfzeile kompakt) · 900 (Seitenleiste) · 1280 (Hero zweispaltig, Kapitelübersicht rechts)',
-  banned_extra=['Runde Karten oder Pillen-Buttons', 'Zentrierte Fließtextblöcke', 'Sans-Serif im Fließtext'],
-  rail_note='Liste scrollt nur, wenn das Fenster niedriger ist als die Leiste; dann blendet sie unten weich aus.'),
  'b-poster': dict(
   name='Poster', fonts='family=Anton&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500',
   display='Anton', body='Barlow', body_kind='Sans-Serif (nicht Inter, nicht Roboto)', default_mode='dunkel',
@@ -314,8 +299,8 @@ def props_json(c):
 
 def examples(c):
     d = CONCEPTS[c]; base, th = parse_tokens(c)
-    css = (ROOT / 'concepts' / c / 'style.css').read_text(encoding='utf-8')
-    js = (ROOT / 'concepts' / 'assets' / 'site.js').read_text(encoding='utf-8')
+    css = (ROOT / 'site' / 'style.css').read_text(encoding='utf-8')
+    js = (ROOT / 'tools' / 'assets' / 'site.js').read_text(encoding='utf-8')
     def sw(m):
         return ''.join(f'<li><span class="sw" style="background:{th[m][k]}"></span><b class="mono">--{k}</b><code>{th[m][k]}</code></li>' for k in ORDER)
     cur = ' aria-current="page"'
@@ -366,7 +351,7 @@ def examples(c):
 ''', encoding='utf-8')
 
 def main():
-    logo = (ROOT / 'concepts' / 'assets' / 'logo.svg').read_text(encoding='utf-8')
+    logo = (ROOT / 'tools' / 'assets' / 'logo.svg').read_text(encoding='utf-8')
     for c in CONCEPTS:
         d = BRAND / c; (d / 'beispiel').mkdir(parents=True, exist_ok=True)
         pretty_tokens(c)

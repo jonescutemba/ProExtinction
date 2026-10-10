@@ -94,7 +94,7 @@ stammen vom Auftraggeber. Wo etwas offen ist, steht es ausdrücklich dabei.
 
 ## Logo
 - Ouroboros mit rotem Schrägstrich. Als SVG nachgezeichnet aus einem 500-px-Bild
-  (`concepts/assets/logo.svg`). **Offen:** Original-Vektordatei, falls auffindbar.
+  (`tools/assets/logo.svg`). **Offen:** Original-Vektordatei, falls auffindbar.
 
 ## Offene Punkte
 1. Konkrete Gestaltungsvorbilder.

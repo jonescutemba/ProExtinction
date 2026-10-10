@@ -3,23 +3,114 @@
   "framework": null,
   "buildCommand": null,
   "installCommand": null,
-  "outputDirectory": "presentation",
+  "outputDirectory": "site",
   "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/manifesto",
+      "destination": "/en/manifesto",
+      "permanent": true
+    },
+    {
+      "source": "/basic-faq",
+      "destination": "/en/basic-faq",
+      "permanent": true
+    },
+    {
+      "source": "/full-faq",
+      "destination": "/en/full-faq",
+      "permanent": true
+    },
+    {
+      "source": "/criticism-of-different-pro-life-ideologies",
+      "destination": "/en/criticism-of-different-pro-life-ideologies",
+      "permanent": true
+    },
+    {
+      "source": "/principles-of-the-movement",
+      "destination": "/en/principles-of-the-movement",
+      "permanent": true
+    },
+    {
+      "source": "/suffering-in-detail",
+      "destination": "/en/suffering-in-detail",
+      "permanent": true
+    },
+    {
+      "source": "/cosmic-extinction",
+      "destination": "/en/cosmic-extinction",
+      "permanent": true
+    },
+    {
+      "source": "/history",
+      "destination": "/en/history",
+      "permanent": true
+    },
+    {
+      "source": "/join-us",
+      "destination": "/en/join-us",
+      "permanent": true
+    },
+    {
+      "source": "/social-media-channels",
+      "destination": "/en/social-media-channels",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/en/contact",
+      "permanent": true
+    },
+    {
+      "source": "/donate",
+      "destination": "/en/donate",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'"
+        }
       ]
     },
     {
       "source": "/fonts/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }

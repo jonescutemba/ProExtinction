@@ -1,0 +1,50 @@
+{
+ "imprint": {
+  "slug": "impressum",
+  "title": "Impressum",
+  "text": [
+   "! Entwurf: Die Angaben in eckigen Klammern fehlen noch. Solange sie fehlen, ist diese Seite für Suchmaschinen gesperrt.",
+   "## Angaben nach § 5 DDG",
+   "[NAME ODER VEREINSNAME]",
+   "[STRASSE UND HAUSNUMMER]",
+   "[POSTLEITZAHL UND ORT]",
+   "[LAND]",
+   "Vertreten durch: [NAME DER VERTRETUNGSBERECHTIGTEN PERSON] (nur bei einem Verein)",
+   "Registereintrag: [REGISTERGERICHT UND REGISTERNUMMER] (nur bei einem eingetragenen Verein)",
+   "## Kontakt",
+   "E-Mail: info@proextinction.com",
+   "## Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV",
+   "[NAME UND ANSCHRIFT DER VERANTWORTLICHEN PERSON]",
+   "## Übersetzungen",
+   "Viele Sprachfassungen dieser Website sind maschinell aus dem Englischen übersetzt. Solche Seiten tragen einen Hinweis. Bei Abweichungen gilt die englische Fassung.",
+   "## Links",
+   "Diese Website verlinkt auf Angebote anderer Anbieter, zum Beispiel WhatsApp, Discord und TikTok. Für deren Inhalte sind die jeweiligen Anbieter verantwortlich."
+  ]
+ },
+ "privacy": {
+  "slug": "datenschutz",
+  "title": "Datenschutzerklärung",
+  "text": [
+   "! Entwurf: Die Angaben in eckigen Klammern fehlen noch. Solange sie fehlen, ist diese Seite für Suchmaschinen gesperrt.",
+   "## Kurz gesagt",
+   "Diese Website setzt keine Cookies, nutzt keine Statistik- oder Tracking-Dienste und lädt keine Inhalte von fremden Servern. Schriften und Bilder liegen auf unserem eigenen Server.",
+   "## Verantwortlich",
+   "[NAME ODER VEREINSNAME], [ANSCHRIFT], E-Mail: info@proextinction.com",
+   "## Hosting und Server-Protokolle",
+   "Die Website liegt bei Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Bei jedem Aufruf verarbeitet Vercel technisch nötige Daten: IP-Adresse, Zeitpunkt, aufgerufene Seite, Browser und Betriebssystem. Das dient dem sicheren und stabilen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO).",
+   "Vercel ist unter dem EU-US Data Privacy Framework zertifiziert. Wie lange Vercel diese Daten speichert, steht in der Datenschutzerklärung von Vercel: https://vercel.com/legal/privacy-policy",
+   "## Speicher im Browser",
+   "Die Website merkt sich im Speicher deines Browsers (localStorage und sessionStorage) einige Einstellungen: hellen oder dunklen Modus, die Einstellung zu Animationen und einen Zähler für einen Logo-Effekt. Diese Daten verlassen deinen Browser nicht und werden nicht an uns gesendet. Du kannst sie jederzeit in deinem Browser löschen.",
+   "## Kontakt per E-Mail",
+   "Wenn du uns schreibst, verwenden wir deine Adresse und deine Nachricht nur, um dir zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Wir löschen sie, wenn das Gespräch beendet ist und keine Pflicht zur Aufbewahrung besteht.",
+   "## Links zu anderen Diensten",
+   "Links zu WhatsApp, Discord, TikTok, Instagram, YouTube und anderen Diensten sind einfache Links. Erst wenn du einen Link anklickst, erhält der jeweilige Dienst Daten von dir. Dann gilt dessen Datenschutzerklärung.",
+   "## Spenden",
+   "Wenn du per Überweisung spendest, sehen wir die Angaben, die deine Bank mit der Überweisung schickt, also Name, IBAN, Betrag und Verwendungszweck. Wir nutzen sie nur für die Buchhaltung und bewahren sie so lange auf, wie es das Gesetz verlangt (Art. 6 Abs. 1 lit. c DSGVO).",
+   "## Deine Rechte",
+   "Du hast das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit und auf Widerspruch gegen die Verarbeitung (Art. 15 bis 21 DSGVO). Schreib dazu an info@proextinction.com.",
+   "Du kannst dich ausserdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel in dem Land, in dem du wohnst.",
+   "Stand: [MONAT UND JAHR]"
+  ]
+ }
+}

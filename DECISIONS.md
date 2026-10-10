@@ -1,28 +1,21 @@
 # Entscheidungen · Pro Extinction Website-Redesign
 
-Stand: laufend gepflegt. **Die Wahl des Konzepts ist bewusst offen und fällt später.**
-Bis dahin werden A und B parallel gepflegt. **C Ring ist verworfen** und entfernt.
+Stand: laufend gepflegt. **Entschieden: Design B (Poster).** A Ember ist entfernt (noch auf `backup/vercel-2026-10-06`), C Ring war schon verworfen.
 
 ## Offen (später festlegen)
 | Frage | Stand | Wann |
 |---|---|---|
-| **Welches Konzept gilt** (A Ember oder B Poster) oder eine Mischung | offen, nicht vorentschieden | nach dem Vergleich im Browser und der Rückmeldung von Beteiligten |
-| Endgültige Hex-Werte | je Konzept vorläufig in `brand/<konzept>/tokens.css` | mit der Konzeptwahl |
+| Endgültige Hex-Werte | vorläufig in `brand/b-poster/tokens.css` | offen |
 | Original-Logo als Vektor | fehlt, `mark.svg` ist eine Nachzeichnung | sobald auffindbar |
-| Schriften selbst hosten | **erledigt für `presentation/`** (lokal, OFL). Prototyp-Seiten und `brand-helmet.html` laden noch von Google | vor Livegang der übrigen Teile |
-| Impressum, Datenschutz, Zugriffsschutz | nicht vorhanden; siehe `DEPLOY.md` | vor öffentlichem Livegang |
-| Bilder von „Suffering in detail" (16) | erste Runde ohne Fotos | nach der Konzeptwahl |
-| Animationen (Staub am Seitenende, animiertes Logo) | Logo-Effekt vorhanden; Staub nicht gebaut | nach der Konzeptwahl |
+| Schriften selbst hosten | **erledigt** für `site/` (lokal, OFL). Nur `brand-helmet.html` lädt noch von Google | – |
+| Impressum, Datenschutz | **Entwurf** in `content/legal/`, Platzhalter für Name und Anschrift fehlen | vor öffentlichem Livegang |
+| Suchmaschinen freischalten | gesperrt, `INDEXABLE` in `tools/build.py` | nach Impressum und Datenschutz |
+| Bilder von „Suffering in detail" (16) | hinter einem Klick verschwommen | – |
 | Deutsche Übersetzung der 4 fehlenden Seiten | Entwürfe in `content/_translation-pending/`, nicht eingebaut | eigener Schritt |
 | Telefonnummer auf der deutschen Seite | bleibt (Wunsch), vor Livegang bestätigen | vor Livegang |
-| Hosting und Domain der neuen Seite | nicht besprochen | nach der Konzeptwahl |
+| Hosting und Domain | Vercel; Domain vorläufig `proextinction.com` ohne www (`SITE_URL`) | mit dem Umzug der Domain |
 
-**Wie wir entscheiden:** Die Konzepte nebeneinander öffnen (`concepts/index.html`), dieselben
-Seiten in Hell und Dunkel, in allen 29 Sprachen, auf Handy und Desktop ansehen. Danach ein Konzept
-wählen, ggf. einzelne Bausteine aus einem anderen übernehmen, und das hier eintragen.
-Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandkit-publish` baut die echte Seite.
-
-## Entschieden (gilt für alle Konzepte)
+## Entschieden
 1. **Marke:** Pro Extinction. „AbolishSuffering" bleibt nur der Discord-Name.
 2. **Tagline:** „Together, we end suffering."
 3. **Ziel:** Neulinge überzeugen, nicht die Community mobilisieren.
@@ -40,25 +33,21 @@ Erst dann gilt `brandkit-build` für das **gewählte** Kit als final und `brandk
 15. **Scrollbars:** dünn, Akzentfarbe; innen dunkler als außen.
 16. **Zielplattform:** nur Website, responsiv. Keine PDFs, Slides, Thumbnails.
 
-## Konzeptspezifisch (der eigentliche Vergleich)
-| | A · Ember | B · Poster |
-|---|---|---|
-| Form | eckig | eckig |
-| Aufbau | redaktionell, asymmetrisch | zentriert, plakativ |
-| Navigation | Leiste links | Navbar oben |
-| Kapitelübersicht | rechts mitlaufend ab 1280 px | wie A (übernommen, ersetzt die Kapitel-Buttons) |
-| Farbwelt | Rot/Schwarz/Silber | Rot/Schwarz/Silber |
-| Fließtext | Serif (Newsreader) | Sans (Barlow) |
-| Standardmodus | dunkel | dunkel |
+## Design B (Poster)
+| | |
+|---|---|
+| Form | eckig |
+| Aufbau | zentriert, plakativ |
+| Navigation | Navbar oben |
+| Kapitelübersicht | rechts mitlaufend ab 1280 px |
+| Farbwelt | Rot/Schwarz/Silber |
+| Fließtext | Sans (Barlow) |
+| Standardmodus | dunkel |
 
-## Kundenpräsentation
-`presentation/index.html` zeigt beide Konzepte in **einer** Seite. Standard ist Design B, der sichtbare Design-Umschalter ist entfernt; Design A erreicht man nur noch über vier schnelle Klicks auf „Global“ in der Fußzeile (oder `?concept=a`). Sprache und Hell/Dunkel bleiben als Umschalter.
-Sie dient zum Vergleichen und Vorlegen; die Konzeptwahl bleibt offen. Sie ist als **finale Version** aufgebaut (keine Entwurfs-Hinweise, alle Seiten vollständig,
-Join-Buttons als WhatsApp + Discord, Icons im Footer), mit lokalen Schriften, ohne Fotos, vorerst noch auf „noindex“. Livegang: `DEPLOY.md`.
+## Aufbau der Website (entschieden 2026-10)
+Eine Datei pro Seite in `site/`, Adressen `/<sprache>/<seite>`; `/` wählt die Sprache nach dem Browser. Die frühere Ein-Datei-Präsentation (`presentation/index.html`, 8,8 MB mit allen Sprachen) ist ersetzt: Sie war langsam und für Suchmaschinen nur eine einzige Seite. Ihre alten Links (`#/de/manifest`) leitet `/` weiter.
+Standardmodus bleibt dunkel; Hell nur, wenn der Besucher es wählt.
 
-## Vorgehen bis zur Wahl
-1. Konzepte pflegen, nur Fehler beheben und Gemeinsames verbessern. Nichts zwischen Konzepten mischen.
-2. Gemeinsames liegt in `tools/css/base.css`, `tools/build.py`, `tools/blocks.py`, `content/`.
-3. Konzeptspezifisches liegt in `brand/<konzept>/tokens.css` und `tools/css/<buchstabe>.css`.
-4. Nach jeder Änderung: `python3 tools/build.py && python3 tools/present.py && python3 tools/kit.py`.
-5. Nach der Wahl: Entscheidung oben eintragen, Übersetzung, `brandkit-build` final, Responsivitäts- und Barrierefreiheitsprüfung, `brandkit-publish`.
+## Vorgehen
+1. Gemeinsames liegt in `tools/css/base.css`, `tools/build.py`, `tools/blocks.py`, `content/`; Design in `brand/b-poster/tokens.css` und `tools/css/b.css`.
+2. Nach jeder Änderung: `python3 tools/build_all.py`.

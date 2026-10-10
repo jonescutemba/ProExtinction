@@ -1,11 +1,12 @@
-"""Build the three design concepts (all languages) into concepts/<concept>/<lang>/*.html."""
+"""Build the website (all languages) into site/: one file per page, site/<lang>/<slug>.html, served as /<lang>/<slug>."""
 import json, re, html, pathlib, sys, urllib.parse
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from blocks import blocks_of, abridge, faq_pairs, pic_anchors, place_pics
 import diagrams
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-OUT = ROOT / 'concepts'
+OUT = ROOT / 'site'
+ASSETS = ROOT / 'tools' / 'assets'
 esc = html.escape
 
 LANGS = ['en', 'de', 'pl', 'es', 'it', 'fr', 'pt', 'ru', 'zh', 'hi', 'ar', 'bn', 'ur', 'id',
@@ -139,6 +140,10 @@ EN_OF = {l: {s: e for s, e, _, _ in SITE[l]} for l in LANGS}          # slug -> 
 OF_EN = {l: {e: s for s, e, _, _ in SITE[l] if e} for l in LANGS}     # English slug -> slug
 ORIG = {l: {s: o for s, _, _, o in SITE[l]} for l in LANGS}
 
+def url(lang, slug):
+    """Site path of a page: /en for home, /en/manifesto otherwise (Vercel serves en/index.html and en/manifesto.html there)."""
+    return f'/{lang}' if slug == 'home' else f'/{lang}/{slug}'
+
 def counterpart(lang, slug, other):
     """Slug of the same page in another language, or 'home'."""
     return OF_EN[other].get(EN_OF[lang].get(slug) or '', 'home')
@@ -151,7 +156,7 @@ T = {
   effort='Effort', questions='Questions?', questions_text='Contact info@proextinction.com to get more information on the project',
   action='Take action', toc='On this page',
   ki='Machine-translated from English (AI).',
-  ki_tag='AI', back='Concepts', back_title='Back to the concept overview', progress='Reading progress', home_link='Pro Extinction – home',
+  ki_tag='AI', progress='Reading progress', home_link='Pro Extinction – home',
   efforts=['Growing the movement to make it possible to prevent billions of years of suffering.',
    'Universal, non-discriminatory help for as many victims as physically possible. For animals, as much extraterrestrial life as possible, and humans.',
    'Purely organised action/activism based. No lamenting at the expense of the victims.',
@@ -164,7 +169,7 @@ T = {
   effort='Einsatz', questions='Fragen?', questions_text='Kontaktiere info@proextinction.com, um mehr Informationen zu bekommen.',
   action='Mach mit', toc='Auf dieser Seite',
   ki='Maschinell aus dem Englischen übersetzt (AI).',
-  ki_tag='AI', back='Konzepte', back_title='Zurück zur Konzeptübersicht', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
+  ki_tag='AI', progress='Lesefortschritt', home_link='Pro Extinction – Startseite',
   efforts=['Wir vergrößern die Bewegung, um unzählige Jahre Leid zu verhindern.',
    'Universelle, nicht diskriminierende Hilfe für so viele Opfer wie physisch möglich. Für Tiere, so viel außerirdisches Leben wie möglich und Menschen.',
    'Wir sind strikt handlungsorientiert, anstatt auf Kosten der Opfer nur über das extreme Leid zu klagen.',
@@ -177,7 +182,7 @@ T = {
   effort='Działanie', questions='Pytania?', questions_text='Skontaktuj się z info@proextinction.com, aby uzyskać więcej informacji na temat projektu',
   action='Dołącz', toc='Na tej stronie',
   ki='Tłumaczenie maszynowe z angielskiego (AI).',
-  ki_tag='AI', back='Koncepty', back_title='Powrót do przeglądu konceptów', progress='Postęp czytania', home_link='Pro Extinction – strona główna',
+  ki_tag='AI', progress='Postęp czytania', home_link='Pro Extinction – strona główna',
   efforts=['Rozwój ruchu, aby umożliwić zapobieżenie miliardom lat cierpienia.',
    'Powszechna, niedyskryminująca pomoc dla jak największej liczby ofiar, na ile to fizycznie możliwe. Dla zwierząt, jak największej liczby form życia więcej niż ziemskiego (czyli wszędzie, gdzie życie może zostać zapobiegnięte od zaistnienia cierpienia w kosmosie) oraz dla ludzi.',
    'Działania oparte wyłącznie na zorganizowanym działaniu/aktywizmie. Żadnego użalania się nad losem ofiar.',
@@ -190,7 +195,7 @@ T = {
   effort='Línea de acción', questions='¿Preguntas?', questions_text='Contacta con info@proextinction.com para obtener más información sobre el proyecto.',
   action='Actúa', toc='En esta página',
   ki='Traducción automática del inglés (AI).',
-  ki_tag='AI', back='Conceptos', back_title='Volver a la vista general de conceptos', progress='Progreso de lectura', home_link='Pro Extinction – página inicial',
+  ki_tag='AI', progress='Progreso de lectura', home_link='Pro Extinction – página inicial',
   efforts=['Impulsar un crecimiento estratégico del movimiento que permita intervenir de forma efectiva sobre las causas estructurales del sufrimiento y prevenir su perpetuación a gran escala.',
    'Promover un alivio universal, no discriminatorio y basado en criterios de sufrimiento, dirigido al mayor número posible de víctimas: animales no humanos, cualquier forma de vida potencialmente sintiente fuera de la Tierra y la humanidad.',
    'Desarrollar un activismo organizado, disciplinado y orientado a resultados, centrado exclusivamente en la reducción del sufrimiento, sin concesiones emocionales ni discursos que lo perpetúen.',
@@ -203,7 +208,7 @@ T = {
   effort='Obiettivo', questions='Domande?', questions_text='Contatta info@proextinction.com per ottenere più informazioni sul progetto',
   action='Agisci', toc='In questa pagina',
   ki="Traduzione automatica dall'inglese (AI).",
-  ki_tag='AI', back='Concept', back_title='Torna alla panoramica dei concept', progress='Avanzamento lettura', home_link='Pro Extinction – home',
+  ki_tag='AI', progress='Avanzamento lettura', home_link='Pro Extinction – home',
   efforts=['Crescere il movimento per rendere possibile la prevenzione di miliardi di anni di sofferenza.',
    'Aiuto universale, non-discriminatorio per quante più vittime sia fisicamente possibile. Per gli animali, quanta più vita extraterrestre possibile, e gli umani.',
    'Basato esclusivamente su azioni/attivismo organizzati. Nessun lamento a spese delle vittime.',
@@ -231,7 +236,7 @@ T.update({
   effort='Frente', questions='Dúvidas?', questions_text='Escreva para info@proextinction.com para saber mais sobre o projeto',
   action='Aja', toc='Nesta página',
   ki='Tradução automática do inglês (AI).',
-  ki_tag='AI', back='Conceitos', back_title='Voltar à visão geral dos conceitos', progress='Progresso de leitura', home_link='Pro Extinction – início',
+  ki_tag='AI', progress='Progresso de leitura', home_link='Pro Extinction – início',
   efforts=['Fazer o movimento crescer para tornar possível evitar bilhões de anos de sofrimento.',
    'Ajuda universal e sem discriminação para o maior número de vítimas fisicamente possível. Para animais, para o máximo possível de vida extraterrestre e para humanos.',
    'Ação puramente organizada, baseada em ativismo. Nada de lamentar à custa das vítimas.',
@@ -244,7 +249,7 @@ T.update({
   effort='Направление', questions='Есть вопросы?', questions_text='Пишите на info@proextinction.com, чтобы узнать больше о проекте',
   action='Действуйте', toc='На этой странице',
   ki='Машинный перевод с английского (AI).',
-  ki_tag='AI', back='Концепты', back_title='Назад к обзору концептов', progress='Прогресс чтения', home_link='Pro Extinction – главная',
+  ki_tag='AI', progress='Прогресс чтения', home_link='Pro Extinction – главная',
   efforts=['Развивать движение, чтобы сделать возможным предотвращение миллиардов лет страданий.',
    'Всеобщая помощь без дискриминации для стольких жертв, сколько физически возможно. Для животных, для как можно большего числа внеземной жизни и для людей.',
    'Только организованные действия и активизм. Никаких причитаний за счёт жертв.',
@@ -257,7 +262,7 @@ T.update({
   effort='方向', questions='有疑问？', questions_text='请联系 info@proextinction.com 了解项目详情',
   action='行动起来', toc='本页内容',
   ki='由英文机器翻译 (AI)。',
-  ki_tag='AI', back='方案', back_title='返回设计方案总览', progress='阅读进度', home_link='Pro Extinction – 首页',
+  ki_tag='AI', progress='阅读进度', home_link='Pro Extinction – 首页',
   efforts=['壮大运动，让防止数十亿年的苦难成为可能。',
    '为物理上可能的最多受害者提供普遍、无差别的帮助。包括动物、尽可能多的地外生命以及人类。',
    '完全以有组织的行动和行动主义为本。不以受害者为代价空发哀叹。',
@@ -270,7 +275,7 @@ T.update({
   effort='प्रयास', questions='कोई सवाल?', questions_text='परियोजना के बारे में और जानकारी के लिए info@proextinction.com पर संपर्क करें',
   action='कदम उठाएँ', toc='इस पेज पर',
   ki='अंग्रेज़ी से मशीन अनुवाद (AI)।',
-  ki_tag='AI', back='कॉन्सेप्ट', back_title='कॉन्सेप्ट की सूची पर वापस जाएँ', progress='पढ़ने की प्रगति', home_link='Pro Extinction – होम',
+  ki_tag='AI', progress='पढ़ने की प्रगति', home_link='Pro Extinction – होम',
   efforts=['आंदोलन को बढ़ाना, ताकि अरबों वर्षों की पीड़ा को रोकना संभव हो सके।',
    'भौतिक रूप से जितने संभव हों उतने पीड़ितों के लिए सार्वभौमिक, बिना भेदभाव की मदद। जानवरों के लिए, जितना हो सके उतने पृथ्वी से बाहर के जीवन के लिए, और इंसानों के लिए।',
    'पूरी तरह संगठित कार्रवाई और एक्टिविज़्म पर आधारित। पीड़ितों की कीमत पर कोई विलाप नहीं।',
@@ -283,7 +288,7 @@ T.update({
   effort='محور', questions='لديك أسئلة؟', questions_text='راسلنا على info@proextinction.com لمعرفة المزيد عن المشروع',
   action='تحرّك', toc='في هذه الصفحة',
   ki='ترجمة آلية من الإنجليزية (AI).',
-  ki_tag='AI', back='التصاميم', back_title='العودة إلى نظرة عامة على التصاميم', progress='تقدّم القراءة', home_link='Pro Extinction – الرئيسية',
+  ki_tag='AI', progress='تقدّم القراءة', home_link='Pro Extinction – الرئيسية',
   efforts=['تنمية الحركة لكي يصبح منع مليارات السنين من المعاناة ممكنًا.',
    'مساعدة شاملة ودون تمييز لأكبر عدد ممكن فيزيائيًا من الضحايا. للحيوانات، ولأكبر قدر ممكن من الحياة خارج الأرض، وللبشر.',
    'عمل منظّم ونشاط ميداني فقط. لا نوح على حساب الضحايا.',
@@ -296,7 +301,7 @@ T.update({
   effort='প্রচেষ্টা', questions='কোনো প্রশ্ন?', questions_text='প্রকল্প সম্পর্কে আরও জানতে info@proextinction.com-এ যোগাযোগ করুন',
   action='পদক্ষেপ নিন', toc='এই পাতায়',
   ki='ইংরেজি থেকে যন্ত্রে অনুবাদ (AI)।',
-  ki_tag='AI', back='ডিজাইন', back_title='ডিজাইনের তালিকায় ফিরে যান', progress='পড়ার অগ্রগতি', home_link='Pro Extinction – হোম',
+  ki_tag='AI', progress='পড়ার অগ্রগতি', home_link='Pro Extinction – হোম',
   efforts=['আন্দোলনকে বড় করা, যাতে কোটি কোটি বছরের দুঃখভোগ ঠেকানো সম্ভব হয়।',
    'শারীরিকভাবে যত বেশি সম্ভব ভুক্তভোগীর জন্য সর্বজনীন, বৈষম্যহীন সাহায্য। প্রাণীদের জন্য, যত বেশি সম্ভব পৃথিবীর বাইরের প্রাণের জন্য, আর মানুষের জন্য।',
    'কেবল সংগঠিত কাজ আর অ্যাক্টিভিজমের ওপর ভিত্তি করে। ভুক্তভোগীদের মূল্যে কোনো বিলাপ নয়।',
@@ -309,7 +314,7 @@ T.update({
   effort='کوشش', questions='کوئی سوال؟', questions_text='منصوبے کے بارے میں مزید جاننے کے لیے info@proextinction.com پر رابطہ کریں',
   action='قدم اٹھائیں', toc='اس صفحے پر',
   ki='انگریزی سے مشینی ترجمہ (AI)۔',
-  ki_tag='AI', back='ڈیزائن', back_title='ڈیزائنز کی فہرست پر واپس جائیں', progress='پڑھنے کی پیش رفت', home_link='Pro Extinction – ہوم',
+  ki_tag='AI', progress='پڑھنے کی پیش رفت', home_link='Pro Extinction – ہوم',
   efforts=['تحریک کو بڑھانا، تاکہ اربوں سال کی تکلیف کو روکنا ممکن ہو سکے۔',
    'جسمانی طور پر جتنے ممکن ہوں اتنے متاثرین کے لیے عالمگیر، بلا امتیاز مدد۔ جانوروں کے لیے، زمین سے باہر جتنی ممکن ہو اتنی زندگی کے لیے، اور انسانوں کے لیے۔',
    'صرف منظم عمل اور ایکٹیوزم پر مبنی۔ متاثرین کی قیمت پر کوئی ماتم نہیں۔',
@@ -322,7 +327,7 @@ T.update({
   effort='Upaya', questions='Ada pertanyaan?', questions_text='Hubungi info@proextinction.com untuk informasi lebih lanjut tentang proyek ini',
   action='Bertindak', toc='Di halaman ini',
   ki='Terjemahan mesin dari bahasa Inggris (AI).',
-  ki_tag='AI', back='Konsep', back_title='Kembali ke ringkasan konsep', progress='Kemajuan membaca', home_link='Pro Extinction – beranda',
+  ki_tag='AI', progress='Kemajuan membaca', home_link='Pro Extinction – beranda',
   efforts=['Membesarkan gerakan agar pencegahan miliaran tahun penderitaan menjadi mungkin.',
    'Bantuan universal tanpa diskriminasi bagi sebanyak mungkin korban yang secara fisik bisa dijangkau. Bagi hewan, bagi sebanyak mungkin kehidupan di luar Bumi, dan bagi manusia.',
    'Murni berbasis aksi dan aktivisme yang terorganisasi. Tidak meratap dengan mengorbankan para korban.',
@@ -337,7 +342,7 @@ T.update({
   effort='取り組み', questions='ご質問は?', questions_text='プロジェクトの詳細は info@proextinction.com までお問い合わせください',
   action='行動する', toc='このページの内容',
   ki='英語からの機械翻訳 (AI)。',
-  ki_tag='AI', back='コンセプト', back_title='コンセプト一覧に戻る', progress='読書の進み具合', home_link='Pro Extinction – ホーム',
+  ki_tag='AI', progress='読書の進み具合', home_link='Pro Extinction – ホーム',
   efforts=['運動を広げ、何十億年もの苦しみを防ぐことを可能にする。',
    '物理的に可能な限り多くの犠牲者への、差別のない普遍的な支援。動物のため、できる限り多くの地球外生命のため、そして人間のため。',
    '組織的な行動とアクティビズムだけに基づく。犠牲者を犠牲にした嘆きはしない。',
@@ -350,7 +355,7 @@ T.update({
   effort='Çaba', questions='Sorunuz mu var?', questions_text='Proje hakkında daha fazla bilgi için info@proextinction.com adresine yazın',
   action='Harekete geçin', toc='Bu sayfada',
   ki='İngilizceden makine çevirisi (AI).',
-  ki_tag='AI', back='Konseptler', back_title='Konsept özetine dön', progress='Okuma ilerlemesi', home_link='Pro Extinction – ana sayfa',
+  ki_tag='AI', progress='Okuma ilerlemesi', home_link='Pro Extinction – ana sayfa',
   efforts=['Milyarlarca yıllık acıyı önlemeyi mümkün kılmak için hareketi büyütmek.',
    'Fiziksel olarak mümkün olan en çok kurbana ayrımsız, evrensel yardım. Hayvanlar için, olabildiğince çok dünya dışı yaşam için ve insanlar için.',
    'Yalnızca örgütlü eyleme ve aktivizme dayalı. Kurbanlar pahasına yakınmak yok.',
@@ -363,7 +368,7 @@ T.update({
   effort='Nỗ lực', questions='Có câu hỏi?', questions_text='Liên hệ info@proextinction.com để biết thêm về dự án',
   action='Hành động', toc='Trên trang này',
   ki='Dịch máy từ tiếng Anh (AI).',
-  ki_tag='AI', back='Bản thiết kế', back_title='Quay lại tổng quan thiết kế', progress='Tiến độ đọc', home_link='Pro Extinction – trang chủ',
+  ki_tag='AI', progress='Tiến độ đọc', home_link='Pro Extinction – trang chủ',
   efforts=['Phát triển phong trào để có thể ngăn chặn hàng tỷ năm khổ đau.',
    'Giúp đỡ phổ quát, không phân biệt, cho nhiều nạn nhân nhất có thể về mặt vật lý. Cho động vật, cho càng nhiều sự sống ngoài Trái Đất càng tốt, và cho con người.',
    'Hoàn toàn dựa trên hành động có tổ chức và hoạt động xã hội. Không than khóc trên lưng nạn nhân.',
@@ -376,7 +381,7 @@ T.update({
   effort='노력', questions='질문이 있나요?', questions_text='프로젝트에 대해 더 알고 싶다면 info@proextinction.com 으로 연락하세요',
   action='행동하기', toc='이 페이지의 내용',
   ki='영어에서 기계 번역됨 (AI).',
-  ki_tag='AI', back='콘셉트', back_title='콘셉트 개요로 돌아가기', progress='읽기 진행률', home_link='Pro Extinction – 홈',
+  ki_tag='AI', progress='읽기 진행률', home_link='Pro Extinction – 홈',
   efforts=['운동을 키워 수십억 년의 고통을 막는 일을 가능하게 한다.',
    '물리적으로 가능한 한 많은 피해자를 위한 차별 없는 보편적 도움. 동물을 위해, 가능한 한 많은 외계 생명을 위해, 그리고 인간을 위해.',
    '오직 조직된 행동과 활동에 기반한다. 피해자를 희생시키는 한탄은 없다.',
@@ -389,7 +394,7 @@ T.update({
   effort='تلاش', questions='پرسشی دارید؟', questions_text='برای آگاهی بیشتر از پروژه به info@proextinction.com پیام دهید',
   action='اقدام کنید', toc='در این صفحه',
   ki='ترجمهٔ ماشینی از انگلیسی (AI).',
-  ki_tag='AI', back='طرح‌ها', back_title='بازگشت به نمای کلی طرح‌ها', progress='پیشرفت خواندن', home_link='Pro Extinction – خانه',
+  ki_tag='AI', progress='پیشرفت خواندن', home_link='Pro Extinction – خانه',
   efforts=['رشد دادن جنبش تا جلوگیری از میلیاردها سال رنج ممکن شود.',
    'کمکی همگانی و بی‌تبعیض به هر چه بیشتر قربانیانی که از نظر فیزیکی ممکن است. برای حیوانات، برای هر چه بیشتر حیات فرازمینی و برای انسان‌ها.',
    'فقط بر پایهٔ اقدام سازمان‌یافته و کنشگری. بدون مویه به بهای قربانیان.',
@@ -402,7 +407,7 @@ T.update({
   effort='प्रयत्न', questions='काही प्रश्न?', questions_text='प्रकल्पाबद्दल अधिक माहितीसाठी info@proextinction.com वर संपर्क साधा',
   action='कृती करा', toc='या पानावर',
   ki='इंग्रजीतून यंत्राद्वारे भाषांतर (AI).',
-  ki_tag='AI', back='संकल्पना', back_title='संकल्पनांच्या आढाव्याकडे परत', progress='वाचनाची प्रगती', home_link='Pro Extinction – मुख्यपृष्ठ',
+  ki_tag='AI', progress='वाचनाची प्रगती', home_link='Pro Extinction – मुख्यपृष्ठ',
   efforts=['अब्जावधी वर्षांचे दुःख रोखणे शक्य व्हावे म्हणून चळवळ वाढवणे.',
    'भौतिकदृष्ट्या शक्य तितक्या बळींसाठी सार्वत्रिक, भेदभावरहित मदत. प्राण्यांसाठी, शक्य तितक्या परग्रहावरील जीवनासाठी आणि माणसांसाठी.',
    'केवळ संघटित कृती आणि चळवळीवर आधारित. बळींच्या जिवावर विलाप नाही.',
@@ -415,7 +420,7 @@ T.update({
   effort='ప్రయత్నం', questions='ప్రశ్నలు ఉన్నాయా?', questions_text='ప్రాజెక్టు గురించి మరింత తెలుసుకోవడానికి info@proextinction.com ని సంప్రదించండి',
   action='చర్య తీసుకోండి', toc='ఈ పేజీలో',
   ki='ఆంగ్లం నుంచి యంత్ర అనువాదం (AI).',
-  ki_tag='AI', back='కాన్సెప్ట్‌లు', back_title='కాన్సెప్ట్‌ల అవలోకనానికి తిరిగి వెళ్ళండి', progress='చదివిన పురోగతి', home_link='Pro Extinction – హోమ్',
+  ki_tag='AI', progress='చదివిన పురోగతి', home_link='Pro Extinction – హోమ్',
   efforts=['బిలియన్ల సంవత్సరాల బాధను నివారించడం సాధ్యమయ్యేలా ఉద్యమాన్ని పెంచడం.',
    'భౌతికంగా సాధ్యమైనంత ఎక్కువ బాధితులకు విశ్వవ్యాప్త, వివక్షలేని సహాయం. జంతువులకు, సాధ్యమైనంత ఎక్కువ గ్రహాంతర జీవాలకు, మనుషులకు.',
    'కేవలం వ్యవస్థీకృత చర్య, ఉద్యమంపై ఆధారపడినది. బాధితుల ఖర్చుతో విలాపం లేదు.',
@@ -428,7 +433,7 @@ T.update({
   effort='முயற்சி', questions='கேள்விகள் உள்ளனவா?', questions_text='திட்டம் பற்றி மேலும் அறிய info@proextinction.com-ஐத் தொடர்பு கொள்ளுங்கள்',
   action='செயல்படுங்கள்', toc='இந்தப் பக்கத்தில்',
   ki='ஆங்கிலத்திலிருந்து இயந்திர மொழிபெயர்ப்பு (AI).',
-  ki_tag='AI', back='கருத்துருக்கள்', back_title='கருத்துரு மேலோட்டத்திற்குத் திரும்பவும்', progress='வாசிப்பு முன்னேற்றம்', home_link='Pro Extinction – முகப்பு',
+  ki_tag='AI', progress='வாசிப்பு முன்னேற்றம்', home_link='Pro Extinction – முகப்பு',
   efforts=['பில்லியன் கணக்கான ஆண்டுகளின் துன்பத்தைத் தடுப்பதைச் சாத்தியமாக்க இயக்கத்தை வளர்ப்பது.',
    'பௌதீக ரீதியாக முடிந்தவரை அதிகமான பாதிக்கப்பட்டவர்களுக்கு உலகளாவிய, பாகுபாடற்ற உதவி. விலங்குகளுக்கு, முடிந்தவரை அதிக வேற்றுக்கிரக உயிர்களுக்கு, மனிதர்களுக்கு.',
    'ஒழுங்கமைக்கப்பட்ட செயல் மற்றும் இயக்கச் செயல்பாட்டை மட்டுமே அடிப்படையாகக் கொண்டது. பாதிக்கப்பட்டவர்களின் விலையில் புலம்பல் இல்லை.',
@@ -441,7 +446,7 @@ T.update({
   effort='Juhudi', questions='Una maswali?', questions_text='Andika kwa info@proextinction.com kujua zaidi kuhusu mradi',
   action='Chukua hatua', toc='Kwenye ukurasa huu',
   ki='Tafsiri ya mashine kutoka Kiingereza (AI).',
-  ki_tag='AI', back='Dhana', back_title='Rudi kwenye muhtasari wa dhana', progress='Maendeleo ya kusoma', home_link='Pro Extinction – nyumbani',
+  ki_tag='AI', progress='Maendeleo ya kusoma', home_link='Pro Extinction – nyumbani',
   efforts=['Kukuza vuguvugu ili kuzuia mabilioni ya miaka ya mateso kuwezekane.',
    'Msaada wa wote, bila ubaguzi, kwa waathiriwa wengi kadiri inavyowezekana kimwili. Kwa wanyama, kwa uhai mwingi wa nje ya dunia kadiri iwezekanavyo, na kwa wanadamu.',
    'Kwa msingi wa vitendo vilivyopangwa na uanaharakati pekee. Hakuna kulalamika kwa gharama ya waathiriwa.',
@@ -454,7 +459,7 @@ T.update({
   effort='ความพยายาม', questions='มีคำถามไหม?', questions_text='ติดต่อ info@proextinction.com เพื่อทราบข้อมูลเพิ่มเติมเกี่ยวกับโครงการ',
   action='ลงมือทำ', toc='ในหน้านี้',
   ki='แปลด้วยเครื่องจากภาษาอังกฤษ (AI)',
-  ki_tag='AI', back='คอนเซปต์', back_title='กลับไปที่ภาพรวมคอนเซปต์', progress='ความคืบหน้าการอ่าน', home_link='Pro Extinction – หน้าแรก',
+  ki_tag='AI', progress='ความคืบหน้าการอ่าน', home_link='Pro Extinction – หน้าแรก',
   efforts=['ขยายขบวนการเพื่อให้การป้องกันความทุกข์ทรมานหลายพันล้านปีเป็นไปได้',
    'ความช่วยเหลือสากลที่ไม่เลือกปฏิบัติ สำหรับเหยื่อให้มากที่สุดเท่าที่เป็นไปได้ทางกายภาพ สำหรับสัตว์ สำหรับชีวิตนอกโลกให้มากที่สุด และสำหรับมนุษย์',
    'ตั้งอยู่บนการกระทำและการเคลื่อนไหวที่มีการจัดตั้งเท่านั้น ไม่คร่ำครวญโดยแลกกับเหยื่อ',
@@ -467,7 +472,7 @@ T.update({
   effort='Inzet', questions='Vragen?', questions_text='Schrijf naar info@proextinction.com voor meer informatie over het project',
   action='Kom in actie', toc='Op deze pagina',
   ki='Machinevertaling uit het Engels (AI).',
-  ki_tag='AI', back='Concepten', back_title='Terug naar het conceptoverzicht', progress='Leesvoortgang', home_link='Pro Extinction – home',
+  ki_tag='AI', progress='Leesvoortgang', home_link='Pro Extinction – home',
   efforts=['De beweging laten groeien, zodat het voorkomen van miljarden jaren lijden mogelijk wordt.',
    'Universele hulp zonder discriminatie aan zoveel slachtoffers als fysiek mogelijk is. Aan dieren, aan zoveel mogelijk buitenaards leven en aan mensen.',
    'Alleen gebaseerd op georganiseerde actie en activisme. Geen geklaag ten koste van de slachtoffers.',
@@ -480,7 +485,7 @@ T.update({
   effort='Зусилля', questions='Є запитання?', questions_text='Пишіть на info@proextinction.com, щоб дізнатися більше про проєкт',
   action='Дійте', toc='На цій сторінці',
   ki='Машинний переклад з англійської (AI).',
-  ki_tag='AI', back='Концепти', back_title='Назад до огляду концептів', progress='Прогрес читання', home_link='Pro Extinction – головна',
+  ki_tag='AI', progress='Прогрес читання', home_link='Pro Extinction – головна',
   efforts=['Розвивати рух, щоб стало можливим запобігти мільярдам років страждань.',
    'Всесвітня допомога без дискримінації якомога більшій кількості жертв, скільки фізично можливо. Тваринам, якомога більшій частині позаземного життя і людям.',
    'Лише на основі організованих дій і активізму. Жодних нарікань за рахунок жертв.',
@@ -493,7 +498,7 @@ T.update({
   effort='Pagsisikap', questions='May tanong?', questions_text='Sumulat sa info@proextinction.com para malaman pa ang tungkol sa proyekto',
   action='Kumilos', toc='Sa pahinang ito',
   ki='Machine translation mula sa Ingles (AI).',
-  ki_tag='AI', back='Mga konsepto', back_title='Bumalik sa listahan ng mga konsepto', progress='Pag-usad ng pagbasa', home_link='Pro Extinction – home',
+  ki_tag='AI', progress='Pag-usad ng pagbasa', home_link='Pro Extinction – home',
   efforts=['Palakihin ang kilusan para maging posible ang pagpigil sa bilyun-bilyong taon ng pagdurusa.',
    'Pandaigdigang tulong nang walang diskriminasyon sa pinakamaraming biktima hangga\'t pisikal na posible. Sa mga hayop, sa pinakamaraming buhay sa ibang planeta hangga\'t maaari, at sa mga tao.',
    'Nakabatay lang sa organisadong aksyon at aktibismo. Walang pagrereklamo na ang mga biktima ang nagbabayad.',
@@ -519,7 +524,7 @@ T.update({
   effort='પ્રયાસ', questions='કોઈ પ્રશ્ન?', questions_text='પ્રોજેક્ટ વિશે વધુ જાણવા info@proextinction.com પર લખો',
   action='પગલું ભરો', toc='આ પાના પર',
   ki='અંગ્રેજીમાંથી મશીન અનુવાદ (AI).',
-  ki_tag='AI', back='કન્સેપ્ટ', back_title='કન્સેપ્ટની ઝાંખી પર પાછા જાઓ', progress='વાંચનની પ્રગતિ', home_link='Pro Extinction – મુખ્ય પાનું',
+  ki_tag='AI', progress='વાંચનની પ્રગતિ', home_link='Pro Extinction – મુખ્ય પાનું',
   efforts=['આંદોલનને વધારવું જેથી અબજો વર્ષોના દુઃખને અટકાવવું શક્ય બને.',
    'શારીરિક રીતે શક્ય હોય તેટલા પીડિતોને ભેદભાવ વિના સાર્વત્રિક મદદ. પ્રાણીઓને, શક્ય તેટલા પરગ્રહી જીવનને અને માણસોને.',
    'ફક્ત સંગઠિત કાર્યવાહી અને સક્રિયતા પર આધારિત. પીડિતોના ભોગે કોઈ ફરિયાદ નહીં.',
@@ -718,7 +723,7 @@ IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8
 PROLIFE_JS = (ROOT / 'tools' / 'prolife.js').read_text(encoding='utf-8')
 SMOKE_JS = (ROOT / 'tools' / 'smoke.js').read_text(encoding='utf-8')   # shake and dark smoke at the end of long pages
 EGGS_JS = (ROOT / 'tools' / 'eggs.js').read_text(encoding='utf-8')     # stars, logo x5, birth counter, console note
-IMG_BASE = '../../../presentation/img/'   # concept pages; present.py sets 'img/'
+IMG_BASE = '/img/'
 
 def figure(n, cls='pic', lang='en'):
     if n in diagrams.NUMBERS:   # redrawn as animated SVG in the theme colours
@@ -969,7 +974,7 @@ def social_body(lang, lines, used):
     out.append(f'<p class="note">{esc(L(94))}</p>')
     return '\n'.join(out), toc
 
-def faq_body(lang, slug, lines, like=None, href=lambda s: s + '.html'):
+def faq_body(lang, slug, lines, like=None, href=None):
     t = T[lang]
     title, lede, rest = head_lede(lines, like)
     intro, pairs = faq_pairs(rest, like[len(lines) - len(rest):] if like else None)
@@ -994,7 +999,7 @@ def faq_body(lang, slug, lines, like=None, href=lambda s: s + '.html'):
 
 def sitenav(lang, slug):
     t = T[lang]; cur = ' aria-current="page"'
-    items = ''.join('<li><a href="%s.html"%s>%s</a></li>' % (s_, cur if s_ == slug else '', esc(NAV[lang][s_])) for s_, _ in PAGES[lang])
+    items = ''.join('<li><a href="%s"%s>%s</a></li>' % (url(lang, s_), cur if s_ == slug else '', esc(NAV[lang][s_])) for s_, _ in PAGES[lang])
     return f'<nav class="sitenav" id="sitenav" aria-label="Main"><ul>{items}</ul></nav>'
 
 def lang_select(lang, url):
@@ -1003,16 +1008,15 @@ def lang_select(lang, url):
     opts = ''.join(f'<option value="{url(l)}" lang="{l}"{" selected" if l == lang else ""}>{CODE[l]} · {LANG_NAME[l]}</option>' for l in LANGS)
     return f'<label class="lang-wrap"><span class="lang" aria-hidden="true">{CODE[lang]}</span><select class="lang-select" aria-label="{t["lang"]}">{opts}</select></label>'
 
-def header(c, lang, slug, ctx):
+def header(lang, slug):
     t = T[lang]
-    picker = lang_select(lang, lambda l: f'../{l}/{counterpart(lang, slug, l)}.html')
+    picker = lang_select(lang, lambda l: url(l, counterpart(lang, slug, l)))
     return f'''<a class="skip" href="#main">{t["skip"]}</a>
 <div class="progress" aria-hidden="true"><i></i></div>
 {top_button(lang)}
 <header class="top">
   <div class="lead">
-    <a class="brand" href="home.html" aria-label="{t["home_link"]}"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a>
-    <a class="back" href="../../index.html" title="{t["back_title"]}"><span aria-hidden="true">←</span><span class="back-t">{t["back"]}</span></a>
+    <a class="brand" href="{url(lang, 'home')}" aria-label="{t["home_link"]}"><span class="logo" role="img" aria-label="Pro Extinction logo"></span><span class="wordmark">PRO EXTINCTION</span></a>
   </div>
   <div class="tools">
     {picker}
@@ -1072,7 +1076,7 @@ def footer(lang):
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>
 </section>
-<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p>{born_line(lang)}</footer>'''
+<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}</p>{born_line(lang)}{legal_links(lang)}</footer>'''
 
 def born_line(lang):
     label, humans, animals, wild, insects = BORN[lang]
@@ -1080,9 +1084,10 @@ def born_line(lang):
             + ' · '.join(f'<span class="bn"><span dir="ltr">{"~" if i else ""}<b data-i="{i}">0</b></span> {esc(w)}</span>'   # ~ marks rough figures
                          for i, w in enumerate((humans, animals, wild, insects))) + '</p>')
 
-def page_main(lang, slug, kind, href=lambda s: s + '.html'):
+def page_main(lang, slug, kind, href=None):
     """Title and <main> content of one page (shared by the multi-page prototype and the single-file presentation)."""
     t = T[lang]
+    href = href or (lambda s: url(lang, s))
     ki = slug in AI[lang]
     if kind == 'home':
         return NAV[lang]['home'], home_main(lang, href), 'home'
@@ -1113,24 +1118,95 @@ def page_main(lang, slug, kind, href=lambda s: s + '.html'):
         main = '<div class="stars" aria-hidden="true"></div>' + main
     return title, main, 'page'
 
-def page_html(c, lang, slug, kind):
-    t = T[lang]; cdef = CONCEPTS[c]
-    title, main, body_class = page_main(lang, slug, kind)
-    return f'''<!doctype html>
-<html lang="{lang}" dir="{DIR(lang)}" data-concept="{c}" data-default="{cdef["mode"]}">
-<head>
-<meta charset="utf-8">
+# ---- search engines
+SITE_URL = 'https://proextinction.com'
+INDEXABLE = False   # the one switch: True lets search engines in (robots.txt, X-Robots-Tag header in vercel.json, meta robots)
+HREFLANG = {'zh': 'zh-Hans'}
+SEO = {l: json.loads((ROOT / 'content' / 'seo' / f'{l}.json').read_text(encoding='utf-8')) for l in LANGS}
+LEGAL = {l: json.loads((ROOT / 'content' / 'legal' / f'{l}.json').read_text(encoding='utf-8')) for l in ('de', 'en')}
+DRAFT = re.compile(r'\[[^\]]*[A-ZÄÖÜ]{3,}[^\]]*\]')   # a placeholder like [STREET AND NUMBER]: the page stays out of search engines
+# Footer links to the legal pages; languages without their own version link to the English one.
+LEGAL_LABEL = {
+ 'en': ('Legal notice', 'Privacy'), 'de': ('Impressum', 'Datenschutz'), 'pl': ('Nota prawna', 'Prywatność'),
+ 'es': ('Aviso legal', 'Privacidad'), 'it': ('Note legali', 'Privacy'), 'fr': ('Mentions légales', 'Confidentialité'),
+ 'pt': ('Aviso legal', 'Privacidade'), 'ru': ('Правовая информация', 'Конфиденциальность'), 'zh': ('法律声明', '隐私'),
+ 'hi': ('कानूनी सूचना', 'निजता'), 'ar': ('إشعار قانوني', 'الخصوصية'), 'bn': ('আইনি তথ্য', 'গোপনীয়তা'),
+ 'ur': ('قانونی معلومات', 'رازداری'), 'id': ('Informasi hukum', 'Privasi'), 'ja': ('運営者情報', 'プライバシー'),
+ 'tr': ('Yasal bilgiler', 'Gizlilik'), 'vi': ('Thông tin pháp lý', 'Quyền riêng tư'), 'ko': ('법적 고지', '개인정보'),
+ 'fa': ('اطلاعات حقوقی', 'حریم خصوصی'), 'mr': ('कायदेशीर माहिती', 'गोपनीयता'), 'te': ('చట్టపరమైన సమాచారం', 'గోప్యత'),
+ 'ta': ('சட்டத் தகவல்', 'தனியுரிமை'), 'sw': ('Taarifa za kisheria', 'Faragha'), 'th': ('ข้อมูลทางกฎหมาย', 'ความเป็นส่วนตัว'),
+ 'nl': ('Colofon', 'Privacy'), 'uk': ('Правова інформація', 'Конфіденційність'), 'tl': ('Legal na abiso', 'Privacy'),
+ 'pa': ('ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ', 'ਨਿੱਜਤਾ'), 'gu': ('કાનૂની માહિતી', 'ગોપનીયતા'),
+}
+
+def legal_links(lang):
+    src = lang if lang in LEGAL else 'en'
+    a, b = LEGAL_LABEL[lang]
+    return (f'<p class="legal mono"><a href="{url(src, LEGAL[src]["imprint"]["slug"])}">{esc(a)}</a>'
+            f'<span aria-hidden="true"> · </span><a href="{url(src, LEGAL[src]["privacy"]["slug"])}">{esc(b)}</a></p>')
+
+def legal_main(lang, key):
+    """A legal page from content/legal/<lang>.json: '## ' starts a heading, '! ' a draft note, other lines are paragraphs."""
+    d = LEGAL[lang][key]; out = []
+    for line in d['text']:
+        if line.startswith('## '): out.append(f'<h2>{esc(line[3:])}</h2>')
+        elif line.startswith('! '): out.append(f'<p class="note draft"><span class="tag">!</span> {esc(line[2:])}</p>')
+        else: out.append(f'<p>{linkify(line)}</p>')
+    return d['title'], (f'<article class="doc legal-doc"><header class="doc-head"><h1>{esc(d["title"])}</h1><hr class="slash"></header>'
+                        f'<div class="prose">{"".join(out)}</div></article>')
+
+def alternates(lang, slug):
+    """[(hreflang, path)] for the same page in every language that has it, English first as x-default."""
+    en = EN_OF[lang].get(slug)
+    if not en: return [(HREFLANG.get(lang, lang), url(lang, slug))]
+    out = [(HREFLANG.get(l, l), url(l, OF_EN[l][en])) for l in LANGS if en in OF_EN[l]]
+    return out + [('x-default', url('en', OF_EN['en'][en]))]
+
+def jsonld(lang):
+    return json.dumps({'@context': 'https://schema.org', '@graph': [
+        {'@type': 'Organization', '@id': SITE_URL + '/#org', 'name': 'Pro Extinction', 'url': SITE_URL, 'email': EMAIL,
+         'logo': SITE_URL + '/logo.png', 'foundingDate': '2024', 'sameAs': [DISCORD]},
+        {'@type': 'WebSite', '@id': SITE_URL + '/#site', 'name': 'Pro Extinction', 'url': SITE_URL,
+         'inLanguage': LANGS, 'publisher': {'@id': SITE_URL + '/#org'}}]}, ensure_ascii=False)
+
+def head(lang, path, title, desc, alts=(), index=True, home=False):
+    """<head> contents shared by every page: theme before paint, SEO tags, the one stylesheet."""
+    robots = 'index, follow' if INDEXABLE and index else 'noindex, nofollow'
+    links = ''.join(f'<link rel="alternate" hreflang="{h}" href="{SITE_URL}{p}">\n' for h, p in alts)
+    ld = f'<script type="application/ld+json">{jsonld(lang)}</script>\n' if home else ''
+    return f'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} – Pro Extinction · {cdef["name"]}</title>
-<meta name="robots" content="noindex">
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(desc)}">
+<meta name="robots" content="{robots}">
+<link rel="canonical" href="{SITE_URL}{path}">
+{links}<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pro Extinction">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:url" content="{SITE_URL}{path}">
+<meta property="og:image" content="{SITE_URL}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0708">
+{ld}<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
 <script>(function(){{var d=document.documentElement,m=null;try{{m=new URLSearchParams(location.search).get('theme')||localStorage.getItem('pe-theme')}}catch(e){{}}
-if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':d.dataset.default)}}d.dataset.theme=m}})()</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{cdef["fonts"]}&display=swap">
-<link rel="stylesheet" href="../style.css">
+d.dataset.theme=m==='light'?'light':'dark'}})()</script>'''
+
+def page_html(lang, slug, kind, title=None, main=None, desc=None, index=True):
+    if main is None: title, main, body_class = page_main(lang, slug, kind)
+    else: body_class = 'page'
+    full = f'Pro Extinction – {T[lang]["tagline"]}' if kind == 'home' else f'{title} | Pro Extinction'
+    alts = alternates(lang, slug) if slug in EN_OF[lang] else ()
+    return f'''<!doctype html>
+<html lang="{lang}" dir="{DIR(lang)}" data-concept="b-poster">
+<head>
+{head(lang, url(lang, slug), full, desc or SEO[lang][slug], alts, index, kind == 'home')}
 </head>
 <body class="{body_class}">
-{header(c, lang, slug, None)}
+{header(lang, slug)}
 <div class="shell">
 {sitenav(lang, slug)}
 <main id="main">
@@ -1138,14 +1214,14 @@ if(m!=='light'&&m!=='dark'){{m=window.matchMedia&&matchMedia('(prefers-color-sch
 </main>
 </div>
 {footer(lang)}
-<script src="../../assets/site.js" defer></script>
+<script src="/site.js" defer></script>
 <script>{SMOKE_JS}</script>
 <script>{EGGS_JS}</script>
 </body>
 </html>
 '''
 
-def home_main(lang, href=lambda s: s + '.html'):
+def home_main(lang, href):
     t = T[lang]
     ki = f'<p class="note ki"><span class="tag">{t["ki_tag"]}</span> {t["ki"]}</p>' if lang in FULL_AI else ''
     eff_pic = {i['where'][1]: i['n'] for i in IMAGES if i['page'] == 'home'}
@@ -1165,7 +1241,7 @@ def home_main(lang, href=lambda s: s + '.html'):
 <section class="questions"><h2>{t["questions"]}</h2>{read_more}<p class="q-mail">{linkify(t["questions_text"])}</p>{ki}</section>'''
 
 def _svg_uri(name):
-    svg = (OUT / 'assets' / f'{name}.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
+    svg = (ASSETS / f'{name}.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
     return 'data:image/svg+xml,' + urllib.parse.quote(svg, safe="/:=' ")
 
 def logo_css():
@@ -1176,36 +1252,93 @@ def logo_css():
 HERO_LOGO = ('<span class="hero-logo" role="img" aria-label="Pro Extinction logo">'
              '<span class="lg lg-snake"></span><span class="lg lg-cut"></span><span class="lg lg-slash"></span></span>')
 
+def css():
+    """One stylesheet for every page: local fonts (only the families the design uses), base, design tokens, design, logo."""
+    used = ('Oswald', 'Anton', 'Barlow', 'JetBrains Mono')
+    fonts = ''.join(l + '\n' for l in (ROOT / 'tools' / 'fonts.css').read_text(encoding='utf-8').splitlines()
+                    if any(f"font-family:'{f}'" in l for f in used)).replace('url(fonts/', 'url(/fonts/')
+    return (fonts + (ROOT / 'tools/css/base.css').read_text(encoding='utf-8') + '\n' + (ROOT / 'brand/b-poster/tokens.css').read_text(encoding='utf-8')
+            + '\n' + (ROOT / 'tools/css/b.css').read_text(encoding='utf-8') + '\n' + logo_css())
+
 def build():
-    css_base = (ROOT / 'tools/css/base.css').read_text(encoding='utf-8')
-    for c in CONCEPTS:
-        css = css_base + '\n' + (ROOT / 'brand' / c / 'tokens.css').read_text(encoding='utf-8') + '\n' + (ROOT / f'tools/css/{c[0]}.css').read_text(encoding='utf-8') + '\n' + logo_css()
-        (OUT / c).mkdir(parents=True, exist_ok=True)
-        (OUT / c / 'style.css').write_text(css, encoding='utf-8')
-        for lang in LANGS:
-            d = OUT / c / lang; d.mkdir(exist_ok=True)
-            for slug, kind in PAGES[lang]:
-                (d / f'{slug}.html').write_text(page_html(c, lang, slug, kind), encoding='utf-8')
-    n = sum(len(PAGES[l]) for l in PAGES) * len(CONCEPTS)
-    print('built', n, 'pages')
+    (OUT / 'style.css').write_text(css(), encoding='utf-8')
+    (OUT / 'site.js').write_text((ASSETS / 'site.js').read_text(encoding='utf-8'), encoding='utf-8')
+    paths = []   # (path, alternates, indexable) for the sitemap
+    for lang in LANGS:
+        d = OUT / lang; d.mkdir(parents=True, exist_ok=True)
+        for slug, kind in PAGES[lang]:
+            (d / ('index.html' if slug == 'home' else f'{slug}.html')).write_text(page_html(lang, slug, kind), encoding='utf-8')
+            paths.append((url(lang, slug), alternates(lang, slug)))
+    for lang in LEGAL:
+        for key in ('imprint', 'privacy'):
+            p = LEGAL[lang][key]; title, main = legal_main(lang, key)
+            draft = any(DRAFT.search(x) for x in p['text'])
+            (OUT / lang / f'{p["slug"]}.html').write_text(page_html(lang, p['slug'], 'doc', title, main, title + ' | Pro Extinction', not draft), encoding='utf-8')
+            if not draft: paths.append((url(lang, p['slug']), ()))
+    (OUT / 'index.html').write_text(root_page(), encoding='utf-8')
+    (OUT / '404.html').write_text(not_found(), encoding='utf-8')
+    (OUT / 'sitemap.xml').write_text(sitemap(paths), encoding='utf-8')
+    (OUT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n' if INDEXABLE else 'User-agent: *\nDisallow: /\n', encoding='utf-8')
+    vercel()
+    print('built', len(paths), 'pages into site/')
+
+def sitemap(paths):
+    rows = []
+    for p, alts in paths:
+        alt = ''.join(f'<xhtml:link rel="alternate" hreflang="{h}" href="{SITE_URL}{a}"/>' for h, a in alts)
+        rows.append(f'<url><loc>{SITE_URL}{p}</loc>{alt}</url>')
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+            + '\n'.join(rows) + '\n</urlset>\n')
+
+def root_page():
+    """/ : picks the visitor's language (browser setting, else English) and forwards old #/lang/slug links of the one-file version.
+    Without script, and for search engines, it is a plain list of languages."""
+    known = {l: [s for s, _ in PAGES[l]] for l in LANGS}
+    items = ''.join(f'<li><a href="{url(l, "home")}" lang="{l}" hreflang="{HREFLANG.get(l, l)}">{LANG_NAME[l]}</a></li>' for l in LANGS)
+    alts = [(HREFLANG.get(l, l), url(l, 'home')) for l in LANGS] + [('x-default', '/')]
+    return f'''<!doctype html>
+<html lang="en" data-concept="b-poster">
+<head>
+{head('en', '/', 'Pro Extinction – ' + T['en']['tagline'], SEO['en']['home'], alts)}
+<script>(function(){{var k={json.dumps(known, separators=(',', ':'))},h=location.hash.match(/^#\/([a-z]+)\/([^\/?#]+)/),l;
+if(h&&k[h[1]]){{location.replace(k[h[1]].indexOf(h[2])>0?'/'+h[1]+'/'+h[2]:'/'+h[1]);return}}
+var w=navigator.languages||[navigator.language||'en'];for(var i=0;i<w.length;i++){{l=String(w[i]).toLowerCase().split('-')[0];if(l==='fil')l='tl';if(k[l]){{location.replace('/'+l);return}}}}
+location.replace('/en')}})()</script>
+</head>
+<body class="page">
+<main id="main" class="shell"><article class="doc"><header class="doc-head"><h1 class="wordmark">PRO EXTINCTION</h1><p class="lede">{T['en']['tagline']}</p><hr class="slash"></header>
+<ul class="lang-list">{items}</ul></article></main>
+</body>
+</html>
+'''
+
+def not_found():
+    items = ''.join(f'<li><a href="{url(l, "home")}" lang="{l}">{LANG_NAME[l]}</a></li>' for l in LANGS)
+    return f'''<!doctype html>
+<html lang="en" data-concept="b-poster">
+<head>
+{head('en', '/404', 'Page not found | Pro Extinction', 'This page does not exist.', index=False)}
+</head>
+<body class="page">
+<main id="main" class="shell"><article class="doc"><header class="doc-head"><p class="mono kicker">404</p><h1>Page not found</h1><p class="lede">This page does not exist (any more). Pick your language to go to the start page.</p><hr class="slash"></header>
+<ul class="lang-list">{items}</ul></article></main>
+</body>
+</html>
+'''
+
+def vercel():
+    """vercel.json follows INDEXABLE, so the switch lives in one place."""
+    hdr = [{'key': 'X-Content-Type-Options', 'value': 'nosniff'}, {'key': 'Referrer-Policy', 'value': 'strict-origin-when-cross-origin'},
+           {'key': 'X-Frame-Options', 'value': 'SAMEORIGIN'}, {'key': 'Permissions-Policy', 'value': 'camera=(), microphone=(), geolocation=()'},
+           {'key': 'Content-Security-Policy', 'value': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'"}]
+    if not INDEXABLE: hdr.insert(0, {'key': 'X-Robots-Tag', 'value': 'noindex, nofollow'})
+    # old English addresses (/manifesto, /home ...) lead to the new ones
+    old = [{'source': '/home', 'destination': '/en', 'permanent': True}] + [
+        {'source': f'/{s}', 'destination': f'/en/{s}', 'permanent': True} for s, _ in PAGES['en'] if s != 'home']
+    conf = {'$schema': 'https://openapi.vercel.sh/vercel.json', 'framework': None, 'buildCommand': None, 'installCommand': None,
+            'outputDirectory': 'site', 'cleanUrls': True, 'trailingSlash': False, 'redirects': old,
+            'headers': [{'source': '/(.*)', 'headers': hdr},
+                        {'source': '/fonts/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]}]}
+    (ROOT / 'vercel.json').write_text(json.dumps(conf, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
 
 if __name__ == '__main__': build()
-
-INDEX = '''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pro Extinction – design concepts</title><meta name="robots" content="noindex">
-<style>:root{color-scheme:dark light;--bg:#0d0809;--text:#dcd8d8;--muted:#9a9292;--line:#2c2224;--accent:#e8484d}
-@media (prefers-color-scheme:light){:root{--bg:#f4f0ea;--text:#151011;--muted:#5e5656;--line:#cfc6ba;--accent:#a30f14}}
-body{margin:0;background:var(--bg);color:var(--text);font:1.05rem/1.6 Georgia,serif;padding:clamp(1.2rem,5vw,3rem);max-width:56rem;margin-inline:auto}
-h1{font:600 clamp(2rem,6vw,3.4rem)/1 "Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0 0 .5rem}
-p{color:var(--muted)}li{border-top:1px solid var(--line);padding:1.2rem 0;list-style:none}ul{padding:0;margin:2rem 0}
-h2{font:600 1.5rem "Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0 0 .3rem}a{color:var(--accent);margin-right:1.2rem}</style></head>
-<body><h1>Pro Extinction – design concepts</h1>
-<p>Two directions for the redesign. All have a light/dark switch (button top right) and 24 languages. Languages marked (AI) are machine-translated from English; machine-translated pages carry a note.</p>
-<ul>
-<li><h2>A · Ember</h2><p>Angular, editorial, asymmetric. Red/black/silver, serif body text.</p>%s</li>
-<li><h2>B · Poster</h2><p>Angular, centred, loud. Red/black/silver, sans-serif body text.</p>%s</li>
-</ul></body></html>
-'''
-LINKS = lambda c: ''.join(f'<a href="{c}/{l}/home.html" lang="{l}">{LANG_NAME[l]}{AI_MARK if l in FULL_AI else ""}</a>' for l in LANGS)
-(OUT / 'index.html').write_text(INDEX % tuple(LINKS(c) for c in CONCEPTS), encoding='utf-8')
