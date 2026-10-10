@@ -37,3 +37,11 @@ Cloudflare needs permission to read the GitHub repository. Only the repository's
 - **Search engines:** the site starts hidden from Google on purpose, until the legal notice and privacy policy are filled in. That is switched on in the code, not in Cloudflare (see `DEPLOY.md`). Once it is switched on:
   - Cloudflare → **Caching** → **Configuration** → turn on **Crawler Hints**. It tells Bing and other search engines about changes right away (IndexNow), free.
   - Add the site to **Google Search Console** (search.google.com/search-console, *Domain* property; Cloudflare can add the verification record for you) and submit `https://proextinction.com/sitemap.xml`. The same for **Bing Webmaster Tools**, which can import it from Search Console.
+
+## 5. Account and domain security (5 minutes, recommended)
+The website itself has no login, database or forms, so the main way to attack it is through the accounts behind it.
+- **Two-factor login** on the Cloudflare account and on every GitHub account with access. For the GitHub organisation: *Settings* → *Authentication security* → **Require two-factor authentication**.
+- **DNSSEC:** Cloudflare → the domain → **DNS** → **Settings** → **Enable DNSSEC**. It stops others from faking the domain's DNS answers. If the domain is registered at Cloudflare, that's all; otherwise copy the DS record it shows to the registrar.
+- **DMARC (email spoofing):** the domain has SPF but no DMARC, so anyone can send mail that claims to come from `@proextinction.com`. Add a DNS record of type `TXT`, name `_dmarc`:
+  - if nobody sends email *from* the domain (Cloudflare Email Routing only forwards incoming mail): `v=DMARC1; p=reject;`
+  - if someone does send from `info@proextinction.com` (e.g. "send as" in Gmail): start with `v=DMARC1; p=none;` and fix SPF for that sender first.
