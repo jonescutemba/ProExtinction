@@ -367,6 +367,8 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 /* easter eggs (tools/eggs.js) */
 .foot .born{margin-top:.35rem;color:var(--muted);font-size:.7rem;letter-spacing:.04em;font-variant-numeric:tabular-nums}
 .foot .born b{font-weight:600;color:var(--text)}
+.foot .born .bn{white-space:nowrap}
+.foot .born [dir=ltr]{direction:ltr;unicode-bidi:isolate}
 .stars{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
 .stars i{position:absolute;border-radius:50%;background:var(--text);opacity:.55;animation:pe-twinkle 4s ease-in-out infinite;transition:opacity 1.6s ease,transform 1.6s ease}
 .stars i.out{opacity:0!important;transform:scale(.2);animation:none}

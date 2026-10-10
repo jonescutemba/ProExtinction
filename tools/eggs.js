@@ -1,7 +1,7 @@
 /* Small easter eggs, shared by the pages and the presentation:
    1. Cosmic extinction page: faint stars go out one by one while the reader scrolls; at the end the sky is dark.
    2. Logo clicked five times quickly: the page fades into nothing, the manifesto's last line appears, then everything returns.
-   3. Footer: humans and farm animals born since the page was opened (estimate from yearly figures).
+   3. Footer: humans, farm animals, wild animals and insects born since the page was opened (estimate from yearly figures).
    4. A note in the browser console for the curious.
    "Reduce motion" (OS setting): no twinkle and no drifting, only fades. */
 (function () {
@@ -103,8 +103,8 @@
       if (!visible(p)) return;
       var lang = (p.closest('[lang]') || d).getAttribute('lang') || 'en';
       var nf = fmt[lang] || (fmt[lang] = (function () { try { return new Intl.NumberFormat(lang); } catch (x) { return new Intl.NumberFormat('en'); } })());
-      var rates = p.dataset.rates.split(',');
-      [].forEach.call(p.querySelectorAll('b[data-i]'), function (b) { b.textContent = nf.format(Math.floor(sec * +rates[b.dataset.i])); });
+      var rates = p.dataset.rates.split(',');   // a sub-millisecond jitter below keeps huge counts from ending in rows of zeros
+      [].forEach.call(p.querySelectorAll('b[data-i]'), function (b) { b.textContent = nf.format(Math.floor((sec + Math.random() / 1000) * +rates[b.dataset.i])); });
     });
   }
   births(); setInterval(births, 250);
