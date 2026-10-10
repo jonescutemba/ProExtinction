@@ -2,6 +2,7 @@
  "imprint": {
   "slug": "impressum",
   "title": "Impressum",
+  "description": "Impressum von Pro Extinction: wer die Website betreibt und wie du uns erreichst.",
   "text": [
    "! Entwurf: Die Angaben in eckigen Klammern fehlen noch. Solange sie fehlen, ist diese Seite für Suchmaschinen gesperrt.",
    "## Angaben nach § 5 DDG",
@@ -24,6 +25,7 @@
  "privacy": {
   "slug": "datenschutz",
   "title": "Datenschutzerklärung",
+  "description": "Datenschutzerklärung von Pro Extinction: keine Cookies, kein Tracking. Welche Daten beim Besuch der Website anfallen und welche Rechte du hast.",
   "text": [
    "! Entwurf: Die Angaben in eckigen Klammern fehlen noch. Solange sie fehlen, ist diese Seite für Suchmaschinen gesperrt.",
    "## Kurz gesagt",

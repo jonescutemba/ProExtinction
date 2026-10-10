@@ -1199,7 +1199,10 @@ d.dataset.theme=m==='light'?'light':'dark'}})()</script>'''
 def page_html(lang, slug, kind, title=None, main=None, desc=None, index=True):
     if main is None: title, main, body_class = page_main(lang, slug, kind)
     else: body_class = 'page'
-    full = f'Pro Extinction – {T[lang]["tagline"]}' if kind == 'home' else f'{title} | Pro Extinction'
+    # search result titles: the home page says what the organisation is, in its own language (the English slogan is the same everywhere);
+    # other pages use their heading, or the short menu name when the heading is long or set in capitals
+    if kind == 'home': full = f'Pro Extinction | {T[lang]["sub"].rstrip(".")}'
+    else: full = f'{NAV[lang][slug] if slug in NAV[lang] and (len(title) > 50 or title.isupper()) else title} | Pro Extinction'
     alts = alternates(lang, slug) if slug in EN_OF[lang] else ()
     return f'''<!doctype html>
 <html lang="{lang}" dir="{DIR(lang)}" data-concept="b-poster">
@@ -1274,7 +1277,7 @@ def build():
         for key in ('imprint', 'privacy'):
             p = LEGAL[lang][key]; title, main = legal_main(lang, key)
             draft = any(DRAFT.search(x) for x in p['text'])
-            (OUT / lang / f'{p["slug"]}.html').write_text(page_html(lang, p['slug'], 'doc', title, main, title + ' | Pro Extinction', not draft), encoding='utf-8')
+            (OUT / lang / f'{p["slug"]}.html').write_text(page_html(lang, p['slug'], 'doc', title, main, p['description'], not draft), encoding='utf-8')
             if not draft: paths.append((url(lang, p['slug']), ()))
     (OUT / 'index.html').write_text(root_page(), encoding='utf-8')
     (OUT / '404.html').write_text(not_found(), encoding='utf-8')
@@ -1300,7 +1303,7 @@ def root_page():
     return f'''<!doctype html>
 <html lang="en" data-concept="b-poster">
 <head>
-{head('en', '/', 'Pro Extinction – ' + T['en']['tagline'], SEO['en']['home'], alts)}
+{head('en', '/', 'Pro Extinction | ' + T['en']['sub'], SEO['en']['home'], alts)}
 <script>(function(){{var k={json.dumps(known, separators=(',', ':'))},h=location.hash.match(/^#\/([a-z]+)\/([^\/?#]+)/),l;
 if(h&&k[h[1]]){{location.replace(k[h[1]].indexOf(h[2])>0?'/'+h[1]+'/'+h[2]:'/'+h[1]+'/');return}}
 var w=navigator.languages||[navigator.language||'en'];for(var i=0;i<w.length;i++){{l=String(w[i]).toLowerCase().split('-')[0];if(l==='fil')l='tl';if(k[l]){{location.replace('/'+l+'/');return}}}}
@@ -1330,6 +1333,7 @@ def not_found():
 HEADERS = {
     'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'X-Frame-Options': 'SAMEORIGIN',
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+    'Strict-Transport-Security': 'max-age=31536000',   # HTTPS only; no includeSubDomains, so other subdomains stay untouched
     'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; "
                                "img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'"}
 

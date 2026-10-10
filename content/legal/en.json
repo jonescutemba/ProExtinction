@@ -2,6 +2,7 @@
  "imprint": {
   "slug": "legal-notice",
   "title": "Legal notice",
+  "description": "Legal notice of Pro Extinction: who runs this website and how to reach us.",
   "text": [
    "! Draft: the details in square brackets are still missing. Until they are filled in, search engines may not index this page.",
    "## Information under § 5 DDG (German Digital Services Act)",
@@ -24,6 +25,7 @@
  "privacy": {
   "slug": "privacy",
   "title": "Privacy policy",
+  "description": "Privacy policy of Pro Extinction: no cookies, no tracking. What data a visit to this website involves and what your rights are.",
   "text": [
    "! Draft: the details in square brackets are still missing. Until they are filled in, search engines may not index this page.",
    "## In short",
