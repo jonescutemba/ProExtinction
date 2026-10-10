@@ -1,0 +1,12 @@
+# The owners approve every pull request before it reaches main (the live website).
+# When the repository moves into the Pro Extinction organisation, replace the names with the owners team,
+# e.g. `* @pro-extinction/owners`, and add James's GitHub name now if he has one.
+*                @AppsOfUse
+
+# Extra care: these decide what gets published and how agents and CI behave.
+/.github/        @AppsOfUse
+/.claude/        @AppsOfUse
+/AGENTS.md       @AppsOfUse
+/CLAUDE.md       @AppsOfUse
+/tools/build.py  @AppsOfUse
+/content/legal/  @AppsOfUse

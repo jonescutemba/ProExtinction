@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 node_modules/
 .vercel/
+.wrangler/
+.env
+.env.*
+.dev.vars
+.claude/settings.local.json

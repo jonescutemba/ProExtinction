@@ -16,7 +16,11 @@ Design A (Ember) ist entfernt; er liegt noch auf dem Branch `backup/vercel-2026-
 | `raw/` | Rohtext der Google-Sites-Seiten PL/ES/IT (`tools/scrape.py`, dann `tools/parse_raw.py`) |
 | `tools/` | Generator: `build.py` (Seiten, SEO, Sitemap, Cloudflare-Steuerdateien), `kit.py` (Brand Kit), `serve.py` (Vorschau), `og.js` (Teilen-Bild), `blocks.py`, `parse.py`, CSS-Quellen, `assets/` (Logo, `site.js`) |
 | `DECISIONS.md` | was entschieden und was offen ist |
+| `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md` | Regeln für KI-Agents und Mitwirkende (EN), Ablauf eines Beitrags |
+| `.claude/` | Claude Code: Wächter-Hook (`hooks/guard.py`), Rechte (`settings.json`), Skills `edit-content`, `translate`, `review` |
+| `.github/` | Prüfung bei jedem Pull Request (`workflows/check.yml`), Code-Owner, PR-Vorlage, Dependabot |
 
+Prüfen (vor jedem Commit): `python tools/check.py`, baut alles neu und prüft Links, hreflang, fremde Server, Sicherheits-Header und Geheimnisse.
 Bauen: `python tools/build_all.py` (Windows, Mac, Linux; unter Mac/Linux ggf. `python3`).
 Ansehen: `python tools/serve.py`, dann http://localhost:8000 öffnen. Die Seiten brauchen einen Server, weil die Links Adressen wie `/de/manifest` sind.
 

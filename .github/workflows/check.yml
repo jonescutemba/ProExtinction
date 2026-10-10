@@ -1,0 +1,26 @@
+# Runs the same gate as `python tools/check.py` on every pull request and every push.
+# Owners: make "check" a required status check for main (see HOSTING.md, section 6).
+name: check
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Build and check the site
+        run: python3 tools/check.py --ci

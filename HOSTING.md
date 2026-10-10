@@ -45,3 +45,33 @@ The website itself has no login, database or forms, so the main way to attack it
 - **DMARC (email spoofing):** the domain has SPF but no DMARC, so anyone can send mail that claims to come from `@proextinction.com`. Add a DNS record of type `TXT`, name `_dmarc`:
   - if nobody sends email *from* the domain (Cloudflare Email Routing only forwards incoming mail): `v=DMARC1; p=reject;`
   - if someone does send from `info@proextinction.com` (e.g. "send as" in Gmail): start with `v=DMARC1; p=none;` and fix SPF for that sender first.
+
+## 6. Who can publish: owners and contributors
+Goal: the two of us are owners. Other people (and their AI tools) can change the site and propose changes, but nothing goes live until one of us merges it.
+All of this is free and set up once in GitHub, in the organisation from step 1.
+
+**People**
+- Organisation → *People*: both of us **Owner**. Everyone else **Member** (they get no rights to settings).
+- Organisation → *Teams* → *New team*: `owners` (both of us) and `contributors`. Repository → *Settings* → *Collaborators and teams*: `owners` **Admin**, `contributors` **Write**.
+  Write lets people push branches and open pull requests, not change settings. Occasional helpers need no access at all: they fork the repository and open a pull request from their fork.
+- Replace the names in `.github/CODEOWNERS` with `@<organisation>/owners`.
+
+**Protect `main`** (Repository → *Settings* → *Rules* → *Rulesets* → *New branch ruleset*)
+| Setting | Value |
+|---|---|
+| Name / Enforcement | `main is live` / **Active** |
+| Target branches | *Include default branch* |
+| Restrict deletions, Block force pushes | on |
+| Require a pull request before merging | on, **1** approval, **Require review from Code Owners**, *Dismiss stale approvals when new commits are pushed* on, *Require conversation resolution* on |
+| Require status checks to pass | on, add **`check`**, *Require branches to be up to date* on |
+| Bypass list | *Repository admin*, mode **For pull requests only**. Then an owner still needs a pull request and a green `check`, but can merge their own without waiting for the other owner. Remove it if you want every change seen by both of us. |
+
+**GitHub Actions** (Repository → *Settings* → *Actions* → *General*)
+- *Fork pull request workflows from outside collaborators*: **Require approval for all external contributors**.
+- *Workflow permissions*: **Read repository contents**, and leave *Allow GitHub Actions to create and approve pull requests* **off**.
+
+**Cloudflare previews**
+Every pushed branch gets a public preview address (`<branch>.proextinction.pages.dev`, hidden from search engines). That is handy for review, but anyone with the link can see unreviewed changes. To keep previews private: Pages project → *Settings* → *General* → **Enable access policy** (Cloudflare Access, free, only the e-mail addresses you allow). Or turn previews off: *Settings* → *Builds & deployments* → *Preview branch control* → **None**.
+
+**AI agents**
+They work like any contributor, on branches and through pull requests, with the rules in `AGENTS.md`. Never give an agent an owner's token, and don't install apps that can merge or push to `main`.

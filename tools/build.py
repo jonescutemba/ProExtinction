@@ -1168,11 +1168,12 @@ def legal_main(lang, key):
                         f'<div class="prose">{"".join(out)}</div></article>')
 
 def alternates(lang, slug):
-    """[(hreflang, path)] for the same page in every language that has it, English first as x-default."""
+    """[(hreflang, path)] for the same page in every language that has it. x-default is English,
+    except for the home pages, where it is the language chooser at / (which lists them back)."""
     en = EN_OF[lang].get(slug)
     if not en: return [(HREFLANG.get(lang, lang), url(lang, slug))]
     out = [(HREFLANG.get(l, l), url(l, OF_EN[l][en])) for l in LANGS if en in OF_EN[l]]
-    return out + [('x-default', url('en', OF_EN['en'][en]))]
+    return out + [('x-default', '/' if en == 'home' else url('en', OF_EN['en'][en]))]
 
 def jsonld(lang):
     return json.dumps({'@context': 'https://schema.org', '@graph': [
