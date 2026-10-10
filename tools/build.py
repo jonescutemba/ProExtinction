@@ -1056,7 +1056,7 @@ BORN = {
     'gu': ('આ પાનું ખોલ્યા પછી જન્મેલા', 'માણસો', 'ફાર્મનાં પ્રાણીઓ'),
 }
 # Logo clicked five times: the page fades away and the manifesto's last line appears (its own last line in each language).
-PEACE_OVERRIDE = {'es': 'Abolamos el sufrimiento. ¡Viva la paz!'}   # the Spanish manifesto ends with a different paragraph
+PEACE_OVERRIDE = {'es': 'Abolamos el sufrimiento. ¡Por justicia!'}   # the closing words of the Spanish manifesto's long last paragraph
 def peace(lang):
     if lang in PEACE_OVERRIDE: return PEACE_OVERRIDE[lang]
     return json.loads((ROOT / 'content' / lang / f'{OF_EN[lang]["manifesto"]}.json').read_text(encoding='utf-8'))[-1]
