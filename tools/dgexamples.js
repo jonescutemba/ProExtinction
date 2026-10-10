@@ -25,7 +25,7 @@
     const v = svg.querySelector('.verdict');
     v.textContent = end; v.style.fontSize = '';
     if (v.getComputedTextLength() > 600) v.style.fontSize = (30 * 600 / v.getComputedTextLength()) + 'px';
-    svg.setAttribute('aria-label', `${root}: ${left.join(', ')}. ${right.join(', ')}. ${end}`);
+    svg.setAttribute('aria-label', `${svg.dataset.heading}. ${root}: ${left.join(', ')}. ${right.join(', ')}. ${end}`);
     svg.querySelectorAll('.flow,.node rect').forEach(e => { e.style.animation = 'none'; e.getBBox(); e.style.animation = ''; });
     svg.classList.remove('dg-swap'); void svg.getBBox(); svg.classList.add('dg-swap');
   });

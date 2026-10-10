@@ -9,9 +9,9 @@ TEXT = {
     'en': {
         5: dict(title='The cycle of suffering: birth leads to suffering, suffering beings reproduce, and reproduction leads to new births.',
                 center=('Cycle of', 'suffering'), nodes=('Birth', 'Suffering', 'Reproduction')),
-        6: dict(title='Cruel design: if the lion kills the zebra, the zebra dies a violent, painful death. If the zebra escapes, '
+        6: dict(heading='Cruel Design', title='Cruel design, predation: if the lion kills the zebra, the zebra dies a violent, painful death. If the zebra escapes, '
                       'the lion starves and dies slowly. Both paths end in suffering.',
-                root='Cruel design', left=('Lion kills zebra', 'Violent, painful death'),
+                root='Predation', left=('Lion kills zebra', 'Violent, painful death'),
                 right=('Zebra escapes', 'Lion starves', 'Slow starvation death'), end='Both paths end in suffering.'),
     },
 }
@@ -93,16 +93,17 @@ def tree(t):
     right = [f'M320,{root_y + 23} V100 H{R} V{rows[0] - 26}', f'M{R},{rows[0] + 23} V{rows[1] - 26}', f'M{R},{rows[1] + 23} V{rows[2] - 26}']
     def branch(paths, side): return ''.join(line(d, 'wire') + line(d, f'flow {side}') for d in paths)
     box = lambda x, y, s, c: _pill(x, y, s, c, h=50, size=20).replace('rx="25"', 'rx="4"')
-    return (f'<svg class="dg dg-tree" viewBox="0 0 640 450" role="img" aria-label="{esc(t["title"])}">'
+    return (f'<svg class="dg dg-tree" viewBox="0 0 640 530" role="img" aria-label="{esc(t["title"])}" data-heading="{esc(t["heading"])}">'
             f'<defs><marker id="{arrow}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
             f'<path d="M1,1 L9,5 L1,9" class="tip"/></marker>'
             f'<marker id="{hot}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
             f'<path d="M1,1 L9,5 L1,9" class="tip hot-tip"/></marker></defs>'
+            f'<text class="dg-heading" x="320" y="34">{esc(t["heading"])}</text><g transform="translate(0,80)">'
             f'<g class="side l">{branch(left, "l")}{box(L, rows[0], t["left"][0], "node")}{box(L, rows[2], t["left"][1], "node end")}</g>'
             f'<g class="side r">{branch(right, "r")}{box(R, rows[0], t["right"][0], "node")}{box(R, rows[1], t["right"][1], "node")}'
             f'{box(R, rows[2], t["right"][2], "node end")}</g>'
             f'{box(320, root_y, t["root"], "node root")}'
-            f'<text class="verdict" x="320" y="425">{esc(t["end"])}</text></svg>')
+            f'<text class="verdict" x="320" y="425">{esc(t["end"])}</text></g></svg>')
 
 NEW_EXAMPLE = 'Generate new example'
 _JS = open(__file__.rsplit('/', 1)[0] + '/dgexamples.js', encoding='utf-8').read()

@@ -292,6 +292,7 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 @keyframes dg-side{0%,15%{stroke:var(--line)}25%,45%{stroke:var(--accent)}52%,100%{stroke:var(--line)}}
 .dg-tree .root rect{stroke:var(--accent)}
 .dg-tree .end text{fill:var(--link,var(--accent))}
+.dg-tree .dg-heading{font-family:var(--display);font-weight:var(--display-weight,600);font-size:52px;text-transform:uppercase;letter-spacing:.03em;fill:var(--text)}
 .dg-tree .verdict{font-family:var(--display);font-weight:var(--display-weight,600);font-size:30px;text-transform:uppercase;letter-spacing:.03em}
 .dg:hover *{animation-play-state:paused}
 .dg .node:hover rect,.dg-tree .side:hover .node rect{stroke:var(--accent);fill:var(--surface)}
