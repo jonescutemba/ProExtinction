@@ -17,7 +17,10 @@
   }
   function place() {
     raf = 0;
-    var all = zones(), z = all[side] || all[side === 'r' ? 'l' : 'r'];
+    b.classList.remove('tight');   // one line if it fits, otherwise two shorter lines
+    var all = zones();
+    if (!all.l && !all.r && getComputedStyle(b).display !== 'none') { b.classList.add('tight'); all = zones(); }
+    var z = all[side] || all[side === 'r' ? 'l' : 'r'];
     b.classList.toggle('off', !z);
     if (z) b.style.transform = 'translate(' + (z.x0 + fx * (z.x1 - z.x0)) + 'px,' + (z.y0 + fy * (z.y1 - z.y0)) + 'px)';
   }

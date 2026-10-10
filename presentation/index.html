@@ -971,12 +971,13 @@ body{font-size:1.125rem}
 @media (min-width:1280px){.toc-top{display:none}.toc-side{display:block;float:inline-end;clear:inline-end;width:14rem;margin:0 -17rem 0 0;margin-inline:0 -17rem;position:sticky;top:7.5rem;max-height:calc(100vh - 9rem);overflow:auto}}
 
 /* "I'm pro-life" joke button (tools/prolife.js): beside the text, left or right, runs away from the pointer */
-@media (min-width:1500px){
+@media (min-width:1280px){
   .prolife{display:block;position:fixed;left:0;top:0;z-index:5;font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--text);background:none;border:1px solid var(--accent);padding:.5rem .95rem;cursor:pointer;white-space:nowrap;
     transition:transform .3s cubic-bezier(.2,.9,.25,1.2),color .2s}
   .prolife:hover{color:var(--link)}
   .prolife.off{visibility:hidden}
+  .prolife.tight{white-space:normal;width:11.5rem;text-align:center;line-height:1.5}
 }
 
 /* principles page: sub-chapters stay quiet next to the big centred chapter headings */
@@ -1179,7 +1180,10 @@ d.dataset.theme=(t==='light'||t==='dark')?t:'dark'})()</script>
   }
   function place() {
     raf = 0;
-    var all = zones(), z = all[side] || all[side === 'r' ? 'l' : 'r'];
+    b.classList.remove('tight');   // one line if it fits, otherwise two shorter lines
+    var all = zones();
+    if (!all.l && !all.r && getComputedStyle(b).display !== 'none') { b.classList.add('tight'); all = zones(); }
+    var z = all[side] || all[side === 'r' ? 'l' : 'r'];
     b.classList.toggle('off', !z);
     if (z) b.style.transform = 'translate(' + (z.x0 + fx * (z.x1 - z.x0)) + 'px,' + (z.y0 + fy * (z.y1 - z.y0)) + 'px)';
   }
