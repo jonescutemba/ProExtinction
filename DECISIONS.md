@@ -48,6 +48,15 @@ Stand: laufend gepflegt. **Entschieden: Design B (Poster).** A Ember ist entfern
 Eine Datei pro Seite in `site/`, Adressen `/<sprache>/<seite>`; `/` wählt die Sprache nach dem Browser. Die frühere Ein-Datei-Präsentation (`presentation/index.html`, 8,8 MB mit allen Sprachen) ist ersetzt: Sie war langsam und für Suchmaschinen nur eine einzige Seite. Ihre alten Links (`#/de/manifest`) leitet `/` weiter.
 Standardmodus bleibt dunkel; Hell nur, wenn der Besucher es wählt.
 
+## Proteste auf der History-Seite (entschieden 2026-10)
+Vergangene Proteste stehen nicht mehr auf der Seite, und damit auch nicht die Überschrift „Upcoming protests". Geschichte, Social-Media-Link, „Where we are today" und die drei Protestfotos bleiben.
+Die Terminplan-Ansicht ist noch im Code (`history_outline` und `sched_html` in `tools/build.py`). Ein neuer Protest erscheint wieder als Plan, wenn er in `content/en/history.json` (und gleich in den KI-Übersetzungen) nach der Zeile mit dem Social-Media-Link so eingetragen wird, eine Zeile pro Eintrag:
+- Überschrift, z. B. `Upcoming protests:`
+- Stadt mit Doppelpunkt, z. B. `WROCŁAW:` (wird Unterkapitel)
+- Datum als `TT.MM.JJJJ`
+- je Ort eine Zeile: `Ort 14:55-16:00` (Komma oder Semikolon am Ende ist erlaubt), dann das nächste Datum
+Danach in `content/images.json` die `where`-Zahlen der History-Fotos um die Zahl der neuen Zeilen erhöhen.
+
 ## Vorgehen
 1. Gemeinsames liegt in `tools/css/base.css`, `tools/build.py`, `tools/blocks.py`, `content/`; Design in `brand/b-poster/tokens.css` und `tools/css/b.css`.
 2. Nach jeder Änderung: `python3 tools/build_all.py`.
