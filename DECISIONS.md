@@ -29,7 +29,7 @@ Stand: laufend gepflegt. **Entschieden: Design B (Poster).** A Ember ist entfern
 11. **Signatur:** der rote Schrägstrich (Trenner, Fortschritt, Hover).
 12. **Bausteine:** Navigation immer sichtbar (kein Hamburger-Menü), Kapitelübersicht, FAQ aufklappbar, Zitatblock, vier Efforts, Call-to-Action, Sprach- und Theme-Umschalter.
 13. **Bilder:** Hauptbildsprache im Code (Linien, Ringe, Schrägstrich, Körnung). Keine Stockfotos. Drastische Bilder nur hinter einem Klick. **Stand jetzt:** die 30 Inhaltsbilder der englischen Originalseite sind zur Sichtung eingebaut, durchnummeriert (#1 bis #30, Liste in `content/images.json`, Dateien in `presentation/img/`). Danach wird entschieden, welche bleiben und welche hinter einen Klick kommen.
-14. **Logo-Effekt:** nur das große Logo, beim 1. Hover und jedem 10., maximal 1,5×, 4 s, respektiert „Bewegung reduzieren".
+14. **Logo-Effekt:** kein Hover-Effekt mehr (entfernt 2026-10). Das große Logo auf der Startseite dreht sich in Schleife, respektiert „Bewegung reduzieren".
 15. **Scrollbars:** dünn, Akzentfarbe; innen dunkler als außen.
 16. **Zielplattform:** nur Website, responsiv. Keine PDFs, Slides, Thumbnails.
 
@@ -47,6 +47,15 @@ Stand: laufend gepflegt. **Entschieden: Design B (Poster).** A Ember ist entfern
 ## Aufbau der Website (entschieden 2026-10)
 Eine Datei pro Seite in `site/`, Adressen `/<sprache>/<seite>`; `/` wählt die Sprache nach dem Browser. Die frühere Ein-Datei-Präsentation (`presentation/index.html`, 8,8 MB mit allen Sprachen) ist ersetzt: Sie war langsam und für Suchmaschinen nur eine einzige Seite. Ihre alten Links (`#/de/manifest`) leitet `/` weiter.
 Standardmodus bleibt dunkel; Hell nur, wenn der Besucher es wählt.
+
+## Proteste auf der History-Seite (entschieden 2026-10)
+Vergangene Proteste stehen nicht mehr auf der Seite, und damit auch nicht die Überschrift „Upcoming protests". Geschichte, Social-Media-Link, „Where we are today" und die drei Protestfotos bleiben.
+Die Terminplan-Ansicht ist noch im Code (`history_outline` und `sched_html` in `tools/build.py`). Ein neuer Protest erscheint wieder als Plan, wenn er in `content/en/history.json` (und gleich in den KI-Übersetzungen) nach der Zeile mit dem Social-Media-Link so eingetragen wird, eine Zeile pro Eintrag:
+- Überschrift, z. B. `Upcoming protests:`
+- Stadt mit Doppelpunkt, z. B. `WROCŁAW:` (wird Unterkapitel)
+- Datum als `TT.MM.JJJJ`
+- je Ort eine Zeile: `Ort 14:55-16:00` (Komma oder Semikolon am Ende ist erlaubt), dann das nächste Datum
+Danach in `content/images.json` die `where`-Zahlen der History-Fotos um die Zahl der neuen Zeilen erhöhen.
 
 ## Vorgehen
 1. Gemeinsames liegt in `tools/css/base.css`, `tools/build.py`, `tools/blocks.py`, `content/`; Design in `brand/b-poster/tokens.css` und `tools/css/b.css`.

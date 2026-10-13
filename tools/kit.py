@@ -11,10 +11,10 @@ ROLES = {
  'muted': 'Beschreibungen, Labels, Metadaten', 'line': 'Rahmen, Trenner, 1px',
  'accent': 'Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text)',
  'link': 'Akzent für Text: Links, aktive Navigation, kleine Nummern',
- 'on-accent': 'Text auf Akzentfläche', 'scare': 'nur Logo-Effekt (Jumpscare)',
+ 'on-accent': 'Text auf Akzentfläche',
  'accent-deep': 'dunklere Akzentvariante (Reserve)', 'grain': 'Deckkraft der Körnung',
 }
-ORDER = ['bg', 'surface', 'text', 'muted', 'line', 'accent', 'link', 'on-accent', 'scare']
+ORDER = ['bg', 'surface', 'text', 'muted', 'line', 'accent', 'link', 'on-accent']
 
 CONCEPTS = {
  'b-poster': dict(
@@ -167,12 +167,11 @@ Getestet wird bei 320 · 390 · 600 · 768 · 1024 · 1280 · 1920 · 2560 px. K
 
 Mindestgröße: Wordmark 16 px Schrifthöhe · Marke 24 px. Schutzraum: Höhe des „P" rundherum.
 Marke färbt sich in Textfarbe, bei Hover in `--accent`. Nicht verzerren, nicht drehen
-(außer im Logo-Effekt), nicht mit Schatten versehen. Die Marke ist eine **Nachzeichnung** eines
+(außer in der Logo-Animation), nicht mit Schatten versehen. Die Marke ist eine **Nachzeichnung** eines
 500-px-Bildes; das Original-Vektor fehlt (siehe Offen).
 
-**Logo-Effekt (nur Startseite, großes Logo):** beim 1. Hover und danach bei jedem 10.: Wachstum
-auf höchstens 1,5×, Vibrieren, zwei Drehungen, 4 s, Farbe `--scare`, Seite dahinter auf 90 %
-abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, Zähler: `?scare=reset`).
+**Logo-Animation (nur Startseite, großes Logo):** die Schlange dreht sich einmal, dann schlägt der
+Schrägstrich durch, hält und verblasst, in Schleife. Kein Hover-Effekt. Bei „Bewegung reduzieren" steht das Logo still.
 
 ## 6. Bausteine
 | Baustein | Maße und Regeln |
@@ -334,7 +333,7 @@ def examples(c):
 <section class="ex-block"><h2>Farben (Tokens)</h2><p class="mono ex-flag">Dunkel</p><ul class="sw-list">{sw("dark")}</ul><p class="mono ex-flag" style="margin-top:1.2rem">Hell</p><ul class="sw-list">{sw("light")}</ul></section>
 <section class="ex-block"><h2>Typografie</h2><h1 style="font-size:{d['h1'].replace(',', '.').replace(' ', '')}">Überschrift H1</h1><h2 style="margin:1rem 0">Überschrift H2</h2><p class="lede">Lede-Zeile in Kursiv.</p><p style="max-width:68ch">Fließtext: {d["body"]}. Die Zeilenlänge bleibt bei etwa 68 Zeichen, damit lange Texte lesbar sind. <a href="#">Ein Link</a> steht in <code>--link</code>.</p><p class="mono">Mono-Label · 01 · Quelle</p></section>
 <section class="ex-block"><h2>Buttons und Trenner</h2><div class="ex-row"><a class="btn primary" href="#">Aktiv werden</a><a class="btn" href="#">Manifest lesen</a></div><hr class="slash"></section>
-<section class="hero" aria-label="Hero und Logo-Effekt"><span class="hero-logo" role="img" aria-label="Logo (Hover testen)"><span class="lg lg-snake"></span><span class="lg lg-cut"></span><span class="lg lg-slash"></span></span><h1 class="wordmark">PRO EXTINCTION</h1><p class="hero-tag">Together, we end suffering.</p><p class="hero-sub">Hover über das Logo: Effekt beim 1. und jedem 10. Mal. Zurücksetzen mit ?scare=reset.</p></section>
+<section class="hero" aria-label="Hero und Logo-Animation"><span class="hero-logo" role="img" aria-label="Logo"><span class="lg lg-snake"></span><span class="lg lg-cut"></span><span class="lg lg-slash"></span></span><h1 class="wordmark">PRO EXTINCTION</h1><p class="hero-tag">Together, we end suffering.</p><p class="hero-sub">Das große Logo dreht sich in Schleife.</p></section>
 <section class="mission"><hr class="slash"><p class="mono kicker">Unsere Mission</p><blockquote>Beispielzitat in der Zitat-Schrift des Konzepts.</blockquote></section>
 <section class="efforts"><ol>{eff}</ol></section>
 <section class="ex-block"><h2>Kapitelübersicht und Langtext</h2><nav class="toc" aria-label="Auf dieser Seite"><p class="mono">Auf dieser Seite</p><ol>{toc}</ol></nav><div class="prose"><h2 id="b1">Beispielkapitel 1</h2><p>Absatz mit Beispieltext. Das mitlaufende aktive Kapitel wird per Script markiert.</p><ul><li>Listenpunkt mit Akzent-Marker</li><li>Zweiter Punkt</li></ul><h2 id="b2">Beispielkapitel 2</h2><p>Zweiter Absatz.</p></div></section>
