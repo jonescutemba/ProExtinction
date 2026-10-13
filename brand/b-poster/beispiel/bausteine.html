@@ -128,15 +128,6 @@ p{margin:0 0 1.15em}
   61%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
   88%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
   95%,100%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:0}}
-/* logo jumpscare: grows fast, shakes, spins back down. Uses individual transform properties so they can run in parallel. */
-.hero-logo.scare{z-index:55;pointer-events:none;color:var(--scare,var(--accent));filter:drop-shadow(0 0 22px var(--scare,var(--accent)));
-  animation:scare-scale 4s cubic-bezier(.2,.8,.2,1) both,scare-spin 4s ease-in-out both,scare-shake .045s steps(1) .2s 44 alternate both}
-/* the logo is a ring (hollow centre), so the page is dimmed behind it for the duration */
-html.scaring body::after{content:"";position:fixed;inset:0;z-index:54;pointer-events:none;background:var(--bg);opacity:0;animation:scare-dim 4s ease both}
-@keyframes scare-dim{0%{opacity:0}4%{opacity:.9}82%{opacity:.9}100%{opacity:0}}
-@keyframes scare-scale{0%{scale:1}4%{scale:1.5}62%{scale:1.5}100%{scale:1}}
-@keyframes scare-spin{0%,60%{rotate:0deg}100%{rotate:720deg}}
-@keyframes scare-shake{0%{translate:0 0}25%{translate:-6px 4px}50%{translate:5px -5px}75%{translate:-4px -4px}100%{translate:6px 4px}}
 html,body{overflow-x:clip}
 .hero .wordmark{font-size:clamp(2.6rem,11vw,8rem);margin:0 0 1rem;min-width:0;overflow-wrap:anywhere;padding-bottom:.08em}
 .hero-tag{font-family:var(--display);text-transform:uppercase;letter-spacing:.3em;font-size:clamp(.9rem,2.4vw,1.25rem);color:var(--text);margin:0 0 .5rem}
@@ -429,7 +420,6 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
   --accent:#c4161c;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
   --link:#e8484d;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
   --on-accent:#fff;  /* Text auf Akzentfläche */
-  --scare:#e01a20;  /* nur Logo-Effekt (Jumpscare) */
   --accent-deep:#7e0e12;  /* dunklere Akzentvariante (Reserve) */
   --grain:.08;  /* Deckkraft der Körnung */
   --metal:linear-gradient(180deg,#fff 0%,#b5b5b5 40%,#f0f0f0 52%,#7d7d7d 100%);
@@ -443,7 +433,6 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
   --accent:#a30f14;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
   --link:#a30f14;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
   --on-accent:#fff;  /* Text auf Akzentfläche */
-  --scare:#c4121a;  /* nur Logo-Effekt (Jumpscare) */
   --accent-deep:#6d0a0d;  /* dunklere Akzentvariante (Reserve) */
   --grain:.05;  /* Deckkraft der Körnung */
   --grain-blend:multiply;
@@ -545,10 +534,10 @@ body{font-size:1.125rem}
 <main id="main">
 <section class="ex-block"><p class="mono ex-flag">BEISPIELDATEN · Referenz für Konzept Poster · alle Texte hier sind Platzhalter</p>
 <h1>Bausteine</h1><hr class="slash"></section>
-<section class="ex-block"><h2>Farben (Tokens)</h2><p class="mono ex-flag">Dunkel</p><ul class="sw-list"><li><span class="sw" style="background:#0b0708"></span><b class="mono">--bg</b><code>#0b0708</code></li><li><span class="sw" style="background:#150f10"></span><b class="mono">--surface</b><code>#150f10</code></li><li><span class="sw" style="background:#e2dfdf"></span><b class="mono">--text</b><code>#e2dfdf</code></li><li><span class="sw" style="background:#9d9595"></span><b class="mono">--muted</b><code>#9d9595</code></li><li><span class="sw" style="background:#2f2426"></span><b class="mono">--line</b><code>#2f2426</code></li><li><span class="sw" style="background:#c4161c"></span><b class="mono">--accent</b><code>#c4161c</code></li><li><span class="sw" style="background:#e8484d"></span><b class="mono">--link</b><code>#e8484d</code></li><li><span class="sw" style="background:#fff"></span><b class="mono">--on-accent</b><code>#fff</code></li><li><span class="sw" style="background:#e01a20"></span><b class="mono">--scare</b><code>#e01a20</code></li></ul><p class="mono ex-flag" style="margin-top:1.2rem">Hell</p><ul class="sw-list"><li><span class="sw" style="background:#f3efe9"></span><b class="mono">--bg</b><code>#f3efe9</code></li><li><span class="sw" style="background:#e9e3da"></span><b class="mono">--surface</b><code>#e9e3da</code></li><li><span class="sw" style="background:#130d0e"></span><b class="mono">--text</b><code>#130d0e</code></li><li><span class="sw" style="background:#5a5253"></span><b class="mono">--muted</b><code>#5a5253</code></li><li><span class="sw" style="background:#cdc4b8"></span><b class="mono">--line</b><code>#cdc4b8</code></li><li><span class="sw" style="background:#a30f14"></span><b class="mono">--accent</b><code>#a30f14</code></li><li><span class="sw" style="background:#a30f14"></span><b class="mono">--link</b><code>#a30f14</code></li><li><span class="sw" style="background:#fff"></span><b class="mono">--on-accent</b><code>#fff</code></li><li><span class="sw" style="background:#c4121a"></span><b class="mono">--scare</b><code>#c4121a</code></li></ul></section>
+<section class="ex-block"><h2>Farben (Tokens)</h2><p class="mono ex-flag">Dunkel</p><ul class="sw-list"><li><span class="sw" style="background:#0b0708"></span><b class="mono">--bg</b><code>#0b0708</code></li><li><span class="sw" style="background:#150f10"></span><b class="mono">--surface</b><code>#150f10</code></li><li><span class="sw" style="background:#e2dfdf"></span><b class="mono">--text</b><code>#e2dfdf</code></li><li><span class="sw" style="background:#9d9595"></span><b class="mono">--muted</b><code>#9d9595</code></li><li><span class="sw" style="background:#2f2426"></span><b class="mono">--line</b><code>#2f2426</code></li><li><span class="sw" style="background:#c4161c"></span><b class="mono">--accent</b><code>#c4161c</code></li><li><span class="sw" style="background:#e8484d"></span><b class="mono">--link</b><code>#e8484d</code></li><li><span class="sw" style="background:#fff"></span><b class="mono">--on-accent</b><code>#fff</code></li></ul><p class="mono ex-flag" style="margin-top:1.2rem">Hell</p><ul class="sw-list"><li><span class="sw" style="background:#f3efe9"></span><b class="mono">--bg</b><code>#f3efe9</code></li><li><span class="sw" style="background:#e9e3da"></span><b class="mono">--surface</b><code>#e9e3da</code></li><li><span class="sw" style="background:#130d0e"></span><b class="mono">--text</b><code>#130d0e</code></li><li><span class="sw" style="background:#5a5253"></span><b class="mono">--muted</b><code>#5a5253</code></li><li><span class="sw" style="background:#cdc4b8"></span><b class="mono">--line</b><code>#cdc4b8</code></li><li><span class="sw" style="background:#a30f14"></span><b class="mono">--accent</b><code>#a30f14</code></li><li><span class="sw" style="background:#a30f14"></span><b class="mono">--link</b><code>#a30f14</code></li><li><span class="sw" style="background:#fff"></span><b class="mono">--on-accent</b><code>#fff</code></li></ul></section>
 <section class="ex-block"><h2>Typografie</h2><h1 style="font-size:clamp(2.6rem.9vw.6rem)">Überschrift H1</h1><h2 style="margin:1rem 0">Überschrift H2</h2><p class="lede">Lede-Zeile in Kursiv.</p><p style="max-width:68ch">Fließtext: Barlow. Die Zeilenlänge bleibt bei etwa 68 Zeichen, damit lange Texte lesbar sind. <a href="#">Ein Link</a> steht in <code>--link</code>.</p><p class="mono">Mono-Label · 01 · Quelle</p></section>
 <section class="ex-block"><h2>Buttons und Trenner</h2><div class="ex-row"><a class="btn primary" href="#">Aktiv werden</a><a class="btn" href="#">Manifest lesen</a></div><hr class="slash"></section>
-<section class="hero" aria-label="Hero und Logo-Effekt"><span class="hero-logo" role="img" aria-label="Logo (Hover testen)"><span class="lg lg-snake"></span><span class="lg lg-cut"></span><span class="lg lg-slash"></span></span><h1 class="wordmark">PRO EXTINCTION</h1><p class="hero-tag">Together, we end suffering.</p><p class="hero-sub">Hover über das Logo: Effekt beim 1. und jedem 10. Mal. Zurücksetzen mit ?scare=reset.</p></section>
+<section class="hero" aria-label="Hero und Logo-Animation"><span class="hero-logo" role="img" aria-label="Logo"><span class="lg lg-snake"></span><span class="lg lg-cut"></span><span class="lg lg-slash"></span></span><h1 class="wordmark">PRO EXTINCTION</h1><p class="hero-tag">Together, we end suffering.</p><p class="hero-sub">Das große Logo dreht sich in Schleife.</p></section>
 <section class="mission"><hr class="slash"><p class="mono kicker">Unsere Mission</p><blockquote>Beispielzitat in der Zitat-Schrift des Konzepts.</blockquote></section>
 <section class="efforts"><ol><li><span class="num mono">01</span><p class="eff-label mono">Einsatz 1</p><p>Beispieltext für einen Einsatz. Länge und Umbruch wie im Original.</p></li><li><span class="num mono">02</span><p class="eff-label mono">Einsatz 2</p><p>Beispieltext für einen Einsatz. Länge und Umbruch wie im Original.</p></li><li><span class="num mono">03</span><p class="eff-label mono">Einsatz 3</p><p>Beispieltext für einen Einsatz. Länge und Umbruch wie im Original.</p></li><li><span class="num mono">04</span><p class="eff-label mono">Einsatz 4</p><p>Beispieltext für einen Einsatz. Länge und Umbruch wie im Original.</p></li></ol></section>
 <section class="ex-block"><h2>Kapitelübersicht und Langtext</h2><nav class="toc" aria-label="Auf dieser Seite"><p class="mono">Auf dieser Seite</p><ol><li><a href="#b1">Beispielkapitel 1</a></li><li><a href="#b2">Beispielkapitel 2</a></li><li><a href="#b3">Beispielkapitel 3</a></li><li><a href="#b4">Beispielkapitel 4</a></li><li><a href="#b5">Beispielkapitel 5</a></li></ol></nav><div class="prose"><h2 id="b1">Beispielkapitel 1</h2><p>Absatz mit Beispieltext. Das mitlaufende aktive Kapitel wird per Script markiert.</p><ul><li>Listenpunkt mit Akzent-Marker</li><li>Zweiter Punkt</li></ul><h2 id="b2">Beispielkapitel 2</h2><p>Zweiter Absatz.</p></div></section>
@@ -570,45 +559,13 @@ body{font-size:1.125rem}
   document.addEventListener('pointerdown', function () { delete d.dataset.kb; }, true);
   var langSel = document.querySelector('.lang-select');
   if (langSel) langSel.addEventListener('change', function () { location.href = langSel.value; });
-  // The OS setting "reduce motion" switches the logo effect off. For testing it can be overridden: add ?motion=on (or ?motion=off to undo).
+  // The OS setting "reduce motion" switches animations off. For testing it can be overridden: add ?motion=on (or ?motion=off to undo).
   try {
     var mp = new URLSearchParams(location.search).get('motion');
     if (mp === 'on') localStorage.setItem('pe-motion', 'on');
     if (mp === 'off') localStorage.removeItem('pe-motion');
     if (localStorage.getItem('pe-motion') === 'on') d.dataset.motion = 'on';
   } catch (e) {}
-  var logo = document.querySelector('.hero-logo');
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && d.dataset.motion !== 'on';
-  // The effect fires on the 1st hover and then on every 10th one (10, 20, 30 ...). The count survives page loads; ?scare=reset starts over.
-  var hovers = 0;
-  try {
-    if (new URLSearchParams(location.search).get('scare') === 'reset') localStorage.removeItem('pe-hovers');
-    hovers = parseInt(localStorage.getItem('pe-hovers'), 10) || 0;
-  } catch (e) {}
-  var armed = true;
-  function scare(e) {
-    if (!logo || reduce || !armed) return;
-    armed = false;
-    hovers++;
-    try { localStorage.setItem('pe-hovers', String(hovers)); } catch (err) {}
-    var isClick = e && e.type === 'click';
-    if (hovers !== 1 && hovers % 10 !== 0) { if (isClick) armed = true; return; }
-    logo.classList.add('scare'); d.classList.add('scaring');
-    setTimeout(function () {
-      logo.classList.remove('scare'); d.classList.remove('scaring');
-      if (isClick) armed = true; // touch has no mouseleave
-    }, 4000);
-  }
-  if (logo) {
-    logo.addEventListener('mouseenter', scare);
-    logo.addEventListener('click', scare);
-    // re-arm only after the pointer has left, so resting on the logo does not loop the effect
-    logo.addEventListener('mouseleave', function () { if (!logo.classList.contains('scare')) armed = true; });
-    document.addEventListener('mousemove', function (e) {
-      if (!armed && !logo.classList.contains('scare') && !logo.contains(e.target)) armed = true;
-    }, { passive: true });
-  }
-
   // ---- expandable menu below 1000px
   var topBar = document.querySelector('.top'), menuBtn = document.querySelector('.menu-toggle');
   function setTopH() { if (topBar) d.style.setProperty('--top-h', Math.max(0, topBar.getBoundingClientRect().bottom) + 'px'); }

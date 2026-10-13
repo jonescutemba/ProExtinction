@@ -29,7 +29,7 @@ Stand: laufend gepflegt. **Entschieden: Design B (Poster).** A Ember ist entfern
 11. **Signatur:** der rote Schrägstrich (Trenner, Fortschritt, Hover).
 12. **Bausteine:** Navigation immer sichtbar (kein Hamburger-Menü), Kapitelübersicht, FAQ aufklappbar, Zitatblock, vier Efforts, Call-to-Action, Sprach- und Theme-Umschalter.
 13. **Bilder:** Hauptbildsprache im Code (Linien, Ringe, Schrägstrich, Körnung). Keine Stockfotos. Drastische Bilder nur hinter einem Klick. **Stand jetzt:** die 30 Inhaltsbilder der englischen Originalseite sind zur Sichtung eingebaut, durchnummeriert (#1 bis #30, Liste in `content/images.json`, Dateien in `presentation/img/`). Danach wird entschieden, welche bleiben und welche hinter einen Klick kommen.
-14. **Logo-Effekt:** nur das große Logo, beim 1. Hover und jedem 10., maximal 1,5×, 4 s, respektiert „Bewegung reduzieren".
+14. **Logo-Effekt:** kein Hover-Effekt mehr (entfernt 2026-10). Das große Logo auf der Startseite dreht sich in Schleife, respektiert „Bewegung reduzieren".
 15. **Scrollbars:** dünn, Akzentfarbe; innen dunkler als außen.
 16. **Zielplattform:** nur Website, responsiv. Keine PDFs, Slides, Thumbnails.
 

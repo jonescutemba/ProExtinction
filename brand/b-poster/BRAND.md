@@ -25,7 +25,6 @@ gleichwertig, Umschalter oben rechts. Standard: dunkel.
 | `--accent` | `#c4161c` | `#a30f14` | Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) |
 | `--link` | `#e8484d` | `#a30f14` | Akzent für Text: Links, aktive Navigation, kleine Nummern |
 | `--on-accent` | `#fff` | `#fff` | Text auf Akzentfläche |
-| `--scare` | `#e01a20` | `#c4121a` | nur Logo-Effekt (Jumpscare) |
 
 Namen weichen von der Vorlage des Skills ab (`--surface` statt `--surf`, `--text` statt `--fg`,
 `--muted` statt `--mut`, `--accent` statt `--acc`). Sie gelten ausschließlich in diesem Kit.
@@ -76,12 +75,11 @@ Getestet wird bei 320 · 390 · 600 · 768 · 1024 · 1280 · 1920 · 2560 px. K
 
 Mindestgröße: Wordmark 16 px Schrifthöhe · Marke 24 px. Schutzraum: Höhe des „P" rundherum.
 Marke färbt sich in Textfarbe, bei Hover in `--accent`. Nicht verzerren, nicht drehen
-(außer im Logo-Effekt), nicht mit Schatten versehen. Die Marke ist eine **Nachzeichnung** eines
+(außer in der Logo-Animation), nicht mit Schatten versehen. Die Marke ist eine **Nachzeichnung** eines
 500-px-Bildes; das Original-Vektor fehlt (siehe Offen).
 
-**Logo-Effekt (nur Startseite, großes Logo):** beim 1. Hover und danach bei jedem 10.: Wachstum
-auf höchstens 1,5×, Vibrieren, zwei Drehungen, 4 s, Farbe `--scare`, Seite dahinter auf 90 %
-abgedunkelt. Kein Blitzen. Bei „Bewegung reduzieren" aus (Test: `?motion=on`, Zähler: `?scare=reset`).
+**Logo-Animation (nur Startseite, großes Logo):** die Schlange dreht sich einmal, dann schlägt der
+Schrägstrich durch, hält und verblasst, in Schleife. Kein Hover-Effekt. Bei „Bewegung reduzieren" steht das Logo still.
 
 ## 6. Bausteine
 | Baustein | Maße und Regeln |
