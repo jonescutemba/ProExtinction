@@ -20,7 +20,6 @@
   --accent:#c4161c;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
   --link:#e8484d;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
   --on-accent:#fff;  /* Text auf Akzentfläche */
-  --scare:#e01a20;  /* nur Logo-Effekt (Jumpscare) */
   --accent-deep:#7e0e12;  /* dunklere Akzentvariante (Reserve) */
   --grain:.08;  /* Deckkraft der Körnung */
   --metal:linear-gradient(180deg,#fff 0%,#b5b5b5 40%,#f0f0f0 52%,#7d7d7d 100%);
@@ -34,7 +33,6 @@
   --accent:#a30f14;  /* Akzent: Flächen, Linien, Buttons, große Zahlen (nicht für kleinen Text) */
   --link:#a30f14;  /* Akzent für Text: Links, aktive Navigation, kleine Nummern */
   --on-accent:#fff;  /* Text auf Akzentfläche */
-  --scare:#c4121a;  /* nur Logo-Effekt (Jumpscare) */
   --accent-deep:#6d0a0d;  /* dunklere Akzentvariante (Reserve) */
   --grain:.05;  /* Deckkraft der Körnung */
   --grain-blend:multiply;

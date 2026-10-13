@@ -99,15 +99,6 @@ p{margin:0 0 1.15em}
   61%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
   88%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:1}
   95%,100%{clip-path:polygon(190% 310%,-210% -90%,300% -200%);opacity:0}}
-/* logo jumpscare: grows fast, shakes, spins back down. Uses individual transform properties so they can run in parallel. */
-.hero-logo.scare{z-index:55;pointer-events:none;color:var(--scare,var(--accent));filter:drop-shadow(0 0 22px var(--scare,var(--accent)));
-  animation:scare-scale 4s cubic-bezier(.2,.8,.2,1) both,scare-spin 4s ease-in-out both,scare-shake .045s steps(1) .2s 44 alternate both}
-/* the logo is a ring (hollow centre), so the page is dimmed behind it for the duration */
-html.scaring body::after{content:"";position:fixed;inset:0;z-index:54;pointer-events:none;background:var(--bg);opacity:0;animation:scare-dim 4s ease both}
-@keyframes scare-dim{0%{opacity:0}4%{opacity:.9}82%{opacity:.9}100%{opacity:0}}
-@keyframes scare-scale{0%{scale:1}4%{scale:1.5}62%{scale:1.5}100%{scale:1}}
-@keyframes scare-spin{0%,60%{rotate:0deg}100%{rotate:720deg}}
-@keyframes scare-shake{0%{translate:0 0}25%{translate:-6px 4px}50%{translate:5px -5px}75%{translate:-4px -4px}100%{translate:6px 4px}}
 html,body{overflow-x:clip}
 .hero .wordmark{font-size:clamp(2.6rem,11vw,8rem);margin:0 0 1rem;min-width:0;overflow-wrap:anywhere;padding-bottom:.08em}
 .hero-tag{font-family:var(--display);text-transform:uppercase;letter-spacing:.3em;font-size:clamp(.9rem,2.4vw,1.25rem);color:var(--text);margin:0 0 .5rem}

@@ -29,6 +29,6 @@ Jede Seite hat Titel, Beschreibung (`content/seo/`), Canonical-Link, `hreflang`-
 **Noch gesperrt:** `INDEXABLE = False` in `tools/build.py`. Auf `True` stellen und neu bauen schaltet Meta-Tag, `X-Robots-Tag` (in `site/_headers`) und `robots.txt` gemeinsam frei. Eine Rechtsseite mit Platzhaltern in eckigen Klammern bleibt für Suchmaschinen gesperrt.
 Domain: `SITE_URL` in `tools/build.py` (`https://proextinction.com`). Alte englische Adressen (`/manifesto`, `/home` …) leiten auf die neuen um, alte Links der Ein-Datei-Version (`#/de/manifest`) leitet `/` weiter.
 
-Adresszusätze zum Testen: `?theme=light` oder `?theme=dark`, Logo-Effekt `?scare=reset` (Zähler zurück), `?motion=on` (trotz „Bewegung reduzieren").
+Adresszusätze zum Testen: `?theme=light` oder `?theme=dark`, `?motion=on` (trotz „Bewegung reduzieren").
 
 Versteckte Effekte (`tools/smoke.js`, `tools/eggs.js`): Rauch am Ende langer Seiten; Sterne, die auf „Cosmic Extinction“ beim Lesen verlöschen; Logo fünfmal schnell anklicken (die Seite verblasst, der letzte Satz des Manifests erscheint); Geburtenzähler in der Fusszeile (Menschen, ~Nutztiere, ~Wildtiere, ~Insekten; grobe Schätzungen aus Jahreszahlen, `BORN` in `tools/build.py`); Gruss in der Browser-Konsole. Mit „Bewegung reduzieren“ nur sanfte Überblendungen.
