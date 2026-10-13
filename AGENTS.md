@@ -13,9 +13,9 @@ These rules apply to every contributor and every AI tool (Claude Code, Codex, Cu
 - Where things are: `README.md`. Decisions and their reasons: `DECISIONS.md`. Going live: `DEPLOY.md`, `HOSTING.md`.
 
 ## Who can publish
-- `main` is the live website. Every merge into `main` goes online within two minutes.
-- Only the owners (see `.github/CODEOWNERS`) approve and merge pull requests. Everyone else, and every AI agent, works on a branch and opens a pull request.
-- Agents never push to `main`, never force-push, never delete branches, never merge their own pull requests and never change repository settings.
+- Only the owners (see `.github/CODEOWNERS`) decide what is merged. Everyone else, and every AI agent, works on a branch and opens a pull request.
+- An agent may merge a pull request into `main` only when an owner (Jonas, GitHub `AppsOfUse`, or James, GitHub `idoinejd`) asks for it in the conversation, for that pull request, and only when the `check` job is green and there is no merge conflict. A general "you may merge" does not cover later pull requests.
+- Agents never push to `main` directly, never force-push, never delete branches, never approve pull requests and never change repository settings.
 
 ## Content rules
 1. **English is the source.** `content/en/` is the reference. Other languages are original texts (from the old language sites) or AI translations. `SITE` in `tools/build.py` says which is which (`None` in the last field = AI translation).
