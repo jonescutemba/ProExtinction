@@ -979,15 +979,22 @@ def social_body(lang, lines, used):
     out.append(f'<p class="note">{esc(L(94))}</p>')
     return '\n'.join(out), toc
 
+# FAQ pictures close the answer to an English question (content/images.json "where": ["answer", question number]).
+# Original-language FAQs number their questions differently: English number -> their number.
+FAQ_Q = {'de': {14: 15}, 'es': {14: 15}, 'it': {14: 15}}
+
 def faq_body(lang, slug, lines, like=None, href=None):
     t = T[lang]
     title, lede, rest = head_lede(lines, like)
     intro, pairs = faq_pairs(rest, like[len(lines) - len(rest):] if like else None)
     shown = pairs
     intro_html = ''.join(f'<p>{linkify(l)}</p>' for l in intro)
+    pics = {x['where'][1]: x['n'] for x in IMAGES if x['page'] == EN_OF[lang][slug] and x['where'][0] == 'answer'}
+    if not like: pics = {FAQ_Q.get(lang, {}).get(k, k): n for k, n in pics.items()}
     items = []
     for k, (q, a) in enumerate(shown, 1):   # counter-set keeps each question's number while the search hides others
-        items.append(f'<details style="counter-set:q {k}"><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a) + '</div></details>')
+        items.append(f'<details style="counter-set:q {k}"><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a)
+                     + (figure(pics[k], 'pic', lang) if k in pics else '') + '</div></details>')
     more = ''
     if EN_OF[lang][slug] == 'full-faq':
         ph, cnt, none, end, mail = FAQ_FIND[lang]
