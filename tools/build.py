@@ -717,7 +717,11 @@ KINDS_BY_HAND = {
     ('en', 'suffering-in-detail'): _SUF, ('es', 'sufrimiento-en-detalle'): _SUF, ('it', 'la-sofferenza-nei-dettagli'): _SUF,
     ('de', 'leid-im-detail'): _kinds(h=(4, 14, 26), h3=(6, 8, 10, 12, 16, 18, 20, 22, 24, 29, 31, 33, 35, 37), p=(3,)),
     ('pl', 'znaczenie-cierpienia'): _kinds(h=(1, 18, 30), h3=(8, 10, 12, 14, 16, 20, 22, 24, 26, 28, 32, 34, 36, 38, 40), p=(5,)),
+    # Criticism: the parts of "Veganism" are sub-chapters; "Who would know?" is a sentence, not a heading.
+    ('en', 'criticism-of-different-pro-life-ideologies'): _kinds(h3=(76, 83, 87, 95, 103, 109, 117, 127), p=(90,)),
 }
+# Pages whose chapters are numbered (1. Human Rights, 2. Left-wing politics …), by English slug.
+NUMBERED = {'criticism-of-different-pro-life-ideologies'}
 
 # Pictures from the English site (content/images.json, files in presentation/img), numbered so unwanted ones can be named.
 IMAGES = json.loads((ROOT / 'content' / 'images.json').read_text(encoding='utf-8'))
@@ -887,7 +891,7 @@ def render_blocks(blocks, used, lang='en'):
     out, toc = [], []
     for b in blocks:
         if b[0] == 'h':
-            i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：')))
+            i = slug_id(re.sub(r'^\d+\. ', '', b[1]), used); toc.append((i, b[1].rstrip(':：')))
             out.append(f'<h2 id="{i}">{esc(b[1].rstrip(":："))}</h2>')
         elif b[0] == 'h3':
             i = slug_id(b[1], used); toc.append((i, b[1].rstrip(':：'), 3))
@@ -952,6 +956,9 @@ def doc_body(lang, slug, lines, full_url, like=None):
         bl = cosmic_outline(bl, blocks_of(rest_like, None, (), ()) if rest_like else None)
     if slug == 'principles-of-the-movement':
         bl = outline(bl, blocks_of(rest_like, None, (), (), kinds=kinds) if rest_like else None)
+    if slug in NUMBERED:   # the number is shown, the anchor stays the chapter's name
+        n = iter(range(1, len(bl) + 1))
+        bl = [(b[0], f'{next(n)}. {b[1]}', *b[2:]) if b[0] == 'h' else b for b in bl]
     body, toc = render_blocks(bl, used, lang)
     return title, lede, body, toc, truncated
 
