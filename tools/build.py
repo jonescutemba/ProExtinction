@@ -981,7 +981,8 @@ def social_body(lang, lines, used):
 
 # FAQ pictures close the answer to an English question (content/images.json "where": ["answer", question number]).
 # Original-language FAQs number their questions differently: English number -> their number.
-FAQ_Q = {'de': {14: 15}, 'es': {14: 15}, 'it': {14: 15}}
+FAQ_Q = {'de': {14: 15, 34: 32, 35: 12}, 'es': {14: 15, 34: 33, 35: 12}, 'it': {14: 15, 34: 33, 35: 12},
+         'pl': {34: 32, 35: 37}}   # 34, 35: veganism and antinatalism (FAQ_MORE); the originals ask them in their own words
 
 # Full FAQ answers that end with a button to a chapter of the criticism page:
 # question number (English and its translations) -> line of that chapter's heading on the criticism page.
@@ -1009,7 +1010,8 @@ def faq_body(lang, slug, lines, like=None, href=None):
     intro, pairs = faq_pairs(rest, like[len(lines) - len(rest):] if like else None)
     shown = pairs
     intro_html = ''.join(f'<p>{linkify(l)}</p>' for l in intro)
-    more_btn = faq_more(lang, href) if EN_OF[lang][slug] == 'full-faq' and (like or lang == 'en') else {}
+    more_btn = faq_more(lang, href) if EN_OF[lang][slug] == 'full-faq' else {}
+    if not like: more_btn = {FAQ_Q.get(lang, {}).get(k, k): v for k, v in more_btn.items()}
     pics = {x['where'][1]: x['n'] for x in IMAGES if x['page'] == EN_OF[lang][slug] and x['where'][0] == 'answer'}
     if not like: pics = {FAQ_Q.get(lang, {}).get(k, k): n for k, n in pics.items()}
     items = []
