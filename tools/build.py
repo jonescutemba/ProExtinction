@@ -692,6 +692,46 @@ FAQ_FIND = {
 FAQ_JS = (ROOT / 'tools' / 'faqsearch.js').read_text(encoding='utf-8')
 
 DISCORD = 'https://discord.gg/nb2K8y846R'
+DEBATE_DISCORD = 'https://discord.gg/887fVYCDsN'
+# Debate server: open to everyone, pro-lifers included. (heading, text, button) per language; shown on the home and contact pages.
+DEBATE = {
+ 'en': ('Debate with us', 'Our debate server on Discord is open to everyone, also to people who disagree with us. Pro-lifers are welcome: bring your best arguments.', 'Debate on Discord'),
+ 'de': ('Diskutiere mit uns', 'Unser Debatten-Server auf Discord ist für alle offen, auch für Menschen, die anderer Meinung sind. Pro-Lifer sind willkommen: Bring deine besten Argumente mit.', 'Zur Debatte auf Discord'),
+ 'pl': ('Dyskutuj z nami', 'Nasz serwer debat na Discordzie jest otwarty dla wszystkich, także dla osób, które się z nami nie zgadzają. Pro-liferzy są mile widziani: przynieś swoje najlepsze argumenty.', 'Debata na Discordzie'),
+ 'es': ('Debate con nosotros', 'Nuestro servidor de debate en Discord está abierto a todos, también a quienes no están de acuerdo con nosotros. Los pro-life son bienvenidos: trae tus mejores argumentos.', 'Debatir en Discord'),
+ 'it': ('Discuti con noi', "Il nostro server di dibattito su Discord è aperto a tutti, anche a chi non è d'accordo con noi. I pro-life sono benvenuti: porta i tuoi argomenti migliori.", 'Dibatti su Discord'),
+ 'fr': ('Débats avec nous', "Notre serveur de débat sur Discord est ouvert à tous, aussi aux personnes qui ne sont pas d'accord avec nous. Les pro-life sont les bienvenus : apporte tes meilleurs arguments.", 'Débattre sur Discord'),
+ 'pt': ('Debata conosco', 'Nosso servidor de debate no Discord é aberto a todos, também a quem discorda de nós. Os pró-vida são bem-vindos: traga seus melhores argumentos.', 'Debater no Discord'),
+ 'nl': ('Debatteer met ons', 'Onze debatserver op Discord staat open voor iedereen, ook voor mensen die het niet met ons eens zijn. Pro-lifers zijn welkom: kom met je beste argumenten.', 'Debatteren op Discord'),
+ 'ru': ('Поспорь с нами', 'Наш сервер для дебатов в Discord открыт для всех, в том числе для тех, кто с нами не согласен. Сторонники pro-life тоже приглашены: приходите с лучшими аргументами.', 'Дебаты в Discord'),
+ 'uk': ('Подискутуй з нами', 'Наш сервер для дебатів у Discord відкритий для всіх, зокрема для тих, хто з нами не згоден. Прихильників pro-life теж запрошуємо: приходьте з найкращими аргументами.', 'Дебати в Discord'),
+ 'tr': ('Bizimle tartış', "Discord'daki tartışma sunucumuz herkese açık, bizimle aynı fikirde olmayanlara da. Pro-life düşünenler de davetli: en iyi argümanlarını getir.", "Discord'da tartış"),
+ 'id': ('Berdebat dengan kami', 'Server debat kami di Discord terbuka untuk semua orang, juga untuk yang tidak setuju dengan kami. Kaum pro-life juga disambut: bawa argumen terbaikmu.', 'Debat di Discord'),
+ 'tl': ('Makipagdebate sa amin', 'Bukas sa lahat ang aming debate server sa Discord, pati sa mga hindi sang-ayon sa amin. Welcome din ang mga pro-life: dalhin ang pinakamahuhusay mong argumento.', 'Makipagdebate sa Discord'),
+ 'vi': ('Tranh luận với chúng tôi', 'Máy chủ tranh luận của chúng tôi trên Discord mở cho tất cả mọi người, kể cả những ai không đồng ý với chúng tôi. Người ủng hộ pro-life cũng được chào đón: hãy mang theo những lập luận tốt nhất của bạn.', 'Tranh luận trên Discord'),
+ 'sw': ('Jadiliana nasi', 'Seva yetu ya mijadala kwenye Discord iko wazi kwa kila mtu, hata kwa wasiokubaliana nasi. Wafuasi wa pro-life wanakaribishwa pia: leta hoja zako bora.', 'Jadiliana kwenye Discord'),
+ 'zh': ('来和我们辩论', '我们在 Discord 上的辩论服务器向所有人开放，也欢迎不同意我们观点的人。pro-life 支持者同样欢迎：带上你最好的论点。', '在 Discord 上辩论'),
+ 'ja': ('私たちと議論しよう', 'Discord の討論サーバーは誰でも参加できます。私たちに反対する人も歓迎です。pro-life の人もぜひ、いちばん強い論拠を持ってきてください。', 'Discord で議論する'),
+ 'ko': ('우리와 토론하세요', '디스코드의 토론 서버는 우리와 생각이 다른 사람을 포함해 누구에게나 열려 있습니다. pro-life 입장인 분들도 환영합니다. 가장 좋은 논거를 가져오세요.', '디스코드에서 토론하기'),
+ 'th': ('มาถกเถียงกับเรา', 'เซิร์ฟเวอร์ถกเถียงของเราบน Discord เปิดให้ทุกคน รวมถึงคนที่ไม่เห็นด้วยกับเรา ฝ่าย pro-life ก็ยินดีต้อนรับ นำข้อโต้แย้งที่ดีที่สุดของคุณมาเลย', 'ถกเถียงบน Discord'),
+ 'hi': ('हमसे बहस करें', 'Discord पर हमारा बहस सर्वर सबके लिए खुला है, उनके लिए भी जो हमसे असहमत हैं। pro-life लोगों का भी स्वागत है: अपने सबसे अच्छे तर्क लेकर आइए।', 'Discord पर बहस करें'),
+ 'mr': ('आमच्याशी वाद घाला', 'Discord वरील आमचा वादविवाद सर्व्हर सगळ्यांसाठी खुला आहे, आमच्याशी असहमत असणाऱ्यांसाठीही. pro-life लोकांचेही स्वागत आहे: तुमचे सर्वोत्तम युक्तिवाद घेऊन या.', 'Discord वर वाद घाला'),
+ 'bn': ('আমাদের সাথে বিতর্ক করুন', 'Discord-এ আমাদের বিতর্ক সার্ভার সবার জন্য খোলা, যারা আমাদের সাথে একমত নন তাদের জন্যও। pro-life মানুষদেরও স্বাগতম: আপনার সেরা যুক্তি নিয়ে আসুন।', 'Discord-এ বিতর্ক করুন'),
+ 'te': ('మాతో చర్చించండి', 'Discord లోని మా చర్చా సర్వర్ అందరికీ తెరిచి ఉంది, మాతో విభేదించేవారికి కూడా. pro-life వారికి కూడా స్వాగతం: మీ ఉత్తమ వాదనలతో రండి.', 'Discord లో చర్చించండి'),
+ 'ta': ('எங்களுடன் விவாதியுங்கள்', 'Discord இல் உள்ள எங்கள் விவாத சர்வர் எல்லோருக்கும் திறந்திருக்கிறது, எங்களுடன் உடன்படாதவர்களுக்கும். pro-life ஆதரவாளர்களும் வரவேற்கப்படுகிறார்கள்: உங்கள் சிறந்த வாதங்களுடன் வாருங்கள்.', 'Discord இல் விவாதியுங்கள்'),
+ 'pa': ('ਸਾਡੇ ਨਾਲ ਬਹਿਸ ਕਰੋ', 'Discord ਉੱਤੇ ਸਾਡਾ ਬਹਿਸ ਸਰਵਰ ਸਭ ਲਈ ਖੁੱਲ੍ਹਾ ਹੈ, ਉਨ੍ਹਾਂ ਲਈ ਵੀ ਜੋ ਸਾਡੇ ਨਾਲ ਸਹਿਮਤ ਨਹੀਂ। pro-life ਲੋਕਾਂ ਦਾ ਵੀ ਸਵਾਗਤ ਹੈ: ਆਪਣੀਆਂ ਸਭ ਤੋਂ ਵਧੀਆ ਦਲੀਲਾਂ ਲੈ ਕੇ ਆਓ।', 'Discord ਉੱਤੇ ਬਹਿਸ ਕਰੋ'),
+ 'gu': ('અમારી સાથે ચર્ચા કરો', 'Discord પરનું અમારું ચર્ચા સર્વર બધા માટે ખુલ્લું છે, અમારી સાથે અસહમત લોકો માટે પણ. pro-life લોકોનું પણ સ્વાગત છે: તમારી શ્રેષ્ઠ દલીલો લઈને આવો.', 'Discord પર ચર્ચા કરો'),
+ 'ar': ('ناقشنا', 'خادم النقاش الخاص بنا على Discord مفتوح للجميع، حتى لمن لا يتفق معنا. أنصار pro-life مرحب بهم أيضا: أحضر أفضل حججك.', 'ناقش على Discord'),
+ 'ur': ('ہم سے بحث کریں', 'Discord پر ہمارا بحث کا سرور سب کے لیے کھلا ہے، ان کے لیے بھی جو ہم سے متفق نہیں۔ pro-life لوگوں کا بھی خیرمقدم ہے: اپنے بہترین دلائل لے کر آئیں۔', 'Discord پر بحث کریں'),
+ 'fa': ('با ما بحث کن', 'سرور بحث ما در Discord برای همه باز است، حتی برای کسانی که با ما مخالف\u200cاند. طرفداران pro-life هم خوش آمدند: بهترین استدلال\u200cهایت را بیاور.', 'بحث در Discord'),
+}
+
+def debate_html(lang, tag='h2'):
+    """The debate server: who it is for and a button to join."""
+    h, text, btn = DEBATE.get(lang, DEBATE['en'])
+    return (f'<{tag}>{esc(h)}</{tag}><p>{esc(text)}</p>'
+            f'<p class="cta-links"><a class="btn" href="{DEBATE_DISCORD}" rel="noopener">{icon("discord")}{esc(btn)}</a></p>')
+
 WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
             'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
             'es': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG'}  # as linked on each original site
@@ -1128,7 +1168,7 @@ def page_main(lang, slug, kind, href=None):
     if EN_OF[lang][slug] == 'contact':   # every way to reach us right on the contact page, not only in the footer
         body += (f'<p class="cta-links join"><a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener">{icon("whatsapp")}WhatsApp</a>'
                  f'<a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a></p>'
-                 + ('<!--social-link-->' if soc else ''))
+                 + debate_html(lang) + ('<!--social-link-->' if soc else ''))
     body = body.replace('<!--social-link-->', f'<p class="go"><a class="btn" href="{href(soc)}">{esc(NAV[lang][soc])} <span aria-hidden="true">&rarr;</span></a></p>' if soc else '')
     main = f'<article class="doc"><header class="doc-head"><p class="mono kicker">{esc(NAV[lang][slug])}</p><h1>{esc(title)}</h1>{lede_html}<hr class="slash"></header>{toc_html}<div class="prose">{notes}{body}</div></article>'
     if EN_OF[lang][slug] == 'cosmic-extinction':   # easter egg: the stars go out while reading (eggs.js)
@@ -1261,7 +1301,8 @@ def home_main(lang, href):
 </section>
 <section class="mission"><hr class="slash"><p class="mono kicker">{t["mission"]}</p><blockquote>{esc(t["mission_text"])}</blockquote></section>
 <section class="efforts"><ol>{efforts}</ol></section>
-<section class="questions"><h2>{t["questions"]}</h2>{read_more}<p class="q-mail">{linkify(t["questions_text"])}</p>{ki}</section>'''
+<section class="questions"><h2>{t["questions"]}</h2>{read_more}<p class="q-mail">{linkify(t["questions_text"])}</p></section>
+<section class="questions debate">{debate_html(lang)}{ki}</section>'''
 
 def _svg_uri(name):
     svg = (ASSETS / f'{name}.svg').read_text(encoding='utf-8').replace('currentColor', '#000')
