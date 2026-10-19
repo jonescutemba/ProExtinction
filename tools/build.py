@@ -750,8 +750,8 @@ JOIN_GATE = {
   qs=[('Have you read our Manifesto and the FAQ?', True),
       ('Should humanity go extinct first, before we help animals and all other life?', False),
       ('Do you agree that all suffering, of humans and of animals, should end, and that only the extinction of all sentient life can end it for good?', True),
-      ('Is violence or harming individuals an acceptable way to reach our goals?', False),
-      ('Are you an atheist who bases your views on evidence and science?', True),
+      ('Should people stop having children now?', False),
+      ('Do you believe in a god, or in other claims that have no evidence?', False),
       ('Do you want to actively help, for example by making content, translating, debating or organising?', True)]),
 }
 
