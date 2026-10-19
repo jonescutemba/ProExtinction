@@ -748,10 +748,10 @@ JOIN_GATE = {
   ok='Thank you! You can join our WhatsApp group now.', ok_btn='Join the WhatsApp group',
   fail='Thank you for your answers. Our activist group may not be the right place for you yet. Read more on our pages, or talk with us on our debate server, which is open to everyone.',
   qs=[('Human extinction would be the worst thing possible, because, to be fair, as the only intelligent species, we have to make other life go extinct first. Do you agree?', True),
-      ('Should humanity stop reproducing now?', False),
       ('Do you agree that all suffering, of humans and of animals, should end, and that only the extinction of all sentient life can end it for good?', True),
       ('Do you believe in a god?', False),
-      ('Do you want to actively help, for example by making content, translating, debating or organising?', True)]),
+      ('Do you want to actively help, for example by making content, translating, debating or organising?', True),
+      ('Should humanity stop reproducing now?', False)]),
 }
 
 def wa_link(lang):
