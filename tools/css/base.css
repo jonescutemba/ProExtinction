@@ -364,3 +364,19 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 [data-theme=light] .stars i.big{box-shadow:none}
 @media (prefers-reduced-motion:reduce){.stars i{animation:none}}
 .void-line{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:0 var(--gutter);text-align:center;pointer-events:none;z-index:2147483001;opacity:0;font-family:var(--display);font-weight:var(--display-weight,600);text-transform:uppercase;font-size:clamp(1.6rem,5vw,3.4rem);line-height:1.15;color:var(--text)}
+/* WhatsApp questions (gate_html in build.py): one step visible at a time */
+.gate{width:min(36rem,calc(100% - 2rem));max-height:calc(100% - 2rem);padding:1.6rem 1.4rem;border:1px solid var(--line);border-radius:var(--r-ui);background:var(--surface);color:var(--text);position:fixed}
+.gate::backdrop{background:rgb(0 0 0/.7)}
+.gate h2{margin:0 2rem .6rem 0;font-size:clamp(1.5rem,4vw,2rem)}
+.gate [data-show]{display:none}
+.gate[data-step=ask] [data-show~=ask],.gate[data-step=missing] [data-show~=missing],.gate[data-step=ok] [data-show~=ok],.gate[data-step=fail] [data-show~=fail]{display:block}
+.gate fieldset{border:0;border-top:1px solid var(--line);margin:0;padding:.9rem 0;display:flex;flex-wrap:wrap;gap:.5rem}
+.gate legend{float:left;width:100%;margin-bottom:.5rem;padding:0}
+.gate fieldset label{position:relative}
+.gate fieldset input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.gate fieldset span{display:inline-block;min-width:4.5rem;padding:.4rem 1rem;border:1px solid var(--line);border-radius:var(--r-ui);text-align:center;font-family:var(--display);letter-spacing:.06em;text-transform:uppercase}
+.gate fieldset input:checked+span{background:var(--text);color:var(--bg);border-color:var(--text)}
+.gate fieldset input:focus-visible+span{outline:2px solid var(--link);outline-offset:2px}
+.gate-missing{color:var(--link)}
+.gate .cta-links{margin-bottom:0}
+.gate-x{position:absolute;top:.6rem;inset-inline-end:.8rem;background:none;border:0;color:var(--text);font-size:1.8rem;line-height:1;cursor:pointer;padding:.2rem .5rem}
