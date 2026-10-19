@@ -18,7 +18,7 @@ Schritt-für-Schritt-Anleitung für James (Englisch): `HOSTING.md`.
 ## Vor dem Teilen prüfen
 | Punkt | Stand |
 |---|---|
-| Suchmaschinen | gesperrt. Freischalten: in `tools/build.py` `INDEXABLE = True` setzen, `python tools/build_all.py`, committen. Das ändert Meta-Tag, `X-Robots-Tag` (`site/_headers`) und `robots.txt` zusammen. Danach `https://proextinction.com/sitemap.xml` in der Google Search Console einreichen |
+| Suchmaschinen | freigeschaltet (`INDEXABLE = True` in `tools/build.py`). Der Schalter ändert Meta-Tag, `X-Robots-Tag` (`site/_headers`) und `robots.txt` zusammen. Danach `https://proextinction.com/sitemap.xml` in der Google Search Console einreichen |
 | Domain | `SITE_URL` in `tools/build.py` (`https://proextinction.com`, ohne www). www leitet per Cloudflare-Regel auf die Domain ohne www (siehe `HOSTING.md`) |
 | Datenschutz | fertig (`content/legal/<de|en>.json`, `privacy`), im Footer jeder Seite verlinkt; Verantwortliche: Pro Extinction als Gruppe von Privatpersonen, info@proextinction.com. Keine Rechtsberatung |
 | Impressum | bewusst **nicht veröffentlicht** (Betreiber nicht in Deutschland/Österreich). Liegt als Entwurf bereit (`imprint` in denselben Dateien); `IMPRINT = True` in `tools/build.py` baut und verlinkt es, vorher die Platzhalter in eckigen Klammern ausfüllen |
