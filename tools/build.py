@@ -1407,7 +1407,28 @@ def social_body(lang, lines, used):
 
 # FAQ pictures close the answer to an English question (content/images.json "where": ["answer", question number]).
 # Original-language FAQs number their questions differently: English number -> their number.
-FAQ_Q = {'de': {14: 15}, 'es': {14: 15}, 'it': {14: 15}}
+FAQ_Q = {'de': {14: 15, 34: 32, 35: 12}, 'es': {14: 15, 34: 33, 35: 12}, 'it': {14: 15, 34: 33, 35: 12},
+         'pl': {34: 32, 35: 37}}   # 34, 35: veganism and antinatalism (FAQ_MORE); the originals ask them in their own words
+
+# Full FAQ answers that end with a button to a chapter of the criticism page:
+# question number (English and its translations) -> line of that chapter's heading on the criticism page.
+FAQ_MORE = {34: 61, 35: 23}
+CRITICISM = 'criticism-of-different-pro-life-ideologies'
+
+def faq_more(lang, href):
+    """{question number: button to the criticism chapter}, in the page's language. The anchor comes from that page's own toc."""
+    crit = OF_EN[lang].get(CRITICISM)
+    if not crit: return {}
+    cl = json.loads((ROOT / 'content' / lang / f'{crit}.json').read_text(encoding='utf-8'))
+    like = json.loads((ROOT / 'content' / 'en' / f'{CRITICISM}.json').read_text(encoding='utf-8')) if crit in AI[lang] else None
+    toc = doc_body(lang, CRITICISM, cl, '', like)[3]
+    out = {}
+    for k, i in FAQ_MORE.items():
+        h = cl[i].strip().rstrip(':：').strip()
+        a = next(x[0] for x in toc if len(x) == 2 and x[1].strip().endswith(h))
+        out[k] = (f'<p class="cta-links"><a class="btn" href="{href(crit)}#{a}">'
+                  f'{esc(NAV[lang][crit])} · {esc(h)} <span aria-hidden="true" class="arr">→</span></a></p>')
+    return out
 
 def faq_body(lang, slug, lines, like=None, href=None):
     t = T[lang]
@@ -1415,12 +1436,14 @@ def faq_body(lang, slug, lines, like=None, href=None):
     intro, pairs = faq_pairs(rest, like[len(lines) - len(rest):] if like else None)
     shown = pairs
     intro_html = ''.join(f'<p>{linkify(l)}</p>' for l in intro)
+    more_btn = faq_more(lang, href) if EN_OF[lang][slug] == 'full-faq' else {}
+    if not like: more_btn = {FAQ_Q.get(lang, {}).get(k, k): v for k, v in more_btn.items()}
     pics = {x['where'][1]: x['n'] for x in IMAGES if x['page'] == EN_OF[lang][slug] and x['where'][0] == 'answer'}
     if not like: pics = {FAQ_Q.get(lang, {}).get(k, k): n for k, n in pics.items()}
     items = []
     for k, (q, a) in enumerate(shown, 1):   # counter-set keeps each question's number while the search hides others
         items.append(f'<details style="counter-set:q {k}"><summary>{esc(q)}</summary><div class="a">' + ''.join(f'<p>{linkify(p)}</p>' for p in a)
-                     + (figure(pics[k], 'pic', lang) if k in pics else '') + '</div></details>')
+                     + (figure(pics[k], 'pic', lang) if k in pics else '') + more_btn.get(k, '') + '</div></details>')
     more = ''
     if EN_OF[lang][slug] == 'full-faq':
         ph, cnt, none, end, mail = FAQ_FIND[lang]
