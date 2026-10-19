@@ -1430,6 +1430,8 @@ def doc_body(lang, slug, lines, full_url, like=None):
         n = iter(range(1, len(bl) + 1))
         bl = [(b[0], f'{next(n)}. {b[1]}', *b[2:]) if b[0] == 'h' else b for b in bl]
     body, toc = render_blocks(bl, used, lang)
+    if slug in NUMBERED:   # the overview numbers its entries itself
+        toc = [(x[0], re.sub(r'^\d+\. ', '', x[1]), *x[2:]) for x in toc]
     return title, lede, body, toc, truncated
 
 SOCIAL_EN = json.loads((ROOT / 'content' / 'en' / 'social-media-channels.json').read_text(encoding='utf-8'))
