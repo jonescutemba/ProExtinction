@@ -18,6 +18,26 @@
     if (mp === 'off') localStorage.removeItem('pe-motion');
     if (localStorage.getItem('pe-motion') === 'on') d.dataset.motion = 'on';
   } catch (e) {}
+  // ---- WhatsApp: yes/no questions first (dialog from gate_html in build.py). Without JavaScript the button stays a plain link.
+  var gate = document.getElementById('join-gate');
+  if (gate && gate.showModal) {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[data-gate]');
+      if (!a) return;
+      e.preventDefault();
+      [].forEach.call(gate.querySelectorAll('input'), function (i) { i.checked = false; });
+      gate.dataset.step = 'ask'; gate.showModal();
+    });
+    gate.querySelector('.gate-x').addEventListener('click', function () { gate.close(); });
+    gate.addEventListener('click', function (e) { if (e.target === gate) gate.close(); });   // click on the backdrop
+    gate.querySelector('.gate-go').addEventListener('click', function () {
+      var sets = [].slice.call(gate.querySelectorAll('fieldset'));
+      if (sets.some(function (f) { return !f.querySelector('input:checked'); })) { gate.dataset.step = 'missing'; return; }
+      gate.dataset.step = sets.every(function (f) { return f.querySelector('input:checked').value === f.dataset.a; }) ? 'ok' : 'fail';
+      gate.scrollTop = 0;
+    });
+  }
+
   // ---- expandable menu below 1000px
   var topBar = document.querySelector('.top'), menuBtn = document.querySelector('.menu-toggle');
   function setTopH() { if (topBar) d.style.setProperty('--top-h', Math.max(0, topBar.getBoundingClientRect().bottom) + 'px'); }
