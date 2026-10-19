@@ -748,9 +748,8 @@ JOIN_GATE = {
   ok='Thank you! You can join our WhatsApp group now.', ok_btn='Join the WhatsApp group',
   fail='Thank you for your answers. Our activist group may not be the right place for you yet. Read more on our pages, or talk with us on our debate server, which is open to everyone.',
   qs=[('Have you read our Manifesto and the FAQ?', True),
-      ('Should humanity go extinct first, before we help animals and all other life?', False),
       ('Do you agree that all suffering, of humans and of animals, should end, and that only the extinction of all sentient life can end it for good?', True),
-      ('Should people stop having children now?', False),
+      ('Should people stop having children so that humanity goes extinct?', False),
       ('Do you believe in a god?', False),
       ('Do you want to actively help, for example by making content, translating, debating or organising?', True)]),
 }
