@@ -379,8 +379,8 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .foot .born b{font-weight:600;color:var(--text)}
 .foot .born .bn{white-space:nowrap}
 .foot .born [dir=ltr]{direction:ltr;unicode-bidi:isolate}
-.foot a.legal{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
-.foot a.legal:hover{color:var(--text)}
+.foot .legal{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+.foot .legal:hover{color:var(--text)}
 .lang-list{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.4rem 1.2rem}   /* / and 404: language list */
 .lang-list a{display:block;padding:.45rem 0;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
 .lang-list a:hover{color:var(--link)}
@@ -409,6 +409,12 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .gate-missing{color:var(--link)}
 .gate .cta-links{margin-bottom:0}
 .gate-x{position:absolute;top:.6rem;inset-inline-end:.8rem;background:none;border:0;color:var(--text);font-size:1.8rem;line-height:1;cursor:pointer;padding:.2rem .5rem}
+/* Share dialog (share_html in build.py) and the footer's share link */
+.share-copy{display:flex;gap:.5rem;margin:1rem 0 0}
+.share-url{flex:1;min-width:0;padding:.4rem .6rem;border:1px solid var(--line);border-radius:var(--r-ui);background:var(--bg);color:var(--text);font:inherit}
+.share-done{margin:.6rem 0 0;color:var(--muted)}
+.foot button.legal{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+.gate-share{margin:1.6rem 0 .8rem}
 
 /* Pro Extinction · Konzept Poster · ausführbare Tokens (einzige Quelle der Wahrheit).
    Werte sind VORLÄUFIG, bis ein Konzept gewählt ist (siehe /DECISIONS.md).
@@ -495,6 +501,7 @@ body{font-size:1.125rem}
 .cta{text-align:center}
 .cta .slash::after{left:50%;transform:translateX(-50%)}
 .cta-links{justify-content:center}
+.prose .debate{text-align:center}   /* contact page: debate text and the social media link centred like its heading and button */
 .btn{font-size:1.1rem;padding:.8rem 1.8rem}
 
 @media (min-width:1000px){
@@ -596,6 +603,36 @@ body{font-size:1.125rem}
       gate.dataset.step = sets.every(function (f) { return f.querySelector('input:checked').value === f.dataset.a; }) ? 'ok' : 'fail';
       gate.scrollTop = 0;
     });
+  }
+
+  // ---- Share: the system's share sheet on touch screens, otherwise the dialog from share_html in build.py with links and the address.
+  var box = document.getElementById('share-box');
+  if (box && box.showModal) {
+    [].forEach.call(document.querySelectorAll('[data-share][hidden]'), function (x) { x.hidden = false; });
+    var NETS = { whatsapp: 'https://wa.me/?text={t}%20{u}', x: 'https://x.com/intent/post?text={t}&url={u}',
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u={u}', telegram: 'https://t.me/share/url?url={u}&text={t}',
+      reddit: 'https://www.reddit.com/submit?url={u}&title={t}', mail: 'mailto:?subject={t}&body={u}' };
+    var field = box.querySelector('.share-url'), done = box.querySelector('.share-done');
+    document.addEventListener('click', function (e) {
+      if (!(e.target.closest && e.target.closest('.share'))) return;
+      var u = location.origin + location.pathname, t = box.dataset.text;
+      if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+        navigator.share({ title: 'Pro Extinction', text: t, url: u }).catch(function () {});
+        return;
+      }
+      [].forEach.call(box.querySelectorAll('[data-net]'), function (a) {
+        a.href = NETS[a.dataset.net].replace('{u}', encodeURIComponent(u)).replace('{t}', encodeURIComponent('Pro Extinction: ' + t));
+      });
+      field.value = u; done.hidden = true; box.showModal();
+    });
+    box.querySelector('.share-copy button').addEventListener('click', function () {
+      field.select();
+      var ok = function () { done.hidden = false; };
+      if (navigator.clipboard) navigator.clipboard.writeText(field.value).then(ok, function () { if (document.execCommand('copy')) ok(); });
+      else if (document.execCommand('copy')) ok();
+    });
+    box.querySelector('.gate-x').addEventListener('click', function () { box.close(); });
+    box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
   }
 
   // ---- expandable menu below 1000px

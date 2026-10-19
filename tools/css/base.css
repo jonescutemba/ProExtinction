@@ -350,8 +350,8 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .foot .born b{font-weight:600;color:var(--text)}
 .foot .born .bn{white-space:nowrap}
 .foot .born [dir=ltr]{direction:ltr;unicode-bidi:isolate}
-.foot a.legal{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
-.foot a.legal:hover{color:var(--text)}
+.foot .legal{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+.foot .legal:hover{color:var(--text)}
 .lang-list{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.4rem 1.2rem}   /* / and 404: language list */
 .lang-list a{display:block;padding:.45rem 0;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
 .lang-list a:hover{color:var(--link)}
@@ -380,3 +380,9 @@ html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
 .gate-missing{color:var(--link)}
 .gate .cta-links{margin-bottom:0}
 .gate-x{position:absolute;top:.6rem;inset-inline-end:.8rem;background:none;border:0;color:var(--text);font-size:1.8rem;line-height:1;cursor:pointer;padding:.2rem .5rem}
+/* Share dialog (share_html in build.py) and the footer's share link */
+.share-copy{display:flex;gap:.5rem;margin:1rem 0 0}
+.share-url{flex:1;min-width:0;padding:.4rem .6rem;border:1px solid var(--line);border-radius:var(--r-ui);background:var(--bg);color:var(--text);font:inherit}
+.share-done{margin:.6rem 0 0;color:var(--muted)}
+.foot button.legal{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
+.gate-share{margin:1.6rem 0 .8rem}

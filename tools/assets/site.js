@@ -38,6 +38,36 @@
     });
   }
 
+  // ---- Share: the system's share sheet on touch screens, otherwise the dialog from share_html in build.py with links and the address.
+  var box = document.getElementById('share-box');
+  if (box && box.showModal) {
+    [].forEach.call(document.querySelectorAll('[data-share][hidden]'), function (x) { x.hidden = false; });
+    var NETS = { whatsapp: 'https://wa.me/?text={t}%20{u}', x: 'https://x.com/intent/post?text={t}&url={u}',
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u={u}', telegram: 'https://t.me/share/url?url={u}&text={t}',
+      reddit: 'https://www.reddit.com/submit?url={u}&title={t}', mail: 'mailto:?subject={t}&body={u}' };
+    var field = box.querySelector('.share-url'), done = box.querySelector('.share-done');
+    document.addEventListener('click', function (e) {
+      if (!(e.target.closest && e.target.closest('.share'))) return;
+      var u = location.origin + location.pathname, t = box.dataset.text;
+      if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+        navigator.share({ title: 'Pro Extinction', text: t, url: u }).catch(function () {});
+        return;
+      }
+      [].forEach.call(box.querySelectorAll('[data-net]'), function (a) {
+        a.href = NETS[a.dataset.net].replace('{u}', encodeURIComponent(u)).replace('{t}', encodeURIComponent('Pro Extinction: ' + t));
+      });
+      field.value = u; done.hidden = true; box.showModal();
+    });
+    box.querySelector('.share-copy button').addEventListener('click', function () {
+      field.select();
+      var ok = function () { done.hidden = false; };
+      if (navigator.clipboard) navigator.clipboard.writeText(field.value).then(ok, function () { if (document.execCommand('copy')) ok(); });
+      else if (document.execCommand('copy')) ok();
+    });
+    box.querySelector('.gate-x').addEventListener('click', function () { box.close(); });
+    box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
+  }
+
   // ---- expandable menu below 1000px
   var topBar = document.querySelector('.top'), menuBtn = document.querySelector('.menu-toggle');
   function setTopH() { if (topBar) d.style.setProperty('--top-h', Math.max(0, topBar.getBoundingClientRect().bottom) + 'px'); }
