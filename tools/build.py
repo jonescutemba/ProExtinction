@@ -1639,7 +1639,7 @@ def page_main(lang, slug, kind, href=None):
 
 # ---- search engines
 SITE_URL = 'https://proextinction.com'
-INDEXABLE = False   # the one switch: True lets search engines in (robots.txt, X-Robots-Tag header in vercel.json, meta robots)
+INDEXABLE = True    # the one switch: True lets search engines in (robots.txt, X-Robots-Tag header in vercel.json, meta robots)
 HREFLANG = {'zh': 'zh-Hans'}
 SEO = {l: json.loads((ROOT / 'content' / 'seo' / f'{l}.json').read_text(encoding='utf-8')) for l in LANGS}
 IMPRINT = False   # legal notice (content/legal/<lang>.json "imprint") kept ready but not published; True builds it and links it in the footer
