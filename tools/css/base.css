@@ -191,12 +191,13 @@ html,body{overflow-x:clip}
 html.nav-open .menu-toggle .bars{background:transparent}
 html.nav-open .menu-toggle .bars::before{transform:rotate(45deg)}
 html.nav-open .menu-toggle .bars::after{transform:rotate(-45deg)}
+/* 100dvh: the visible height; 100vh on phones counts the hidden address bar, which cut off the end of the menu */
 @media (max-width:999.98px){
   .menu-toggle{display:inline-flex}
   html:not(.nav-open) .sitenav{display:none}
   html .sitenav{position:fixed;inset-inline-start:0;inset-inline-end:0;top:var(--top-h,4.3rem);z-index:45;width:auto;margin:0;
-    max-height:calc(100vh - var(--top-h,4.3rem));overflow-y:auto;background:var(--bg);border:0;border-bottom:1px solid var(--line);
-    border-radius:0;padding:.4rem var(--gutter) 1.4rem;-webkit-mask-image:none;mask-image:none}
+    max-height:calc(100vh - var(--top-h,4.3rem));max-height:calc(100dvh - var(--top-h,4.3rem));overflow-y:auto;overscroll-behavior:contain;background:var(--bg);border:0;border-bottom:1px solid var(--line);
+    border-radius:0;padding:.4rem var(--gutter) calc(1.4rem + env(safe-area-inset-bottom));-webkit-mask-image:none;mask-image:none}
   html .sitenav ul{flex-direction:column;overflow:visible;gap:0;max-height:none;padding:0;-webkit-mask-image:none;mask-image:none}
   html .sitenav li{border-bottom:1px solid var(--line)}
   html .sitenav a{white-space:normal;padding:.95rem .2rem;font-size:1.15rem;border:0;border-radius:0;background:none;color:var(--text)}
