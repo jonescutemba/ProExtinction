@@ -1093,9 +1093,54 @@ JOIN_GATE = {
   qs=list(zip(['انقراض انسان بدترین اتفاق ممکن خواهد بود، چون اگر منصف باشیم، ما به عنوان تنها گونه هوشمند باید اول دیگر شکل\u200cهای حیات را منقرض کنیم. موافقی؟', 'آیا موافقی که همه رنج\u200cها، رنج انسان\u200cها و حیوانات، باید پایان یابد، و فقط انقراض همه حیات حس\u200cمند می\u200cتواند آن را برای همیشه پایان دهد؟', 'آیا به خدایی باور داری؟', 'آیا می\u200cخواهی فعالانه کمک کنی، مثلا با ساختن محتوا، ترجمه، بحث یا سازمان\u200cدهی؟', 'آیا بشریت باید همین حالا از تولید مثل دست بکشد؟'], GATE_ANSWERS))),
 }
 
+# The owners' switch: False closes the WhatsApp group to new members. The WhatsApp buttons then open a note that
+# requests go through Discord (without JavaScript they lead to Discord). True brings back the link with the questions above.
+WHATSAPP_OPEN = False
+WA_CLOSED = {
+ 'en': 'We currently only accept requests on Discord.',
+ 'de': 'Wir nehmen Anfragen momentan nur auf Discord an.',
+ 'pl': 'Obecnie przyjmujemy zgłoszenia tylko na Discordzie.',
+ 'es': 'Por ahora solo aceptamos solicitudes en Discord.',
+ 'it': 'Al momento accettiamo richieste solo su Discord.',
+ 'fr': 'Pour le moment, nous acceptons les demandes uniquement sur Discord.',
+ 'pt': 'No momento, só aceitamos pedidos pelo Discord.',
+ 'ru': 'Сейчас мы принимаем заявки только в Discord.',
+ 'zh': '我们目前只在 Discord 上接受申请。',
+ 'hi': 'हम अभी केवल Discord पर अनुरोध स्वीकार करते हैं।',
+ 'ar': 'نقبل الطلبات حاليا عبر Discord فقط.',
+ 'bn': 'আমরা এখন শুধু Discord-এ অনুরোধ গ্রহণ করি।',
+ 'ur': 'ہم فی الحال صرف Discord پر درخواستیں قبول کرتے ہیں۔',
+ 'id': 'Saat ini kami hanya menerima permintaan lewat Discord.',
+ 'ja': '現在、申し込みは Discord でのみ受け付けています。',
+ 'tr': 'Şu anda başvuruları yalnızca Discord üzerinden kabul ediyoruz.',
+ 'vi': 'Hiện tại chúng tôi chỉ nhận yêu cầu qua Discord.',
+ 'ko': '현재는 Discord에서만 신청을 받고 있습니다.',
+ 'fa': 'ما در حال حاضر درخواست\u200cها را فقط در Discord می\u200cپذیریم.',
+ 'mr': 'आम्ही सध्या फक्त Discord वर विनंत्या स्वीकारतो.',
+ 'te': 'ప్రస్తుతం మేము Discord లో మాత్రమే అభ్యర్థనలను స్వీకరిస్తున్నాం.',
+ 'ta': 'தற்போது Discord இல் மட்டுமே கோரிக்கைகளை ஏற்கிறோம்.',
+ 'sw': 'Kwa sasa tunapokea maombi kupitia Discord tu.',
+ 'th': 'ขณะนี้เรารับคำขอผ่าน Discord เท่านั้น',
+ 'nl': 'We nemen aanvragen op dit moment alleen via Discord aan.',
+ 'uk': 'Зараз ми приймаємо заявки лише в Discord.',
+ 'tl': 'Sa ngayon, sa Discord lang kami tumatanggap ng mga request.',
+ 'pa': 'ਅਸੀਂ ਇਸ ਵੇਲੇ ਸਿਰਫ਼ Discord ਉੱਤੇ ਬੇਨਤੀਆਂ ਸਵੀਕਾਰ ਕਰਦੇ ਹਾਂ।',
+ 'gu': 'અમે હાલમાં ફક્ત Discord પર વિનંતીઓ સ્વીકારીએ છીએ.',
+}
+
 def wa_link(lang):
+    if not WHATSAPP_OPEN:
+        return f'<a class="btn primary" href="{DISCORD}" rel="noopener" data-wa-closed>{icon("whatsapp")}WhatsApp</a>'
     gate = ' data-gate' if lang in JOIN_GATE else ''
     return f'<a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener"{gate}>{icon("whatsapp")}WhatsApp</a>'
+
+def wa_closed_html(lang):
+    """The note behind the WhatsApp buttons while the group is closed; site.js opens it."""
+    close = JOIN_GATE.get(lang, JOIN_GATE['en'])['close']
+    return (f'<dialog class="gate" id="wa-closed" aria-labelledby="wa-closed-title"><div class="gate-in">'
+            f'<h2 id="wa-closed-title">WhatsApp</h2><p>{esc(WA_CLOSED[lang])}</p>'
+            f'<p class="cta-links"><a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a></p>'
+            f'<button class="gate-x" type="button" aria-label="{esc(close)}">×</button></div></dialog>')
 
 def gate_html(lang):
     """The question dialog, once per page; site.js opens it when a WhatsApp button is clicked. No <form>: the CSP allows none."""
@@ -1591,7 +1636,7 @@ def footer(lang, cta=True):
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links">{wa_link(lang)}<a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a>{share_btn(lang)}</p>
 </section>
-''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}{legal_links(lang)}<span data-share hidden> · <button class="share legal" type="button">{esc(SHARE[lang][0])}</button></span></p>{born_line(lang)}</footer>{gate_html(lang)}{share_html(lang)}'''
+''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}{legal_links(lang)}<span data-share hidden> · <button class="share legal" type="button">{esc(SHARE[lang][0])}</button></span></p>{born_line(lang)}</footer>{gate_html(lang) if WHATSAPP_OPEN else wa_closed_html(lang)}{share_html(lang)}'''
 
 def born_line(lang):
     label, humans, animals, wild, insects = BORN[lang]
