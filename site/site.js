@@ -38,6 +38,16 @@
     });
   }
 
+  // ---- WhatsApp closed (WHATSAPP_OPEN in build.py): the buttons open a note pointing to Discord.
+  var waClosed = document.getElementById('wa-closed');
+  if (waClosed && waClosed.showModal) {
+    document.addEventListener('click', function (e) {
+      if (!(e.target.closest && e.target.closest('a[data-wa-closed]'))) return;
+      e.preventDefault(); waClosed.showModal();
+    });
+    waClosed.querySelector('.gate-x').addEventListener('click', function () { waClosed.close(); });
+    waClosed.addEventListener('click', function (e) { if (e.target === waClosed) waClosed.close(); });
+  }
   // ---- Share: the system's share sheet on touch screens, otherwise the dialog from share_html in build.py with links and the address.
   var box = document.getElementById('share-box');
   if (box && box.showModal) {
