@@ -60,3 +60,49 @@ Am besten intern (Discord) statt öffentlich auf der Website.
    (GitHub Secrets oder Cloudflare), und jemand muss sie verwalten.
 2. Öffentlich auf der Website oder nur intern (Discord)?
 3. Ob die Datenschutzerklärung angepasst werden muss (nur nötig, wenn die Website Daten von fremden Servern lädt oder Besucherdaten verarbeitet).
+
+## 3. Entwicklungs-Branch `develop` und Vorschau auf dev.proextinction.com
+
+**Idee:** Neue Änderungen gehen zuerst auf `develop` und sind auf dev.proextinction.com zu sehen. Auf `main` (die echte Seite) kommt nur, was über `develop` geprüft wurde.
+
+- **Branch:** `develop` aus dem heutigen `main` anlegen (kann die KI).
+- **Nur Jonas und James mergen:** GitHub → *Settings* → *Rules* → *Rulesets* für `main` und `develop`: nur per Pull Request, `check` muss grün sein, kein Löschen, kein Force-Push, Merge nur für die Org-Owner (Bypass-Liste).
+  Privates Repo: braucht GitHub Team (rund 4 $ pro Person und Monat), öffentliches Repo: gratis.
+- **Auf `main` nur von `develop`:** keine Einstellung bei GitHub. Lösung: kleine Prüfung im Workflow, die rot wird, wenn ein Pull Request auf `main` nicht von `develop` kommt; im Ruleset als Pflicht-Check eintragen.
+- **dev.proextinction.com:** zweiter Cloudflare Worker (z. B. `proextinction-dev`), gleiches Repo, Production-Branch `develop`, Custom Domain `dev.proextinction.com`.
+  Empfohlen: per Cloudflare Access nur für eure E-Mail-Adressen sichtbar (bis 50 Personen gratis).
+- **Suchmaschinen:** Die Dev-Seite muss gesperrt bleiben (sonst doppelte und ungeprüfte Inhalte bei Google). Der Build braucht dafür einen Schalter, der `develop` immer auf "noindex" setzt.
+- **Regeln für die KI:** `AGENTS.md` anpassen (Pull Requests auf `develop`, nur `develop` auf `main`). Das ändert ein Owner selbst.
+- **Offene Pull Requests** danach auf `develop` umstellen.
+
+**Stand:** besprochen, noch nicht entschieden.
+
+## 4. Suchmaschinen und Domain
+
+- **Erledigt:** Website für Suchmaschinen freigeschaltet (`INDEXABLE = True`, Oktober 2026).
+- **Google zeigt noch den alten Stand** (alte Google-Sites-Seite, "keine Informationen verfügbar"). Wird mit dem nächsten Besuch von Google neu eingelesen.
+- **Google Search Console:** Domain `proextinction.com` bestätigen (TXT-Eintrag in Cloudflare DNS), Sitemap `https://proextinction.com/sitemap.xml` einreichen,
+  `https://proextinction.com/en/` per *URL-Prüfung* → *Indexierung beantragen*. Optional dasselbe in den Bing Webmaster Tools.
+- **www auf die Domain ohne www umleiten:** www liefert heute eine eigene Kopie aus. Cloudflare → *Rules* → *Redirect Rules*: Hostname `www.proextinction.com`
+  → `https://proextinction.com${http.request.uri.path}`, 301, Query-String behalten.
+- Zuständig: James (Cloudflare-Konto) oder Jonas mit Zugang (siehe 5).
+
+## 5. Cloudflare-Zugang für Jonas
+
+- Kein geteiltes Passwort: James lädt Jonas ein (*Manage Account* → *Members* → *Invite*).
+- Rollen: "Administrator Read Only" (nur ansehen) oder "Administrator" (alles einstellen, Abrechnung bleibt bei James).
+- Nur für die Domain: domain-bezogene Rolle (z. B. "Domain Administrator", Scope nur `proextinction.com`), falls der Tarif sie anbietet.
+- Nur für den Worker geht nicht: Workers-Rechte gelten für alle Workers im Konto.
+- Falls James im Konto auch anderes hat: eigenes Cloudflare-Konto nur für Pro Extinction, Domain und Worker dorthin umziehen, beide Administrator.
+- Jonas: Zwei-Faktor-Anmeldung einschalten.
+
+## 6. Weitere offene Punkte (warten auf Entscheidung der Owner)
+
+- **Quiz vor der WhatsApp-Gruppe:** Absage-Text um "Sorry, you didn't make it" ergänzen? (Heute: freundlicher Text plus "You can still help: share our website!")
+- **PR #7 (Cloudflare Workers):** schließen, nur die Doku behalten oder nur den Sicherheitsabschnitt aus `HOSTING.md` entfernen (er sollte vor einem öffentlichen Repo weg).
+- **Vorschau-Builds bei Pull Requests** schlagen bei Cloudflare immer fehl (die echte Seite aus `main` geht). Ursache in den Worker-Einstellungen bei Cloudflare suchen.
+- **`CODEOWNERS`:** James (`idoinejd`) eintragen, sobald er die Einladung als Org-Owner angenommen hat.
+- **Datenschutzerklärung kürzen** (Abschnitte "Kontakt per E-Mail", "Deine Rechte"): nur nach Bestätigung.
+- **Cartoon-Bild im FAQ** (Bild 31, moralische Subjektivität): unscharf hinter einem Klick wie die Bilder bei "Suffering in detail"?
+- **Dependabot PR #1** (actions/checkout 4.2.2 → 7.0.1): prüfen und mergen oder schließen.
+- **Repo öffentlich oder GitHub Team:** nötig für Rulesets (siehe 3).
