@@ -732,10 +732,7 @@ def debate_html(lang, tag='h2'):
     return (f'<{tag}>{esc(h)}</{tag}><p>{esc(text)}</p>'
             f'<p class="cta-links"><a class="btn" href="{DEBATE_DISCORD}" rel="noopener">{icon("discord")}{esc(btn)}</a></p>')
 
-WHATSAPP = {'en': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs', 'it': 'https://chat.whatsapp.com/J9WIHBa7Lqy8MyhlQYLogs',
-            'de': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG', 'pl': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG',
-            'es': 'https://chat.whatsapp.com/Dej17Wh0dvUG7oeauTH3GG'}  # as linked on each original site
-WHATSAPP.update({l: WHATSAPP['en'] for l in FULL_AI})
+WHATSAPP = {l: 'https://chat.whatsapp.com/KvNQxQiyCl4GO3w3J1w5Gb' for l in LANGS}   # one group for every language (October 2026)
 EMAIL = 'info@proextinction.com'
 
 # Before the WhatsApp link: yes/no questions with an expected answer each. All as expected: the link appears.
@@ -1094,8 +1091,9 @@ JOIN_GATE = {
 }
 
 # The owners' switch: False closes the WhatsApp group to new members. The WhatsApp buttons then open a note that
-# requests go through Discord (without JavaScript they lead to Discord). True brings back the link with the questions above.
-WHATSAPP_OPEN = False
+# requests go through Discord (without JavaScript they lead to Discord). True: the buttons link to the group.
+WHATSAPP_OPEN = True
+WHATSAPP_QUIZ = False   # True: the yes/no questions before the link
 WA_CLOSED = {
  'en': 'We currently only accept requests on Discord.',
  'de': 'Wir nehmen Anfragen momentan nur auf Discord an.',
@@ -1131,7 +1129,7 @@ WA_CLOSED = {
 def wa_link(lang):
     if not WHATSAPP_OPEN:
         return f'<a class="btn primary" href="{DISCORD}" rel="noopener" data-wa-closed>{icon("whatsapp")}WhatsApp</a>'
-    gate = ' data-gate' if lang in JOIN_GATE else ''
+    gate = ' data-gate' if WHATSAPP_QUIZ and lang in JOIN_GATE else ''
     return f'<a class="btn primary" href="{WHATSAPP[lang]}" rel="noopener"{gate}>{icon("whatsapp")}WhatsApp</a>'
 
 def wa_closed_html(lang):
@@ -1636,7 +1634,7 @@ def footer(lang, cta=True):
   <p class="cta-sub">{t["tagline"]}</p>
   <p class="cta-links">{wa_link(lang)}<a class="btn primary" href="{DISCORD}" rel="noopener">{icon("discord")}Discord</a><a class="btn" href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a>{share_btn(lang)}</p>
 </section>
-''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}{legal_links(lang)}<span data-share hidden> · <button class="share legal" type="button">{esc(SHARE[lang][0])}</button></span></p>{born_line(lang)}</footer>{gate_html(lang) if WHATSAPP_OPEN else wa_closed_html(lang)}{share_html(lang)}'''
+''' if cta else '') + f'''<footer class="foot" data-peace="{esc(peace(lang))}" data-discord="{DISCORD}"><p class="mono">{t["foot"].replace("Global", '<span class="glob">Global</span>', 1)}{legal_links(lang)}<span data-share hidden> · <button class="share legal" type="button">{esc(SHARE[lang][0])}</button></span></p>{born_line(lang)}</footer>{(gate_html(lang) if WHATSAPP_QUIZ else '') if WHATSAPP_OPEN else wa_closed_html(lang)}{share_html(lang)}'''
 
 def born_line(lang):
     label, humans, animals, wild, insects = BORN[lang]
